@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'b7e1167fe1e2507311b795a8d8874e7668e78fef',
+    'reference' => '0b87769af865903cfcab383153a146f4e4a8fcb7',
     'name' => '__root__',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'b7e1167fe1e2507311b795a8d8874e7668e78fef',
+      'reference' => '0b87769af865903cfcab383153a146f4e4a8fcb7',
     ),
     'composer/package-versions-deprecated' => 
     array (

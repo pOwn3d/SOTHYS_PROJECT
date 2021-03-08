@@ -58,7 +58,7 @@ class RegistrationController extends AbstractController
                     ->from(new Address('clopez@nexton-group.com', 'A MODIFIER DEV'))
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
+                    ->htmlTemplate('emails/account/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
 
@@ -77,6 +77,9 @@ class RegistrationController extends AbstractController
 
     /**
      * @Route("/verify/email", name="app_verify_email")
+     * @param Request $request
+     *
+     * @return Response
      */
     public function verifyUserEmail(Request $request): Response
     {

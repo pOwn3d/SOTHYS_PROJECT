@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Coedi Sothys - Connexion{% endblock %}
 
 {% block body %}
-<form method="post">
+
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -14,29 +14,89 @@
         </div>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
+    {# <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1> #}
+    {# <label for="inputEmail">Email</label> #}
+    {# <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required #}
+    {# autofocus> #}
+    {# <label for="inputPassword">Password</label> #}
+    {# <input type="password" name="password" id="inputPassword" class="form-control" required> #}
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+    {# <input type="hidden" name="_csrf_token" #}
+    {# value="{{ csrf_token('authenticate') }}" #}
+    {# > #}
 
     {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
+    Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+    See https://symfony.com/doc/current/security/remember_me.html
 
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
+    <div class="checkbox mb-3">
+        <label>
+            <input type="checkbox" name="_remember_me"> Remember me
+        </label>
+    </div>
     #}
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
-{% endblock %}
+    {# <button class="btn btn-lg btn-primary" type="submit"> #}
+    {# Sign in #}
+    {# </button> #}
+    {# </form> #}
+
+    <main class="main" id="top">
+        <div class="container-fluid">
+            <div class="row min-vh-100 bg-100">
+                <div class="col-6 d-none d-lg-block position-relative">
+                    <div class="bg-holder"
+                         style="background-image:url({{ asset('assets/images/bg-home.jpg') }});background-position: 50% 20%;">
+                    </div>
+                </div>
+                <div class="col-sm-10 col-md-6 px-sm-0 align-self-center mx-auto py-5">
+                    <div class="row justify-content-center g-0">
+                        <div class="col-lg-9 col-xl-8 col-xxl-6">
+                            <div class="card">
+                                <div class="card-header text-center p-2"><img
+                                            src="{{ asset('assets/images/logo_register.png') }}"/></div>
+                                <div class="card-body p-4">
+                                    <div class="row flex-between-center">
+                                        <div class="col-auto">
+                                        </div>
+                                        <div class="col-auto fs--1 text-600"><span class="mb-0 font-weight-semi-bold">Pas de compte ?</span>
+                                            <span><a href="{{ path('app_register') }}">Inscription</a></span></div>
+                                    </div>
+                                    <form method="post">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="split-email">Email</label>
+                                            <input type="email" value="{{ last_username }}" name="email" id="inputEmail"
+                                                   class="form-control" required autofocus>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="split-email">Mot de passe</label>
+                                            <input type="password" name="password" id="inputPassword"
+                                                   class="form-control" required>
+                                        </div>
+                                        <input type="hidden" name="_csrf_token"
+                                               value="{{ csrf_token('authenticate') }}">
+                                        <div class="row flex-between-center">
+                                            <div class="col-auto">
+                                                <div class="form-check mb-0">
+                                                    <input class="form-check-input" type="checkbox" id="basic-checkbox" checked="checked">
+                                                    <label class="form-check-label" for="basic-checkbox">Se souvenir de moi</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-auto"><a class="fs--1" href="{{ path('app_forgot_password_request') }}">Mot de passe oublié</a></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <button class="btn btn-primary btn-block mt-3" type="submit" name="submit">
+                                                Connexion
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% endblock %}
