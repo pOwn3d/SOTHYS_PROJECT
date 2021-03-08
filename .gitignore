@@ -7,6 +7,8 @@
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
+var
+
 /vendor/
 /public/uploads/*
 /old/*
@@ -17,7 +19,6 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
-.env
 .env.test
 
 # Cache and logs (Symfony2)
@@ -42,7 +43,6 @@
 /bin/*
 !bin/console
 !bin/symfony_requirements
-/vendor/
 vendor  
 # Assets and user uploads
 /web/bundles/
