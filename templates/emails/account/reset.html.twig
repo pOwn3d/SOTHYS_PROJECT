@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="assets/images/favicon.png" type="image/x-icon">
     <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
-    <title>SOTHYS - Confirmation Email</title>
+    <title>SOTHYS- REINITILIALISATION MOT DE PASSE </title>
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&display=swap"
             rel="stylesheet">
@@ -119,20 +119,24 @@
             <img src="assets/images/booking-success.png">
             <h2
                     style="margin: 0 auto; width: 90%;  font-size:calc(18px + (22 - 18) * ((100vw - 320px) / (1920 - 320)));">
-                Confirmer mon email ! </h2>
-            <h3 style="width: 70%;margin: 5px auto 28px;line-height: 1.4;color: #9a9a9a;font-weight: 400;">Afin
-                d'accéder à nos service, nous vous demandons de validé votre email, pour ce faire il suffit de cliquez
-                sur le lien suivant </h3>
+                Demande de réinitilisation de mot de passe </h2>
+            <h3 style="width: 70%;margin: 5px auto 28px;line-height: 1.4;color: #9a9a9a;font-weight: 400;">Une demande
+                de réinitialisation de mot de passe a était faite, si vous n'êtes pas l'auteur de cette demande, merci
+                de ne pas en tenir compte et de le signaler à info@st-transport.com </h3>
         </td>
     </tr>
 
+    <tr>
+        <td>
+            <h5 style="font-size: 18px; padding-left: 24px; margin-bottom: 10px;">Cliquez sur le lien suivant</h5>
+        </td>
+    </tr>
     <tr style="color: #616161;">
         <td style="padding: 0 24px 50px;">
-            <p>
-                Veuillez confirmer votre adresse e-mail en cliquant sur le lien suivant<br><br>
-                Le lien expire dans {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
-                <a href="{{ signedUrl|raw }}">Confirmer mon e-mail </a>
-            </p>
+            <a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
+            <p>Le lien expire
+                dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}
+                .</p>
         </td>
     </tr>
     </tbody>

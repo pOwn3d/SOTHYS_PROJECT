@@ -3,9 +3,7 @@
 {% block title %}Reset your password{% endblock %}
 
 {% block body %}
-    {% for flashError in app.flashes('reset_password_error') %}
-        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-    {% endfor %}
+  
 
     <main class="main" id="top">
         <div class="container-fluid">
@@ -19,6 +17,9 @@
                 <div class="col-sm-10 col-md-6 px-sm-0 align-self-center mx-auto py-5">
                     <div class="row justify-content-center g-0">
                         <div class="col-lg-9 col-xl-8 col-xxl-6">
+                            {% for flashError in app.flashes('reset_password_error') %}
+                                <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+                            {% endfor %}
                             <div class="card">
                                 <div class="card-header text-center p-2"><img
                                             src="{{ asset('assets/images/logo_register.png') }}"/></div>
@@ -27,17 +28,15 @@
                                         <h4 class="mb-0"> Réinitialisation mot de passe?</h4><small>Entrez votre e-mail
                                             et nous vous enverrons un lien de réinitialisation.</small>
                                         {{ form_start(requestForm) }}
-                                        <form class="mb-3 mt-4">
-                                            {{ form_row(requestForm.email, {'label' : false,  'attr' : {'placeholder' : 'Email',  'class' : 'form-control'  }}) }}
-                                            <div class="mb-3">
-                                                <button class="btn btn-primary btn-block mt-3" type="submit"
-                                                        name="submit">Envoyer le lien de réinitialisation
-                                                </button>
-                                            </div>
-                                        </form>
+                                        {{ form_row(requestForm.email, {'label' : false,  'attr' : {'placeholder' : 'Email',  'class' : 'form-control'  }}) }}
+                                        <div class="mb-3">
+                                            <button class="btn btn-primary btn-block mt-3" type="submit"
+                                                    name="submit">Envoyer le lien de réinitialisation
+                                            </button>
+                                        </div>                                   
+                                        {{ form_end(requestForm) }}
                                         <a class="fs--1 text-600" href="{{ path('app_login') }}">Je ne veux pas
                                             récupérer mon compte<span class="d-inline-block ml-1">&rarr;</span></a>
-                                        {{ form_end(requestForm) }}
                                     </div>
                                 </div>
                             </div>
