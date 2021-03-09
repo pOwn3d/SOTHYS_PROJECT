@@ -39,7 +39,7 @@ class AdminUserController extends AbstractCrudController
                 ->autocomplete()
                 ->setChoices([
                         'Client' => 'ROLE_USER',                 
-                        'SuperAdmin' => 'ROLE_SUPER_ADMIN']
+                        'Administrateur' => 'ROLE_SUPER_ADMIN']
                 )
         ];
     }
