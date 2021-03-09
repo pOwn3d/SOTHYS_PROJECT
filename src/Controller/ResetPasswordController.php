@@ -129,7 +129,7 @@ class ResetPasswordController extends AbstractController
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('reset_password/reset.html.twig', [
@@ -155,22 +155,23 @@ class ResetPasswordController extends AbstractController
             // the lines below and change the redirect to 'app_forgot_password_request'.
             // Caution: This may reveal if a user is registered or not.
             //
-            // $this->addFlash('reset_password_error', sprintf(
-            //     'There was a problem handling your password reset request - %s',
-            //     $e->getReason()
-            // ));
+             $this->addFlash('reset_password_error', sprintf(
+                 'There was a problem handling your password reset request - %s',
+                 $e->getReason()
+             ));
 
             return $this->redirectToRoute('app_check_email');
         }
 
         $email = (new TemplatedEmail())
-            ->from(new Address('clopez@nexton-group.com', 'A MODIFIER DEV'))
+            ->from(new Address('clopez@nexton-group.com', 'Acme Mail Bot'))
             ->to($user->getEmail())
-            ->subject('Your password reset request')
-            ->htmlTemplate('reset_password/email.html.twig')
+            ->subject('Demande de nouveau mot de passe')
+            ->htmlTemplate('emails/account/reset.html.twig')
             ->context([
                 'resetToken' => $resetToken,
-            ]);
+            ])
+        ;
 
         $mailer->send($email);
 
