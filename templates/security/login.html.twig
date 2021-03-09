@@ -51,9 +51,9 @@
                                                value="{{ csrf_token('authenticate') }}">
                                         <div class="row flex-between-center">
                                             <div class="col-auto">
-                                                <div class="form-check mb-0">
-                                                    <input class="form-check-input" type="checkbox" id="basic-checkbox" checked="checked">
-                                                    <label class="form-check-label" for="basic-checkbox">Se souvenir de moi</label>
+                                                <div class="form-check mb-0">                                     
+                                                    <input class="form-check-input" name="_remember_me"  type="checkbox" id="remember_me" checked="checked">
+                                                    <label class="form-check-label" for="remember_me">Se souvenir de moi</label>
                                                 </div>
                                             </div>
                                             <div class="col-auto"><a class="fs--1" href="{{ path('app_forgot_password_request') }}">Mot de passe oublié</a></div>
