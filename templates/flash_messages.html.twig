@@ -1,22 +1,7 @@
-{% block flash_messages %}
-    {% for type, messages in app.session.flashbag.all() %}
-        {% for message in messages %}
-            <div class="block-toast">
-                <div class="toast show {{ type }}" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="toast-header">
-                        <strong class="mr-auto"> {% if type == 'success' %} Succès
-                            {% else %}
-                                Erreur
-                            {% endif %}</strong>
-
-                        <button class="ml-2 mb-1 close" type="button" data-dismiss="toast" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="toast-body"> {{ message | raw }}</div>
-                </div>
-            </div>
-        {% endfor %}
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="flash-{{ label }} alert-{{ label }}">
+            {{ message }}
+        </div>
     {% endfor %}
-{% endblock %}
-
+{% endfor %}

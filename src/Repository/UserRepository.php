@@ -44,6 +44,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+
+    public function updatePassword($userId, $encoder, $dataForm, $entityManager)
+    {
+        $hash = $encoder->encodePassword($userId, $dataForm);
+        $updateUser = $userId
+            ->setPassword($hash);
+ 
+        $entityManager->persist($updateUser);
+        $entityManager->flush();
+    }
+
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
