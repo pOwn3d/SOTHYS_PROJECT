@@ -8,8 +8,7 @@
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
         {% block stylesheets %}
-            <link href=" {{ asset('assets/css/theme.css') }}" rel="stylesheet">
-
+            <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
             {#{{ encore_entry_link_tags('app') }}#}
         {% endblock %}
 
@@ -18,6 +17,9 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% include 'partials/header.twig' %}
+        <div id="content" role="main">
+            {% block body %}{% endblock %}
+        </div>
     </body>
 </html>
