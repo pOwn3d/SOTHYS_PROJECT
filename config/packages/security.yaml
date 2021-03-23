@@ -15,6 +15,15 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            user_checker: App\Security\UserChecker
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path: /               
+                # by default, the feature is enabled by checking a
+                # checkbox in the login form (see below), uncomment the
+                # following line to always enable it.
+                #always_remember_me: true
             anonymous: true
             lazy: true
             provider: app_user_provider
@@ -34,6 +43,11 @@ security:
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
+    role_hierarchy:
+        ROLE_CLIENT: ROLE_USER
+        ROLE_CUSTOMER: ROLE_CUSTOMER
+        ROLE_ADMIN: [ ROLE_USER, ROLE_ADMIN, ROLE_CUSTOMER ]
+        ROLE_SUPER_ADMIN: [ ROLE_USER, ROLE_ADMIN, ROLE_CUSTOMER ]
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/admin, roles: ROLE_SUPER_ADMIN }
+         - { path: ^/profile, roles: ROLE_USER }

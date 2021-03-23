@@ -41,6 +41,11 @@ class User implements UserInterface
      */
     private $isVerified = false;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $accountActivated;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -80,12 +85,11 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles($roles)
     {
         $this->roles = $roles;
-
-        return $this;
     }
+
 
     /**
      * @see UserInterface
@@ -130,6 +134,18 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getAccountActivated(): ?bool
+    {
+        return $this->accountActivated;
+    }
+
+    public function setAccountActivated(bool $accountActivated): self
+    {
+        $this->accountActivated = $accountActivated;
 
         return $this;
     }
