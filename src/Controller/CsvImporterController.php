@@ -46,6 +46,8 @@ class CsvImporterController extends AbstractController
             $newUser = new User();
             $newUser
                 ->setEmail($row[0])
+                ->setAccountActivated($row[1])
+                ->setIsVerified($row[2])
                 ->setPassword('TOTOaChanger')
                 ->setRoles([ "ROLE_USER" ])
             ;
