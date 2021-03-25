@@ -1,0 +1,8 @@
+<a class="logo" href="/">
+    {% if type is defined and type == 'footer' %}
+        <img src="{{ asset('assets/images/logo-sothys-blanc.png') }}" srcset="{{ asset('assets/images/logo-sothys-blanc.png') }} 2x" alt="Sothys">
+        <span>Exclusivement<br>en Instituts &amp; Spas</span>
+    {% else %}
+        <img src="{{ asset('assets/images/logo-sothys.png') }}" srcset="{{ asset('assets/images/logo-sothys.png') }} 2x" alt="Sothys">
+    {% endif %}
+</a>
