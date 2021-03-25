@@ -40,7 +40,8 @@ class AdminUserController extends AbstractCrudController
                 ->setChoices([
                         'Client' => 'ROLE_USER',                 
                         'Administrateur' => 'ROLE_SUPER_ADMIN']
-                )
+                )          
+            
         ];
     }
 

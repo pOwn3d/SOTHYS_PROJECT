@@ -24,9 +24,26 @@ class Society
      */
     private $userID;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $idCustomer;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="SocietyID")
+     */
+    private $orders;
+
+    /**
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="societyID")
+     */
+    private $users;
+
     public function __construct()
     {
         $this->userID = new ArrayCollection();
+        $this->orders = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -58,6 +75,78 @@ class Society
             // set the owning side to null (unless already changed)
             if ($userID->getSociety() === $this) {
                 $userID->setSociety(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getIdCustomer(): ?int
+    {
+        return $this->idCustomer;
+    }
+
+    public function setIdCustomer(int $idCustomer): self
+    {
+        $this->idCustomer = $idCustomer;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Order[]
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->setSocietyID($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getSocietyID() === $this) {
+                $order->setSocietyID(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setSocietyID($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getSocietyID() === $this) {
+                $user->setSocietyID(null);
             }
         }
 

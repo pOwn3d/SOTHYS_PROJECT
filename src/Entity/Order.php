@@ -26,7 +26,7 @@ class Order
     private $idOrder;
 
     /**
-     * 
+     *
      * @ORM\Column(type="integer", unique=true)
      */
     private $idOrderX3;
@@ -60,6 +60,11 @@ class Order
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateLastDelivery;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Society::class, inversedBy="orders")
+     */
+    private $SocietyID;
 
     public function getId(): ?int
     {
@@ -161,4 +166,18 @@ class Order
 
         return $this;
     }
+
+    public function getSocietyID(): ?Society
+    {
+        return $this->SocietyID;
+    }
+
+    public function setSocietyID(?Society $SocietyID): self
+    {
+        $this->SocietyID = $SocietyID;
+
+        return $this;
+    }
+
+ 
 }

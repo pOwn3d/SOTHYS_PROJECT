@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Entity\Society;
 use App\Entity\User;
+use App\Repository\SocietyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -38,18 +40,22 @@ class CsvImporterController extends AbstractController
      * @throws ResetPasswordExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function index(EntityManagerInterface $em, MailerInterface $mailer): Response
+    public function index(EntityManagerInterface $em, MailerInterface $mailer, SocietyRepository $societyRepository): Response
     {
         $csv = Reader::createFromPath('../public/csv/customer.csv');
         $csv->fetchColumn();
         foreach ($csv as $row) {
             $user    = $this->getDoctrine()->getRepository(User::class)->findOneBy([ 'email' => $row[0] ]);
+
+            $society = $this->getDoctrine()->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[1] ]);
+
             $newUser = new User();
             $newUser
                 ->setEmail($row[0])
                 ->setAccountActivated($row[1])
                 ->setIsVerified($row[2])
                 ->setPassword('TOTOaChanger')
+                ->setSocietyID($society)
                 ->setRoles([ "ROLE_USER" ]);
             $em->persist($newUser);
             $em->flush();
@@ -88,17 +94,20 @@ class CsvImporterController extends AbstractController
         $csv = Reader::createFromPath('../public/csv/order.csv');
         $csv->fetchColumn();
 
+
         foreach ($csv as $row) {
             if ($row[13] == 0) {
                 $row[13] = null;
             }
+
+            $society = $this->getDoctrine()->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[2] ]);
 
 
             $newOrder = new Order();
             $newOrder
                 ->setIdOrder($row[0])
                 ->setIdOrderX3($row[1])
-//                -setIdCustomer($row[2])
+                ->setSocietyID($society)
 //                ->setIdLogin()
                 ->setDateOrder(new \DateTime($row[4]))
                 ->setDateDelivery(new \DateTime($row[5]))
