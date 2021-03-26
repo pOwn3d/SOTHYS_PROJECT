@@ -2,10 +2,10 @@
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}ST TRANSPORT BIENVENUE{% endblock %}</title>
+    <title>{% block title %}Sothys{% endblock %}</title>
     <!-- SEO Meta Tags-->
-    <meta name="description" content="blablabla">
-    <meta name="keywords" content="Blablabla">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
     <!-- Viewport-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="msapplication-TileColor" content="#766df4">
@@ -31,39 +31,39 @@
                     </a>
                 </div>
                 <div class="col-3 col-lg-5 col-xl-4">
-                    <div class="navbar-tools">
-                        <ul class="list--horizontal">
-                            <li>
-{#                                <a href="/pages/checkout/checkout-1-mon-panier.html" aria-label="Accéder à mon panier"#}
-{#                                   title="Accéder à mon panier" data-microtip-position="bottom" role="tooltip"#}
-{#                                   class="cart__access js-cart-toggler">#}
-{#                                    <i class="icon icon-panier">#}
-{#                                        <span class="hidden">mon panier</span>#}
-{#                                    </i>#}
-{#                                    <span>2</span>#}
-{#                                </a>#}
-                            </li>
-                            <li class="account__access_button d-none d-lg-block">
-                                <a href="{{ path('app_login') }}" aria-label="Accéder à l'espace mon compte"
-                                   title="Accéder à l'espace mon compte">
-                                    <i class="icon icon-compte">
-                                        <span class="hidden">mon compte</span>
-                                    </i>
-                                </a>
-                                <div class="account__access_wrapper">
-                                    <div class="account__access_inner">
-                                        <a href="{{ path('app_account') }}"
-                                           class="button button--small button--dark" title="Mon compte">Mon compte</a>
-                                        {% if app.user != null %}
-                                        <a href="{{ path('app_logout') }}"
-                                           class="button button--small button--dark" title="Mon compte">Déconnexion</a>
-                                        {% endif %}
+                    {% if app.user != null %}
+                        <div class="navbar-tools">
+                            <ul class="list--horizontal">
+                                <li>
+    {#                                <a href="/pages/checkout/checkout-1-mon-panier.html" aria-label="Accéder à mon panier"#}
+    {#                                   title="Accéder à mon panier" data-microtip-position="bottom" role="tooltip"#}
+    {#                                   class="cart__access js-cart-toggler">#}
+    {#                                    <i class="icon icon-panier">#}
+    {#                                        <span class="hidden">mon panier</span>#}
+    {#                                    </i>#}
+    {#                                    <span>2</span>#}
+    {#                                </a>#}
+                                </li>
+                                <li class="account__access_button d-none d-lg-block">
+                                    <a href="{{ path('app_login') }}" aria-label="Accéder à l'espace mon compte"
+                                    title="Accéder à l'espace mon compte">
+                                        <i class="icon icon-compte">
+                                            <span class="hidden">mon compte</span>
+                                        </i>
+                                    </a>
+                                    <div class="account__access_wrapper">
+                                        <div class="account__access_inner">
+                                            <a href="{{ path('app_account') }}"
+                                            class="button button--small button--dark" title="Mon compte">Mon compte</a>
+                                            <a href="{{ path('app_logout') }}"
+                                            class="button button--small button--dark" title="Mon compte">Déconnexion</a>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                        </ul>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
         </div>
     </div>
