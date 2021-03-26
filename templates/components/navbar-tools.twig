@@ -1,0 +1,24 @@
+<div class="navbar-tools">
+    <ul class="list--horizontal">
+        <li>
+            <a href="/pages/checkout/checkout-1-mon-panier.html" aria-label="Accéder à mon panier" title="Accéder à mon panier" data-microtip-position="bottom" role="tooltip" class="cart__access js-cart-toggler">
+                <i class="icon icon-panier">
+                    <span class="hidden">mon panier</span>
+                </i>
+                <span>2</span>
+            </a>
+        </li>
+        <li class="account__access_button d-none d-lg-block">
+            <a href="{{ path('app_login') }}" aria-label="Accéder à l'espace mon compte" title="Accéder à l'espace mon compte">
+                <i class="icon icon-compte">
+                    <span class="hidden">mon compte</span>
+                </i>
+            </a>
+            <div class="account__access_wrapper">
+                <div class="account__access_inner">
+                    {% include "components/button.twig" with {'text': 'Mon compte', 'href': '/pages/mon-compte/authentification.html', 'class': 'button--small button--dark'}%}
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

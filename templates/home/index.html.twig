@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Page d'accueil{% endblock %}
 
 {% block body %}
 
@@ -20,6 +20,7 @@
         }
         th, td {
             padding: 0.25rem;
+            text-align: center;
         }
         tr.red th {
             background: red;
@@ -37,10 +38,9 @@
             background: white;
             position: sticky;
             top: 0; /* Don't forget this, required for the stickiness */
-            box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
         }
     </style>
-    <table class="tg">
+    <table class="tg" style="width: 100%;">
         <thead>
         <tr class="red">
             <th>Order</th>
@@ -62,7 +62,6 @@
         {% for order in orders %}
             <tbody>
             <tr>
-
                 <td>{{ order.idOrder }}</td>
                 <td>{{ order.idOrderX3 }}</td>
                 <th>N/A</th>
