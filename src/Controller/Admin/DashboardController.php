@@ -2,6 +2,9 @@
 
 namespace App\Controller\Admin;
 
+
+use App\Entity\Order;
+use App\Entity\Society;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -31,7 +34,11 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
+        yield MenuItem::section('Gestion des Utilisateurs');
         yield MenuItem::linkToCrud('Utilisateur', 'fas fa-user', User::class);
-   
+        yield MenuItem::section('Gestion des commandes');
+        yield MenuItem::linkToCrud('Commande', 'fas fa-store-alt', Order::class);
+        yield MenuItem::section('Gestion des societe');
+        yield MenuItem::linkToCrud('Societe', 'fas fa-store-alt', Society::class);
     }
 }

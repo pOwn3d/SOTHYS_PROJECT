@@ -33,10 +33,10 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
     {
-        $this->entityManager = $entityManager;
-        $this->urlGenerator = $urlGenerator;
+        $this->entityManager    = $entityManager;
+        $this->urlGenerator     = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
-        $this->passwordEncoder = $passwordEncoder;
+        $this->passwordEncoder  = $passwordEncoder;
     }
 
     public function supports(Request $request): bool
@@ -48,8 +48,8 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator implements P
     public function getCredentials(Request $request): array
     {
         $credentials = [
-            'email' => $request->request->get('email'),
-            'password' => $request->request->get('password'),
+            'email'      => $request->request->get('email'),
+            'password'   => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(
@@ -67,7 +67,7 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator implements P
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
+        $user = $this->entityManager->getRepository(User::class)->findOneBy([ 'email' => $credentials['email'] ]);
 
         if (!$user) {
             // fail authentication with a custom error
@@ -84,7 +84,9 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
+     *
      * @param $credentials
+     *
      * @return string|null
      */
     public function getPassword($credentials): ?string
@@ -94,15 +96,23 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey): RedirectResponse
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($targetPath);
-        }
+        $roles = $token->getUser()->getRoles();
+        $rolesTab = array_map(function ($roles) {
+            return $roles;
+        }, $roles);
 
-        return new RedirectResponse($this->urlGenerator->generate('app_home'));
+        if (in_array('ROLE_USER', $rolesTab, true) && in_array('ROLE_SUPER_ADMIN', $rolesTab, true))
+            return $redirection = new RedirectResponse($this->urlGenerator->generate('admin'));
+        else
+            return $redirection = new RedirectResponse($this->urlGenerator->generate('app_home'));
     }
 
     protected function getLoginUrl(): string
     {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
+    }
+
+    private function isGranted(string $string)
+    {
     }
 }

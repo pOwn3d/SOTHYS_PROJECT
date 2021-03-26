@@ -46,6 +46,11 @@ class User implements UserInterface
      */
     private $accountActivated;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Society::class, inversedBy="users")
+     */
+    private $societyID;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -146,6 +151,18 @@ class User implements UserInterface
     public function setAccountActivated(bool $accountActivated): self
     {
         $this->accountActivated = $accountActivated;
+
+        return $this;
+    }
+
+    public function getSocietyID(): ?Society
+    {
+        return $this->societyID;
+    }
+
+    public function setSocietyID(?Society $societyID): self
+    {
+        $this->societyID = $societyID;
 
         return $this;
     }
