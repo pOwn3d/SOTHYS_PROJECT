@@ -34,14 +34,14 @@
                     <div class="navbar-tools">
                         <ul class="list--horizontal">
                             <li>
-                                <a href="/pages/checkout/checkout-1-mon-panier.html" aria-label="Accéder à mon panier"
-                                   title="Accéder à mon panier" data-microtip-position="bottom" role="tooltip"
-                                   class="cart__access js-cart-toggler">
-                                    <i class="icon icon-panier">
-                                        <span class="hidden">mon panier</span>
-                                    </i>
-                                    <span>2</span>
-                                </a>
+{#                                <a href="/pages/checkout/checkout-1-mon-panier.html" aria-label="Accéder à mon panier"#}
+{#                                   title="Accéder à mon panier" data-microtip-position="bottom" role="tooltip"#}
+{#                                   class="cart__access js-cart-toggler">#}
+{#                                    <i class="icon icon-panier">#}
+{#                                        <span class="hidden">mon panier</span>#}
+{#                                    </i>#}
+{#                                    <span>2</span>#}
+{#                                </a>#}
                             </li>
                             <li class="account__access_button d-none d-lg-block">
                                 <a href="{{ path('app_login') }}" aria-label="Accéder à l'espace mon compte"
@@ -145,6 +145,8 @@
 </header>
 {% block body %}
 {% endblock %}
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+
+{% endblock %}
 </body>
 </html>

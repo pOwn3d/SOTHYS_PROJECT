@@ -4,7 +4,6 @@
 
 {% block body %}
 
-
     <section class="section section--checkout section--checkout-connexion">
         <div class="container">
             <div class="row justify-content-center">
@@ -35,7 +34,7 @@
                                             <label for="inputEmail">Email<sup data-children-count="0">*</sup></label>
                                             <input type="email" value="{{ last_username }}" name="email" id="inputEmail"
                                                    class="form-control" required autofocus>
-                                        </p>
+
                                         <p class="form__item" data-children-count="1">
                                             <label for="inputPassword">Mot de passe<sup
                                                     data-children-count="0">*</sup></label>
@@ -56,9 +55,9 @@
                                             </p>
                                         </div>
                                         <div class="form__item flex flex--center">
-                <span class="button button--primary-fill button--submit" style="margin: 0 auto;">
-                    <input type="submit" value="Se connecter">
-                </span>
+                                            <span class="button button--primary-fill button--submit" style="margin: 0 auto;">
+                                                  <input type="submit" value="Se connecter">
+                                            </span>
                                         </div>
                                     </fieldset>
                                 </form>
@@ -69,8 +68,6 @@
             </div>
         </div>
     </section>
-
-
 
 
 {% endblock %}
