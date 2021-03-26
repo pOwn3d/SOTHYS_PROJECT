@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
@@ -22,7 +23,7 @@ class AdminUserController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         $deleteUser = Action::new('deleteUser text-danger', 'Supprimer', 'fa fa-delete')
-            ->linkToRoute('reset_request_admin', function (User $entity) {
+            ->linkToRoute('delete_user_admin', function (User $entity) {
                 return [
                     'email'        => $entity->getEmail(),
                     '_switch_user' => "reset_admin"
@@ -52,6 +53,7 @@ class AdminUserController extends AbstractCrudController
                         'Administrateur' => 'ROLE_SUPER_ADMIN'
                     ]
                 ),
+            AssociationField::new('societyID')
         ];
     }
 
