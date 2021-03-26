@@ -6,9 +6,11 @@ use App\Repository\SocietyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=SocietyRepository::class)
+ * @UniqueEntity(fields={"idCustomer"}, message="There is already exist")
  */
 class Society
 {
@@ -25,7 +27,7 @@ class Society
     private $userID;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", unique=true)
      */
     private $idCustomer;
 

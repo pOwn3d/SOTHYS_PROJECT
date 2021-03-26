@@ -45,7 +45,7 @@ class CsvImporterController extends AbstractController
         $csv = Reader::createFromPath('../public/csv/customer.csv');
         $csv->fetchColumn();
         foreach ($csv as $row) {
-            $user    = $this->getDoctrine()->getRepository(User::class)->findOneBy([ 'email' => $row[0] ]);
+            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([ 'email' => $row[0] ]);
 
             $society = $this->getDoctrine()->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[1] ]);
 
@@ -77,9 +77,7 @@ class CsvImporterController extends AbstractController
 
         }
 
-        return $this->render('csv_importer/index.html.twig', [
-            'controller_name' => 'CsvImporterController',
-        ]);
+        dd();
     }
 
     /**
@@ -125,8 +123,30 @@ class CsvImporterController extends AbstractController
             $em->flush();
         }
 
-        return $this->render('csv_importer/index.html.twig', [
-            'controller_name' => 'CsvImporterController',
-        ]);
+        dd();
+    }
+
+    /**
+     * @Route("/import-society", name="import_csv_society")
+     * @param EntityManagerInterface $em
+     *
+     * @return Response
+     * @throws \Exception
+     */
+    public function importSociety(EntityManagerInterface $em): Response
+    {
+        $csv = Reader::createFromPath('../public/csv/society.csv');
+        $csv->fetchColumn();
+
+        foreach ($csv as $row) {
+            $newSociety = new Society();
+            $newSociety
+                ->setIdCustomer($row[0])
+                ->setName($row[1]);
+
+            $em->persist($newSociety);
+            $em->flush();
+        }
+        dd();
     }
 }
