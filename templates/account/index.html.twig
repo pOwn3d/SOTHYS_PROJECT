@@ -1,52 +1,64 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Coedi Sothys - Inscription{% endblock %}
+{% block title %}Coedi Sothys - Mon compte{% endblock %}
 
 {% block body %}
-  
-    <main class="main" id="top">
-        <div class="container-fluid">
-            <div class="row min-vh-100 bg-100">
-                <div class="col-6 d-none d-lg-block position-relative">
-                    <div class="bg-holder"
-                         style="background-image:url({{ asset('assets/images/bg-home.jpg') }});background-position: 50% 20%;">
-                    </div>
-                </div>
-                <div class="col-sm-10 col-md-6 px-sm-0 align-self-center mx-auto py-5">
-                    <div class="row justify-content-center g-0">
-                        <div class="col-lg-9 col-xl-8 col-xxl-6">
-                            <div class="card">
-                                <div class="card-header text-center p-2">
-                                    {% include 'flash_messages.html.twig' %}
-                                    <img src="{{ asset('assets/images/logo_register.png') }}" alt=""/></div>
-                                <div class="card-body p-4">                                    
-                                    {{ form_start(form) }}
-                                   
-                                    <div class="row gx-3">
-                                        <div class="mb-3 col-sm-6">
-                                            <label class="form-label" for="split-password">Mot de passe</label>
-                                            {{ form_row(form.password.first, {'label' : false,  'attr' : {'placeholder' : 'Mot de passe',  'class' : 'form-control'  }}) }}
-                                        </div>
-                                        <div class="mb-3 col-sm-6">
-                                            <label class="form-label" for="split-confirm-password">Confirmer mot de
-                                                passe</label>
-                                            {{ form_row(form.password.second, {'label' : false,  'attr' : {'placeholder' : 'Mot de passe',  'class' : 'form-control'  }}) }}
-                                        </div>
-                                    </div>
-                                   
-                                    <div class="mb-3">
-                                        <button class="btn btn-primary btn-block mt-3" type="submit" name="submit">
-                                           Modifier mon compte
-                                        </button>
-                                    </div>
-                                    {{ form_end(form) }}
-                                </div>
-                            </div>
+
+    <div id="content" role="main">
+        <section class="section section--compte">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 aos-init aos-animate" data-aos="fade-up">
+                        {% include 'flash_messages.html.twig' %}
+                        <div class="title--border title--border--margin">
+                            <h2>Mon compte</h2>
                         </div>
+                    </div>
+                    <div class="col-4 col-md-4">
+                        <ul class="compte__menu">
+                            <li>
+                                <a class="active" href="{{ path('app_account') }}">
+                                    Mon compte
+                                </a>
+                            </li>
+                            <li>
+                                <a class="active" href="{{ path('app_order') }}">
+                                    Mes commandes
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-8 col-md-8">
+                        {{ form_start(form) }}
+                        <fieldset>
+                            <p class="form__item">
+                                <label for="email">Email</label>
+                                <input type="text" id="email" name="email" value="{{ user.email }}" disabled="">
+                            </p>
+                            <p class="form__item">
+                                <label for="id_society">Identifiant compte client</label>
+                                <input type="text" id="id_society" name="text" value="{{ user.societyID.idCustomer }}  {{ user.societyID.name|upper }} " disabled="">
+                            </p>
+                            <p class="form__item">
+                                <label for="password">Mot de passe</label>
+                                {{ form_row(form.password.first, {'label' : false,  'attr' : {'placeholder' : 'Mot de passe',  'class' : 'form-control' ,'name' : 'password' }}) }}
+                            </p>
+                            <p class="form__item">
+                                <label for="password_confirm">Confirmer le mot de passe</label>
+                                {{ form_row(form.password.second, {'label' : false,  'attr' : {'placeholder' : 'Mot de passe',  'class' : 'form-control' , 'name' : 'password_confirm' }}) }}
+                            </p>
+                            <p>
+                                        <span class="button button--secondary-fill button--submit">
+                                            <input type="submit" value="Sauvegarder">
+                                        </span>
+                            </p>
+                        </fieldset>
+                        {{ form_end(form) }}
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </section>
+    </div>
 
 {% endblock %}

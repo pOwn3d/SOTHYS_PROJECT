@@ -20,7 +20,6 @@ class AdminUserController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-
         $deleteUser = Action::new('deleteUser text-danger', 'Supprimer', 'fa fa-delete')
             ->linkToRoute('reset_request_admin', function (User $entity) {
                 return [
@@ -31,11 +30,9 @@ class AdminUserController extends AbstractCrudController
 
 
         return $actions
-
             ->update(Crud::PAGE_INDEX, Action::NEW,
                 fn(Action $action) => $action->setIcon('fa fa-user-plus')->setLabel('Nouveau compte'))
             ->add(Crud::PAGE_INDEX, $deleteUser)
-
             ->disable( Action::DELETE);
     }
 
@@ -54,7 +51,6 @@ class AdminUserController extends AbstractCrudController
                         'Administrateur' => 'ROLE_SUPER_ADMIN'
                     ]
                 )
-
         ];
     }
 

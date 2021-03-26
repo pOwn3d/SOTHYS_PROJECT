@@ -19,7 +19,7 @@ security:
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds
-                path: /               
+                path: /
                 # by default, the feature is enabled by checking a
                 # checkbox in the login form (see below), uncomment the
                 # following line to always enable it.
@@ -50,4 +50,4 @@ security:
         ROLE_SUPER_ADMIN: [ ROLE_USER, ROLE_ADMIN, ROLE_CUSTOMER ]
     access_control:
          - { path: ^/admin, roles: ROLE_SUPER_ADMIN }
-         - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/mon-compte, roles: ROLE_USER }
