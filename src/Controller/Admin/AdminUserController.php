@@ -21,10 +21,22 @@ class AdminUserController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
 
+        $deleteUser = Action::new('deleteUser text-danger', 'Supprimer', 'fa fa-delete')
+            ->linkToRoute('reset_request_admin', function (User $entity) {
+                return [
+                    'email'        => $entity->getEmail(),
+                    '_switch_user' => "reset_admin"
+                ];
+            });
+
 
         return $actions
+
             ->update(Crud::PAGE_INDEX, Action::NEW,
-                fn(Action $action) => $action->setIcon('fa fa-user-plus')->setLabel('Nouveau compte'));
+                fn(Action $action) => $action->setIcon('fa fa-user-plus')->setLabel('Nouveau compte'))
+            ->add(Crud::PAGE_INDEX, $deleteUser)
+
+            ->disable( Action::DELETE);
     }
 
     public function configureFields(string $pageName): iterable
@@ -38,10 +50,11 @@ class AdminUserController extends AbstractCrudController
                 ->allowMultipleChoices()
                 ->autocomplete()
                 ->setChoices([
-                        'Client' => 'ROLE_USER',                 
-                        'Administrateur' => 'ROLE_SUPER_ADMIN']
-                )          
-            
+                        'Client'         => 'ROLE_USER',
+                        'Administrateur' => 'ROLE_SUPER_ADMIN'
+                    ]
+                )
+
         ];
     }
 

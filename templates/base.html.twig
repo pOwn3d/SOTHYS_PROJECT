@@ -1,26 +1,148 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
+    <title>{% block title %}ST TRANSPORT BIENVENUE{% endblock %}</title>
+    <!-- SEO Meta Tags-->
+    <meta name="description" content="blablabla">
+    <meta name="keywords" content="Blablabla">
+    <!-- Viewport-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-           
+    <meta name="msapplication-TileColor" content="#766df4">
+    <meta name="theme-color" content="#ffffff">
+    {% block stylesheets %}
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/main.css') }} ">
+    {% endblock %}
+</head>
 
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
+<body>
 
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
-    </head>
-    <body>
-        {% include 'partials/header.twig' %}
-        <div id="content" role="main">
-            {% block body %}{% endblock %}
+<header>
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-3 col-lg-5 col-xl-4">
+                </div>
+                <div class="col-6 col-lg-2 col-xl-4">
+                    <a class="logo" href="{{ path('app_home') }}">
+                        <img src="{{ asset('assets/images/logo-sothys.png') }}"
+                             srcset="{{ asset('assets/images/logo-sothys.png') }}"
+                             alt="Sothys">
+                    </a>
+                </div>
+                <div class="col-3 col-lg-5 col-xl-4">
+                    <div class="navbar-tools">
+                        <ul class="list--horizontal">
+                            <li>
+                                <a href="/pages/checkout/checkout-1-mon-panier.html" aria-label="Accéder à mon panier"
+                                   title="Accéder à mon panier" data-microtip-position="bottom" role="tooltip"
+                                   class="cart__access js-cart-toggler">
+                                    <i class="icon icon-panier">
+                                        <span class="hidden">mon panier</span>
+                                    </i>
+                                    <span>2</span>
+                                </a>
+                            </li>
+                            <li class="account__access_button d-none d-lg-block">
+                                <a href="{{ path('app_login') }}" aria-label="Accéder à l'espace mon compte"
+                                   title="Accéder à l'espace mon compte">
+                                    <i class="icon icon-compte">
+                                        <span class="hidden">mon compte</span>
+                                    </i>
+                                </a>
+                                <div class="account__access_wrapper">
+                                    <div class="account__access_inner">
+                                        <a href="{{ path('app_login') }}"
+                                           class="button button--small button--dark" title="Mon compte">Mon compte</a>
+                                        {% if app.user != null %}
+                                        <a href="{{ path('app_logout') }}"
+                                           class="button button--small button--dark" title="Mon compte">Déconnexion</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-    </body>
+    </div>
+    <div class="header__nav">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="navbar navbar--fixed js-navbar">
+                        <div class="navbar__wrapper">
+                            <div class="navbar__collapse">
+                                <div class="d-flex d-lg-none navbar__header">
+                                    <button class="navbar__toggler js-navbar-toggler">
+                                        <i class="icon icon-close">
+                                            <span class="hidden">fermer</span>
+                                        </i>
+                                    </button>
+                                    <ul class="lang">
+                                        <li>
+                                            <a href="#" title="Choix de la langue en Francais" class="active">FR</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" title="Choix de la langue en Anglais">EN</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <ul class="navbar__menu navbar__menu--desktop">
+                                    <li class="menu-item menu-item--has-child">
+                                        <a href="test">Catégorie 1</a>
+                                        <div class="menu-item__submenu">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-12 col-lg-3">
+                                                        <ul class="menu-item__submenu--large">
+                                                            <li class="menu-item__submenu-item">
+                                                                <a href="/pages/soins/subcategory1.html"
+                                                                   class="nav-link">Sous-catégorie 1</a>
+                                                            </li>
+                                                            <li class="menu-item__submenu-item">
+                                                                <a href="/pages/soins/subcategory1.html"
+                                                                   class="nav-link">Sous-catégorie 2</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="menu-item menu-item--has-child">
+                                        <a href="test">Catégorie 2</a>
+                                        <div class="menu-item__submenu">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-12 col-lg-3">
+                                                        <ul class="menu-item__submenu--large">
+                                                            <li class="menu-item__submenu-item">
+                                                                <a href="/pages/soins/subcategory1.html"
+                                                                   class="nav-link">Sous-catégorie 3</a>
+                                                            </li>
+                                                            <li class="menu-item__submenu-item">
+                                                                <a href="/pages/soins/subcategory1.html"
+                                                                   class="nav-link">Sous-catégorie 4</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% block body %}
+{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
 </html>
