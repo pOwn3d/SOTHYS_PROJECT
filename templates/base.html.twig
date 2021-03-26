@@ -67,6 +67,7 @@
             </div>
         </div>
     </div>
+    {% if app.user != null %}
     <div class="header__nav">
         <div class="container">
             <div class="row">
@@ -140,6 +141,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
 </header>
 {% block body %}
 {% endblock %}

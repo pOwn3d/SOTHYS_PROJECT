@@ -19,7 +19,6 @@ class HomeController extends AbstractController
     public function index(OrderRepository $orderRepository): Response
     {
 
-
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
 

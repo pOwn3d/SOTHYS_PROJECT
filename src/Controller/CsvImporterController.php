@@ -7,6 +7,7 @@ use App\Entity\Society;
 use App\Entity\User;
 use App\Repository\SocietyRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use League\Csv\Reader;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -85,7 +86,7 @@ class CsvImporterController extends AbstractController
      * @param EntityManagerInterface $em
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function importBooking(EntityManagerInterface $em): Response
     {
@@ -131,7 +132,7 @@ class CsvImporterController extends AbstractController
      * @param EntityManagerInterface $em
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function importSociety(EntityManagerInterface $em): Response
     {
