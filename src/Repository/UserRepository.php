@@ -50,7 +50,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $hash = $encoder->encodePassword($userId, $dataForm);
         $updateUser = $userId
             ->setPassword($hash);
- 
+
         $entityManager->persist($updateUser);
         $entityManager->flush();
     }

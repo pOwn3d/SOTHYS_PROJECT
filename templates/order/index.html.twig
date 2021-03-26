@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Coedi Sothys - Mes commandes{% endblock %}
+
+{% block body %}
+
+    <div id="content" role="main">
+        <section class="section section--compte">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 aos-init aos-animate" data-aos="fade-up">
+                        {% include 'flash_messages.html.twig' %}
+                        <div class="title--border title--border--margin">
+                            <h2>Mes commandes</h2>
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-4">
+                        <ul class="compte__menu">
+                            <li>
+                                <a class="active" href="{{ path('app_account') }}">
+                                    Mon compte
+                                </a>
+                            </li>
+                            <li>
+                                <a class="active" href="{{ path('app_order') }}">
+                                    Mes commandes
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <div style="overflow-x:auto">
+                            <table class="compte__commandes table-responsive">
+                                <thead>
+                                <tr>
+                                    <th>Order</th>
+                                    <th>OrderX3</th>
+                                    <th>SocietyID</th>
+                                    <th>Login</th>
+                                    <th>DateOrder</th>
+                                    <th>DateDelivery</th>
+                                    <th>Adress</th>
+                                    <th>Statut</th>
+                                    <th>DownStatut</th>
+                                    <th>Reference</th>
+                                    <th>Transport</th>
+                                    <th>setIdIntercom</th>
+                                    <th>setIdCondition</th>
+                                    <th>DateLastDelivery</th>
+                                </tr>
+                                </thead>
+                                {% for order in orders %}
+                                    <tbody>
+                                    <tr>
+                                        <td>{{ order.idOrder }}</td>
+                                        <td>{{ order.idOrderX3 }}</td>
+                                        <th>N/A</th>
+                                        <th>N/A</th>
+                                        <td>{{ order.dateOrder|date }}</td>
+                                        <td>{{ order.dateDelivery|date }}</td>
+                                        <th>N/A</th>
+                                        <td>{{ order.idStatut }}</td>
+                                        <td>{{ order.idDownStatut }}</td>
+                                        <td>{{ order.reference }}</td>
+                                        <th>N/A</th>
+                                        <th>N/A</th>
+                                        <th>N/A</th>
+                                        <td>{{ order.dateLastDelivery|date }}</td>
+                                    </tr>
+                                    </tbody>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

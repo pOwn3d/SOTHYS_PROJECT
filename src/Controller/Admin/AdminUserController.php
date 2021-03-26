@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class AdminUserController extends AbstractCrudController
@@ -20,7 +21,6 @@ class AdminUserController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-
         $deleteUser = Action::new('deleteUser text-danger', 'Supprimer', 'fa fa-delete')
             ->linkToRoute('reset_request_admin', function (User $entity) {
                 return [
@@ -31,12 +31,10 @@ class AdminUserController extends AbstractCrudController
 
 
         return $actions
-
             ->update(Crud::PAGE_INDEX, Action::NEW,
                 fn(Action $action) => $action->setIcon('fa fa-user-plus')->setLabel('Nouveau compte'))
             ->add(Crud::PAGE_INDEX, $deleteUser)
-
-            ->disable( Action::DELETE);
+            ->disable(Action::DELETE);
     }
 
     public function configureFields(string $pageName): iterable
@@ -53,8 +51,7 @@ class AdminUserController extends AbstractCrudController
                         'Client'         => 'ROLE_USER',
                         'Administrateur' => 'ROLE_SUPER_ADMIN'
                     ]
-                )
-
+                ),
         ];
     }
 

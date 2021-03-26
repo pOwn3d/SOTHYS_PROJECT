@@ -1,9 +1,0 @@
-{% if alt is not defined %}
-    {% set alt = text %}
-{% endif %}
-
-{% if href is defined and href != '' %}
-    <a href="{{href}}" class="button {{class}}" title="{{alt}}">{{text}}</a>
-{% else %}
-    <span class="button {{class}}" title="{{alt}}">{{text}}</span>
-{% endif %}

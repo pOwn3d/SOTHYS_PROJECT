@@ -19,6 +19,19 @@ class SocietyRepository extends ServiceEntityRepository
         parent::__construct($registry, Society::class);
     }
 
+
+    public function getSociety($userId){
+
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.id = :val')
+            ->setParameter('val', $userId->getSocietyID())
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+
+    }
+
+
     // /**
     //  * @return Society[] Returns an array of Society objects
     //  */
