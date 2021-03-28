@@ -53,7 +53,7 @@ class AdminUserController extends AbstractCrudController
                         'Administrateur' => 'ROLE_SUPER_ADMIN'
                     ]
                 ),
-//            AssociationField::new('societyID')
+            AssociationField::new('societyID')
         ];
     }
 

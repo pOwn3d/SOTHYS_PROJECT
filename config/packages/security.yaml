@@ -49,6 +49,6 @@ security:
         ROLE_ADMIN: [ ROLE_USER, ROLE_ADMIN, ROLE_CUSTOMER ]
         ROLE_SUPER_ADMIN: [ ROLE_USER, ROLE_ADMIN, ROLE_CUSTOMER ]
     access_control:
-         - { path: ^/admin, roles: ROLE_SUPER_ADMIN }
+#         - { path: ^/admin, roles: ROLE_SUPER_ADMIN }
          - { path: ^/home, roles: ROLE_USER }
          - { path: ^/mon-compte, roles: ROLE_USER }
