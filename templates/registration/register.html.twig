@@ -6,7 +6,7 @@
 {#    {% for flashError in app.flashes('verify_email_error') %}#}
 {#        <div class="alert alert-danger" role="alert">{{ flashError }}</div>#}
 {#    {% endfor %}#}
-{#    #}
+
 {#    <main class="main" id="top">#}
 {#        <div class="container-fluid">#}
 {#            <div class="row min-vh-100 bg-100">#}
@@ -28,7 +28,7 @@
 {#                                        <div class="col-auto fs--1 text-600"><span class="mb-0 font-weight-semi-bold">Déja utilisateur ?</span>#}
 {#                                            <span><a href="{{ path('app_login') }}">Connexion</a></span></div>#}
 {#                                    </div>#}
-{#                                    {{ form_start(registrationForm) }}                                 #}
+{#                                    {{ form_start(registrationForm) }}#}
 {#                                        <div class="mb-3">#}
 {#                                            <label class="form-label" for="split-email">Email</label>#}
 {#                                            {{ form_row(registrationForm.email, {'label' : false,  'attr' : {'placeholder' : 'Email',  'class' : 'form-control'  }}) }}#}
@@ -64,5 +64,5 @@
 {#            </div>#}
 {#        </div>#}
 {#    </main>#}
-{#    #}
+
 {#{% endblock %}#}

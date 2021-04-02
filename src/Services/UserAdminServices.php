@@ -28,4 +28,13 @@ class UserAdminServices extends AbstractController
         return null;
     }
 
+
+    public function editUserAdmin($email, UserRepository $userRepository, $entityManager, $encoder)
+    {
+        $user = $userRepository->findOneBy([ 'email' => $email ]);
+        dd($user);
+
+
+    }
+
 }

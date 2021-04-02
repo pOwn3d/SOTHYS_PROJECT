@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\GammeProduct;
 use App\Entity\Order;
+use App\Entity\OrderLine;
 use App\Entity\Society;
 use App\Entity\User;
 use App\Repository\SocietyRepository;
@@ -146,6 +148,69 @@ class CsvImporterController extends AbstractController
                 ->setName($row[1]);
 
             $em->persist($newSociety);
+            $em->flush();
+        }
+        dd();
+    }
+
+    /**
+     * @Route("/import-gamme", name="import_csv_gamme")
+     * @param EntityManagerInterface $em
+     *
+     * @return Response
+     * @throws Exception
+     */
+    public function importGamme(EntityManagerInterface $em): Response
+    {
+        $csv = Reader::createFromPath('../public/csv/gamme.csv');
+        $csv->fetchColumn();
+
+        foreach ($csv as $row) {
+            $gamme = new GammeProduct();
+            $gamme
+                ->setIdCoedi($row[0])
+                ->setName($row[1])
+                ->setName2($row[2]);
+
+            $em->persist($gamme);
+            $em->flush();
+        }
+        dd();
+    }
+
+    /**
+     * @Route("/import-order-item", name="import_csv_order_item")
+     * @param EntityManagerInterface $em
+     *
+     * @return Response
+     * @throws Exception
+     */
+    public function importOrderItem(EntityManagerInterface $em): Response
+    {
+        $csv = Reader::createFromPath('../public/csv/orderItem.csv');
+        $csv->fetchColumn();
+
+        foreach ($csv as $row) {
+
+            if ($row[0] == "") {
+                $row[0] = null;
+            }
+            if ($row[1] == "") {
+                $row[1] = null;
+            }
+
+            $orderLine = new OrderLine();
+            $orderLine
+                ->setIdOrder($row[0])
+                ->setIdOrderLine($row[1])
+
+                ->setQuantity($row[3])
+                ->setPrice($row[4])
+                ->setPriceUnit($row[5])
+                ->setIdOrderX3($row[7])
+                ->setRemainingQtyOrder($row[9]);
+
+            $em->persist($orderLine);
             $em->flush();
         }
         dd();

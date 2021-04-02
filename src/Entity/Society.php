@@ -22,11 +22,6 @@ class Society
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="society")
-     */
-    private $userID;
-
-    /**
      * @ORM\Column(type="integer", unique=true)
      */
     private $idCustomer;
@@ -48,44 +43,13 @@ class Society
 
     public function __construct()
     {
-        $this->userID = new ArrayCollection();
         $this->orders = new ArrayCollection();
-        $this->users = new ArrayCollection();
+        $this->users  = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection|User[]
-     */
-    public function getUserID(): Collection
-    {
-        return $this->userID;
-    }
-
-    public function addUserID(User $userID): self
-    {
-        if (!$this->userID->contains($userID)) {
-            $this->userID[] = $userID;
-            $userID->setSociety($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserID(User $userID): self
-    {
-        if ($this->userID->removeElement($userID)) {
-            // set the owning side to null (unless already changed)
-            if ($userID->getSociety() === $this) {
-                $userID->setSociety(null);
-            }
-        }
-
-        return $this;
     }
 
     public function getIdCustomer(): ?int
@@ -168,16 +132,13 @@ class Society
     public function setName(?string $name): self
     {
         $this->name = $name;
-
         return $this;
     }
 
 
     public function __toString()
     {
-
-    return $this->getName();
-
+        return $this->getName();
     }
 
 

@@ -1,0 +1,68 @@
+S000,Soins institutionnels,CORPORATE CARE
+SV01,Soins préparateurs essentiels,ESSENTIAL PREPARING TREATMENTS
+SV02,Soins réguliers,REGULAR CARE
+SV03,Soins équilibrants,BALANCING CARE
+SV04,Soins spécifiques,SPECIFIC CARE
+SV05,Soins intensifs,INTENSIVE CARE
+SV06,TI et produits prof visage,FACE IT AND PROFESSIONAL PRODUCTS
+SC01,Aroma-Sothys,AROMA-SOTHYS
+SC02,Thalassothys,THALASSOTHYS
+SC03,TI et produits prof corps,BODY IT AND PROFESSIONAL PRODUCTS
+SS01,TI et produits prof solaires,SUN CARE IT AND PROFESSIONAL PRODUCTS
+SS02,Soins Soleil Cellu-guard,CELLU-GUARD SUN CARE
+SP01,Secrets de Sothys,SECRETS DE SOTHYS
+SP02,Secrets de Sothys Profess.,SECRETS DE SOTHYS - PROFESSIONAL
+SH01,Soins Homme,MEN CARE
+SH02,TI et produits prof Homme,MEN IT AND PROFESSIONAL PRODUCTS
+SD01,Ustensiles,Ustensiles
+SD02,Linge,LINEN
+M000,Gamme maquillage générique,Gamme maquillage générique
+M001,Gamme Mascaras,Gamme Mascaras
+M002,Gamme Crayons Yeux,GAMME Crayons Yeux
+M003,Gamme Crayons Sourcils,Gamme Crayons Sourcils
+M004,Gamme Eye-Liner,Gamme Eye-Liner
+M005,Gamme Fards Monos,Gamme Fards Monos
+M006,Gamme Fards Crême multi-usages,Gamme Fards Crême multi-usages
+M007,Gamme Rouges à lèvres,Gamme Rouges à lèvres
+M008,Gamme Crayons lèvres,Gamme Crayons lèvres
+M009,Gamme Vernis à ongles,Gamme Vernis à ongles
+M010,Gamme Fonds de teint,Gamme Fonds de teint
+M011,Gamme Poudres,GAmme Poudres
+M012,Gamme Préparateurs de teint,Gamme PRéparateurs de teint
+M013,Gamme Correcteurs de teint,GAmme Correcteurs de teint
+M014,Gamme Produits Pros Maquillage,Gamme Produits Pros Maquillage
+M015,Gamme Ustensiles Maquillage,GAmme Ustensiles Maquillage
+SA01,Soins Eau Thermale Spa,EAU THERMALE SPA
+SA02,TI Soins prof Eau Thermale Spa,EAU THERMALE SPA IT AND PROF PROD
+AA01,Institutionnel,OTHERS
+M020,Maquillage soin lèvres,LIPS MAKE UP CARE
+M021,Maquillage soin ongles,NAIL MAKE UP CARE
+M022,Maquillage soin yeux,EYES MAKE UP CARE
+M023,Maquillage soin teint,FOUNDATION MAKE UP CARE
+M024,Accessoires maquillage soin,MAKE UP CARE ACCESSORIES
+M025,Maquillage soin professionnel,MAKE UP PROFESSIONAL CARE
+M030,Maquillage soin institutionnel,CORPORATE CARE MAKE-UP
+SC04,Prospa Concept,PROSPA CONCEPT
+SB01,Beauty Garden,BEAUTY GARDEN
+SB02,TI et pdts profs Beauty Garden,BEAUTY GARDEN IT AND PROF PROD
+SB03,Auriac Gardens,AURIAC GARDENS
+SB04,TI & pdts profs Auriac Gardens,AURIAC GARDENS IT AND PROF PROD
+SC05,CORPS,BODY CARE
+SC06,CORPS PROF,PROF BODY CARE
+M040,Maquillage générique,Generic Make-up
+M041,Maquillage teint fluide,Complexion Make-up fluids
+M042,Maquillage autre teint,Complexion Make-up other
+M043,Maquillage enlumineur,Illuminating Make-up
+M044,Maquillage yeux,Eyes Make-up
+M045,Maquillage lèvres RAL,Lips Make-up lipsticks
+M046,Maquillage autre lèvres,Lips Make-up other
+M047,Maquillage ongles,Nails Make-up
+M048,Maquillage accessoires,Make-up accessories
+SS03,SOINS SOLAIRES,SUN CARE
+SV07,Gamme Cosmeceutique,Cosmeceutique Range
+SV08,Produits prof Cosmeceutique,Cosmeceutique Professional products
+SP03,Secrets de Sothys excellence,Secrets de Sothys - excellence
+SV09,Saison visage,
+SC07,Saison corps,
+AA02,Outils institutionnels,
+ST01,Terrade,Terrade

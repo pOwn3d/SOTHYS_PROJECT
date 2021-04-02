@@ -14,63 +14,76 @@
                             <h2>Mes commandes</h2>
                         </div>
                     </div>
-                    <div class="col-4 col-md-4">
-                        <ul class="compte__menu">
-                            <li>
-                                <a class="active" href="{{ path('app_account') }}">
-                                    Mon compte
-                                </a>
-                            </li>
-                            <li>
-                                <a class="active" href="{{ path('app_order') }}">
-                                    Mes commandes
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    {% include 'components/nav_customer.html.twig' %}
+                    {# <div class="col-12 col-md-8"> #}
+                    {# <div style="overflow-x:auto"> #}
+                    {# <table class="compte__commandes table-responsive"> #}
+                    {# <thead> #}
+                    {# <tr> #}
+                    {# <th>Order</th> #}
+                    {# <th>OrderX3</th> #}
+                    {# <th>SocietyID</th> #}
+                    {# <th>Login</th> #}
+                    {# <th>DateOrder</th> #}
+                    {# <th>DateDelivery</th> #}
+                    {# <th>Adress</th> #}
+                    {# <th>Statut</th> #}
+                    {# <th>DownStatut</th> #}
+                    {# <th>Reference</th> #}
+                    {# <th>Transport</th> #}
+                    {# <th>setIdIntercom</th> #}
+                    {# <th>setIdCondition</th> #}
+                    {# <th>DateLastDelivery</th> #}
+                    {# </tr> #}
+                    {# </thead> #}
+                    {# {% for order in orders %} #}
+                    {# <tbody> #}
+                    {# <tr> #}
+                    {# <td>{{ order.idOrder }}</td> #}
+                    {# <td>{{ order.idOrderX3 }}</td> #}
+                    {# <th>N/A</th> #}
+                    {# <th>N/A</th> #}
+                    {# <td>{{ order.dateOrder|date }}</td> #}
+                    {# <td>{{ order.dateDelivery|date }}</td> #}
+                    {# <th>N/A</th> #}
+                    {# <td>{{ order.idStatut }}</td> #}
+                    {# <td>{{ order.idDownStatut }}</td> #}
+                    {# <td>{{ order.reference }}</td> #}
+                    {# <th>N/A</th> #}
+                    {# <th>N/A</th> #}
+                    {# <th>N/A</th> #}
+                    {# <td>{{ order.dateLastDelivery|date }}</td> #}
+                    {# </tr> #}
+                    {# </tbody> #}
+                    {# {% endfor %} #}
+                    {# </table> #}
+                    {# </div> #}
+                    {# </div> #}
                     <div class="col-12 col-md-8">
-                        <div style="overflow-x:auto">
-                            <table class="compte__commandes table-responsive">
-                                <thead>
+                        <table class="compte__commandes table-responsive">
+                            <thead>
+                            <tr>
+                                <th>Réf commande</th>
+                                <th>Date</th>
+                                <th>Prix total</th>
+                                <th>État</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for order in orders %}
                                 <tr>
-                                    <th>Order</th>
-                                    <th>OrderX3</th>
-                                    <th>SocietyID</th>
-                                    <th>Login</th>
-                                    <th>DateOrder</th>
-                                    <th>DateDelivery</th>
-                                    <th>Adress</th>
-                                    <th>Statut</th>
-                                    <th>DownStatut</th>
-                                    <th>Reference</th>
-                                    <th>Transport</th>
-                                    <th>setIdIntercom</th>
-                                    <th>setIdCondition</th>
-                                    <th>DateLastDelivery</th>
+                                    <td class="ref">
+                                        <a href="{{ path('app_order_item_id' , { 'id': order.idOrderX3 }) }}">#{{ order.idOrder  }} </a>
+                                    </td>
+                                    <td class="date">{{ order.dateOrder|date }}</td>
+                                    <td class="price">?? €</td>
+                                    <td class="status">
+                                        <span class="status status--completed">{{ order.idStatut }} A DEFINIR ?</span>
+                                    </td>
                                 </tr>
-                                </thead>
-                                {% for order in orders %}
-                                    <tbody>
-                                    <tr>
-                                        <td>{{ order.idOrder }}</td>
-                                        <td>{{ order.idOrderX3 }}</td>
-                                        <th>N/A</th>
-                                        <th>N/A</th>
-                                        <td>{{ order.dateOrder|date }}</td>
-                                        <td>{{ order.dateDelivery|date }}</td>
-                                        <th>N/A</th>
-                                        <td>{{ order.idStatut }}</td>
-                                        <td>{{ order.idDownStatut }}</td>
-                                        <td>{{ order.reference }}</td>
-                                        <th>N/A</th>
-                                        <th>N/A</th>
-                                        <th>N/A</th>
-                                        <td>{{ order.dateLastDelivery|date }}</td>
-                                    </tr>
-                                    </tbody>
-                                {% endfor %}
-                            </table>
-                        </div>
+                            {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

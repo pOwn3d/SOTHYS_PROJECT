@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande{% endblock %}
+
+{% block body %}
+    <div id="content" role="main">
+        <section class="section section--compte">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 aos-init aos-animate" data-aos="fade-up">
+                        {% include 'flash_messages.html.twig' %}
+                        <div class="title--border title--border--margin">
+                            <h2>Mes commandes</h2>
+                        </div>
+                    </div>
+                    {% include 'components/nav_customer.html.twig' %}
+
+                    <div class="col-4 col-md-4">
+                        <p>Reference :
+                            N° de commande :<br/>
+                            Date commande :23/03/2021<br/>
+                            N° de chrono :34310<br/>
+                            Client :310178<br/>
+                            Identifiant Client :310178<br/>
+                            Statut commande :Brouillon<br/>
+                            Etat de livraison :Non livrée<br/>
+                            Mode Transport :<br/>
+                            Incoterm :-<br/>
+                            Condition Paiement :Paiement à la commande<br/>
+                            Type commande :Stock<br/>
+                        </p>
+
+                    </div>
+                    <div class="col-4 col-md-4">
+                        SOTHYS EXPORT <br/>
+                        <h3> Adresse Facturation</h3><br>
+                        REGINA'S BEAUTY<br/>
+                        Israël<br/>
+                        <h3> Adresse Livraison</h3><br>
+
+                    </div>
+                </div>
+
+                <table class="compte__commandes table-responsive">
+                    <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Désignation</th>
+                        <th>Quantité commandée</th>
+                        <th>Quantité Livrée</th>
+                        <th>Prix unitatire (EUR)</th>
+                        <th>Prix total (EUR)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{ dump(orders) }}
+                    {% for order in orders %}
+                        <tr>
+                            <td>{{ order.itemID.itemID }}</td>
+                            <td>{{ order.itemID.name }}</td>
+                            <td>{{ order.quantity }}</td>
+                            <td>{{ order.quantity }}</td>
+                            <td>{{ order.priceUnit }}</td>
+                            <td>{{ order.price }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="5">Total HT (EUR)</td>
+                        <td>871,80</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">Dont Vente/Cabine (EUR)</td>
+                        <td>871,80</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">Dont Autre (EUR)</td>
+                        <td>871,80</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <span class="button button--secondary-fill button--submit" style="float: right;">
+                                <input type="submit" value="Modifier" class="">
+               </span>
+            </div>
+
+        </section>
+    </div>
+
+
+
+
+{% endblock %}

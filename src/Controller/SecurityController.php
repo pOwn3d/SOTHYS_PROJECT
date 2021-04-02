@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -59,6 +60,27 @@ class SecurityController extends AbstractController
         $email = $request->attributes->get('email');
         $userAdminServices->deleteUser($email, $userRepository, $entityManager);
 
+        return $this->redirectToRoute('admin');
+
+    }
+
+
+    /**
+     * Display & process form to request a password reset.
+     *
+     * @Route("edit_user_admin", name="edit_user_admin")
+     * @param Request                      $request
+     * @param UserAdminServices            $userAdminServices
+     * @param UserRepository               $userRepository
+     * @param EntityManagerInterface       $entityManager
+     * @param UserPasswordEncoderInterface $encoder
+     *
+     * @return Response
+     */
+    public function editUserAdmin(Request $request, UserAdminServices $userAdminServices, UserRepository $userRepository, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder): Response
+    {
+        $email = $request->attributes->get('email');
+        $userAdminServices->editUserAdmin($email, $userRepository, $entityManager, $encoder);
         return $this->redirectToRoute('admin');
 
     }
