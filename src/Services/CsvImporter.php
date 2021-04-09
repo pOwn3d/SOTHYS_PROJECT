@@ -47,7 +47,7 @@ class CsvImporter
         $this->gammeProductRepository = $gammeProductRepository;
     }
 
-    public function importUser()
+    public function importUser(bool $shouldSendMail = true)
     {
         $csv = Reader::createFromPath('../public/csv/user.csv');
         $csv->fetchColumn();
@@ -68,11 +68,15 @@ class CsvImporter
 
             $user = $this->em->getRepository(User::class)->findOneBy([ 'email' => $newUser->getEmail() ]);
 
+            if(!$shouldSendMail) {
+                return;
+            }
+
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
             $email      = (new TemplatedEmail())
-                ->from(new Address('clopez@nexton-group.com', 'Acme Mail Bot'))
+                ->from(new Address('service.client@sothys.net', 'Service Client Sothys')) # TODO: translate me
                 ->to($newUser->getEmail())
-                ->subject('Demande de nouveau mot de passe')
+                ->subject('Demande de nouveau mot de passe') # TODO: translate me
                 ->htmlTemplate('emails/account/reset.html.twig')
                 ->context([
                     'resetToken' => $resetToken,

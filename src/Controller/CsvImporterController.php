@@ -6,6 +6,7 @@ use App\Services\CsvImporter;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
@@ -24,14 +25,16 @@ class CsvImporterController extends AbstractController
     }
 
     /**
-     * @Route("/import-user", name="import_csv_user")
+     * @Route("/import-user/{should_send_mail}", name="import_csv_user")
      * @param CsvImporter $csvImporter
      *
      * @return Response
      */
-    public function index(CsvImporter $csvImporter): Response
+    public function index(CsvImporter $csvImporter, Request $request): Response
     {
-        $csvImporter->importUser();
+        $shouldSendMail = (bool) $request->get('should_send_mail');
+
+        $csvImporter->importUser($shouldSendMail);
         dd();
     }
 
