@@ -200,8 +200,12 @@ class CsvImporter
 
             } else {
 
+
                 $gammeID     = $this->em->getRepository(GammeProduct::class)->findOneBy([ 'refID' => $row[8] ]);
-                $gammeString = $gammeID->getRefID();
+                if ($gammeID != null){
+                    $gammeString = $gammeID->getRefID();
+                }
+
 
             }
 

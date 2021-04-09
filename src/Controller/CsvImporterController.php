@@ -24,6 +24,18 @@ class CsvImporterController extends AbstractController
     }
 
     /**
+     * @Route("/import-society", name="import_csv_society")
+     * @param CsvImporter $csvImporter
+     *
+     * @return Response
+     */
+    public function importSociety(CsvImporter $csvImporter): Response
+    {
+        $csvImporter->importSociety();
+        dd();
+    }
+
+    /**
      * @Route("/import-user/{should_send_mail}", name="import_csv_user")
      * @param CsvImporter $csvImporter
      * @param Request     $request
@@ -52,18 +64,6 @@ class CsvImporterController extends AbstractController
     }
 
     /**
-     * @Route("/import-society", name="import_csv_society")
-     * @param CsvImporter $csvImporter
-     *
-     * @return Response
-     */
-    public function importSociety(CsvImporter $csvImporter): Response
-    {
-        $csvImporter->importSociety();
-        dd();
-    }
-
-    /**
      * @Route("/import-gamme", name="import_csv_gamme")
      * @param CsvImporter $csvImporter
      *
@@ -72,6 +72,18 @@ class CsvImporterController extends AbstractController
     public function importGamme(CsvImporter $csvImporter): Response
     {
         $csvImporter->importGamme();
+        dd();
+    }
+
+    /**
+     * @Route("/import-order-product", name="import_csv_order_item")
+     * @param CsvImporter $csvImporter
+     *
+     * @return Response
+     */
+    public function importItem(CsvImporter $csvImporter): Response
+    {
+        $csvImporter->importItem();
         dd();
     }
 
@@ -87,15 +99,5 @@ class CsvImporterController extends AbstractController
         dd();
     }
 
-    /**
-     * @Route("/import-order-product", name="import_csv_order_item")
-     * @param CsvImporter $csvImporter
-     *
-     * @return Response
-     */
-    public function importItem(CsvImporter $csvImporter): Response
-    {
-        $csvImporter->importItem();
-        dd();
-    }
+
 }
