@@ -40,6 +40,7 @@ class CsvImporterController extends AbstractController
      * @param CsvImporter $csvImporter
      *
      * @return Response
+     * @throws Exception
      */
     public function importBooking(CsvImporter $csvImporter): Response
     {
@@ -84,7 +85,7 @@ class CsvImporterController extends AbstractController
     }
 
     /**
-     * @Route("/import-order-item", name="import_csv_order_item")
+     * @Route("/import-order-product", name="import_csv_order_item")
      * @param CsvImporter $csvImporter
      *
      * @return Response

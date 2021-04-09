@@ -14,20 +14,20 @@
                         </div>
                     </div>
                     {% include 'components/nav_customer.html.twig' %}
-
+{{ dump() }}
                     <div class="col-4 col-md-4">
                         <p>Reference :
                             N° de commande :<br/>
-                            Date commande :23/03/2021<br/>
-                            N° de chrono :34310<br/>
-                            Client :310178<br/>
-                            Identifiant Client :310178<br/>
-                            Statut commande :Brouillon<br/>
-                            Etat de livraison :Non livrée<br/>
+                            Date commande : {{ orderX3.dateOrder|format_datetime('short', 'none', locale='fr') }} <br/>
+                            N° de chrono : 34310<br/>
+                            Client : 310178<br/>
+                            Identifiant Client : {{ orderX3.societyID.idCustomer }} <br/>
+                            Statut commande : Brouillon<br/>
+                            Etat de livraison : Non livrée<br/>
                             Mode Transport :<br/>
                             Incoterm :-<br/>
-                            Condition Paiement :Paiement à la commande<br/>
-                            Type commande :Stock<br/>
+                            Condition Paiement : Paiement à la commande<br/>
+                            Type commande : Stock<br/>
                         </p>
 
                     </div>
@@ -53,7 +53,6 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {{ dump(orders) }}
                     {% for order in orders %}
                         <tr>
                             <td><a href="{{ order.itemID.itemID }}">{{ order.itemID.itemID }}</a></td>

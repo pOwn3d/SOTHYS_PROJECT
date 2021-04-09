@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use App\Repository\OrderLineRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=OrderLineRepository::class)
+ * @UniqueEntity(fields={"idOrderLine"}, message="Commande déjà enregistré")
  */
 class OrderLine
 {
@@ -147,12 +149,12 @@ class OrderLine
         return $this;
     }
 
-    public function getItemID(): ?Item
+    public function getItemID(): ?Product
     {
         return $this->itemID;
     }
 
-    public function setItemID(?Item $itemID): self
+    public function setItemID(?Product $itemID): self
     {
         $this->itemID = $itemID;
 

@@ -77,14 +77,14 @@ class GammeProduct
     }
 
     /**
-     * @return Collection|Item[]
+     * @return Collection|Product[]
      */
     public function getItems(): Collection
     {
         return $this->items;
     }
 
-    public function addItem(Item $item): self
+    public function addItem(Product $item): self
     {
         if (!$this->items->contains($item)) {
             $this->items[] = $item;
@@ -94,7 +94,7 @@ class GammeProduct
         return $this;
     }
 
-    public function removeItem(Item $item): self
+    public function removeItem(Product $item): self
     {
         if ($this->items->removeElement($item)) {
             // set the owning side to null (unless already changed)
