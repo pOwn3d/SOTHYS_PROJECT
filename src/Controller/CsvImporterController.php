@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Services\CsvImporter;
-use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,6 +26,7 @@ class CsvImporterController extends AbstractController
     /**
      * @Route("/import-user/{should_send_mail}", name="import_csv_user")
      * @param CsvImporter $csvImporter
+     * @param Request     $request
      *
      * @return Response
      */
