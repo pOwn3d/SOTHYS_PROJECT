@@ -51,6 +51,7 @@ class CsvImporter
     {
         $csv = Reader::createFromPath('../public/csv/user.csv');
         $csv->fetchColumn();
+
         foreach ($csv as $row) {
             $user    = $this->em->getRepository(User::class)->findOneBy([ 'email' => $row[0] ]);
             $society = $this->em->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[1] ]);
@@ -69,7 +70,7 @@ class CsvImporter
             $user = $this->em->getRepository(User::class)->findOneBy([ 'email' => $newUser->getEmail() ]);
 
             if(!$shouldSendMail) {
-                return;
+                continue;
             }
 
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
