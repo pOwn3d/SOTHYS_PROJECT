@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class OrderItemController extends AbstractController
 {
     /**
-     * @Route("/order/item/{id}", name="app_order_item_id")
+     * @Route("/commande/{id}", name="app_order_item_id")
      * @param Request             $request
      * @param OrderLineRepository $orderLineRepository
      * @param ItemRepository      $itemRepository
@@ -24,11 +24,8 @@ class OrderItemController extends AbstractController
         $id        = $request->get('id');
         $orderLine = $orderLineRepository->findAllByX3($id);
 
-
-
         return $this->render('order/order.item.html.twig', [
             'controller_name' => 'OrderItemController',
-            //            'references'      => $references,
             'orders'          => $orderLine
         ]);
     }

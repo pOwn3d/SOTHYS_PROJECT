@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\GammeProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=GammeProductRepository::class)
- * @UniqueEntity(fields={"idCoedi"}, message="There is already exist")
+ * @UniqueEntity(fields={"refID"}, message="There is already exist")
  */
 class GammeProduct
 {
@@ -19,58 +21,99 @@ class GammeProduct
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     */
-    private $idCoedi;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $name2;
+    private $labelFR;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $labelEN;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Item::class, mappedBy="gamme")
+     */
+    private $items;
+
+    /**
+     * @ORM\Column(type="string", length=255 , unique=true)
+     */
+    private $refID;
+
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdCoedi(): ?string
+       public function getLabelFR(): ?string
     {
-        return $this->idCoedi;
+        return $this->labelFR;
     }
 
-    public function setIdCoedi(string $idCoedi): self
+    public function setLabelFR(?string $labelFR): self
     {
-        $this->idCoedi = $idCoedi;
+        $this->labelFR = $labelFR;
 
         return $this;
     }
 
-    public function getName(): ?string
+    public function getLabelEN(): ?string
     {
-        return $this->name;
+        return $this->labelEN;
     }
 
-    public function setName(string $name): self
+    public function setLabelEN(?string $labelEN): self
     {
-        $this->name = $name;
+        $this->labelEN = $labelEN;
 
         return $this;
     }
 
-    public function getName2(): ?string
+    /**
+     * @return Collection|Item[]
+     */
+    public function getItems(): Collection
     {
-        return $this->name2;
+        return $this->items;
     }
 
-    public function setName2(?string $name2): self
+    public function addItem(Item $item): self
     {
-        $this->name2 = $name2;
+        if (!$this->items->contains($item)) {
+            $this->items[] = $item;
+            $item->setGamme($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItem(Item $item): self
+    {
+        if ($this->items->removeElement($item)) {
+            // set the owning side to null (unless already changed)
+            if ($item->getGamme() === $this) {
+                $item->setGamme(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getRefID(): ?string
+    {
+        return $this->refID;
+    }
+
+    public function setRefID(string $refID): self
+    {
+        $this->refID = $refID;
 
         return $this;
     }

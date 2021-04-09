@@ -56,8 +56,8 @@
                     {{ dump(orders) }}
                     {% for order in orders %}
                         <tr>
-                            <td>{{ order.itemID.itemID }}</td>
-                            <td>{{ order.itemID.name }}</td>
+                            <td><a href="{{ order.itemID.itemID }}">{{ order.itemID.itemID }}</a></td>
+                            <td><a href="{{ path('app_item_id', { 'id': order.itemID.itemID }) }}">{{ order.itemID.labelFR }}</a></td>
                             <td>{{ order.quantity }}</td>
                             <td>{{ order.quantity }}</td>
                             <td>{{ order.priceUnit }}</td>
