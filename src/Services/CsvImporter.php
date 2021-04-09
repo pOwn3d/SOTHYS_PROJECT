@@ -187,19 +187,18 @@ class CsvImporter
 
         foreach ($csv as $row) {
 
-            $product = new Item();
+            $product     = new Item();
             $gammeString = 'DIVERS';
 
             if (is_null($row[8]) || $row[8] == null) {
 
-                $divers      = $this->em->getRepository(GammeProduct::class)->findOneBy([ 'refID' => 'DIVERS' ]);
-                $gammeID     = $divers;
-
+                $divers  = $this->em->getRepository(GammeProduct::class)->findOneBy([ 'refID' => 'DIVERS' ]);
+                $gammeID = $divers;
 
             } else {
 
-                $gammeID = $this->em->getRepository(GammeProduct::class)->findOneBy([ 'refID' => $row[8] ]);
-                $gammeString    = $gammeID->getRefID();
+                $gammeID     = $this->em->getRepository(GammeProduct::class)->findOneBy([ 'refID' => $row[8] ]);
+                $gammeString = $gammeID->getRefID();
 
             }
 
