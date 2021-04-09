@@ -116,8 +116,6 @@ class CsvImporter
             $this->em->flush();
         }
 
-        echo $csv->toString();
-
     }
 
     public function importSociety()
