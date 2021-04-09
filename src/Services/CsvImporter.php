@@ -58,11 +58,11 @@ class CsvImporter
             $newUser = new User();
             $newUser
                 ->setEmail($row[0])
-                ->setAccountActivated($row[1])
-                ->setIsVerified($row[2])
-                ->setPassword('$argon2id$v=19$m=65536,t=4,p=1$bnM5WjlnVFFkZURDNlQuYw$mRc2Rxng96ERn2SxcwyyWuBuL5WF/2tWzyAK5xe2iTE')
+                ->setAccountActivated($row[2])
+                ->setIsVerified($row[3])
+                ->setPassword($row[4])
                 ->setSocietyID($society)
-                ->setRoles([ "ROLE_USER" ]);
+                ->setRoles(array($row[5]));
             $this->em->persist($newUser);
             $this->em->flush();
 
