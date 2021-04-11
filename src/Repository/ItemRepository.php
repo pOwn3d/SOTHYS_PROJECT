@@ -19,14 +19,14 @@ class ItemRepository extends ServiceEntityRepository
         parent::__construct($registry, Item::class);
     }
 
-    // /**
-    //  * @return Item[] Returns an array of Item objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Item[] Returns an array of Item objects
+     */
+    public function findByGammeId($value)
     {
         return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
+            ->leftJoin('i.gamme', 'gamme')
+            ->andWhere('gamme.id = :val')
             ->setParameter('val', $value)
             ->orderBy('i.id', 'ASC')
             ->setMaxResults(10)
@@ -34,7 +34,6 @@ class ItemRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Item

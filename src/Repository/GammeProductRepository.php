@@ -19,22 +19,19 @@ class GammeProductRepository extends ServiceEntityRepository
         parent::__construct($registry, GammeProduct::class);
     }
 
-    // /**
-    //  * @return GammeProduct[] Returns an array of GammeProduct objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return GammeProduct[] Returns an array of GammeProduct objects
+     */
+    public function findByStartingPrefix($value)
     {
         return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('g.refID LIKE :val')
+            ->setParameter('val', "$value%")
             ->orderBy('g.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?GammeProduct

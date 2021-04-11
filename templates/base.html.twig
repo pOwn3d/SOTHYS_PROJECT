@@ -3,10 +3,8 @@
 <head>
     <meta charset="utf-8">
     <title>{% block title %}Sothys{% endblock %}</title>
-    <!-- SEO Meta Tags-->
     <meta name="description" content="">
     <meta name="keywords" content="">
-    <!-- Viewport-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="msapplication-TileColor" content="#766df4">
     <meta name="theme-color" content="#ffffff">
@@ -91,21 +89,27 @@
                                     </ul>
                                 </div>
                                 <ul class="navbar__menu navbar__menu--desktop">
+                                    <li class="menu-item">
+                                        <a href="{{ path('app_order') }}">
+                                            {{ 'Mes commandes' | trans }}
+                                        </a>
+                                    </li>
                                     <li class="menu-item menu-item--has-child">
-                                        <a href="test">Catégorie 1</a>
+                                        <a>Soins</a>
                                         <div class="menu-item__submenu">
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="col-12 col-lg-3">
                                                         <ul class="menu-item__submenu--large">
-                                                            <li class="menu-item__submenu-item">
-                                                                <a href="/pages/soins/subcategory1.html"
-                                                                   class="nav-link">Sous-catégorie 1</a>
-                                                            </li>
-                                                            <li class="menu-item__submenu-item">
-                                                                <a href="/pages/soins/subcategory1.html"
-                                                                   class="nav-link">Sous-catégorie 2</a>
-                                                            </li>
+                                                            {% for gamme in categories.getGamme() %}
+                                                                <li class="menu-item__submenu-item">
+                                                                    <a href="{{ path('app_gamme', {
+                                                                        gamme_id: gamme.id
+                                                                    }) }}" class="nav-link">
+                                                                        {{ gamme.labelFR }}
+                                                                    </a>
+                                                                </li>
+                                                            {% endfor %}
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -113,20 +117,21 @@
                                         </div>
                                     </li>
                                     <li class="menu-item menu-item--has-child">
-                                        <a href="test">Catégorie 2</a>
+                                        <a href="test">Maquillage</a>
                                         <div class="menu-item__submenu">
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="col-12 col-lg-3">
                                                         <ul class="menu-item__submenu--large">
-                                                            <li class="menu-item__submenu-item">
-                                                                <a href="/pages/soins/subcategory1.html"
-                                                                   class="nav-link">Sous-catégorie 3</a>
-                                                            </li>
-                                                            <li class="menu-item__submenu-item">
-                                                                <a href="/pages/soins/subcategory1.html"
-                                                                   class="nav-link">Sous-catégorie 4</a>
-                                                            </li>
+                                                            {% for gamme in categories.getGamme('M') %}
+                                                                <li class="menu-item__submenu-item">
+                                                                    <a href="{{ path('app_gamme', {
+                                                                        gamme_id: gamme.id
+                                                                    }) }}" class="nav-link">
+                                                                        {{ gamme.labelFR }}
+                                                                    </a>
+                                                                </li>
+                                                            {% endfor %}
                                                         </ul>
                                                     </div>
                                                 </div>
