@@ -14,8 +14,7 @@
                                     <div style="float: left; width: 14.2857%;">
                                         <div class="carousel__item">
                                             <picture>
-                                                <!-- Portrait Phones -->
-                                                <img src="http://placekitten.com/480/480" alt="image product">
+                                                <img src="https://place-hold.it/480" alt="image product">
                                             </picture>
                                         </div>
                                     </div>
@@ -28,12 +27,18 @@
                         <h1>{{ product.labelFR }}</h1>
                         <div>
                             <span class="complement">{{ product.capacityFR }}</span>
+                            {% if product.amountBulking > 1 %}
+                                <br />
+                                <span class="complement">Groupage par: {{ product.amountBulking }}</span>
+                            {% endif %}
                         </div>
                         <ul class="features">
-                            <li><strong>Lorem</strong><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores dicta eius ipsa maxime minus officia quo sequi sit temporibus? Culpa debitis doloremque ea fugit impedit incidunt ipsam, non provident sapiente?</span></li>
+                            <li><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores dicta eius ipsa maxime minus officia quo sequi sit temporibus? Culpa debitis doloremque ea fugit impedit incidunt ipsam, non provident sapiente?</span></li>
                         </ul>
                         <div class="button__wrapper">
-                            <a href="#" class="button button--primary-fill button--small">Acheter</a>
+                            <a href="#" class="button button--primary-fill button--small">
+                                {{ 'Ajouter a ma commande' | trans }}
+                            </a>
                         </div>
                     </div>
                 </div>
