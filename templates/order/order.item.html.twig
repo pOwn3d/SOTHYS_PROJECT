@@ -14,22 +14,23 @@
                         </div>
                     </div>
                     {% include 'components/nav_customer.html.twig' %}
-                    <div class="col-4 col-md-4">
-                        <p>Reference :
-                            N° de commande :<br/>
-                            Date commande : {{ orderX3.dateOrder|format_datetime('short', 'none', locale='fr') }} <br/>
-                            N° de chrono : 34310<br/>
-                            Client : 310178<br/>
-                            Identifiant Client : {{ orderX3.societyID.idCustomer }} <br/>
-                            Statut commande : Brouillon<br/>
-                            Etat de livraison : Non livrée<br/>
-                            Mode Transport :<br/>
-                            Incoterm :-<br/>
-                            Condition Paiement : Paiement à la commande<br/>
-                            Type commande : Stock<br/>
-                        </p>
+                    {{ dump(orderX3) }}
+{#                    <div class="col-4 col-md-4">#}
+{#                        <p>Reference :#}
+{#                            N° de commande :<br/>#}
+{#                            Date commande : {{ orderX3.dateOrder|format_datetime('short', 'none', locale='fr') }} <br/>#}
+{#                            N° de chrono : 34310<br/>#}
+{#                            Client : 310178<br/>#}
+{#                            Identifiant Client : {{ orderX3.societyID.idCustomer }} <br/>#}
+{#                            Statut commande : Brouillon<br/>#}
+{#                            Etat de livraison : Non livrée<br/>#}
+{#                            Mode Transport :<br/>#}
+{#                            Incoterm :-<br/>#}
+{#                            Condition Paiement : Paiement à la commande<br/>#}
+{#                            Type commande : Stock<br/>#}
+{#                        </p>#}
 
-                    </div>
+{#                    </div>#}
                     <div class="col-4 col-md-4">
                         SOTHYS EXPORT <br/>
                         <h3> Adresse Facturation</h3><br>
@@ -64,7 +65,7 @@
                     {% endfor %}
                     <tr>
                         <td colspan="5">Total HT (EUR)</td>
-                        <td>871,80</td>
+                        <td>{{ orderSum.price |round(1, 'floor') }} €</td>
                     </tr>
                     <tr>
                         <td colspan="5">Dont Vente/Cabine (EUR)</td>

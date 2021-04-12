@@ -149,12 +149,12 @@ class OrderLine
         return $this;
     }
 
-    public function getItemID(): ?Product
+    public function getItemID()
     {
         return $this->itemID;
     }
 
-    public function setItemID(?Product $itemID): self
+    public function setItemID($itemID)
     {
         $this->itemID = $itemID;
 
