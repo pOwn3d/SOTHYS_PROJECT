@@ -21,6 +21,7 @@ class CsvImporterController extends AbstractController
     public function __construct(ResetPasswordHelperInterface $resetPasswordHelper)
     {
         set_time_limit(0);
+        ini_set('memory_limit', -1);
         $this->resetPasswordHelper = $resetPasswordHelper;
     }
 
