@@ -21,11 +21,11 @@ class OrderItemController extends AbstractController
      */
     public function index(Request $request, OrderLineRepository $orderLineRepository, OrderServices $orderServices): Response
     {
+
         $id        = $request->get('id');
         $orderLine = $orderLineRepository->findAllByX3($id);
         $orderX3   = $orderServices->getOrderByX3($id);
         $orderSum  = $orderServices->getSumOrderLine($id);
-
 
         return $this->render('order/order.item.html.twig', [
             'controller_name' => 'OrderItemController',

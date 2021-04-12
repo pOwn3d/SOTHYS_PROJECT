@@ -1,42 +1,31 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Produits :
-{% endblock %}
+{% block title %}Gamme  : {% endblock %}
 
 {% block body %}
+
     <div class="container">
         <div class="col-12">
             <div class="row">
-
-            <div class="col-12">
-                <h1 style="text-align: center">{{ gamme.labelFR }}</h1>
-            </div>
-
+                <div class="col-12">
+                    <h1 style="text-align: center">{{ gamme.labelFR }}</h1>
+                </div>
                 {% for product in products %}
                     <div class="col-6 col-md-6 col-lg-4 productBox aos-init aos-animate" data-aos="fade-up">
                         <a href="{{ path('app_item_id', {id: product.id}) }} " class="card card--product card--overlay ">
                             <div class="card__visuel">
-
                                 <picture>
                                     <img class="blur-up ls-is-cached lazyloaded" alt="" src="https://place-hold.it/450">
                                 </picture>
-
                                 <picture class="card__visuel--overlay">
                                     <img class="blur-up ls-is-cached lazyloaded" alt="" src="https://place-hold.it/450">
                                 </picture>
                             </div>
                             <div class="card__content__wrapper">
                                 <div class="card__content">
-
-                                    {# <span class="text--category">Visage</span> #}
-
                                     <span class="card__title">{{ product.labelFR }}</span>
-
                                     <span class="complement">
                                         {{ product.capacityFR }}
                                     </span>
-
-                                    {# <span class="price">32,50 €</span> #}
                                 </div>
                             </div>
                         </a>

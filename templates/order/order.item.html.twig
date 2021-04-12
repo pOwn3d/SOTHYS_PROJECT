@@ -1,8 +1,7 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Commande{% endblock %}
-
 {% block body %}
+
     <div id="content" role="main">
         <section class="section section--compte">
             <div class="container">
@@ -14,33 +13,30 @@
                         </div>
                     </div>
                     {% include 'components/nav_customer.html.twig' %}
-                    {{ dump(orderX3) }}
-{#                    <div class="col-4 col-md-4">#}
-{#                        <p>Reference :#}
-{#                            N° de commande :<br/>#}
-{#                            Date commande : {{ orderX3.dateOrder|format_datetime('short', 'none', locale='fr') }} <br/>#}
-{#                            N° de chrono : 34310<br/>#}
-{#                            Client : 310178<br/>#}
-{#                            Identifiant Client : {{ orderX3.societyID.idCustomer }} <br/>#}
-{#                            Statut commande : Brouillon<br/>#}
-{#                            Etat de livraison : Non livrée<br/>#}
-{#                            Mode Transport :<br/>#}
-{#                            Incoterm :-<br/>#}
-{#                            Condition Paiement : Paiement à la commande<br/>#}
-{#                            Type commande : Stock<br/>#}
-{#                        </p>#}
-
-{#                    </div>#}
+                    <div class="col-4 col-md-4">
+                        <p>Reference :<br/>
+                            {{ dump() }}
+                            N° de commande : {{ orderX3.idOrder }}<br/>
+                            Date commande : {{ orderX3.dateOrder|format_datetime('short', 'none', locale='fr') }} <br/>
+                            N° de chrono : ??<br/>
+                            Client : ??<br/>
+                            Identifiant Client : {{ orderX3.societyID.idCustomer }} <br/>
+                            Statut commande : ??<br/>
+                            Etat de livraison : ??<br/>
+                            Mode Transport : ??<br/>
+                            Incoterm : ??<br/>
+                            Condition Paiement : ??<br/>
+                            Type commande : ??<br/>
+                        </p>
+                    </div>
                     <div class="col-4 col-md-4">
                         SOTHYS EXPORT <br/>
                         <h3> Adresse Facturation</h3><br>
                         REGINA'S BEAUTY<br/>
                         Israël<br/>
                         <h3> Adresse Livraison</h3><br>
-
                     </div>
                 </div>
-
                 <table class="compte__commandes table-responsive">
                     <thead>
                     <tr>
@@ -53,39 +49,38 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {% set totalCabine = 0 %}
                     {% for order in orders %}
                         <tr>
-                            <td><a href="{{ order.itemID.itemID }}">{{ order.itemID.itemID }}</a></td>
-                            <td><a href="{{ path('app_item_id', { 'id': order.itemID.itemID }) }}">{{ order.itemID.labelFR }}</a></td>
+                            <td><a href="{{ path('app_item_id', { 'id': order.itemID.id }) }}">{{ order.itemID.id }}</a></td>
+                            <td><a href="{{ path('app_item_id', { 'id': order.itemID.id }) }}">{{ order.itemID.labelFR }}</a></td>
                             <td>{{ order.quantity }}</td>
                             <td>{{ order.quantity }}</td>
                             <td>{{ order.priceUnit }}</td>
                             <td>{{ order.price }}</td>
                         </tr>
+
+                        {% if  order.itemID.idPresentation == "Cabine" %}
+                            {% set totalCabine = totalCabine + (order.price) %}
+                        {% endif %}
+
                     {% endfor %}
+                    <tr>
+                        <td colspan="5">Dont Vente/Cabine (EUR)</td>
+                        <td>{{ totalCabine }} €</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">Dont Autre (EUR)</td>
+                        <td>{{ orderSum.price |round(1, 'floor') - totalCabine }} </td>
+                    </tr>
                     <tr>
                         <td colspan="5">Total HT (EUR)</td>
                         <td>{{ orderSum.price |round(1, 'floor') }} €</td>
                     </tr>
-                    <tr>
-                        <td colspan="5">Dont Vente/Cabine (EUR)</td>
-                        <td>871,80</td>
-                    </tr>
-                    <tr>
-                        <td colspan="5">Dont Autre (EUR)</td>
-                        <td>871,80</td>
-                    </tr>
                     </tbody>
                 </table>
-                <span class="button button--secondary-fill button--submit" style="float: right;">
-                                <input type="submit" value="Modifier" class="">
-               </span>
             </div>
-
         </section>
     </div>
-
-
-
 
 {% endblock %}

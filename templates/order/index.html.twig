@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Coedi Sothys - Mes commandes{% endblock %}
-
 {% block body %}
 
     <div id="content" role="main">
@@ -26,12 +24,13 @@
                             </tr>
                             </thead>
                             <tbody>
+                            {{ dump() }}
                             {% for order in orders %}
                                 <tr>
                                     <td class="ref">
                                         <a href="{{ path('app_order_item_id' , { 'id': order.idOrderX3 }) }}">#{{ order.idOrder  }} </a>
                                     </td>
-                                    <td class="date">{{ order.dateOrder|date }}</td>
+                                    <td class="date">{{ order.dateOrder|date('d/m/Y') }}</td>
                                     <td class="price">?? €</td>
                                     <td class="status">
                                         <span class="status status--completed">{{ order.idStatut }} A DEFINIR ?</span>
