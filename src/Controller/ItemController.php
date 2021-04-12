@@ -23,6 +23,7 @@ class ItemController extends AbstractController
         $id      = $request->get('id');
         $product = $productServices->getProductInfo($id);
 
+
         return $this->render('item/index.html.twig', [
             'controller_name' => 'ItemController',
             'product'         => $product

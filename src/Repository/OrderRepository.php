@@ -22,7 +22,7 @@ class OrderRepository extends ServiceEntityRepository
     // /**
     //  * @return Order[] Returns an array of Order objects
     //  */
- 
+
     public function findOrderCustomer($value)
     {
         return $this->createQueryBuilder('o')

@@ -8,7 +8,7 @@
 /public/bundles/
 /var/
 var
-
+init.sh
 /vendor/
 /public/uploads/*
 /old/*
@@ -43,7 +43,7 @@ var
 /bin/*
 !bin/console
 !bin/symfony_requirements
-vendor  
+vendor
 # Assets and user uploads
 /web/bundles/
 /web/uploads/

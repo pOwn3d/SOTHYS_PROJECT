@@ -24,11 +24,14 @@ class OrderItemController extends AbstractController
         $id        = $request->get('id');
         $orderLine = $orderLineRepository->findAllByX3($id);
         $orderX3   = $orderServices->getOrderByX3($id);
+        $orderSum  = $orderServices->getSumOrderLine($id);
+
 
         return $this->render('order/order.item.html.twig', [
             'controller_name' => 'OrderItemController',
             'orders'          => $orderLine,
-            'orderX3'         => $orderX3
+            'orderX3'         => $orderX3,
+            'orderSum'        => $orderSum
         ]);
     }
 }

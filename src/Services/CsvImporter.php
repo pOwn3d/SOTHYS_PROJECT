@@ -63,13 +63,13 @@ class CsvImporter
                 ->setIsVerified($row[3])
                 ->setPassword($row[4])
                 ->setSocietyID($society)
-                ->setRoles(array($row[5]));
+                ->setRoles([ $row[5] ]);
             $this->em->persist($newUser);
             $this->em->flush();
 
             $user = $this->em->getRepository(User::class)->findOneBy([ 'email' => $newUser->getEmail() ]);
 
-            if(!$shouldSendMail) {
+            if (!$shouldSendMail) {
                 continue;
             }
 
@@ -168,11 +168,14 @@ class CsvImporter
                 $row[1] = null;
             }
 
+            $itemID = $this->em->getRepository(Item::class)->findOneBy([ 'itemID' => $row[2] ]);
+
             $orderLine = new OrderLine();
             $orderLine
                 ->setIdOrder($row[0])
                 ->setIdOrderLine($row[1])
                 ->setQuantity($row[3])
+                ->setItemID($itemID)
                 ->setPrice($row[4])
                 ->setPriceUnit($row[5])
                 ->setIdOrderX3($row[7])
@@ -190,28 +193,18 @@ class CsvImporter
 
         foreach ($csv as $row) {
 
-            $product     = new Item();
-            $gammeString = 'DIVERS';
-
-            if (is_null($row[8]) || $row[8] == null) {
-
-                $divers  = $this->em->getRepository(GammeProduct::class)->findOneBy([ 'refID' => 'DIVERS' ]);
-                $gammeID = $divers;
-
+            $product = new Item();
+            if ($row[8] != null) {
+                $divers      = $this->em->getRepository(GammeProduct::class)->findOneBy([ 'refID' => $row[8] ]);
+                $gammeString = $row[0];
             } else {
-
-
-                $gammeID     = $this->em->getRepository(GammeProduct::class)->findOneBy([ 'refID' => $row[8] ]);
-                if ($gammeID != null){
-                    $gammeString = $gammeID->getRefID();
-                }
-
-
+                $divers      = $this->em->getRepository(GammeProduct::class)->findOneBy([ 'refID' => 'DIVERS' ]);
+                $gammeString = 'DIVERS';
             }
 
             $product
                 ->setItemID($row[0])
-                ->setGamme($gammeID)
+                ->setGamme($divers)
                 ->setLabelFR($row[1])
                 ->setLabelEN($row[2])
                 ->setCapacityFR($row[3])
@@ -223,12 +216,8 @@ class CsvImporter
                 ->setAmountBulking($row[11])
                 ->setCodeEAN($row[12])
                 ->setIdAtTheRate($row[13]);
-
             $this->em->persist($product);
-
         }
-
         $this->em->flush();
-        return 'je suis ici';
     }
 }

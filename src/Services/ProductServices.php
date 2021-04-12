@@ -24,7 +24,7 @@ class ProductServices
 
     public function getProductInfo($id): ?Item
     {
-        return $this->itemRepository->findOneBy([ 'id' => $id ]);
+      return $this->itemRepository->findOneBy([ 'id' => $id ]);
 
     }
 
