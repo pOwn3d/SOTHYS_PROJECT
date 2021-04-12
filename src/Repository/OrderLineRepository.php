@@ -32,7 +32,6 @@ class OrderLineRepository extends ServiceEntityRepository
 
     public function sumOrderByX3($value)
     {
-
         return $this->createQueryBuilder('s')
             ->andWhere('s.idOrderX3  = :val')
             ->setParameter('val', $value['idOrderX3'])

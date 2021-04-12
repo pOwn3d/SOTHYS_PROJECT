@@ -1,8 +1,7 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Produits : {% endblock %}
-
 {% block body %}
+
     <div id="content" role="main">
         <section class="section section--product-information">
             <div class="container">
@@ -18,115 +17,21 @@
                                             </picture>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-12 col-md-12 col-lg-5">
-                            <span class="text--category">GAMME - LIGNE</span>
-                            <h1>{{ product.labelFR }}</h1>
-                            <div>
-                                <span class="complement">{{ product.capacityFR }}</span>
-                            </div>
-                            <ul class="features">
-                                <li class="hidden--mobile"><strong>Lorem</strong><span>Lorem</span></li>
-                                <li class="hidden--mobile"><strong>Lorem</strong><span>Lorem</span></li>
-                                <li><strong>Lorem</strong><span>Lorem</span></li>
-                                <li><strong>Lorem</strong><span>Lorem</span></li>
-                            </ul>
-                            <div class="button__wrapper">
-                                <a href="#" class="button button--primary-fill button--small">Acheter</a>
-                            </div>
-                            <div class="col-12 col-md-10 product-information-pictos show--mobile">
-                                <ul>
-                                    <li>
-                                        <i class="icon icon-fabrication-local"></i>
-                                        <span>Lorem</span>
-                                    </li>
-                                    <li>
-                                        <i class="icon icon-actifs-brevetes"></i>
-                                        <span>Lorem</span>
-                                    </li>
-                                    <li>
-                                        <i class="icon icon-recyclable"></i>
-                                        <span>Lorem</span>
-                                    </li>
-                                    <li>
-                                        <i class="icon icon-made-in-france"></i>
-                                        <span>Lorem</span>
-                                    </li>
-                                </ul>
-                            </div>
-                    </div>
-                    <div class="col-12 col-md-10 product-information-pictos hidden--mobile">
-                        <ul>
-                            <li>
-                                <i class="icon icon-fabrication-local"></i>
-                                <span>Lorem</span>
-                            </li>
-                            <li>
-                                <i class="icon icon-actifs-brevetes"></i>
-                                <span>Lorem</span>
-                            </li>
-                            <li>
-                                <i class="icon icon-recyclable"></i>
-                                <span>Lorem</span>
-                            </li>
-                            <li>
-                                <i class="icon icon-made-in-france"></i>
-                                <span>Lorem</span>
+                        <a href="{{ path('app_gamme', { gamme_id: gamme.id }) }}" class="nav-link"> {{ gamme.labelFR }}</a>
+                        <h1>{{ product.labelFR }}</h1>
+                        <div>
+                            <span class="complement">{{ product.capacityFR }}</span>
+                        </div>
+                        <ul class="features">
+                            <li><strong>Lorem</strong>
+                                <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores dicta eius ipsa maxime minus officia quo sequi sit temporibus? Culpa debitis doloremque ea fugit impedit incidunt ipsam, non provident sapiente?</span>
                             </li>
                         </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section section--product-details">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-12 col-md-10 section__wrapper">
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <h3>Détail produit</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus tincidunt, elit at fringilla tristique, nunc augue vulputate odio, ac sollicitudin nibh sem sed dui. </p>
-                                <p>Aliquam justo sem, aliquam eget, luctus in, elementum mattis, magna. Mauris lacinia leo non dui. Nullam elit. Donec sui ligula, tincidunt quis, consectetuer a, feugiat id, sem. Quisque sodales tincidunt nunc. Proin justo metus, commodo a, posuere quis, porttitor lobortis, lorem. Praesent accumsan metus nec nunc. Etiam quam tortor, aliquet sed, congue in, vehicula at, mi. Morbi ullamcorper semper tellus. Praesent commodo. Proin vel turpis auctor enim porttitor
-                                    dignissim. Mauris arcu nibh, venenatis sit amet, lobortis et, mollis vel, wisi. Vivamus dui.</p>
-                                <h3>Gestuelle d’application</h3>
-                                <p>Applique matin et soir sur le visage et le coup.</p>
-                                <ul>
-                                    <li>Appliquer du centre du visage vers l'extérieur, du cou vers le front par mouvements légers
-                                        d'effleurages.
-                                    </li>
-                                    <li>Effectuer des pianotements sur l'ensemble du visage et du cou.</li>
-                                </ul>
-                                <p><a href="#">Voir la routine beauté</a></p>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <h3>Éfficacité</h3>
-                                <p>96% des femmes sont satisfaites de l’effet jeunesse de leur crême*.<br><a href="#">Voir le détail des résultats</a></p>
-                                <h3>Actifs</h3>
-                                <ul>
-                                    <li>Pore refiner system</li>
-                                    <li>Complexe chrono-dynamisant (sels de Mg, Cu, Zn, Ca)</li>
-                                    <li>Acide phytique</li>
-                                    <li>BP3. Tri-complex ™ Safran-Sophora-Peptides*Parfums</li>
-                                </ul>
-                                <p><a href="#">Voir le détail des actifs</a></p>
-                                <h3>Parfums</h3>
-                                <ul>
-                                    <li>Hespéridé</li>
-                                    <li>Fleuri</li>
-                                    <li>Poudré</li>
-                                </ul>
-                            </div>
-                            <div class="col-12 col-md-12 conseils">
-                                <h3>Conseils particuliers</h3>
-                                <p>Se rincer les mains après chaque utilisation. En cas de contact avec les yeux rincer abondamment à l’eau. Le Gel chauffant lissant est un produit actif dont l’application provoque des rougeurs et des sensations d’échauffement liées à la particularité de sa formule.<br>Appliquer uniquement sur bras, ventre, cuisses et fesses. Ne pas appliquer sur des zones fragilisées (plaies, irritations, muqueuses, vaisseaux apparents, aisselles…). <a href="#">Lire la
-                                        suite</a></p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
