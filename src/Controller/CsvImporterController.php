@@ -59,7 +59,7 @@ class CsvImporterController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function importBooking(CsvImporter $csvImporter): Response
+    public function importOrder(CsvImporter $csvImporter): Response
     {
         $csvImporter->importOrder();
         dd();
@@ -101,5 +101,30 @@ class CsvImporterController extends AbstractController
         dd();
     }
 
+
+    /**
+     * @Route("/import-price-item", name="import_csv_price_item")
+     * @param CsvImporter $csvImporter
+     *
+     * @return Response
+     */
+    public function importItemPrice(CsvImporter $csvImporter): Response
+    {
+        $csvImporter->importItemPrice();
+        dd();
+    }
+
+
+    /**
+     * @Route("/import-quantity-item", name="import_csv_price_item")
+     * @param CsvImporter $csvImporter
+     *
+     * @return Response
+     */
+    public function importItemQuantity(CsvImporter $csvImporter): Response
+    {
+        $csvImporter->importItemQuantity();
+        dd();
+    }
 
 }

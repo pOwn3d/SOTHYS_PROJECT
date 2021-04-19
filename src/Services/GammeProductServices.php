@@ -7,7 +7,7 @@ namespace App\Services;
 use App\Entity\Item;
 use App\Repository\ItemRepository;
 
-class ProductServices
+class GammeProductServices
 {
 
     /**
@@ -22,7 +22,7 @@ class ProductServices
 
     public function getProductInfo($id): ?Item
     {
-      return $this->itemRepository->findOneBy([ 'id' => $id ]);
+        return $this->itemRepository->findOneBy([ 'id' => $id ]);
     }
 
     public function findByGammeId($id): array

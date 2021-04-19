@@ -28,7 +28,12 @@
                             {% for order in orders %}
                                 <tr>
                                     <td class="ref">
-                                        <a href="{{ path('app_order_item_id' , { 'id': order.idOrderX3 }) }}">#{{ order.idOrder  }} </a>
+                                        {{ dump(order) }}
+                                        {% if order.idOrderX3 != null %}
+                                            <a href="{{ path('app_order_item_id' , { 'id': order.idOrderX3 }) }}">#{{ order.idOrder }} </a>
+                                        {% else %}
+                                            <a href="{{ path('app_order_item_id_draft' , { 'id': order.id }) }}">#{{ order.id }} </a>
+                                        {% endif %}
                                     </td>
                                     <td class="date">{{ order.dateOrder|date('d/m/Y') }}</td>
                                     <td class="price">?? €</td>

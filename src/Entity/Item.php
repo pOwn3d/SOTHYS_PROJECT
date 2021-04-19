@@ -91,9 +91,27 @@ class Item
      */
     private $itemID;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ItemPrice::class, mappedBy="idItem")
+     */
+    private $itemPrices;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ItemQuantity::class, mappedBy="idItem" )
+     */
+    private $itemQuantities;
+
+    /**
+     * @ORM\OneToMany(targetEntity=OrderDraft::class, mappedBy="idItem")
+     */
+    private $orderDrafts;
+
     public function __construct()
     {
         $this->orderLines = new ArrayCollection();
+        $this->itemPrices = new ArrayCollection();
+        $this->itemQuantities = new ArrayCollection();
+        $this->orderDrafts = new ArrayCollection();
     }
 
 
@@ -289,6 +307,96 @@ class Item
     public function setItemID(string $itemID): self
     {
         $this->itemID = $itemID;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ItemPrice[]
+     */
+    public function getItemPrices(): Collection
+    {
+        return $this->itemPrices;
+    }
+
+    public function addItemPrice(ItemPrice $itemPrice): self
+    {
+        if (!$this->itemPrices->contains($itemPrice)) {
+            $this->itemPrices[] = $itemPrice;
+            $itemPrice->setIdItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItemPrice(ItemPrice $itemPrice): self
+    {
+        if ($this->itemPrices->removeElement($itemPrice)) {
+            // set the owning side to null (unless already changed)
+            if ($itemPrice->getIdItem() === $this) {
+                $itemPrice->setIdItem(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ItemQuantity[]
+     */
+    public function getItemQuantities(): Collection
+    {
+        return $this->itemQuantities;
+    }
+
+    public function addItemQuantity(ItemQuantity $itemQuantity): self
+    {
+        if (!$this->itemQuantities->contains($itemQuantity)) {
+            $this->itemQuantities[] = $itemQuantity;
+            $itemQuantity->setIdItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItemQuantity(ItemQuantity $itemQuantity): self
+    {
+        if ($this->itemQuantities->removeElement($itemQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($itemQuantity->getIdItem() === $this) {
+                $itemQuantity->setIdItem(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderDraft[]
+     */
+    public function getOrderDrafts(): Collection
+    {
+        return $this->orderDrafts;
+    }
+
+    public function addOrderDraft(OrderDraft $orderDraft): self
+    {
+        if (!$this->orderDrafts->contains($orderDraft)) {
+            $this->orderDrafts[] = $orderDraft;
+            $orderDraft->setIdItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderDraft(OrderDraft $orderDraft): self
+    {
+        if ($this->orderDrafts->removeElement($orderDraft)) {
+            // set the owning side to null (unless already changed)
+            if ($orderDraft->getIdItem() === $this) {
+                $orderDraft->setIdItem(null);
+            }
+        }
 
         return $this;
     }

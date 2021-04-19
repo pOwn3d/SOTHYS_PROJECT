@@ -21,13 +21,13 @@ class Order
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer" , nullable=true)
      */
     private $idOrder;
 
     /**
      *
-     * @ORM\Column(type="integer", unique=true)
+     * @ORM\Column(type="integer", unique=true , nullable=true)
      */
     private $idOrderX3;
 
@@ -37,7 +37,7 @@ class Order
     private $dateOrder;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime" , nullable=true)
      */
     private $dateDelivery;
 
@@ -47,7 +47,7 @@ class Order
     private $idStatut;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer" , nullable=true)
      */
     private $idDownStatut;
 

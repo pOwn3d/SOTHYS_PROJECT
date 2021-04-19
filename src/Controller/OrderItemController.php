@@ -34,4 +34,25 @@ class OrderItemController extends AbstractController
             'orderSum'        => $orderSum
         ]);
     }
+
+    /**
+     * @Route("/commande/draft/{id}", name="app_order_item_id_draft")
+     * @param Request             $request
+     * @param OrderServices       $orderServices
+     * @param OrderLineRepository $orderLineRepository
+     *
+     * @return Response
+     */
+    public function commandDraft(Request $request, OrderServices $orderServices, OrderLineRepository $orderLineRepository): Response
+    {
+        $id        = $request->get('id');
+        $order     = $orderServices->getOrderByID($id);
+        $orderLine = $orderLineRepository->findByOrderID($id);
+
+        return $this->render('order/order_draft.item.html.twig', [
+            'controller_name' => 'OrderItemController',
+            'ordersLine'      => $orderLine,
+            'order'          => $order,
+        ]);
+    }
 }

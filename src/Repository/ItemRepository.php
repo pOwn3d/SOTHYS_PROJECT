@@ -22,7 +22,7 @@ class ItemRepository extends ServiceEntityRepository
     /**
      * @return Item[] Returns an array of Item objects
      */
-    public function findByGammeId($value)
+    public function findByGammeId($value): array
     {
         return $this->createQueryBuilder('i')
             ->leftJoin('i.gamme', 'gamme')
@@ -34,6 +34,7 @@ class ItemRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
 
     /*
     public function findOneBySomeField($value): ?Item

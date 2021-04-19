@@ -33,14 +33,14 @@
                         <div class="navbar-tools">
                             <ul class="list--horizontal">
                                 <li>
-    {#                                <a href="/pages/checkout/checkout-1-mon-panier.html" aria-label="Accéder à mon panier"#}
-    {#                                   title="Accéder à mon panier" data-microtip-position="bottom" role="tooltip"#}
-    {#                                   class="cart__access js-cart-toggler">#}
-    {#                                    <i class="icon icon-panier">#}
-    {#                                        <span class="hidden">mon panier</span>#}
-    {#                                    </i>#}
-    {#                                    <span>2</span>#}
-    {#                                </a>#}
+                                    <a href="{{ path('app_shop') }}" aria-label="Accéder à mon panier"
+                                       title="Accéder à mon panier" data-microtip-position="bottom" role="tooltip"
+                                       class="cart__access js-cart-toggler">
+                                        <i class="icon icon-panier">
+                                            <span class="hidden">mon panier</span>
+                                        </i>
+                                        <span>2</span>
+                                    </a>
                                 </li>
                                 <li class="account__access_button d-none d-lg-block">
                                     <a href="{{ path('app_login') }}" aria-label="Accéder à l'espace mon compte"
@@ -151,7 +151,8 @@
 {% block body %}
 {% endblock %}
 {% block javascripts %}
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
 {% endblock %}
 </body>
 </html>

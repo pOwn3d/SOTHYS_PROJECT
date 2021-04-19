@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+{% block title %}Commande{% endblock %}
+{% block body %}
+
+    <div id="content" role="main">
+        <section class="section section--compte">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 aos-init aos-animate" data-aos="fade-up">
+                        {% include 'flash_messages.html.twig' %}
+                        <div class="title--border title--border--margin">
+                            <h2>Mes commandes</h2>
+                        </div>
+                    </div>
+                    {% include 'components/nav_customer.html.twig' %}
+                    <div class="col-4 col-md-4">
+                        <p>Reference :<br/>
+                            <br/><br/><br/><br/><br/>
+                        </p>
+                    </div>
+                    <div class="col-4 col-md-4">
+                        <div class="checkout-wrapper">
+                            <a href="{{ path('app_order_edit', { 'id': order.id }) }}" class=" checkout button button--primary-fill">
+                                Modifier ma commande </a>
+                        </div>
+                    </div>
+                </div>
+                <table class="compte__commandes table-responsive">
+                    <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Désignation</th>
+                        <th>Quantité commandée</th>
+                        <th>Quantité Livrée</th>
+                        <th>Prix unitatire (EUR)</th>
+                        <th>Prix total (EUR)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% set totalCabine = 0 %}
+                    {% for order in ordersLine %}
+                        <tr>
+                            <td><a href="{{ path('app_item_id', { 'id': order.itemID.id }) }}">{{ order.itemID.id }}</a></td>
+                            <td><a href="{{ path('app_item_id', { 'id': order.itemID.id }) }}">{{ order.itemID.labelFR }}</a></td>
+                            <td>{{ order.quantity }}</td>
+                            <td>{{ order.quantity }}</td>
+                            <td>{{ order.priceUnit }}</td>
+                            <td>{{ order.price }}</td>
+                        </tr>
+                        {% if  order.itemID.idPresentation == "Cabine" %}
+                            {% set totalCabine = totalCabine + (order.price) %}
+                        {% endif %}
+                    {% endfor %}
+                    <tr>
+                        <td colspan="6">Dont Vente/Cabine (EUR)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">Dont Autre (EUR)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">Total HT (EUR)</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

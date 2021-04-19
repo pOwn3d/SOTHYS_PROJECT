@@ -6,6 +6,8 @@ namespace App\Services;
 
 use App\Entity\GammeProduct;
 use App\Entity\Item;
+use App\Entity\ItemPrice;
+use App\Entity\ItemQuantity;
 use App\Entity\Order;
 use App\Entity\OrderLine;
 use App\Entity\Society;
@@ -98,27 +100,29 @@ class CsvImporter
                 $row[13] = null;
             }
 
-            $society  = $this->em->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[2] ]);
-            $newOrder = new Order();
-            $newOrder
-                ->setIdOrder($row[0])
-                ->setIdOrderX3($row[1])
-                ->setSocietyID($society)
+            if ($row[0] != null) {
+                $society = $this->em->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[2] ]);
+//            $idOrder = $this->em->getRepository(Order)
+                $newOrder = new Order();
+                $newOrder
+                    ->setIdOrder($row[0])
+                    ->setIdOrderX3($row[1])
+                    ->setSocietyID($society)
 //                ->setIdLogin()
-                ->setDateOrder(new \DateTime($row[4]))
-                ->setDateDelivery(new \DateTime($row[5]))
+                    ->setDateOrder(new \DateTime($row[4]))
+                    ->setDateDelivery(new \DateTime($row[5]))
 //                ->setIdAdress()
-                ->setIdStatut($row[7])
-                ->setIdDownStatut($row[8])
-                ->setReference($row[9])
+                    ->setIdStatut($row[7])
+                    ->setIdDownStatut($row[8])
+                    ->setReference($row[9])
 //                ->setIdTransport()
 //                ->setIdIntercom()
 //                ->setIdCondition()
+                    ->setDateLastDelivery(new \DateTime($row[13]));
 
-                ->setDateLastDelivery(new \DateTime($row[13]));
-
-            $this->em->persist($newOrder);
-            $this->em->flush();
+                $this->em->persist($newOrder);
+                $this->em->flush();
+            }
         }
 
     }
@@ -161,28 +165,32 @@ class CsvImporter
         $csv->fetchColumn();
 
         foreach ($csv as $row) {
-            if ($row[0] == "") {
-                $row[0] = null;
-            }
-            if ($row[1] == "") {
-                $row[1] = null;
-            }
+//            if ($row[0] == "") {
+//                $row[0] = null;
+//            }
+//            if ($row[1] == "") {
+//                $row[1] = null;
+//            }
 
             $itemID = $this->em->getRepository(Item::class)->findOneBy([ 'itemID' => $row[2] ]);
 
             $orderLine = new OrderLine();
-            $orderLine
-                ->setIdOrder($row[0])
-                ->setIdOrderLine($row[1])
-                ->setQuantity($row[3])
-                ->setItemID($itemID)
-                ->setPrice($row[4])
-                ->setPriceUnit($row[5])
-                ->setIdOrderX3($row[7])
-                ->setRemainingQtyOrder($row[9]);
+            if ($row[0] != "" && $row[1] != "" && $itemID != null) {
 
-            $this->em->persist($orderLine);
-            $this->em->flush();
+
+                $orderLine
+                    ->setIdOrder($row[0])
+                    ->setIdOrderLine($row[1])
+                    ->setQuantity($row[3])
+                    ->setItemID($itemID)
+                    ->setPrice($row[4])
+                    ->setPriceUnit($row[5])
+                    ->setIdOrderX3($row[7])
+                    ->setRemainingQtyOrder($row[9]);
+
+                $this->em->persist($orderLine);
+                $this->em->flush();
+            }
         }
     }
 
@@ -219,5 +227,53 @@ class CsvImporter
             $this->em->persist($product);
         }
         $this->em->flush();
+    }
+
+    public function importItemPrice()
+    {
+        $csv = Reader::createFromPath('../public/csv/price.csv');
+        $csv->fetchColumn();
+
+        foreach ($csv as $row) {
+
+            $price   = new ItemPrice();
+            $society = $this->em->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[0] ]);
+            $itemID  = $this->em->getRepository(Item::class)->findOneBy([ 'gammeString' => $row[1] ]);
+
+            if ($itemID != null) {
+                $price
+                    ->setIdSociety($society)
+                    ->setIdItem($itemID)
+                    ->setPrice($row[2])
+                    ->setDateStartValidity(new \DateTime($row[3]))
+                    ->setDateEndValidity(new \DateTime($row[4]))
+                    ->setPricePublic($row[5])
+                    ->setPriceAesthetic($row[6]);
+                $this->em->persist($price);
+
+            }
+            $this->em->flush();
+        }
+    }
+
+    public function importItemQuantity()
+    {
+        $csv = Reader::createFromPath('../public/csv/itemQuantity.csv');
+        $csv->fetchColumn();
+
+        foreach ($csv as $row) {
+            $itemQuantity = new ItemQuantity();
+            $society      = $this->em->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[0] ]);
+            $itemID       = $this->em->getRepository(Item::class)->findOneBy([ 'gammeString' => $row[1] ]);
+
+            if ($itemID != null) {
+                $itemQuantity
+                    ->setIdSociety($society)
+                    ->setIdItem($itemID)
+                    ->setQuantity($row[2]);
+                $this->em->persist($itemQuantity);
+                $this->em->flush();
+            }
+        }
     }
 }

@@ -30,6 +30,16 @@ class OrderLineRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findByOrderID($value)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.idOrder = :val')
+            ->setParameter('val', $value)
+            ->orderBy('s.idOrder', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function sumOrderByX3($value)
     {
         return $this->createQueryBuilder('s')

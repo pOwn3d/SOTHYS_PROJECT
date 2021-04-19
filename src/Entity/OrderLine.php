@@ -50,12 +50,12 @@ class OrderLine
     private $remainingQtyOrder;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $idOrderX3;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Item::class, inversedBy="orderLines", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity=Item::class, inversedBy="orderLines")
      */
     private $itemID;
 
