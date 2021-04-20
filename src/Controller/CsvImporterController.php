@@ -116,7 +116,7 @@ class CsvImporterController extends AbstractController
 
 
     /**
-     * @Route("/import-quantity-item", name="import_csv_price_item")
+     * @Route("/import-quantity-item", name="import_csv_quantity_item")
      * @param CsvImporter $csvImporter
      *
      * @return Response

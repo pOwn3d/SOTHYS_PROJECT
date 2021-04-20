@@ -23,12 +23,12 @@ class ShopServices
 
     public function __construct(ItemRepository $itemRepository, GammeProductRepository $gammeProductRepository, ItemPriceRepository $itemPriceRepository, OrderDraftRepository $orderDraftRepository, EntityManagerInterface $em, ItemQuantityService $itemQuantityService)
     {
-        $this->itemRepository         = $itemRepository;
+        $this->itemRepository = $itemRepository;
         $this->gammeProductRepository = $gammeProductRepository;
-        $this->itemPriceRepository    = $itemPriceRepository;
-        $this->orderDraftRepository   = $orderDraftRepository;
-        $this->em                     = $em;
-        $this->itemQuantityService    = $itemQuantityService;
+        $this->itemPriceRepository = $itemPriceRepository;
+        $this->orderDraftRepository = $orderDraftRepository;
+        $this->em = $em;
+        $this->itemQuantityService = $itemQuantityService;
     }
 
     public function getItemShop()
@@ -43,15 +43,17 @@ class ShopServices
 
     public function getPriceItemIDSociety($item, $society)
     {
+
         return $this->itemPriceRepository->getPriceBySociety($item, $society);
+
     }
 
     public function cartSociety($society, $item, $qty)
     {
-        $itemID   = $this->itemRepository->findOneBy([ 'id' => $item ]);
-        $cart     = $this->orderDraftRepository->findOneBy([ 'idSociety' => $society ]);
-        $cartItem = $this->orderDraftRepository->findOneBy([ 'idItem' => $itemID->getId() ]);
-        $price    = $this->itemPriceRepository->getPriceBySociety($item, $society);
+        $itemID = $this->itemRepository->findOneBy(['id' => $item]);
+        $cart = $this->orderDraftRepository->findOneBy(['idSociety' => $society]);
+        $cartItem = $this->orderDraftRepository->findOneBy(['idItem' => $itemID->getId()]);
+        $price = $this->itemPriceRepository->getPriceBySociety($item, $society);
         $quantity = $this->itemQuantityService->quantityItemSociety($item, $society);
 
 
@@ -82,8 +84,7 @@ class ShopServices
     public function setOrderSociety($society)
     {
 
-        $orders = $this->orderDraftRepository->findBy([ 'idSociety' => $society->getId() ]);
-
+        $orders = $this->orderDraftRepository->findBy(['idSociety' => $society->getId()]);
 
 
         $newOrder = new Order();
@@ -108,16 +109,17 @@ class ShopServices
             $newOrderLine
                 ->setQuantity($order->getQuantity())
                 ->setPrice($order->getPrice() * $order->getQuantity())
+                ->setPriceUnit($order->getPrice())
                 ->setItemID($order->getIdItem())
                 ->setIdOrder($orderId)
 //                ->setIdOrderLine()
 //                ->setIdOrderX3()
-                ->setPriceUnit($order->getPrice())
-//                ->setRemainingQtyOrder()
+                ->setPriceUnit($order->getPrice())//                ->setRemainingQtyOrder()
             ;
 
-            $this->em->persist($newOrderLine);
+
             $this->em->remove($order);
+            $this->em->persist($newOrderLine);
             $this->em->flush();
         }
 

@@ -19,11 +19,11 @@ class ShopController extends AbstractController
     {
 
         $society = $this->getUser()->getSocietyID();
-        $orders  = $shopServices->getOrderDraft($society);
+        $orders = $shopServices->getOrderDraft($society);
 
         return $this->render('shop/index.html.twig', [
             'controller_name' => 'ShopController',
-            'orders'          => $orders,
+            'orders' => $orders,
         ]);
     }
 
@@ -34,7 +34,8 @@ class ShopController extends AbstractController
     {
         $society = $this->getUser()->getSocietyID();
         $shopServices->setOrderSociety($society);
-        dd();
+
+        return $this->redirectToRoute('app_order');
     }
 
     /**
@@ -44,17 +45,18 @@ class ShopController extends AbstractController
     {
         //   je récupère la commande qu'il souhaite éditer
 
-        $id      = $request->get('id');
+        $id = $request->get('id');
         $society = $this->getUser()->getSocietyID();
-        $order     = $orderServices->editOrderID($id);
+        $order = $orderServices->editOrderID($id);
         $orderLine = $orderServices->editOrderLineID($id);
+        $orderDraftServices->editOrderDraft($order, $society, $orderLine);
 
-        $orderDraft = $orderDraftServices->editOrderDraft($order, $society, $orderLine);
+        return $this->redirect('/shop');
 
-        return $this->render('shop/index.html.twig', [
-            'controller_name' => 'ShopController',
-            'orders'          => $order,
-        ]);
+//        return $this->render('shop/index.html.twig', [
+//            'controller_name' => 'ShopController',
+//            'orders' => $order,
+//        ]);
     }
 
 }
