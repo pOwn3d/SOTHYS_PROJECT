@@ -89,5 +89,6 @@ package.tar
 
 ## Composer related (symfony-specific)
 /bin/*
+!/bin/init.sh
 !/bin/console
 !/bin/symfony_requirements
