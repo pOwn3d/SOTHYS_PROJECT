@@ -36,6 +36,7 @@ class CsvImporter
      * @var MailerInterface
      */
     private MailerInterface $mailer;
+
     /**
      * @var GammeProductRepository
      */
@@ -47,6 +48,9 @@ class CsvImporter
         $this->mailer                 = $mailer;
         $this->resetPasswordHelper    = $resetPasswordHelper;
         $this->gammeProductRepository = $gammeProductRepository;
+
+        // See here: https://www.doctrine-project.org/projects/doctrine-orm/en/2.8/reference/batch-processing.html
+        $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
     }
 
     public function importUser(bool $shouldSendMail = true)
@@ -164,34 +168,40 @@ class CsvImporter
         $csv = Reader::createFromPath('../public/csv/orderLine.csv');
         $csv->fetchColumn();
 
-        foreach ($csv as $row) {
-//            if ($row[0] == "") {
-//                $row[0] = null;
-//            }
-//            if ($row[1] == "") {
-//                $row[1] = null;
-//            }
+        $items = $this->em->getRepository(Item::class)->findAll();
 
-            $itemID = $this->em->getRepository(Item::class)->findOneBy([ 'itemID' => $row[2] ]);
+        foreach ($csv as $row) {
 
             $orderLine = new OrderLine();
-            if ($row[0] != "" && $row[1] != "" && $itemID != null) {
+            if ($row[0] != "" && $row[1] != "") {
+                $item = null;
 
+                $foundItems = array_filter($items, function($item) use ($row) {
+                    return $item->getItemID() == $row[2];
+                });
+
+                if(count($foundItems)) {
+                    $item = array_shift($foundItems);
+                }
+
+                if($item == null) {
+                    continue;
+                }
 
                 $orderLine
                     ->setIdOrder($row[0])
                     ->setIdOrderLine($row[1])
                     ->setQuantity($row[3])
-                    ->setItemID($itemID)
+                    ->setItemID($item)
                     ->setPrice($row[4])
                     ->setPriceUnit($row[5])
                     ->setIdOrderX3($row[7])
                     ->setRemainingQtyOrder($row[9]);
 
                 $this->em->persist($orderLine);
-                $this->em->flush();
             }
         }
+        $this->em->flush();
     }
 
     public function importItem()
@@ -199,20 +209,31 @@ class CsvImporter
         $csv = Reader::createFromPath('../public/csv/item.csv');
         $csv->fetchColumn();
 
+        $gammes = $this->em->getRepository(GammeProduct::class)->findAll();
+        $divers = $this->em->getRepository(GammeProduct::class)->findOneBy([ 'refID' => 'DIVERS' ]);
+
+
         foreach ($csv as $row) {
 
             $product = new Item();
+            $gamme = null;
             if ($row[8] != null) {
-                $divers      = $this->em->getRepository(GammeProduct::class)->findOneBy([ 'refID' => $row[8] ]);
                 $gammeString = $row[0];
+                $foundGammes = array_filter($gammes, function($gamme) use ($row) {
+                    return $gamme->getRefID() == $row[8];
+                });
+
+                if(count($foundGammes)) {
+                    $gamme = array_shift($foundGammes);
+                }
             } else {
-                $divers      = $this->em->getRepository(GammeProduct::class)->findOneBy([ 'refID' => 'DIVERS' ]);
                 $gammeString = 'DIVERS';
+                $gamme       = $divers;
             }
 
             $product
                 ->setItemID($row[0])
-                ->setGamme($divers)
+                ->setGamme($gamme)
                 ->setLabelFR($row[1])
                 ->setLabelEN($row[2])
                 ->setCapacityFR($row[3])
@@ -234,26 +255,46 @@ class CsvImporter
         $csv = Reader::createFromPath('../public/csv/price.csv');
         $csv->fetchColumn();
 
+        $companies = $this->em->getRepository(Society::class)->findAll();
+        $items = $this->em->getRepository(Item::class)->findAll();
+
         foreach ($csv as $row) {
 
             $price   = new ItemPrice();
-            $society = $this->em->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[0] ]);
-            $itemID  = $this->em->getRepository(Item::class)->findOneBy([ 'gammeString' => $row[1] ]);
 
-            if ($itemID != null) {
+            $item = null;
+
+            $foundItems = array_filter($items, function($item) use ($row) {
+                return $item->getItemID() == $row[1];
+            });
+
+            if(count($foundItems)) {
+                $item = array_shift($foundItems);
+            }
+
+            $company = null;
+
+            $foundCompanies = array_filter($companies, function($company) use ($row) {
+                return $company->getIdCustomer() == $row[0];
+            });
+
+            if(count($foundCompanies)) {
+                $company = array_shift($foundCompanies);
+            }
+
+            if ($item != null) {
                 $price
-                    ->setIdSociety($society)
-                    ->setIdItem($itemID)
+                    ->setIdSociety($company)
+                    ->setIdItem($item)
                     ->setPrice($row[2])
                     ->setDateStartValidity(new \DateTime($row[3]))
                     ->setDateEndValidity(new \DateTime($row[4]))
                     ->setPricePublic($row[5])
                     ->setPriceAesthetic($row[6]);
                 $this->em->persist($price);
-
             }
-            $this->em->flush();
         }
+        $this->em->flush();
     }
 
     public function importItemQuantity()
@@ -261,19 +302,40 @@ class CsvImporter
         $csv = Reader::createFromPath('../public/csv/itemQuantity.csv');
         $csv->fetchColumn();
 
+        $companies = $this->em->getRepository(Society::class)->findAll();
+        $items = $this->em->getRepository(Item::class)->findAll();
+
         foreach ($csv as $row) {
             $itemQuantity = new ItemQuantity();
-            $society      = $this->em->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[0] ]);
-            $itemID       = $this->em->getRepository(Item::class)->findOneBy([ 'gammeString' => $row[1] ]);
 
-            if ($itemID != null) {
+            $item = null;
+
+            $foundItems = array_filter($items, function($item) use ($row) {
+                return $item->getItemID() == $row[1];
+            });
+
+            if(count($foundItems)) {
+                $item = array_shift($foundItems);
+            }
+
+            $company = null;
+
+            $foundCompanies = array_filter($companies, function($company) use ($row) {
+                return $company->getIdCustomer() == $row[0];
+            });
+
+            if(count($foundCompanies)) {
+                $company = array_shift($foundCompanies);
+            }
+
+            if ($item != null) {
                 $itemQuantity
-                    ->setIdSociety($society)
-                    ->setIdItem($itemID)
+                    ->setIdSociety($company)
+                    ->setIdItem($item)
                     ->setQuantity($row[2]);
                 $this->em->persist($itemQuantity);
-                $this->em->flush();
             }
         }
+        $this->em->flush();
     }
 }
