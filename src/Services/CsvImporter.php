@@ -258,9 +258,10 @@ class CsvImporter
         $companies = $this->em->getRepository(Society::class)->findAll();
         $items = $this->em->getRepository(Item::class)->findAll();
 
+        $i = 0;
         foreach ($csv as $row) {
 
-            $price   = new ItemPrice();
+            $price = new ItemPrice();
 
             $item = null;
 
@@ -293,7 +294,14 @@ class CsvImporter
                     ->setPriceAesthetic($row[6]);
                 $this->em->persist($price);
             }
+            $i++;
+
+            if($i % 4000 == 0) {
+                $this->em->flush();
+                $this->em->clear(ItemPrice::class);
+            }
         }
+
         $this->em->flush();
     }
 
@@ -305,6 +313,7 @@ class CsvImporter
         $companies = $this->em->getRepository(Society::class)->findAll();
         $items = $this->em->getRepository(Item::class)->findAll();
 
+        $i = 0;
         foreach ($csv as $row) {
             $itemQuantity = new ItemQuantity();
 
@@ -335,7 +344,15 @@ class CsvImporter
                     ->setQuantity($row[2]);
                 $this->em->persist($itemQuantity);
             }
+
+            $i++;
+
+            if($i % 4000 == 0) {
+                $this->em->flush();
+                $this->em->clear(ItemQuantity::class);
+            }
         }
+
         $this->em->flush();
     }
 }
