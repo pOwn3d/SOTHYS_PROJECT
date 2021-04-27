@@ -30,6 +30,26 @@ class OrderDraftRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findSumOrderDraftSociety($society)
+    {
+        return $this->createQueryBuilder('o')
+            ->select('SUM(o.priceOrder) as price')
+            ->andWhere('o.idSociety = :val')
+            ->setParameter('val', $society)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findSumItemOrderDraftSociety($society)
+    {
+        return $this->createQueryBuilder('o')
+            ->select('SUM(o.quantity) as quantity')
+            ->andWhere('o.idSociety = :val')
+            ->setParameter('val', $society)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return OrderDraft[] Returns an array of OrderDraft objects
     //  */

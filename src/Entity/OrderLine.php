@@ -73,7 +73,6 @@ class OrderLine
     public function setIdOrder(?int $idOrder): self
     {
         $this->idOrder = $idOrder;
-
         return $this;
     }
 
@@ -85,7 +84,6 @@ class OrderLine
     public function setIdOrderLine(?int $idOrderLine): self
     {
         $this->idOrderLine = $idOrderLine;
-
         return $this;
     }
 
@@ -97,7 +95,6 @@ class OrderLine
     public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
-
         return $this;
     }
 
@@ -109,7 +106,6 @@ class OrderLine
     public function setPrice(?string $price): self
     {
         $this->price = $price;
-
         return $this;
     }
 
@@ -121,7 +117,6 @@ class OrderLine
     public function setPriceUnit(?int $priceUnit): self
     {
         $this->priceUnit = $priceUnit;
-
         return $this;
     }
 
@@ -133,7 +128,6 @@ class OrderLine
     public function setRemainingQtyOrder(?int $remainingQtyOrder): self
     {
         $this->remainingQtyOrder = $remainingQtyOrder;
-
         return $this;
     }
 
@@ -145,7 +139,6 @@ class OrderLine
     public function setIdOrderX3(int $idOrderX3): self
     {
         $this->idOrderX3 = $idOrderX3;
-
         return $this;
     }
 
@@ -157,7 +150,6 @@ class OrderLine
     public function setItemID($itemID)
     {
         $this->itemID = $itemID;
-
         return $this;
     }
 

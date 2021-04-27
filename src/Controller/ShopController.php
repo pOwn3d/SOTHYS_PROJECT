@@ -17,13 +17,12 @@ class ShopController extends AbstractController
      */
     public function index(ShopServices $shopServices): Response
     {
-
         $society = $this->getUser()->getSocietyID();
-        $orders = $shopServices->getOrderDraft($society);
+        $orders  = $shopServices->getOrderDraft($society);
 
         return $this->render('shop/index.html.twig', [
             'controller_name' => 'ShopController',
-            'orders' => $orders,
+            'orders'          => $orders,
         ]);
     }
 
@@ -43,20 +42,25 @@ class ShopController extends AbstractController
      */
     public function orderEdit(Request $request, OrderServices $orderServices, OrderDraftServices $orderDraftServices): Response
     {
-        //   je récupère la commande qu'il souhaite éditer
-
-        $id = $request->get('id');
-        $society = $this->getUser()->getSocietyID();
-        $order = $orderServices->editOrderID($id);
+        $id        = $request->get('id');
+        $society   = $this->getUser()->getSocietyID();
+        $order     = $orderServices->editOrderID($id);
         $orderLine = $orderServices->editOrderLineID($id);
         $orderDraftServices->editOrderDraft($order, $society, $orderLine);
 
         return $this->redirect('/shop');
-
-//        return $this->render('shop/index.html.twig', [
-//            'controller_name' => 'ShopController',
-//            'orders' => $order,
-//        ]);
     }
+
+    /**
+     * @Route("/order-delete-item/{id}", name="app_order_product_delete")
+     */
+    public function orderDeleteItem(Request $request, ShopServices $shopServices): Response
+    {
+        // TODO : Checker si la société est bien celle de la personne qui supprime le produit.
+        $id = $request->get('id');
+        $shopServices->deleteItemOrderDraf($id);
+        return $this->redirect('/shop');
+    }
+
 
 }

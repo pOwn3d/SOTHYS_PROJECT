@@ -15,7 +15,6 @@
                     {% include 'components/nav_customer.html.twig' %}
                     <div class="col-4 col-md-4">
                         <p>Reference :<br/>
-                            {{ dump() }}
                             N° de commande : {{ orderX3.idOrder }}<br/>
                             Date commande : {{ orderX3.dateOrder|format_datetime('short', 'none', locale='fr') }} <br/>
                             N° de chrono : ??<br/>

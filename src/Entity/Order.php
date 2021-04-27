@@ -79,7 +79,6 @@ class Order
     public function setIdOrder(int $idOrder): self
     {
         $this->idOrder = $idOrder;
-
         return $this;
     }
 
@@ -91,7 +90,6 @@ class Order
     public function setIdOrderX3(int $idOrderX3): self
     {
         $this->idOrderX3 = $idOrderX3;
-
         return $this;
     }
 
@@ -103,7 +101,6 @@ class Order
     public function setDateOrder(\DateTimeInterface $dateOrder): self
     {
         $this->dateOrder = $dateOrder;
-
         return $this;
     }
 
@@ -115,7 +112,6 @@ class Order
     public function setDateDelivery(\DateTimeInterface $dateDelivery): self
     {
         $this->dateDelivery = $dateDelivery;
-
         return $this;
     }
 
@@ -127,7 +123,6 @@ class Order
     public function setIdStatut(int $idStatut): self
     {
         $this->idStatut = $idStatut;
-
         return $this;
     }
 
@@ -139,7 +134,6 @@ class Order
     public function setIdDownStatut(int $idDownStatut): self
     {
         $this->idDownStatut = $idDownStatut;
-
         return $this;
     }
 
@@ -151,7 +145,6 @@ class Order
     public function setReference(?string $reference): self
     {
         $this->reference = $reference;
-
         return $this;
     }
 
@@ -163,7 +156,6 @@ class Order
     public function setDateLastDelivery(?\DateTimeInterface $dateLastDelivery): self
     {
         $this->dateLastDelivery = $dateLastDelivery;
-
         return $this;
     }
 
@@ -175,7 +167,6 @@ class Order
     public function setSocietyID(?Society $SocietyID): self
     {
         $this->SocietyID = $SocietyID;
-
         return $this;
     }
 

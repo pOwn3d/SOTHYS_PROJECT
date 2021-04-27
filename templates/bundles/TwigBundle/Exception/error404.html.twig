@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page non trouvée{% endblock %}
+
+{% block body %}
+    <section class="section section--404 section--default">
+        <div class="container">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-4 col-md-4 text-align--center">
+                    <img src="{{ asset('assets/images/logo-404.png') }}" alt="logo sothys page 404">
+                </div>
+                <div class="col-12 col-md-8">
+                    <span class="text--highlight">Erreur {{status_code}}</span>
+                    <h1>Cette page n'existe pas !</h1>
+                    <a href="{{ path('app_home') }}" class="button">ALLER SUR LA PAGE D'ACCUEIL</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

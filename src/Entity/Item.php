@@ -114,7 +114,6 @@ class Item
         $this->orderDrafts = new ArrayCollection();
     }
 
-
     public function getId(): ?int
     {
         return $this->id;
@@ -134,7 +133,6 @@ class Item
             $this->orderLines[] = $orderLine;
             $orderLine->setItemID($this);
         }
-
         return $this;
     }
 
@@ -146,7 +144,6 @@ class Item
                 $orderLine->setItemID(null);
             }
         }
-
         return $this;
     }
 
@@ -158,13 +155,11 @@ class Item
     public function setGammeString(string $gammeString): self
     {
         $this->gammeString = $gammeString;
-
         return $this;
     }
     public function __toString(): ?string
     {
        return $this->getName();
-
     }
 
     public function getLabelFR(): ?string
@@ -175,7 +170,6 @@ class Item
     public function setLabelFR(?string $labelFR): self
     {
         $this->labelFR = $labelFR;
-
         return $this;
     }
 
@@ -187,7 +181,6 @@ class Item
     public function setLabelEN(?string $labelEN): self
     {
         $this->labelEN = $labelEN;
-
         return $this;
     }
 
@@ -199,7 +192,6 @@ class Item
     public function setCapacityFR(?string $capacityFR): self
     {
         $this->capacityFR = $capacityFR;
-
         return $this;
     }
 
@@ -211,7 +203,6 @@ class Item
     public function setCapacityEN(?string $capacityEN): self
     {
         $this->capacityEN = $capacityEN;
-
         return $this;
     }
 
@@ -223,7 +214,6 @@ class Item
     public function setIdPresentation(?string $idPresentation): self
     {
         $this->idPresentation = $idPresentation;
-
         return $this;
     }
 
@@ -235,7 +225,6 @@ class Item
     public function setSector(?string $sector): self
     {
         $this->sector = $sector;
-
         return $this;
     }
 
@@ -247,7 +236,6 @@ class Item
     public function setUsageString(?string $usageString): self
     {
         $this->usageString = $usageString;
-
         return $this;
     }
 
@@ -259,7 +247,6 @@ class Item
     public function setAmountBulking(?int $amountBulking): self
     {
         $this->amountBulking = $amountBulking;
-
         return $this;
     }
 
@@ -271,7 +258,6 @@ class Item
     public function setCodeEAN(?string $codeEAN): self
     {
         $this->codeEAN = $codeEAN;
-
         return $this;
     }
 
@@ -283,7 +269,6 @@ class Item
     public function setIdAtTheRate(?int $idAtTheRate): self
     {
         $this->idAtTheRate = $idAtTheRate;
-
         return $this;
     }
 
@@ -295,7 +280,6 @@ class Item
     public function setGamme(?GammeProduct $gamme): self
     {
         $this->gamme = $gamme;
-
         return $this;
     }
 
@@ -307,7 +291,6 @@ class Item
     public function setItemID(string $itemID): self
     {
         $this->itemID = $itemID;
-
         return $this;
     }
 
@@ -325,7 +308,6 @@ class Item
             $this->itemPrices[] = $itemPrice;
             $itemPrice->setIdItem($this);
         }
-
         return $this;
     }
 
@@ -337,7 +319,6 @@ class Item
                 $itemPrice->setIdItem(null);
             }
         }
-
         return $this;
     }
 
@@ -355,7 +336,6 @@ class Item
             $this->itemQuantities[] = $itemQuantity;
             $itemQuantity->setIdItem($this);
         }
-
         return $this;
     }
 
@@ -367,7 +347,6 @@ class Item
                 $itemQuantity->setIdItem(null);
             }
         }
-
         return $this;
     }
 
@@ -385,7 +364,6 @@ class Item
             $this->orderDrafts[] = $orderDraft;
             $orderDraft->setIdItem($this);
         }
-
         return $this;
     }
 
@@ -397,10 +375,7 @@ class Item
                 $orderDraft->setIdItem(null);
             }
         }
-
         return $this;
     }
-
-
 
 }

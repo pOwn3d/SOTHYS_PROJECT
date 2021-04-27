@@ -3,11 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>{% block title %}Sothys{% endblock %}</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="msapplication-TileColor" content="#766df4">
-    <meta name="theme-color" content="#ffffff">
     {% block stylesheets %}
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/main.css') }} ">
     {% endblock %}
@@ -39,7 +35,7 @@
                                         <i class="icon icon-panier">
                                             <span class="hidden">mon panier</span>
                                         </i>
-                                        <span>2</span>
+{#                                        <span>{{ itemCart }}</span>#}
                                     </a>
                                 </li>
                                 <li class="account__access_button d-none d-lg-block">

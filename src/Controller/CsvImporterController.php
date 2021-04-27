@@ -46,8 +46,7 @@ class CsvImporterController extends AbstractController
      */
     public function index(CsvImporter $csvImporter, Request $request): Response
     {
-        $shouldSendMail = (bool) $request->get('should_send_mail');
-
+        $shouldSendMail = (bool)$request->get('should_send_mail');
         $csvImporter->importUser($shouldSendMail);
         dd();
     }

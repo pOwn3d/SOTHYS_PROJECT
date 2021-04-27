@@ -17,7 +17,6 @@ class ItemPrice
      */
     private $id;
 
-
     /**
      * @ORM\ManyToOne(targetEntity=Item::class, inversedBy="itemPrices")
      */
@@ -66,7 +65,6 @@ class ItemPrice
     public function setIdItem(?Item $idItem): self
     {
         $this->idItem = $idItem;
-
         return $this;
     }
 
@@ -78,7 +76,6 @@ class ItemPrice
     public function setPrice(?float $price): self
     {
         $this->price = $price;
-
         return $this;
     }
 
@@ -90,7 +87,6 @@ class ItemPrice
     public function setDateStartValidity(?\DateTimeInterface $dateStartValidity): self
     {
         $this->dateStartValidity = $dateStartValidity;
-
         return $this;
     }
 
@@ -102,7 +98,6 @@ class ItemPrice
     public function setDateEndValidity(?\DateTimeInterface $dateEndValidity): self
     {
         $this->dateEndValidity = $dateEndValidity;
-
         return $this;
     }
 
@@ -114,7 +109,6 @@ class ItemPrice
     public function setPricePublic(?float $pricePublic): self
     {
         $this->pricePublic = $pricePublic;
-
         return $this;
     }
 
@@ -126,7 +120,6 @@ class ItemPrice
     public function setPriceAesthetic(?float $priceAesthetic): self
     {
         $this->priceAesthetic = $priceAesthetic;
-
         return $this;
     }
 
@@ -138,7 +131,7 @@ class ItemPrice
     public function setIdSociety(?Society $idSociety): self
     {
         $this->idSociety = $idSociety;
-
         return $this;
     }
+
 }

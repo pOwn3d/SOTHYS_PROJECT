@@ -28,7 +28,7 @@ class OrderDraft
     private $idItem;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="float", nullable=true)
      */
     private $price;
 
@@ -47,6 +47,11 @@ class OrderDraft
      */
     private $quantityBundling;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $priceOrder;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,7 +65,6 @@ class OrderDraft
     public function setIdSociety(?Society $idSociety): self
     {
         $this->idSociety = $idSociety;
-
         return $this;
     }
 
@@ -72,19 +76,17 @@ class OrderDraft
     public function setIdItem(?Item $idItem): self
     {
         $this->idItem = $idItem;
-
         return $this;
     }
 
-    public function getPrice(): ?int
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function setPrice(?int $price): self
+    public function setPrice(?float $price): self
     {
         $this->price = $price;
-
         return $this;
     }
 
@@ -96,7 +98,6 @@ class OrderDraft
     public function setState(?bool $state): self
     {
         $this->state = $state;
-
         return $this;
     }
 
@@ -108,7 +109,6 @@ class OrderDraft
     public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
-
         return $this;
     }
 
@@ -123,4 +123,17 @@ class OrderDraft
 
         return $this;
     }
+
+    public function getPriceOrder(): ?float
+    {
+        return $this->priceOrder;
+    }
+
+    public function setPriceOrder(?float $priceOrder): self
+    {
+        $this->priceOrder = $priceOrder;
+
+        return $this;
+    }
+
 }

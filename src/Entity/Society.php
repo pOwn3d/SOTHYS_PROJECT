@@ -78,7 +78,6 @@ class Society
     public function setIdCustomer(int $idCustomer): self
     {
         $this->idCustomer = $idCustomer;
-
         return $this;
     }
 
@@ -96,7 +95,6 @@ class Society
             $this->orders[] = $order;
             $order->setSocietyID($this);
         }
-
         return $this;
     }
 
@@ -108,7 +106,6 @@ class Society
                 $order->setSocietyID(null);
             }
         }
-
         return $this;
     }
 
@@ -126,7 +123,6 @@ class Society
             $this->users[] = $user;
             $user->setSocietyID($this);
         }
-
         return $this;
     }
 
@@ -138,7 +134,6 @@ class Society
                 $user->setSocietyID(null);
             }
         }
-
         return $this;
     }
 
@@ -173,7 +168,6 @@ class Society
             $this->itemPrices[] = $itemPrice;
             $itemPrice->setIdSociety($this);
         }
-
         return $this;
     }
 
@@ -185,7 +179,6 @@ class Society
                 $itemPrice->setIdSociety(null);
             }
         }
-
         return $this;
     }
 
@@ -203,7 +196,6 @@ class Society
             $this->itemQuantities[] = $itemQuantity;
             $itemQuantity->setIdSociety($this);
         }
-
         return $this;
     }
 
@@ -215,7 +207,6 @@ class Society
                 $itemQuantity->setIdSociety(null);
             }
         }
-
         return $this;
     }
 
@@ -233,7 +224,6 @@ class Society
             $this->orderDrafts[] = $orderDraft;
             $orderDraft->setIdSociety($this);
         }
-
         return $this;
     }
 
@@ -245,9 +235,7 @@ class Society
                 $orderDraft->setIdSociety(null);
             }
         }
-
         return $this;
     }
-
 
 }

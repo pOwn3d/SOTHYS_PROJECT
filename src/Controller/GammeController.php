@@ -21,7 +21,6 @@ class GammeController extends AbstractController
      */
     public function index(Request $request, GammeServices $gammeServices, GammeProductServices $gammeProductServices): Response
     {
-
         $products = $gammeProductServices->findByGammeId($request->get('gamme_id'));
         $gamme    = $gammeServices->getGammeID($request->get('gamme_id'));
 
@@ -30,6 +29,5 @@ class GammeController extends AbstractController
             'gamme'           => $gamme,
             'products'        => $products
         ]);
-
     }
 }

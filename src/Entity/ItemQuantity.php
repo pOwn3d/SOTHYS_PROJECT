@@ -45,7 +45,6 @@ class ItemQuantity
     public function setIdSociety(?Society $IdSociety): self
     {
         $this->IdSociety = $IdSociety;
-
         return $this;
     }
 
@@ -57,7 +56,6 @@ class ItemQuantity
     public function setIdItem(?item $idItem): self
     {
         $this->idItem = $idItem;
-
         return $this;
     }
 
@@ -69,7 +67,7 @@ class ItemQuantity
     public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
-
         return $this;
     }
+
 }
