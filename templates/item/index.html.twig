@@ -31,6 +31,7 @@
                             <li><strong>Lorem</strong>
                                 <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores dicta eius ipsa maxime minus officia quo sequi sit temporibus? Culpa debitis doloremque ea fugit impedit incidunt ipsam, non provident sapiente?</span>
                             </li>
+                            {% if quantity  != null  and  itemPrice != null %}
                             <li><strong>Prix : </strong>
                                 <span>{{ itemPrice.price }} €</span>
                             </li>
@@ -42,6 +43,7 @@
                             <label for="quantity">Quantité</label><input type="number" id="quantity" name="quantity">
                             <a href="{{ path('app_add_to_cart_id', { 'item': product.id ,  'qty': "qty" }) }} " id="addToCart" class="button button--small">Ajouter au panier</a>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Nouvelle commande {% endblock %}
-
+{% block title %}Mon panier {% endblock %}
 {% block body %}
 
     <section class="section section--checkout">
@@ -16,16 +14,16 @@
                                     <th>Produit</th>
                                     <th>Désignation</th>
                                     <th>Quantité</th>
+                                    <th></th>
                                     <th>Quantité Groupage</th>
                                     <th>Prix unitaire (EUR)</th>
                                     <th>Prix total (EUR)</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                {% set totalCabine = 0 %}
+                                {% set total = 0 %}
                                 {% for order in orders %}
-
-                                    {% set totalCabine = 0 %}
-                                    {% set total = 0 %}
 
                                     {% set total = total + (order.price *  order.quantity ) %}
                                     {% if  order.idItem.idPresentation == "Cabine" %}
@@ -45,7 +43,6 @@
                                             <span class="text--category show--mobile">  <a href="{{ path('app_item_id', { 'id': order.idItem.id }) }}">{{ order.idItem.labelFR }}</a></span>
                                             <div class="quantity">
                                                 <label for="product-quantity--291">Quantité</label>
-
                                                 <input type="number" class="qty input-text js-update-cart-quantity" step="1" min="1" data-product="{{ order.idItem.id }}" value="{{ order.quantity }}" style="text-align: center;">
                                                 <div class="quantity-nav">
                                                     <div class="quantity-button quantity-up">+</div>
@@ -53,6 +50,7 @@
                                                 </div>
                                             </div>
                                         </td>
+                                        <td><a href="{{ path('app_order_product_delete', { 'id': order.id }) }}"><i class="icon icon-close"></i></a></td>
                                         <td class="product-quantityGroupage">
                                             <span class="text--category" id="qty_update_{{ order.idItem.id }}">{{ order.quantity }} x {{ order.quantityBundling }} </span>
                                         </td>
@@ -60,7 +58,7 @@
                                             <span class="text--category">  {{ order.price }} €</span>
                                         </td>
                                         <td class="product-priceTotal">
-                                            <span class="text--category" id="price_update_{{ order.idItem.id }}">{{ order.price *  order.quantity }} € </span>
+                                            <span class="text--category" id="price_update_{{ order.idItem.id }}">{{ order.price *  order.quantity|round  }} € </span>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -68,7 +66,6 @@
                             </table>
                         </form>
                     </div>
-
                 </div>
                 <div class="col-12 col-md-4">
                     <div class="cart--checkout-total">
@@ -79,7 +76,7 @@
                                 <tr class="cart-subtotal">
                                     <th>Sous-total</th>
                                     <td>
-                                        <span class="price">40,50 €</span>
+                                        <span class="price total" id="priceTotal">{{ total}} €</span>
                                     </td>
                                 </tr>
                                 <tr class="order-total">
@@ -92,7 +89,6 @@
                                 </tr>
                                 </tbody>
                             </table>
-
                             <div class="checkout-wrapper">
                                 <a href="{{ path("app_order_publish") }}" class=" checkout button button--primary-fill">
                                     Valider ma commande </a>
@@ -104,85 +100,5 @@
             </div>
         </div>
     </section>
-
-    {# <div id="content" role="main"> #}
-    {# <section class="section section--compte"> #}
-    {# <div class="container"> #}
-    {# <div class="row"> #}
-    {# <div class="col-12 aos-init aos-animate" data-aos="fade-up"> #}
-    {# {% include 'flash_messages.html.twig' %} #}
-    {# <div class="title--border title--border--margin"> #}
-    {# <h2>Mes commandes</h2> #}
-    {# </div> #}
-    {# </div> #}
-    {# <div class="col-12"> #}
-    {# <table class="compte__commandes table-responsive" id="table"> #}
-    {# <thead> #}
-    {# <tr> #}
-    {# <th>Code</th> #}
-    {# <th>Désignation</th> #}
-    {# <th>Quantité groupage</th> #}
-    {# <th>Quantité commandée</th> #}
-    {# <th>Prix unitaire (EUR)</th> #}
-    {# <th>Prix total (EUR)</th> #}
-    {# </tr> #}
-    {# </thead> #}
-    {# <tbody> #}
-    {# <tr> #}
-    {# <td>CODE</td> #}
-    {# <td>Désignation</td> #}
-    {# <td>Quantité commandée</td> #}
-    {# <td>Quantité groupage</td> #}
-    {# <td>Prix unitaire (EUR)</td> #}
-    {# <td>Prix total (EUR)</td> #}
-    {# </tr> #}
-
-
-    {# {% for order in orders %} #}
-
-    {# {% set total = total + (order.price *  order.quantity ) %} #}
-    {# {% if  order.idItem.idPresentation == "Cabine" %} #}
-    {# {% set totalCabine = totalCabine + (order.price) %} #}
-    {# {% endif %} #}
-
-    {# <tr> #}
-    {# {{ dump(order.idItem.id) }} #}
-    {# <td><a href="{{ path('app_item_id', { 'id': order.idItem.id }) }}">{{ order.idItem.itemId }}></a></td> #}
-    {# <td class="{{ order.idItem.id }}"><a href="{{ path('app_item_id', { 'id': order.idItem.id }) }}">{{ order.idItem.labelFR }}</td> #}
-    {# <td> #}
-    {# <input type="number" class="qty" data-product="{{ order.idItem.id }}" value="{{ order.quantity }}" style="text-align: center;"> #}
-    {# </td> #}
-    {# <td id="qty_update_{{ order.idItem.id }}">{{ order.quantity }} x {{ order.quantityBundling }}</td> #}
-    {# <td>{{ order.price }} €</td> #}
-    {# <td id="price_update_{{ order.idItem.id }}">{{ order.price *  order.quantity }} €</td> #}
-    {# </tr> #}
-    {# {% endfor %} #}
-    {# </tbody> #}
-
-    {# <tbody> #}
-    {# <tr id="addLigneTitre"> #}
-    {# <td colspan="8" class="soustitre"></td> #}
-    {# </tr> #}
-    {# <tr> #}
-    {# <td colspan="5">Dont Vente/Cabine (EUR)</td> #}
-    {# <td>{{ totalCabine }} €</td> #}
-    {# </tr> #}
-    {# <tr> #}
-    {# <td class="totalTitre" colspan="5">Dont Autre (EUR)</td> #}
-    {# <td class="total">0,00</td> #}
-    {# </tr> #}
-    {# <tr> #}
-    {# <td class="totalTitre" colspan="5"><b> Total HT (EUR)</b></td> #}
-    {# <td class="total"><b>{{ total }} €</b></td> #}
-    {# </tr> #}
-    {# </tbody> #}
-    {# </table> #}
-    {# </div> #}
-    {# </div> #}
-    {# </div> #}
-
-
-    {# </section> #}
-    {# </div> #}
 
 {% endblock %}

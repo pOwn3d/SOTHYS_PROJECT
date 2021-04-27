@@ -21,7 +21,6 @@ class OrderItemController extends AbstractController
      */
     public function index(Request $request, OrderLineRepository $orderLineRepository, OrderServices $orderServices): Response
     {
-
         $id        = $request->get('id');
         $orderLine = $orderLineRepository->findAllByX3($id);
         $orderX3   = $orderServices->getOrderByX3($id);

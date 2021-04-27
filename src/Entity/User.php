@@ -64,7 +64,6 @@ class User implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -86,7 +85,6 @@ class User implements UserInterface
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
-
         return array_unique($roles);
     }
 
@@ -107,7 +105,6 @@ class User implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
-
         return $this;
     }
 
@@ -139,7 +136,6 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
-
         return $this;
     }
 
@@ -151,7 +147,6 @@ class User implements UserInterface
     public function setAccountActivated(bool $accountActivated): self
     {
         $this->accountActivated = $accountActivated;
-
         return $this;
     }
 
@@ -163,9 +158,7 @@ class User implements UserInterface
     public function setSocietyID(?Society $societyID): self
     {
         $this->societyID = $societyID;
-
         return $this;
     }
-
 
 }

@@ -6,7 +6,6 @@ namespace App\Services;
 
 use App\Entity\Order;
 use App\Entity\OrderDraft;
-use App\Entity\OrderLine;
 use App\Repository\OrderDraftRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -18,17 +17,17 @@ class OrderDraftServices
     public function __construct(OrderDraftRepository $orderDraftRepository, EntityManagerInterface $em)
     {
         $this->orderDraftRepository = $orderDraftRepository;
-        $this->em = $em;
+        $this->em                   = $em;
     }
 
     public function getOrderDraftID($id, $item)
     {
-        return $this->orderDraftRepository->findOneBy(['idSociety' => $id, 'idItem' => $item]);
+        return $this->orderDraftRepository->findOneBy([ 'idSociety' => $id, 'idItem' => $item ]);
     }
 
     public function editOrderDraft($id, $society, $orderLine)
     {
-;
+
         foreach ($orderLine as $item) {
 
             $draft = new OrderDraft();
@@ -48,5 +47,16 @@ class OrderDraftServices
         $this->em->remove($order);
         $this->em->flush();
     }
+
+    public function getSumOrderDraft($id)
+    {
+        return $this->orderDraftRepository->findSumOrderDraftSociety($id);
+    }
+
+    public function getSumItemOrderDraft($id)
+    {
+        return $this->orderDraftRepository->findSumItemOrderDraftSociety($id);
+    }
+
 
 }

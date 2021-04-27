@@ -23,23 +23,24 @@ class ShopServices
 
     public function __construct(ItemRepository $itemRepository, GammeProductRepository $gammeProductRepository, ItemPriceRepository $itemPriceRepository, OrderDraftRepository $orderDraftRepository, EntityManagerInterface $em, ItemQuantityService $itemQuantityService)
     {
-        $this->itemRepository = $itemRepository;
+        $this->itemRepository         = $itemRepository;
         $this->gammeProductRepository = $gammeProductRepository;
-        $this->itemPriceRepository = $itemPriceRepository;
-        $this->orderDraftRepository = $orderDraftRepository;
-        $this->em = $em;
-        $this->itemQuantityService = $itemQuantityService;
+        $this->itemPriceRepository    = $itemPriceRepository;
+        $this->orderDraftRepository   = $orderDraftRepository;
+        $this->em                     = $em;
+        $this->itemQuantityService    = $itemQuantityService;
     }
 
-    public function getItemShop()
-    {
-        return $this->itemRepository->findAll();
-    }
 
-    public function getItemGammeShop()
-    {
-        return $this->gammeProductRepository->findAll();
-    }
+//    public function getItemShop()
+//    {
+//        return $this->itemRepository->findAll();
+//    }
+//
+//    public function getItemGammeShop()
+//    {
+//        return $this->gammeProductRepository->findAll();
+//    }
 
     public function getPriceItemIDSociety($item, $society)
     {
@@ -50,10 +51,10 @@ class ShopServices
 
     public function cartSociety($society, $item, $qty)
     {
-        $itemID = $this->itemRepository->findOneBy(['id' => $item]);
-        $cart = $this->orderDraftRepository->findOneBy(['idSociety' => $society]);
-        $cartItem = $this->orderDraftRepository->findOneBy(['idItem' => $itemID->getId()]);
-        $price = $this->itemPriceRepository->getPriceBySociety($item, $society);
+        $itemID   = $this->itemRepository->findOneBy([ 'id' => $item ]);
+        $cart     = $this->orderDraftRepository->findOneBy([ 'idSociety' => $society ]);
+        $cartItem = $this->orderDraftRepository->findOneBy([ 'idItem' => $itemID->getId() ]);
+        $price    = $this->itemPriceRepository->getPriceBySociety($item, $society);
         $quantity = $this->itemQuantityService->quantityItemSociety($item, $society);
 
 
@@ -62,6 +63,7 @@ class ShopServices
             $order->setIdItem($itemID)
                 ->setIdSociety($society)
                 ->setPrice($price->getPrice())
+                ->setPriceOrder($price->getPrice() * $qty)
                 ->setQuantity($qty)
                 ->setQuantityBundling($quantity->getQuantity())
                 ->setState(0);
@@ -69,7 +71,8 @@ class ShopServices
 
         if ($cartItem != null) {
             $order = $cartItem;
-            $order->setQuantity($qty);
+            $order->setQuantity($qty)
+                ->setPriceOrder($price->getPrice() * $qty);
         }
 
         $this->em->persist($order);
@@ -83,9 +86,11 @@ class ShopServices
 
     public function setOrderSociety($society)
     {
+        $orders = $this->orderDraftRepository->findBy([ 'idSociety' => $society->getId() ]);
 
-        $orders = $this->orderDraftRepository->findBy(['idSociety' => $society->getId()]);
-
+        if ($orders == []) {
+            return 'commande vide';
+        }
 
         $newOrder = new Order();
         $newOrder
@@ -102,7 +107,6 @@ class ShopServices
         $this->em->flush();
         $orderId = $newOrder->getId();
 
-
         foreach ($orders as $order) {
 
             $newOrderLine = new OrderLine();
@@ -117,13 +121,18 @@ class ShopServices
                 ->setPriceUnit($order->getPrice())//                ->setRemainingQtyOrder()
             ;
 
-
             $this->em->remove($order);
             $this->em->persist($newOrderLine);
             $this->em->flush();
         }
 
+    }
 
+    public function deleteItemOrderDraf($id)
+    {
+        $orders = $this->orderDraftRepository->findOneBy([ 'id' => $id ]);
+        $this->em->remove($orders);
+        $this->em->flush();
     }
 
 }

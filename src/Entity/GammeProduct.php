@@ -21,7 +21,6 @@ class GammeProduct
      */
     private $id;
 
-
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -60,7 +59,6 @@ class GammeProduct
     public function setLabelFR(?string $labelFR): self
     {
         $this->labelFR = $labelFR;
-
         return $this;
     }
 
@@ -72,7 +70,6 @@ class GammeProduct
     public function setLabelEN(?string $labelEN): self
     {
         $this->labelEN = $labelEN;
-
         return $this;
     }
 
@@ -114,7 +111,6 @@ class GammeProduct
     public function setRefID(string $refID): self
     {
         $this->refID = $refID;
-
         return $this;
     }
 }
