@@ -1,0 +1,34 @@
+
+.--scale-2x {
+    animation: scale2x .7s ease-out;
+    animation-iteration-count: 1;
+
+    -moz-animation: scale2x .7s ease-out;
+    -moz-animation-iteration-count: 1;
+
+    -webkit-animation: scale2x .7s ease-out;
+    -webkit-animation-iteration-count: 1;
+
+    -ms-animation: scale2x .7s ease-out;
+    -ms-animation-iteration-count: 1;
+}
+
+@keyframes scale2x {
+    50% { transform: scale(2.0); }
+    100% { transform: scale(1.0); }
+}
+
+@-webkit-keyframes scale2x {
+    50% { transform: scale(2.0); }
+    100% { transform: scale(1.0); }
+}
+
+@-moz-keyframes scale2x {
+    50% { transform: scale(2.0); }
+    100% { transform: scale(1.0); }
+}
+
+@-ms-keyframes scale2x {
+    50% { transform: scale(2.0); }
+    100% { transform: scale(1.0); }
+}
