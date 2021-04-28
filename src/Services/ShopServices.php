@@ -10,18 +10,21 @@ use App\Repository\GammeProductRepository;
 use App\Repository\ItemPriceRepository;
 use App\Repository\ItemRepository;
 use App\Repository\OrderDraftRepository;
+use App\Repository\OrderLineRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class ShopServices
+class ShopServices extends AbstractController
 {
     private ItemRepository $itemRepository;
-    private GammeProductRepository $gammeProductRepository;
     private ItemPriceRepository $itemPriceRepository;
     private OrderDraftRepository $orderDraftRepository;
     private EntityManagerInterface $em;
     private ItemQuantityService $itemQuantityService;
+    private OrderLineRepository $orderLineRepository;
 
-    public function __construct(ItemRepository $itemRepository, GammeProductRepository $gammeProductRepository, ItemPriceRepository $itemPriceRepository, OrderDraftRepository $orderDraftRepository, EntityManagerInterface $em, ItemQuantityService $itemQuantityService)
+
+    public function __construct(ItemRepository $itemRepository, GammeProductRepository $gammeProductRepository, ItemPriceRepository $itemPriceRepository, OrderDraftRepository $orderDraftRepository, EntityManagerInterface $em, ItemQuantityService $itemQuantityService, OrderLineRepository $orderLineRepository)
     {
         $this->itemRepository         = $itemRepository;
         $this->gammeProductRepository = $gammeProductRepository;
@@ -29,6 +32,7 @@ class ShopServices
         $this->orderDraftRepository   = $orderDraftRepository;
         $this->em                     = $em;
         $this->itemQuantityService    = $itemQuantityService;
+        $this->orderLineRepository    = $orderLineRepository;
     }
 
 
@@ -44,9 +48,7 @@ class ShopServices
 
     public function getPriceItemIDSociety($item, $society)
     {
-
         return $this->itemPriceRepository->getPriceBySociety($item, $society);
-
     }
 
     public function cartSociety($society, $item, $qty)
@@ -86,11 +88,17 @@ class ShopServices
 
     public function setOrderSociety($society)
     {
+
         $orders = $this->orderDraftRepository->findBy([ 'idSociety' => $society->getId() ]);
 
-        if ($orders == []) {
-            return 'commande vide';
+        if ($orders == [] || $orders[0]->getPriceOrder() == null) {
+
+            return [
+                'type' => 'error',
+                'msg'  => 'Commande vide',
+            ];
         }
+
 
         $newOrder = new Order();
         $newOrder
@@ -128,11 +136,16 @@ class ShopServices
 
     }
 
-    public function deleteItemOrderDraf($id)
+    public function deleteItemOrderDraft($id)
     {
         $orders = $this->orderDraftRepository->findOneBy([ 'id' => $id ]);
         $this->em->remove($orders);
         $this->em->flush();
+    }
+
+    public function deleteOrderLine($id)
+    {
+        $this->orderLineRepository->deleteOrderLine($id);
     }
 
 }

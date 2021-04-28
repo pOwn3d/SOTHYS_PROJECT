@@ -50,6 +50,16 @@ class OrderLineRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    public function deleteOrderLine($id){
+        return $this->createQueryBuilder('s')
+            ->delete('')
+            ->where('s.idOrder = :id')
+            ->setParameter("id", $id)
+            ->getQuery()
+            ->execute();
+
+    }
+
 
     // /**
     //  * @return OrderLine[] Returns an array of OrderLine objects

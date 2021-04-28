@@ -32,7 +32,12 @@ class ShopController extends AbstractController
     public function orderPublish(OrderDraftServices $orderDraftServices, ShopServices $shopServices): Response
     {
         $society = $this->getUser()->getSocietyID();
-        $shopServices->setOrderSociety($society);
+        $order   = $shopServices->setOrderSociety($society);
+
+        if ($order != null) {
+            $this->addFlash($order['type'], $order['msg']);
+            return $this->redirectToRoute('app_shop');
+        }
 
         return $this->redirectToRoute('app_order');
     }
@@ -40,13 +45,14 @@ class ShopController extends AbstractController
     /**
      * @Route("/order-edit/{id}", name="app_order_edit")
      */
-    public function orderEdit(Request $request, OrderServices $orderServices, OrderDraftServices $orderDraftServices): Response
+    public function orderEdit(Request $request, OrderServices $orderServices, OrderDraftServices $orderDraftServices, ShopServices $shopServices): Response
     {
         $id        = $request->get('id');
         $society   = $this->getUser()->getSocietyID();
         $order     = $orderServices->editOrderID($id);
         $orderLine = $orderServices->editOrderLineID($id);
         $orderDraftServices->editOrderDraft($order, $society, $orderLine);
+        $shopServices->deleteOrderLine($id);
 
         return $this->redirect('/shop');
     }
@@ -58,7 +64,7 @@ class ShopController extends AbstractController
     {
         // TODO : Checker si la société est bien celle de la personne qui supprime le produit.
         $id = $request->get('id');
-        $shopServices->deleteItemOrderDraf($id);
+        $shopServices->deleteItemOrderDraft($id);
         return $this->redirect('/shop');
     }
 
