@@ -34,7 +34,7 @@ class ShopController extends AbstractController
     public function orderPublish(OrderDraftServices $orderDraftServices, ShopServices $shopServices): Response
     {
         $society = $this->getUser()->getSocietyID();
-        $order   = $shopServices->setOrderSociety($society);
+        $order   = $shopServices->createOrder($society);
 
         if ($order != null) {
             $this->addFlash($order['type'], $order['msg']);
