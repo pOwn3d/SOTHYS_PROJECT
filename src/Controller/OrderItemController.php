@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\OrderLineRepository;
+use App\Services\Cart\CartItem;
 use App\Services\OrderServices;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,18 +17,21 @@ class OrderItemController extends AbstractController
      * @param Request             $request
      * @param OrderLineRepository $orderLineRepository
      * @param OrderServices       $orderServices
+     * @param CartItem            $cartItem
      *
      * @return Response
      */
-    public function index(Request $request, OrderLineRepository $orderLineRepository, OrderServices $orderServices): Response
+    public function index(Request $request, OrderLineRepository $orderLineRepository, OrderServices $orderServices, CartItem $cartItem): Response
     {
-        $id        = $request->get('id');
+        $id      = $request->get('id');
 
         return $this->render('order/order.item.html.twig', [
             'controller_name' => 'OrderItemController',
             'orders'          => $orderLineRepository->findAllByX3($id),
-            'orderX3'         =>$orderServices->getOrderByX3($id),
-            'orderSum'        =>$orderServices->getSumOrderLine($id)
+            'orderX3'         => $orderServices->getOrderByX3($id),
+            'orderSum'        => $orderServices->getSumOrderLine($id),
+            'cartItem'        => $cartItem->getItemCart($this->getUser()->getSocietyID())['0']['quantity']
+
         ]);
     }
 
@@ -36,19 +40,19 @@ class OrderItemController extends AbstractController
      * @param Request             $request
      * @param OrderServices       $orderServices
      * @param OrderLineRepository $orderLineRepository
+     * @param CartItem            $cartItem
      *
      * @return Response
      */
-    public function commandDraft(Request $request, OrderServices $orderServices, OrderLineRepository $orderLineRepository): Response
+    public function commandDraft(Request $request, OrderServices $orderServices, OrderLineRepository $orderLineRepository, CartItem $cartItem): Response
     {
-        $id        = $request->get('id');
-        $order     = $orderServices->getOrderByID($id);
-        $orderLine = $orderLineRepository->findByOrderID($id);
+        $id      = $request->get('id');
 
         return $this->render('order/order_draft.item.html.twig', [
             'controller_name' => 'OrderItemController',
-            'ordersLine'      => $orderLine,
-            'order'          => $order,
+            'ordersLine'      => $orderLineRepository->findByOrderID($id),
+            'order'           => $orderServices->getOrderByID($id),
+            'cartItem'        => $cartItem->getItemCart($this->getUser()->getSocietyID())['0']['quantity']
         ]);
     }
 }

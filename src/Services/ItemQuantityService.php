@@ -17,9 +17,6 @@ class ItemQuantityService
         $this->itemQuantityRepository = $itemQuantityRepository;
     }
 
-    /**
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
     public function quantityItemSociety($item, $society)
     {
         return $this->itemQuantityRepository->getPriceBySociety($item, $society);

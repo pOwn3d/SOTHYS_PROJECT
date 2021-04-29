@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\OrderRepository;
 use App\Services\Cart\CartItem;
 use App\Services\OrderDraftServices;
+use App\Services\OrderServices;
 use App\Services\ShopServices;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,14 +19,16 @@ class OrderController extends AbstractController
      * @Route("/mes-commandes", name="app_order")
      * @param OrderRepository $orderRepository
      * @param CartItem        $cartItem
+     * @param OrderServices   $orderServices
      *
      * @return Response
      */
-    public function index(OrderRepository $orderRepository, CartItem $cartItem): Response
+    public function index(OrderRepository $orderRepository, CartItem $cartItem, OrderServices $orderServices): Response
     {
         $society = $this->getUser()->getSocietyID()->getId();
         $orders  = null;
         $orders  = $orderRepository->findOrderCustomer($society);
+
 
         return $this->render('order/index.html.twig', [
             'controller_name' => 'OrderController',

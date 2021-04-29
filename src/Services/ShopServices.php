@@ -97,17 +97,23 @@ class ShopServices extends AbstractController
             ];
         }
 
+        $total = 0;
+        foreach ($orders as $order) {
+            $total += $order->getPrice();
+        }
+
 
         $newOrder = new Order();
         $newOrder
 //                ->setIdOrderX3()
 //                ->setIdOrder(666)
 //                ->setIdDownStatut()
+            ->setPriceOrder($total)
             ->setDateOrder(new \DateTime())
 //                ->setDateDelivery()
             ->setSocietyID($society)
             ->setIdStatut(1)
-            ->setReference("Je suis un test");
+            ->setReference("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias cum deleniti dolore maxime neque non porro praesentium quibusdam sunt? Autem dicta eos itaque tempore!");
 
         $this->em->persist($newOrder);
         $this->em->flush();

@@ -19,12 +19,10 @@ class ItemQuantityRepository extends ServiceEntityRepository
         parent::__construct($registry, ItemQuantity::class);
     }
 
-    /**
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
+
     public function getPriceBySociety($item, $society)
     {
-             return $this->createQueryBuilder('i')
+        return $this->createQueryBuilder('i')
             ->andWhere('i.IdSociety = :val')
             ->setParameter('val', $society)
             ->andWhere('i.idItem  = :item')

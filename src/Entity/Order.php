@@ -66,6 +66,11 @@ class Order
      */
     private $SocietyID;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $priceOrder;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -167,6 +172,18 @@ class Order
     public function setSocietyID(?Society $SocietyID): self
     {
         $this->SocietyID = $SocietyID;
+        return $this;
+    }
+
+    public function getPriceOrder(): ?float
+    {
+        return $this->priceOrder;
+    }
+
+    public function setPriceOrder(?float $priceOrder): self
+    {
+        $this->priceOrder = $priceOrder;
+
         return $this;
     }
 

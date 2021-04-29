@@ -24,7 +24,6 @@ class ItemController extends AbstractController
      * @param \App\Services\Cart\CartItem       $cartItem
      *
      * @return Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(Request $request, GammeProductServices $gammeProductServices, GammeServices $gammeServices, ShopServices $shopServices, ItemQuantityService $itemQuantityService, CartItem $cartItem): Response
     {
@@ -33,6 +32,7 @@ class ItemController extends AbstractController
         $id      = $request->get('id');
         $product = $gammeProductServices->getProductInfo($id);
         $gamme   = $gammeServices->getGammeID($product->getGamme()->getId());
+
 
         return $this->render('item/index.html.twig', [
             'controller_name' => 'ItemController',
