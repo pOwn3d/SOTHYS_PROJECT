@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\GammeProduct;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -22,26 +23,17 @@ class GammeProductRepository extends ServiceEntityRepository
     /**
      * @return GammeProduct[] Returns an array of GammeProduct objects
      */
-    public function findByStartingPrefix($value)
+    public function findGammeWithPrice($societyId)
     {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.refID LIKE :val')
-            ->setParameter('val', "$value%")
+        $query = $this->createQueryBuilder('g')
+            ->select('g, i')
+            ->join('g.items', 'i', Join::WITH, 'i.gamme = g.id')
+            ->join('i.itemPrices', 'p', Join::WITH, 'p.idItem = i.id AND p.idSociety = :societyId')
+            ->setParameter('societyId', $societyId)
             ->orderBy('g.id', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
+            ->getQuery();
+
+        return $query->getResult();
     }
 
-    /*
-    public function findOneBySomeField($value): ?GammeProduct
-    {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

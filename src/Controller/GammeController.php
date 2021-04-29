@@ -21,7 +21,7 @@ class GammeController extends AbstractController
      */
     public function index(Request $request, GammeServices $gammeServices, GammeProductServices $gammeProductServices): Response
     {
-        $products = $gammeProductServices->findByGammeId($request->get('gamme_id'));
+        $products = $gammeProductServices->findByGammeId($request->get('gamme_id'), $this->getUser()->getSocietyID());
         $gamme    = $gammeServices->getGammeID($request->get('gamme_id'));
 
         return $this->render('gamme/index.html.twig', [

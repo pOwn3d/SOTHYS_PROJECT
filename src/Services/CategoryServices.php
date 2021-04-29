@@ -18,9 +18,9 @@ class CategoryServices
         $this->gammeProductRepository = $gammeProductRepository;
     }
 
-    public function getGamme(string $prefix = 'SV')
+    public function getGamme($societyId)
     {
-        return $this->gammeProductRepository->findByStartingPrefix($prefix);
+        return $this->gammeProductRepository->findGammeWithPrice($societyId);
     }
 
 }
