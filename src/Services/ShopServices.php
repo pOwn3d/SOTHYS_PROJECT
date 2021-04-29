@@ -86,7 +86,7 @@ class ShopServices extends AbstractController
         return $this->orderDraftRepository->findOrderDraftSociety($society);
     }
 
-    public function setOrderSociety($society)
+    public function createOrder($society, $reference = "")
     {
 
         $orders = $this->orderDraftRepository->findBy([ 'idSociety' => $society->getId() ]);
@@ -102,7 +102,6 @@ class ShopServices extends AbstractController
             $total += $order->getPrice();
         }
 
-
         $newOrder = new Order();
         $newOrder
 //                ->setIdOrderX3()
@@ -113,7 +112,7 @@ class ShopServices extends AbstractController
 //                ->setDateDelivery()
             ->setSocietyID($society)
             ->setIdStatut(1)
-            ->setReference("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias cum deleniti dolore maxime neque non porro praesentium quibusdam sunt? Autem dicta eos itaque tempore!");
+            ->setReference($reference);
 
         $this->em->persist($newOrder);
         $this->em->flush();
