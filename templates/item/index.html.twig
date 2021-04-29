@@ -38,10 +38,12 @@
                             <li><strong>Quantité lot : </strong>
                                 <span>{{ quantity.quantity }} </span>
                             </li>
+                            <li><strong>Quantité : </strong>
+                                <input type="number" id="quantity" name="quantity" value="1">
+                            </li>
                         </ul>
                         <div class="button__wrapper" style="flex-wrap: wrap">
-                            <label for="quantity">Quantité</label><input type="number" id="quantity" name="quantity">
-                            <a href="{{ path('app_add_to_cart_id', { 'item': product.id ,  'qty': "qty" }) }} " id="addToCart" class="button button--small">Ajouter au panier</a>
+                            <a href="{{ path('app_add_to_cart_id', { 'item': product.id ,  'qty': "qty" }) }} " id="addToCart" class="button button--primary-fill button--small modal--show add-to-cart">Ajouter au panier</a>
                         </div>
                         {% endif %}
                     </div>

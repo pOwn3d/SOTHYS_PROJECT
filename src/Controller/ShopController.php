@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Services\Cart\CartItem;
 use App\Services\OrderDraftServices;
 use App\Services\OrderServices;
 use App\Services\ShopServices;
@@ -15,7 +16,7 @@ class ShopController extends AbstractController
     /**
      * @Route("/shop", name="app_shop")
      */
-    public function index(ShopServices $shopServices): Response
+    public function index(ShopServices $shopServices, CartItem $cartItem): Response
     {
         $society = $this->getUser()->getSocietyID();
         $orders  = $shopServices->getOrderDraft($society);
@@ -23,6 +24,7 @@ class ShopController extends AbstractController
         return $this->render('shop/index.html.twig', [
             'controller_name' => 'ShopController',
             'orders'          => $orders,
+            'cartItem'        => $cartItem->getItemCart($society)['0']['quantity']
         ]);
     }
 

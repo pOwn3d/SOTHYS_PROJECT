@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Repository\OrderRepository;
+use App\Services\Cart\CartItem;
 use App\Services\OrderDraftServices;
-use App\Services\SessionServices;
 use App\Services\ShopServices;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,24 +17,20 @@ class OrderController extends AbstractController
     /**
      * @Route("/mes-commandes", name="app_order")
      * @param OrderRepository $orderRepository
+     * @param CartItem        $cartItem
      *
      * @return Response
      */
-    public function index(OrderRepository $orderRepository, SessionServices $sessionServices): Response
+    public function index(OrderRepository $orderRepository, CartItem $cartItem): Response
     {
-        if ($this->getUser()->getSocietyID() != null) {
-            $idSociety = $this->getUser()->getSocietyID()->getId();
-            $orders    = $orderRepository->findOrderCustomer($idSociety);
-        } else {
-            $orders = null;
-        }
-
-
+        $society = $this->getUser()->getSocietyID()->getId();
+        $orders  = null;
+        $orders  = $orderRepository->findOrderCustomer($society);
 
         return $this->render('order/index.html.twig', [
             'controller_name' => 'OrderController',
             'orders'          => $orders,
-            'itemCart'        => $sessionServices->getSession()
+            'cartItem'        => $cartItem->getItemCart($society)['0']['quantity']
         ]);
     }
 
@@ -43,18 +39,18 @@ class OrderController extends AbstractController
      * @param Request            $request
      * @param ShopServices       $shopServices
      * @param OrderDraftServices $orderDraftServices
+     * @param CartItem           $cartItem
      *
      * @return JsonResponse
      */
-    public function addToCart(Request $request, ShopServices $shopServices, OrderDraftServices $orderDraftServices): JsonResponse
+    public function addToCart(Request $request, ShopServices $shopServices, OrderDraftServices $orderDraftServices, CartItem $cartItem): JsonResponse
     {
-        $qty     = $request->get('qty');
+
         $item    = $request->get('item');
         $society = $this->getUser()->getSocietyID();
-        $shopServices->cartSociety($society, $item, $qty);
+        $shopServices->cartSociety($society, $item, $request->get('qty'));
         $orders = $orderDraftServices->getOrderDraftID($society->getId(), $item);
         $sum    = $orderDraftServices->getSumOrderDraft($society->getId());
-//        $sessionServices->updateSession($orderDraftServices->getSumItemOrderDraft($society->getId()));
 
         $data = [
             'total'            => $sum[0]['price'],
@@ -62,7 +58,7 @@ class OrderController extends AbstractController
             'price'            => $orders->getPrice(),
             'quantityBundling' => $orders->getQuantityBundling(),
             'id'               => $orders->getId(),
-//            'itemCart'         => $sessionServices->getSession()
+            'cartItem'         => $cartItem->getItemCart($society)['0']['quantity']
         ];
 
         return new JsonResponse(json_encode($data));

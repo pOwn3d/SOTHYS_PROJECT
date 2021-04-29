@@ -9,9 +9,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }} ">
     {% endblock %}
 </head>
-
 <body>
-
 <header>
     <div class="header__top">
         <div class="container">
@@ -36,7 +34,7 @@
                                         <i class="icon icon-panier">
                                             <span class="hidden">mon panier</span>
                                         </i>
-{#                                        <span>{{ itemCart }}</span>#}
+                                        <span id="cartItem">{{ cartItem|default('0') }}</span>
                                     </a>
                                 </li>
                                 <li class="account__access_button d-none d-lg-block">

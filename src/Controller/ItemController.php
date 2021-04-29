@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Services\Cart\CartItem;
 use App\Services\GammeProductServices;
 use App\Services\GammeServices;
 use App\Services\ItemQuantityService;
@@ -20,25 +21,26 @@ class ItemController extends AbstractController
      * @param GammeServices                     $gammeServices
      * @param ShopServices                      $shopServices
      * @param \App\Services\ItemQuantityService $itemQuantityService
+     * @param \App\Services\Cart\CartItem       $cartItem
      *
      * @return Response
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function index(Request $request, GammeProductServices $gammeProductServices, GammeServices $gammeServices, ShopServices $shopServices, ItemQuantityService $itemQuantityService): Response
+    public function index(Request $request, GammeProductServices $gammeProductServices, GammeServices $gammeServices, ShopServices $shopServices, ItemQuantityService $itemQuantityService, CartItem $cartItem): Response
     {
-        $society   = $this->getUser()->getSocietyID()->getId();
-        $id        = $request->get('id');
-        $product   = $gammeProductServices->getProductInfo($id);
-        $gamme     = $gammeServices->getGammeID($product->getGamme()->getId());
-        $itemPrice = $shopServices->getPriceItemIDSociety($id, $society);
-        $quantity  = $itemQuantityService->quantityItemSociety($id, $society);
+
+        $society = $this->getUser()->getSocietyID()->getId();
+        $id      = $request->get('id');
+        $product = $gammeProductServices->getProductInfo($id);
+        $gamme   = $gammeServices->getGammeID($product->getGamme()->getId());
 
         return $this->render('item/index.html.twig', [
             'controller_name' => 'ItemController',
             'product'         => $product,
             'gamme'           => $gamme,
-            'itemPrice'       => $itemPrice,
-            'quantity'        => $quantity
+            'itemPrice'       => $shopServices->getPriceItemIDSociety($id, $society),
+            'quantity'        => $itemQuantityService->quantityItemSociety($id, $society),
+            'cartItem'        => $cartItem->getItemCart($society)['0']['quantity']
         ]);
 
     }

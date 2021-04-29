@@ -13,21 +13,18 @@ class GammeController extends AbstractController
 {
     /**
      * @Route("/gamme/{gamme_id}", name="app_gamme")
-     * @param Request         $request
-     * @param GammeServices   $gammeServices
+     * @param Request              $request
+     * @param GammeServices        $gammeServices
      * @param GammeProductServices $gammeProductServices
      *
      * @return Response
      */
     public function index(Request $request, GammeServices $gammeServices, GammeProductServices $gammeProductServices): Response
     {
-        $products = $gammeProductServices->findByGammeId($request->get('gamme_id'));
-        $gamme    = $gammeServices->getGammeID($request->get('gamme_id'));
-
         return $this->render('gamme/index.html.twig', [
             'controller_name' => 'GammeController',
-            'gamme'           => $gamme,
-            'products'        => $products
+            'gamme'           => $gammeServices->getGammeID($request->get('gamme_id')),
+            'products'        => $gammeProductServices->findByGammeId($request->get('gamme_id')),
         ]);
     }
 }

@@ -90,9 +90,7 @@ class ShopServices extends AbstractController
     {
 
         $orders = $this->orderDraftRepository->findBy([ 'idSociety' => $society->getId() ]);
-
-        if ($orders == [] || $orders[0]->getPriceOrder() == null) {
-
+        if ($orders == []) {
             return [
                 'type' => 'error',
                 'msg'  => 'Commande vide',
