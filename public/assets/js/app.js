@@ -109,6 +109,11 @@ $(document).ready(function () {
     });
 
 
+    $("#reference").focusout(function () {
+
+        console.log("la")
+    })
+
 });
 
 

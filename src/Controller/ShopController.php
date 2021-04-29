@@ -31,7 +31,7 @@ class ShopController extends AbstractController
     /**
      * @Route("/order-publish", name="app_order_publish")
      */
-    public function orderPublish(OrderDraftServices $orderDraftServices, ShopServices $shopServices): Response
+    public function orderPublish(ShopServices $shopServices): Response
     {
         $society = $this->getUser()->getSocietyID();
         $order   = $shopServices->createOrder($society);

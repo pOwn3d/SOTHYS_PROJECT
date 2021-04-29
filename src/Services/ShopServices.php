@@ -57,7 +57,12 @@ class ShopServices extends AbstractController
         $cart     = $this->orderDraftRepository->findOneBy([ 'idSociety' => $society ]);
         $cartItem = $this->orderDraftRepository->findOneBy([ 'idItem' => $itemID->getId() ]);
         $price    = $this->itemPriceRepository->getPriceBySociety($item, $society);
-        $quantity = $this->itemQuantityService->quantityItemSociety($item, $society);
+
+        if ($this->itemQuantityService->quantityItemSociety($item, $society) == null) {
+            $quantity = '1';
+        } else {
+            $quantity = $this->itemQuantityService->quantityItemSociety($item, $society)->getQuantity();
+        }
 
 
         if ($cart == null || $cartItem == null) {
@@ -67,7 +72,7 @@ class ShopServices extends AbstractController
                 ->setPrice($price->getPrice())
                 ->setPriceOrder($price->getPrice() * $qty)
                 ->setQuantity($qty)
-                ->setQuantityBundling($quantity->getQuantity())
+                ->setQuantityBundling($quantity)
                 ->setState(0);
         }
 
