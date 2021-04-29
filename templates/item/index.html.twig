@@ -31,12 +31,12 @@
                             <li><strong>Description : </strong>
                                 <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores dicta eius ipsa maxime minus officia quo sequi sit temporibus? Culpa debitis doloremque ea fugit impedit incidunt ipsam, non provident sapiente?</span>
                             </li>
-                            {% if quantity  != null  and  itemPrice != null %}
+                            {% if  itemPrice != null %}
                             <li><strong>Prix : </strong>
                                 <span>{{ itemPrice.price }} €</span>
                             </li>
                             <li><strong>Quantité groupage : </strong>
-                                <span>{{ quantity.quantity }} </span>
+                                <span>{{ quantity.quantity|default(1)}} </span>
                             </li>
                             <li><strong>Quantité : </strong>
                                 <input type="number" id="quantity" name="quantity" value="1">

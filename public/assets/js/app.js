@@ -10,14 +10,14 @@ $(document).ready(function () {
             method: "POST",
             url: res,
             success: function (result) {
-                var data                                                     = JSON.parse(result)
+                var data = JSON.parse(result)
                 console.log(result)
                 console.log('ok')
-                document.getElementById('cartItem').innerHTML     = data.cartItem
+                document.getElementById('cartItem').innerHTML = data.cartItem
                 $('.cart__access').removeClass('--scale-2x');
-                setTimeout(() =>{
+                setTimeout(() => {
                     $('.cart__access').addClass('--scale-2x');
-                },10);
+                }, 10);
             },
         });
     });
@@ -35,17 +35,16 @@ $(document).ready(function () {
                                 method: "POST",
                                 url: url,
                                 success: function (result) {
-
                                     var data                                                     = JSON.parse(result)
                                     document.getElementById('qty_update_' + product).innerHTML   = data.quantity + ' x ' + data.quantityBundling
                                     document.getElementById('price_update_' + product).innerHTML = (data.price * data.quantity).toFixed(2) + ' € '
                                     document.getElementById('priceTotal').innerHTML              = data.total + ' € '
-                                   document.getElementById('cartItem').innerHTML     = data.cartItem
+                                    document.getElementById('cartItem').innerHTML                = data.cartItem
 
                                     $('.cart__access').removeClass('--scale-2x');
-                                    setTimeout(() =>{
+                                    setTimeout(() => {
                                         $('.cart__access').addClass('--scale-2x');
-                                    },10);
+                                    }, 10);
                                 },
                             });
                             t.trigger("change")
@@ -73,11 +72,11 @@ $(document).ready(function () {
                                 document.getElementById('qty_update_' + product).innerHTML   = data.quantity + ' x ' + data.quantityBundling
                                 document.getElementById('price_update_' + product).innerHTML = (data.price * data.quantity).toFixed(2) + ' € '
                                 document.getElementById('priceTotal').innerHTML              = data.total + ' € '
-                                document.getElementById('cartItem').innerHTML     = data.cartItem
+                                document.getElementById('cartItem').innerHTML                = data.cartItem
                                 $('.cart__access').removeClass('--scale-2x');
-                                setTimeout(() =>{
+                                setTimeout(() => {
                                     $('.cart__access').addClass('--scale-2x');
-                                },10);
+                                }, 10);
                             },
                         });
                         t.trigger("change")
@@ -100,11 +99,11 @@ $(document).ready(function () {
                 document.getElementById('qty_update_' + product).innerHTML   = data.quantity + ' x ' + data.quantityBundling
                 document.getElementById('price_update_' + product).innerHTML = (data.price * data.quantity).toFixed(2) + ' € '
                 document.getElementById('priceTotal').innerHTML              = data.total + ' € '
-                document.getElementById('cartItem').innerHTML     = data.cartItem
+                document.getElementById('cartItem').innerHTML                = data.cartItem
                 $('.cart__access').removeClass('--scale-2x');
-                setTimeout(() =>{
+                setTimeout(() => {
                     $('.cart__access').addClass('--scale-2x');
-                },10);
+                }, 10);
             },
         });
     });
