@@ -90,35 +90,13 @@
                                         </a>
                                     </li>
                                     <li class="menu-item menu-item--has-child">
-                                        <a>Soins</a>
+                                        <a>Produits</a>
                                         <div class="menu-item__submenu">
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="col-12 col-lg-3">
                                                         <ul class="menu-item__submenu--large">
-                                                            {% for gamme in categories.getGamme() %}
-                                                                <li class="menu-item__submenu-item">
-                                                                    <a href="{{ path('app_gamme', {
-                                                                        gamme_id: gamme.id
-                                                                    }) }}" class="nav-link">
-                                                                        {{ gamme.labelFR }}
-                                                                    </a>
-                                                                </li>
-                                                            {% endfor %}
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="menu-item menu-item--has-child">
-                                        <a href="test">Maquillage</a>
-                                        <div class="menu-item__submenu">
-                                            <div class="container">
-                                                <div class="row">
-                                                    <div class="col-12 col-lg-3">
-                                                        <ul class="menu-item__submenu--large">
-                                                            {% for gamme in categories.getGamme('M') %}
+                                                            {% for gamme in categories.getGamme(app.user.societyID) %}
                                                                 <li class="menu-item__submenu-item">
                                                                     <a href="{{ path('app_gamme', {
                                                                         gamme_id: gamme.id

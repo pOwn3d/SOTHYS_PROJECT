@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Item;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -22,11 +23,13 @@ class ItemRepository extends ServiceEntityRepository
     /**
      * @return Item[] Returns an array of Item objects
      */
-    public function findByGammeId($value): array
+    public function findByGammeId($value, $societyId): array
     {
         return $this->createQueryBuilder('i')
             ->leftJoin('i.gamme', 'gamme')
+            ->join('i.itemPrices', 'p', Join::WITH, 'p.idItem = i.id AND p.idSociety = :societyId')
             ->andWhere('gamme.id = :val')
+            ->setParameter('societyId', $societyId)
             ->setParameter('val', $value)
             ->orderBy('i.id', 'ASC')
             ->setMaxResults(10)
@@ -34,17 +37,4 @@ class ItemRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
-
-    /*
-    public function findOneBySomeField($value): ?Item
-    {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

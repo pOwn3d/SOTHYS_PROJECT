@@ -25,9 +25,9 @@ class GammeProductServices
         return $this->itemRepository->findOneBy([ 'id' => $id ]);
     }
 
-    public function findByGammeId($id): array
+    public function findByGammeId($id, $societyId): array
     {
-        return $this->itemRepository->findByGammeId($id);
+        return $this->itemRepository->findByGammeId($id, $societyId);
     }
 
 }
