@@ -22,13 +22,19 @@ class ItemQuantityRepository extends ServiceEntityRepository
 
     public function getPriceBySociety($item, $society)
     {
-        return $this->createQueryBuilder('i')
+        $sql = $this->createQueryBuilder('i')
             ->andWhere('i.IdSociety = :val')
             ->setParameter('val', $society)
             ->andWhere('i.idItem  = :item')
             ->setParameter('item', $item)
+            ->setMaxResults(1)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
+
+        if (empty($sql)) {
+            return null;
+        }
+        return $sql['0'];
     }
 
     // /**

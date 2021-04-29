@@ -31,13 +31,12 @@ class ItemController extends AbstractController
         $society = $this->getUser()->getSocietyID()->getId();
         $id      = $request->get('id');
         $product = $gammeProductServices->getProductInfo($id);
-        $gamme   = $gammeServices->getGammeID($product->getGamme()->getId());
 
 
         return $this->render('item/index.html.twig', [
             'controller_name' => 'ItemController',
             'product'         => $product,
-            'gamme'           => $gamme,
+            'gamme'           => $gammeServices->getGammeID($product->getGamme()->getId()),
             'itemPrice'       => $shopServices->getPriceItemIDSociety($id, $society),
             'quantity'        => $itemQuantityService->quantityItemSociety($id, $society),
             'cartItem'        => $cartItem->getItemCart($society)['0']['quantity']

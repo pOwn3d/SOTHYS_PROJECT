@@ -34,7 +34,30 @@ class ItemRepository extends ServiceEntityRepository
             ->orderBy('i.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
+
+//    public function findProduct($id)
+//    {
+//        $x = $this->createQueryBuilder('i')
+//            ->andWhere('i. = :val')
+//            ->setParameter('val', $id)
+//            ->andWhere('itemQuantities')
+//            ->orderBy()
+//            ->getQuery()
+//            ->getResult();
+//    }
+//        dd($id);
+//
+//        $x = $this->createQueryBuilder('i')
+//            ->andWhere('i. = :val')
+//            ->setParameter('val', $id)
+//            ->orderBy('i.idItem', 'ASC')
+//            ->setMaxResults(1)
+//            ->getQuery()
+//            ->getResult();
+//
+//        dd($x);
+//
+//    }
 }
