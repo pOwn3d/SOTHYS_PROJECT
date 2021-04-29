@@ -176,15 +176,15 @@ class CsvImporter
             if ($row[0] != "" && $row[1] != "") {
                 $item = null;
 
-                $foundItems = array_filter($items, function($item) use ($row) {
+                $foundItems = array_filter($items, function ($item) use ($row) {
                     return $item->getItemID() == $row[2];
                 });
 
-                if(count($foundItems)) {
+                if (count($foundItems)) {
                     $item = array_shift($foundItems);
                 }
 
-                if($item == null) {
+                if ($item == null) {
                     continue;
                 }
 
@@ -212,18 +212,17 @@ class CsvImporter
         $gammes = $this->em->getRepository(GammeProduct::class)->findAll();
         $divers = $this->em->getRepository(GammeProduct::class)->findOneBy([ 'refID' => 'DIVERS' ]);
 
-
         foreach ($csv as $row) {
 
             $product = new Item();
-            $gamme = null;
+            $gamme   = null;
             if ($row[8] != null) {
                 $gammeString = $row[0];
-                $foundGammes = array_filter($gammes, function($gamme) use ($row) {
+                $foundGammes = array_filter($gammes, function ($gamme) use ($row) {
                     return $gamme->getRefID() == $row[8];
                 });
 
-                if(count($foundGammes)) {
+                if (count($foundGammes)) {
                     $gamme = array_shift($foundGammes);
                 }
             } else {
@@ -256,7 +255,7 @@ class CsvImporter
         $csv->fetchColumn();
 
         $companies = $this->em->getRepository(Society::class)->findAll();
-        $items = $this->em->getRepository(Item::class)->findAll();
+        $items     = $this->em->getRepository(Item::class)->findAll();
 
         $i = 0;
         foreach ($csv as $row) {
@@ -265,21 +264,21 @@ class CsvImporter
 
             $item = null;
 
-            $foundItems = array_filter($items, function($item) use ($row) {
+            $foundItems = array_filter($items, function ($item) use ($row) {
                 return $item->getItemID() == $row[1];
             });
 
-            if(count($foundItems)) {
+            if (count($foundItems)) {
                 $item = array_shift($foundItems);
             }
 
             $company = null;
 
-            $foundCompanies = array_filter($companies, function($company) use ($row) {
+            $foundCompanies = array_filter($companies, function ($company) use ($row) {
                 return $company->getIdCustomer() == $row[0];
             });
 
-            if(count($foundCompanies)) {
+            if (count($foundCompanies)) {
                 $company = array_shift($foundCompanies);
             }
 
@@ -296,7 +295,7 @@ class CsvImporter
             }
             $i++;
 
-            if($i % 4000 == 0) {
+            if ($i % 4000 == 0) {
                 $this->em->flush();
                 $this->em->clear(ItemPrice::class);
             }
@@ -311,7 +310,7 @@ class CsvImporter
         $csv->fetchColumn();
 
         $companies = $this->em->getRepository(Society::class)->findAll();
-        $items = $this->em->getRepository(Item::class)->findAll();
+        $items     = $this->em->getRepository(Item::class)->findAll();
 
         $i = 0;
         foreach ($csv as $row) {
@@ -319,21 +318,21 @@ class CsvImporter
 
             $item = null;
 
-            $foundItems = array_filter($items, function($item) use ($row) {
+            $foundItems = array_filter($items, function ($item) use ($row) {
                 return $item->getItemID() == $row[1];
             });
 
-            if(count($foundItems)) {
+            if (count($foundItems)) {
                 $item = array_shift($foundItems);
             }
 
             $company = null;
 
-            $foundCompanies = array_filter($companies, function($company) use ($row) {
+            $foundCompanies = array_filter($companies, function ($company) use ($row) {
                 return $company->getIdCustomer() == $row[0];
             });
 
-            if(count($foundCompanies)) {
+            if (count($foundCompanies)) {
                 $company = array_shift($foundCompanies);
             }
 
@@ -347,7 +346,7 @@ class CsvImporter
 
             $i++;
 
-            if($i % 4000 == 0) {
+            if ($i % 4000 == 0) {
                 $this->em->flush();
                 $this->em->clear(ItemQuantity::class);
             }

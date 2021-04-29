@@ -110,7 +110,7 @@ class CsvImporterController extends AbstractController
     public function importItemPrice(CsvImporter $csvImporter): Response
     {
         $csvImporter->importItemPrice();
-        dd();
+        dd('la');
     }
 
 
