@@ -1,3 +1,7 @@
+.menu-item__submenu-item {
+    display: inline-block;
+    width: 49%;
+}
 
 .--scale-2x {
     animation: scale2x .7s ease-out;
