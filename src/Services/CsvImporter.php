@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Entity\GammeProduct;
+use App\Entity\Intercom;
 use App\Entity\Item;
 use App\Entity\ItemPrice;
 use App\Entity\ItemQuantity;
@@ -353,5 +354,46 @@ class CsvImporter
         }
 
         $this->em->flush();
+    }
+
+
+    public function importIntercom()
+    {
+        $csv = Reader::createFromPath('../public/csv/intercom.csv');
+        $csv->fetchColumn();
+
+        foreach ($csv as $row) {
+            $gamme = new Intercom();
+            $gamme
+                ->setReference($row[0]);
+            $this->em->persist($gamme);
+            $this->em->flush();
+        }
+    }
+
+    public function customerImportIntercom()
+    {
+        $csv = Reader::createFromPath('../public/csv/customerIntercom.csv');
+        $csv->fetchColumn();
+
+
+
+        foreach ($csv as $row) {
+
+
+            $society = $this->em->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[1] ]);
+
+            dd($society);
+
+//            $gamme = new CustomerIntercom();
+
+//            $gamme
+//                ->setIntercomSociety($companies)
+//                ->setReference($row[3])
+//                ->setCity($row[4])
+//            ;
+//            $this->em->persist($gamme);
+//            $this->em->flush();
+        }
     }
 }

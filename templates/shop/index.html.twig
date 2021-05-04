@@ -5,15 +5,11 @@
     <section class="section section--checkout">
         <div class="container">
             {% include 'flash_messages.html.twig' %}
-{#            <div>#}
-{#                <p>Référence </p>#}
-{#                <input type="text" id="reference">#}
-{#            </div>#}
-            <div class="row">
 
-                <div class="col-12 col-md-8">
-                    <div class="cart--checkout-table">
-                        <form action="#" class="">
+            <form action="#" class="">
+                <div class="row">
+                    <div class="col-12 col-md-8">
+                        <div class="cart--checkout-table">
                             <table class="cart--table  table-responsive">
                                 <thead>
                                 <tr>
@@ -63,7 +59,7 @@
                                             <span class="text--category">  {{ order.price }} €</span>
                                         </td>
                                         <td class="product-priceTotal">
-                                            <span class="text--category" id="price_update_{{ order.idItem.id }}">{{ order.price *  order.quantity|round  }} € </span>
+                                            <span class="text--category" id="price_update_{{ order.idItem.id }}">{{ order.price *  order.quantity|round }} € </span>
                                         </td>
                                         <td>
                                             <a href="{{ path('app_order_product_delete', { 'id': order.id }) }}"><i class="icon icon-close"></i></a>
@@ -72,39 +68,39 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
-                        </form>
+            </form>
+        </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="cart--checkout-total">
+                <div class="cart--totals cart--totals-default">
+                    <h3>Récapitulatif panier</h3>
+                    <table class="table-responsive cart--table-totals">
+                        <tbody>
+                        <tr class="cart-subtotal">
+                            {# <th>Sous-total</th> #}
+                            {# <td> #}
+                            {# </td> #}
+                        </tr>
+                        <tr class="order-total">
+                            <th>
+                                Total
+                            </th>
+                            <td>
+                                <span class="price total" id="priceTotal">{{ total }} €</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="checkout-wrapper">
+                        <a href="{{ path("app_order_publish") }}" class=" checkout button button--primary-fill">
+                            Valider ma commande </a>
                     </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="cart--checkout-total">
-                        <div class="cart--totals cart--totals-default">
-                            <h3>Récapitulatif panier</h3>
-                            <table class="table-responsive cart--table-totals">
-                                <tbody>
-                                <tr class="cart-subtotal">
-{#                                    <th>Sous-total</th>#}
-{#                                    <td>#}
-{#                                    </td>#}
-                                </tr>
-                                <tr class="order-total">
-                                    <th>
-                                        Total
-                                    </th>
-                                    <td>
-                                        <span class="price total" id="priceTotal">{{ total}} €</span>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <div class="checkout-wrapper">
-                                <a href="{{ path("app_order_publish") }}" class=" checkout button button--primary-fill">
-                                    Valider ma commande </a>
-                            </div>
-                            <br>
-                        </div>
-                    </div>
+                    <br>
                 </div>
             </div>
+        </div>
+        </div>
         </div>
     </section>
 

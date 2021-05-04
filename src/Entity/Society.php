@@ -56,6 +56,17 @@ class Society
      */
     private $orderDrafts;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Quote::class, mappedBy="society")
+     */
+    private $quotes;
+
+    /**
+     * @ORM\OneToMany(targetEntity=CustomerIntercom::class, mappedBy="intercomSociety")
+     */
+    private $customerIntercoms;
+
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -63,6 +74,8 @@ class Society
         $this->itemPrices = new ArrayCollection();
         $this->itemQuantities = new ArrayCollection();
         $this->orderDrafts = new ArrayCollection();
+        $this->quotes = new ArrayCollection();
+        $this->customerIntercoms = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -237,5 +250,67 @@ class Society
         }
         return $this;
     }
+
+    /**
+     * @return Collection|Quote[]
+     */
+    public function getQuotes(): Collection
+    {
+        return $this->quotes;
+    }
+
+    public function addQuote(Quote $quote): self
+    {
+        if (!$this->quotes->contains($quote)) {
+            $this->quotes[] = $quote;
+            $quote->setSociety($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuote(Quote $quote): self
+    {
+        if ($this->quotes->removeElement($quote)) {
+            // set the owning side to null (unless already changed)
+            if ($quote->getSociety() === $this) {
+                $quote->setSociety(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CustomerIntercom[]
+     */
+    public function getCustomerIntercoms(): Collection
+    {
+        return $this->customerIntercoms;
+    }
+
+    public function addCustomerIntercom(CustomerIntercom $customerIntercom): self
+    {
+        if (!$this->customerIntercoms->contains($customerIntercom)) {
+            $this->customerIntercoms[] = $customerIntercom;
+            $customerIntercom->setIntercomSociety($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCustomerIntercom(CustomerIntercom $customerIntercom): self
+    {
+        if ($this->customerIntercoms->removeElement($customerIntercom)) {
+            // set the owning side to null (unless already changed)
+            if ($customerIntercom->getIntercomSociety() === $this) {
+                $customerIntercom->setIntercomSociety(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 
 }
