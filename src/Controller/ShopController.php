@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\OrderType;
 use App\Services\Cart\CartItem;
 use App\Services\OrderDraftServices;
 use App\Services\OrderServices;
@@ -14,13 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class ShopController extends AbstractController
 {
     /**
-     * @Route("/shop", name="app_shop")
+     * @Route("/panier", name="app_shop")
      */
     public function index(ShopServices $shopServices, CartItem $cartItem): Response
     {
         $society = $this->getUser()->getSocietyID();
         $orders  = $shopServices->getOrderDraft($society);
-
         return $this->render('shop/index.html.twig', [
             'controller_name' => 'ShopController',
             'orders'          => $orders,
@@ -28,10 +28,34 @@ class ShopController extends AbstractController
         ]);
     }
 
+//    /**
+//     * @Route("/order-publish", name="app_order_publish")
+//     */
+//    public function orderPublish(CartItem $cartItem, Request $request): Response
+//    {
+//        $society = $this->getUser()->getSocietyID();
+//
+//
+//        $form = $this->createForm(OrderType::class);
+//        $form->handleRequest($request);
+//
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            dd($form->getData());
+//        }
+//
+//
+//        return $this->render('shop/shop.html.twig', [
+//            'controller_name' => 'ShopController',
+//            'cartItem'        => $cartItem->getItemCart($society)['0']['quantity'],
+//            'form'            => $form->createView(),
+//        ]);
+//    }
+
     /**
      * @Route("/order-publish", name="app_order_publish")
      */
-    public function orderPublish(ShopServices $shopServices): Response
+    public function orderSave(ShopServices $shopServices): Response
     {
         $society = $this->getUser()->getSocietyID();
         $order   = $shopServices->createOrder($society);
@@ -56,7 +80,7 @@ class ShopController extends AbstractController
         $orderDraftServices->editOrderDraft($order, $society, $orderLine);
         $shopServices->deleteOrderLine($id);
 
-        return $this->redirect('/shop');
+        return $this->redirect('/panier');
     }
 
     /**
@@ -67,7 +91,7 @@ class ShopController extends AbstractController
         // TODO : Checker si la société est bien celle de la personne qui supprime le produit.
         $id = $request->get('id');
         $shopServices->deleteItemOrderDraft($id);
-        return $this->redirect('/shop');
+        return $this->redirect('/panier');
     }
 
 

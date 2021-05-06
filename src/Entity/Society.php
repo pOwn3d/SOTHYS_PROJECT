@@ -62,9 +62,9 @@ class Society
     private $quotes;
 
     /**
-     * @ORM\OneToMany(targetEntity=CustomerIntercom::class, mappedBy="intercomSociety")
+     * @ORM\OneToMany(targetEntity=CustomerIncoterm::class, mappedBy="societyCustomerIncoterm")
      */
-    private $customerIntercoms;
+    private $customerIncoterms;
 
 
     public function __construct()
@@ -75,7 +75,7 @@ class Society
         $this->itemQuantities = new ArrayCollection();
         $this->orderDrafts = new ArrayCollection();
         $this->quotes = new ArrayCollection();
-        $this->customerIntercoms = new ArrayCollection();
+        $this->customerIncoterms = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -282,35 +282,34 @@ class Society
     }
 
     /**
-     * @return Collection|CustomerIntercom[]
+     * @return Collection|CustomerIncoterm[]
      */
-    public function getCustomerIntercoms(): Collection
+    public function getCustomerIncoterms(): Collection
     {
-        return $this->customerIntercoms;
+        return $this->customerIncoterms;
     }
 
-    public function addCustomerIntercom(CustomerIntercom $customerIntercom): self
+    public function addCustomerIncoterm(CustomerIncoterm $customerIncoterm): self
     {
-        if (!$this->customerIntercoms->contains($customerIntercom)) {
-            $this->customerIntercoms[] = $customerIntercom;
-            $customerIntercom->setIntercomSociety($this);
+        if (!$this->customerIncoterms->contains($customerIncoterm)) {
+            $this->customerIncoterms[] = $customerIncoterm;
+            $customerIncoterm->setSocietyCustomerIncoterm($this);
         }
 
         return $this;
     }
 
-    public function removeCustomerIntercom(CustomerIntercom $customerIntercom): self
+    public function removeCustomerIncoterm(CustomerIncoterm $customerIncoterm): self
     {
-        if ($this->customerIntercoms->removeElement($customerIntercom)) {
+        if ($this->customerIncoterms->removeElement($customerIncoterm)) {
             // set the owning side to null (unless already changed)
-            if ($customerIntercom->getIntercomSociety() === $this) {
-                $customerIntercom->setIntercomSociety(null);
+            if ($customerIncoterm->getSocietyCustomerIncoterm() === $this) {
+                $customerIncoterm->setSocietyCustomerIncoterm(null);
             }
         }
 
         return $this;
     }
-
 
 
 }

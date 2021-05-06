@@ -59,6 +59,11 @@ class OrderLine
      */
     private $itemID;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=OrderDraft::class, inversedBy="orderLines")
+     */
+    private $orderDraftID;
+
 
     public function getId(): ?int
     {
@@ -150,6 +155,18 @@ class OrderLine
     public function setItemID($itemID)
     {
         $this->itemID = $itemID;
+        return $this;
+    }
+
+    public function getOrderDraftID(): ?OrderDraft
+    {
+        return $this->orderDraftID;
+    }
+
+    public function setOrderDraftID(?OrderDraft $orderDraftID): self
+    {
+        $this->orderDraftID = $orderDraftID;
+
         return $this;
     }
 

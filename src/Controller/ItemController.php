@@ -16,12 +16,12 @@ class ItemController extends AbstractController
 {
     /**
      * @Route("/produit/{id}", name="app_item_id")
-     * @param Request                           $request
-     * @param GammeProductServices              $gammeProductServices
-     * @param GammeServices                     $gammeServices
-     * @param ShopServices                      $shopServices
-     * @param \App\Services\ItemQuantityService $itemQuantityService
-     * @param \App\Services\Cart\CartItem       $cartItem
+     * @param Request              $request
+     * @param GammeProductServices $gammeProductServices
+     * @param GammeServices        $gammeServices
+     * @param ShopServices         $shopServices
+     * @param ItemQuantityService  $itemQuantityService
+     * @param CartItem             $cartItem
      *
      * @return Response
      */
@@ -31,7 +31,6 @@ class ItemController extends AbstractController
         $society = $this->getUser()->getSocietyID()->getId();
         $id      = $request->get('id');
         $product = $gammeProductServices->getProductInfo($id);
-
 
         return $this->render('item/index.html.twig', [
             'controller_name' => 'ItemController',

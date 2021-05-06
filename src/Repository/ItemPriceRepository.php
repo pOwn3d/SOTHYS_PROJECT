@@ -22,13 +22,17 @@ class ItemPriceRepository extends ServiceEntityRepository
 
     public function getPriceBySociety($item, $society)
     {
-        return $this->createQueryBuilder('i')
+        $query = $this->createQueryBuilder('i')
             ->andWhere('i.idItem = :val')
             ->setParameter('val', $item)
             ->andWhere('i.idSociety  = :society')
             ->setParameter('society', $society)
+            ->setMaxResults(1)
+            ->orderBy('i.id', 'DESC')
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
+
+        return $query['0'];
     }
 
     // /**

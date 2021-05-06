@@ -71,6 +71,11 @@ class Order
      */
     private $priceOrder;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=CustomerIncoterm::class, inversedBy="orders")
+     */
+    private $incoterm;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -186,5 +191,18 @@ class Order
 
         return $this;
     }
+
+    public function getIncoterm(): ?customerIncoterm
+    {
+        return $this->incoterm;
+    }
+
+    public function setIncoterm(?customerIncoterm $incoterm): self
+    {
+        $this->incoterm = $incoterm;
+
+        return $this;
+    }
+
 
 }

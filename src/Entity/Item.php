@@ -159,7 +159,7 @@ class Item
     }
     public function __toString(): ?string
     {
-       return $this->getName();
+       return $this->getLabelFR();
     }
 
     public function getLabelFR(): ?string

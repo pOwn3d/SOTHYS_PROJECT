@@ -35,6 +35,25 @@ class OrderRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findOrderCustomerExport()
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.idOrderX3 IS NULL')
+            ->orderBy('o.dateOrder', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findOrderAndLinesCustomerExport()
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.idOrderX3 IS NULL')
+            ->orderBy('o.dateOrder', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
     /*
     public function findOneBySomeField($value): ?Order

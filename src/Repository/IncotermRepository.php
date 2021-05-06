@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Intercom;
+use App\Entity\Incoterm;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Intercom|null find($id, $lockMode = null, $lockVersion = null)
- * @method Intercom|null findOneBy(array $criteria, array $orderBy = null)
- * @method Intercom[]    findAll()
- * @method Intercom[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Incoterm|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Incoterm|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Incoterm[]    findAll()
+ * @method Incoterm[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class IntercomRepository extends ServiceEntityRepository
+class IncotermRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Intercom::class);
+        parent::__construct($registry, Incoterm::class);
     }
 
     // /**
-    //  * @return Intercom[] Returns an array of Intercom objects
+    //  * @return Incoterm[] Returns an array of Incoterm objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class IntercomRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Intercom
+    public function findOneBySomeField($value): ?Incoterm
     {
         return $this->createQueryBuilder('i')
             ->andWhere('i.exampleField = :val')

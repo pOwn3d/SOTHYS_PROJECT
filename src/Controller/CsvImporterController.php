@@ -132,21 +132,21 @@ class CsvImporterController extends AbstractController
      *
      * @return Response
      */
-    public function importIntercom(CsvImporter $csvImporter): Response
+    public function importIncoterm(CsvImporter $csvImporter): Response
     {
-        $csvImporter->importIntercom();
+        $csvImporter->importIncoterm();
         dd();
     }
 
     /**
-     * @Route("/import-customer-intercom", name="import_csv_customerIntercom")
+     * @Route("/import-customer-incoterm", name="import_csv_customer-incoterm")
      * @param CsvImporter $csvImporter
      *
      * @return Response
      */
-    public function customerImportIntercom(CsvImporter $csvImporter): Response
+    public function customerImportIncoterm(CsvImporter $csvImporter): Response
     {
-        $csvImporter->customerImportIntercom();
+        $csvImporter->customerImportIncoterm();
         dd();
     }
 }

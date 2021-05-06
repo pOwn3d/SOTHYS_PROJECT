@@ -4,8 +4,9 @@
 namespace App\Services;
 
 
+use App\Entity\CustomerIncoterm;
 use App\Entity\GammeProduct;
-use App\Entity\Intercom;
+use App\Entity\Incoterm;
 use App\Entity\Item;
 use App\Entity\ItemPrice;
 use App\Entity\ItemQuantity;
@@ -357,13 +358,13 @@ class CsvImporter
     }
 
 
-    public function importIntercom()
+    public function importIncoterm()
     {
         $csv = Reader::createFromPath('../public/csv/intercom.csv');
         $csv->fetchColumn();
 
         foreach ($csv as $row) {
-            $gamme = new Intercom();
+            $gamme = new Incoterm();
             $gamme
                 ->setReference($row[0]);
             $this->em->persist($gamme);
@@ -371,29 +372,23 @@ class CsvImporter
         }
     }
 
-    public function customerImportIntercom()
+    public function customerImportIncoterm()
     {
         $csv = Reader::createFromPath('../public/csv/customerIntercom.csv');
         $csv->fetchColumn();
 
-
-
         foreach ($csv as $row) {
 
+            $user  = $this->em->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[1] ]);
+            $incoterm = $this->em->getRepository(Incoterm::class)->findOneBy([ 'reference' => $row[3] ]);
 
-            $society = $this->em->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[1] ]);
-
-            dd($society);
-
-//            $gamme = new CustomerIntercom();
-
-//            $gamme
-//                ->setIntercomSociety($companies)
-//                ->setReference($row[3])
-//                ->setCity($row[4])
-//            ;
-//            $this->em->persist($gamme);
-//            $this->em->flush();
+            $gamme = new CustomerIncoterm();
+            $gamme
+                ->setSocietyCustomerIncoterm($user)
+                ->setReference($incoterm)
+                ->setCity($row[4]);
+            $this->em->persist($gamme);
+            $this->em->flush();
         }
     }
 }

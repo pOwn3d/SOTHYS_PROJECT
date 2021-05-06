@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% block title %}Mon panier {% endblock %}
+{% block body %}
+
+    <section class="section section--checkout">
+        <div class="container">
+            {% include 'flash_messages.html.twig' %}
+
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col-12 col-md-12">
+                    <p class="form__item">
+
+{#                        <label for="">Référence</label>#}
+{#                        {{ form_row(form.reference, {'label' : false,  'attr' : {'placeholder' : 'Référence',  'class' : 'form-control' ,'name' : 'reference' }}) }}#}
+{#                    </p>#}
+{#                    <p class="form__item">#}
+{#                        <label for="">Référence</label>#}
+{#                        {{ form_row(form.incoterm, {'label' : false,  'attr' : {'placeholder' : 'Référence',  'class' : 'form-control' ,'name' : 'reference' }}) }}#}
+                    </p>
+                </div>
+
+            </div>
+            <button type="submit">
+                Valider ma commande
+            </button>
+            {{ form_end(form) }}
+
+
+
+        </div>
+    </section>
+
+{% endblock %}
