@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Repository\OrderLineRepository;
 use App\Repository\OrderRepository;
+use App\Repository\SocietyRepository;
 use League\Csv\Writer;
 use SplTempFileObject;
 
@@ -13,11 +14,13 @@ class CsvExporter
 
     private OrderLineRepository $orderLineRepository;
     private OrderRepository $orderRepository;
+    private SocietyRepository $societyRepository;
 
-    public function __construct(OrderLineRepository $orderLineRepository, OrderRepository $orderRepository)
+    public function __construct(OrderLineRepository $orderLineRepository, OrderRepository $orderRepository, SocietyRepository $societyRepository)
     {
         $this->orderLineRepository = $orderLineRepository;
         $this->orderRepository     = $orderRepository;
+        $this->societyRepository   = $societyRepository;
     }
 
     /**
@@ -25,10 +28,12 @@ class CsvExporter
     public function exportCoedi()
     {
         $orders = $this->orderRepository->findOrderCustomerExport();
-        $rows   = [];
-        foreach ($orders as $order) {
 
-            array_push($rows, [ 'E|' . $order->getId() . '|310262|20201214|20201225|VIR60DDF|2|3|3|L01|||||||||COEDI||2|Urgent Order|310262|9|EXW|USSAC||' ]);
+        $rows = [];
+        foreach ($orders as $order) {
+            $society = $this->societyRepository->findSociety($order->getSocietyID()->getId());
+
+            array_push($rows, [ 'E|' . $order->getId() . '|' . $society->getIdCustomer() . '|Date commande|Date livraison demandée|Condition paiement|2|3|3|Code Adresse livraison|Commentaire1|Commentaire2|Commentaire3|Commentaire4|Commentaire5|Commentaire6|Commentaire7|Commentaire8|COEDI|2|Urgent Order|Réf commande client|adresse mail|Mode livraison|Incoterm|Ville incoterm|' ]);
             $orderLines = $this->orderLineRepository->findByOrderID($order->getId());
 
             foreach ($orderLines as $orderLine) {
@@ -36,7 +41,6 @@ class CsvExporter
             }
 
         }
-
 
         $writer = Writer::createFromFileObject(new SplTempFileObject());
         $writer->insertAll($rows); //using an array

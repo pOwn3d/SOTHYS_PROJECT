@@ -31,6 +31,17 @@ class SocietyRepository extends ServiceEntityRepository
 
     }
 
+    public function findSociety($value){
+
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+
+    }
+
 
     // /**
     //  * @return Society[] Returns an array of Society objects
