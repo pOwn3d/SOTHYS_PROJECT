@@ -39,6 +39,11 @@ class CustomerIncoterm
      */
     private $societyCustomerIncoterm;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $idModeTransport;
+
 
 
     public function __construct()
@@ -114,6 +119,18 @@ class CustomerIncoterm
     public function setSocietyCustomerIncoterm(?Society $societyCustomerIncoterm): self
     {
         $this->societyCustomerIncoterm = $societyCustomerIncoterm;
+
+        return $this;
+    }
+
+    public function getIdModeTransport(): ?int
+    {
+        return $this->idModeTransport;
+    }
+
+    public function setIdModeTransport(int $idModeTransport): self
+    {
+        $this->idModeTransport = $idModeTransport;
 
         return $this;
     }

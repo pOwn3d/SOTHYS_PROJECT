@@ -385,7 +385,9 @@ class CsvImporter
             $gamme = new CustomerIncoterm();
             $gamme
                 ->setSocietyCustomerIncoterm($user)
+                ->setIdModeTransport($row[2])
                 ->setReference($incoterm)
+
                 ->setCity($row[4]);
             $this->em->persist($gamme);
             $this->em->flush();

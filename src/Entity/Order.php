@@ -76,6 +76,11 @@ class Order
      */
     private $incoterm;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $email;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -200,6 +205,18 @@ class Order
     public function setIncoterm(?customerIncoterm $incoterm): self
     {
         $this->incoterm = $incoterm;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }

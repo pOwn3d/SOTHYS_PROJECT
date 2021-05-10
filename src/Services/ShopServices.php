@@ -3,10 +3,12 @@
 
 namespace App\Services;
 
+use App\Entity\Incoterm;
 use App\Entity\Order;
 use App\Entity\OrderDraft;
 use App\Entity\OrderLine;
 use App\Repository\GammeProductRepository;
+use App\Repository\IncotermRepository;
 use App\Repository\ItemPriceRepository;
 use App\Repository\ItemRepository;
 use App\Repository\OrderDraftRepository;
@@ -22,9 +24,11 @@ class ShopServices extends AbstractController
     private EntityManagerInterface $em;
     private ItemQuantityService $itemQuantityService;
     private OrderLineRepository $orderLineRepository;
+    private IncotermRepository $incotermRepository;
+    private GammeProductRepository $gammeProductRepository;
 
 
-    public function __construct(ItemRepository $itemRepository, GammeProductRepository $gammeProductRepository, ItemPriceRepository $itemPriceRepository, OrderDraftRepository $orderDraftRepository, EntityManagerInterface $em, ItemQuantityService $itemQuantityService, OrderLineRepository $orderLineRepository)
+    public function __construct(ItemRepository $itemRepository, GammeProductRepository $gammeProductRepository, ItemPriceRepository $itemPriceRepository, OrderDraftRepository $orderDraftRepository, EntityManagerInterface $em, ItemQuantityService $itemQuantityService, OrderLineRepository $orderLineRepository, IncotermRepository $incotermRepository)
     {
         $this->itemRepository         = $itemRepository;
         $this->gammeProductRepository = $gammeProductRepository;
@@ -33,6 +37,7 @@ class ShopServices extends AbstractController
         $this->em                     = $em;
         $this->itemQuantityService    = $itemQuantityService;
         $this->orderLineRepository    = $orderLineRepository;
+        $this->incotermRepository    = $incotermRepository;
     }
 
 
@@ -91,10 +96,12 @@ class ShopServices extends AbstractController
         return $this->orderDraftRepository->findOrderDraftSociety($society);
     }
 
-    public function createOrder($society, $reference = "")
+    public function createOrder($society,  $data)
     {
 
+//dd(->getId());
         $orders = $this->orderDraftRepository->findBy([ 'idSociety' => $society->getId() ]);
+        $incoterm = $this->incotermRepository->findBy([ 'id' => $society->getId() ]);
         if ($orders == []) {
             return [
                 'type' => 'error',
@@ -117,7 +124,10 @@ class ShopServices extends AbstractController
 //                ->setDateDelivery()
             ->setSocietyID($society)
             ->setIdStatut(1)
-            ->setReference($reference);
+            ->setIncoterm($data->getIncoterm())
+            ->setReference($data->getReference())
+            ->setEmail($data->getEmail())
+        ;
 
         $this->em->persist($newOrder);
         $this->em->flush();

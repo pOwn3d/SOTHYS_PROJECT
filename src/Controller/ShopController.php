@@ -28,45 +28,52 @@ class ShopController extends AbstractController
         ]);
     }
 
-//    /**
-//     * @Route("/order-publish", name="app_order_publish")
-//     */
-//    public function orderPublish(CartItem $cartItem, Request $request): Response
-//    {
-//        $society = $this->getUser()->getSocietyID();
-//
-//
-//        $form = $this->createForm(OrderType::class);
-//        $form->handleRequest($request);
-//
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            dd($form->getData());
-//        }
-//
-//
-//        return $this->render('shop/shop.html.twig', [
-//            'controller_name' => 'ShopController',
-//            'cartItem'        => $cartItem->getItemCart($society)['0']['quantity'],
-//            'form'            => $form->createView(),
-//        ]);
-//    }
-
     /**
      * @Route("/order-publish", name="app_order_publish")
      */
-    public function orderSave(ShopServices $shopServices): Response
+    public function orderPublish(CartItem $cartItem, Request $request, ShopServices $shopServices): Response
     {
         $society = $this->getUser()->getSocietyID();
-        $order   = $shopServices->createOrder($society);
 
-        if ($order != null) {
-            $this->addFlash($order['type'], $order['msg']);
-            return $this->redirectToRoute('app_shop');
+        $form = $this->createForm(OrderType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $society = $this->getUser()->getSocietyID();
+            $order   = $shopServices->createOrder($society, $form->getData());
+
+            if ($order != null) {
+                $this->addFlash($order['type'], $order['msg']);
+                return $this->redirectToRoute('app_shop');
+            }
+            return $this->redirectToRoute('app_order');
         }
 
-        return $this->redirectToRoute('app_order');
+
+        return $this->render('shop/shop.html.twig', [
+            'controller_name' => 'ShopController',
+            'cartItem'        => $cartItem->getItemCart($society)['0']['quantity'],
+            'form'            => $form->createView(),
+            'user' => $this->getUser(),
+        ]);
     }
+
+//    /**
+//     * @Route("/order-publish", name="app_order_publish")
+//     */
+//    public function orderSave(ShopServices $shopServices): Response
+//    {
+//        $society = $this->getUser()->getSocietyID();
+//        $order   = $shopServices->createOrder($society);
+//
+//        if ($order != null) {
+//            $this->addFlash($order['type'], $order['msg']);
+//            return $this->redirectToRoute('app_shop');
+//        }
+//
+//        return $this->redirectToRoute('app_order');
+//    }
 
     /**
      * @Route("/order-edit/{id}", name="app_order_edit")

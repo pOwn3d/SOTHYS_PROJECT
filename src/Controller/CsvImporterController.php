@@ -127,7 +127,7 @@ class CsvImporterController extends AbstractController
     }
 
     /**
-     * @Route("/import-intercom", name="import_csv_intercom")
+     * @Route("/import-incoterm", name="import_csv_incoterm")
      * @param CsvImporter $csvImporter
      *
      * @return Response
