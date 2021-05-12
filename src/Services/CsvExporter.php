@@ -35,6 +35,7 @@ class CsvExporter
 
             $society = $this->societyRepository->findSociety($order->getSocietyID()->getId());
 
+
             array_push($rows, [ 'E|' . $order->getId() . '|' . $society->getIdCustomer() . '|' . $order->getDateOrder()->format("Ymd") . '|Date livraison demandée|Condition paiement|2|3|3|Code Adresse livraison|||||||||COEDI|2|Urgent Order|' . $order->getReference() . '|' . $order->getEmail() . '|Mode livraison|' . $order->getIncoterm()->getId() . '|' . $order->getIncoterm()->getCity() . '|' ]);
             $orderLines = $this->orderLineRepository->findByOrderID($order->getId());
 

@@ -127,6 +127,18 @@ class CsvImporterController extends AbstractController
     }
 
     /**
+     * @Route("/import-mode-transport", name="import_csv_modetransport")
+     * @param CsvImporter $csvImporter
+     *
+     * @return Response
+     */
+    public function importModeTransport(CsvImporter $csvImporter): Response
+    {
+        $csvImporter->importModeTransport();
+        dd();
+    }
+
+    /**
      * @Route("/import-incoterm", name="import_csv_incoterm")
      * @param CsvImporter $csvImporter
      *

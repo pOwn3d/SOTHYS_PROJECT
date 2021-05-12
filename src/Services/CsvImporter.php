@@ -13,6 +13,7 @@ use App\Entity\ItemQuantity;
 use App\Entity\Order;
 use App\Entity\OrderLine;
 use App\Entity\Society;
+use App\Entity\TransportMode;
 use App\Entity\User;
 use App\Repository\GammeProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -358,6 +359,22 @@ class CsvImporter
     }
 
 
+    public function importModeTransport()
+    {
+        $csv = Reader::createFromPath('../public/csv/modeTransport.csv');
+        $csv->fetchColumn();
+
+        foreach ($csv as $row) {
+            $gamme = new TransportMode();
+            $gamme
+                ->setIdTransport($row[0])
+                ->setNameFR($row[1])
+                ->setNameEN($row[2]);
+            $this->em->persist($gamme);
+            $this->em->flush();
+        }
+    }
+
     public function importIncoterm()
     {
         $csv = Reader::createFromPath('../public/csv/intercom.csv');
@@ -379,15 +396,15 @@ class CsvImporter
 
         foreach ($csv as $row) {
 
-            $user  = $this->em->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[1] ]);
+            $user     = $this->em->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[1] ]);
             $incoterm = $this->em->getRepository(Incoterm::class)->findOneBy([ 'reference' => $row[3] ]);
+            $modeTransport = $this->em->getRepository(TransportMode::class)->findOneBy([ 'idTransport' => $row[2] ]);
 
             $gamme = new CustomerIncoterm();
             $gamme
                 ->setSocietyCustomerIncoterm($user)
-                ->setIdModeTransport($row[2])
+                ->setModeTransport($modeTransport)
                 ->setReference($incoterm)
-
                 ->setCity($row[4]);
             $this->em->persist($gamme);
             $this->em->flush();
