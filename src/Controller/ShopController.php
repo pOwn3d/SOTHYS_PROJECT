@@ -15,8 +15,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class ShopController extends AbstractController
 {
     /**
-     * @Route("/panier", name="app_shop")
-     */
+    * @Route("/{_locale}/panier", name="app_shop", requirements={
+    * "_locale"="%app.locales%"
+    * })
+    */
     public function index(ShopServices $shopServices, CartItem $cartItem): Response
     {
         $society = $this->getUser()->getSocietyID();
@@ -98,7 +100,7 @@ class ShopController extends AbstractController
         // TODO : Checker si la société est bien celle de la personne qui supprime le produit.
         $id = $request->get('id');
         $shopServices->deleteItemOrderDraft($id);
-        return $this->redirect('/panier');
+        return $this->redirectToRoute('app_shop');
     }
 
 

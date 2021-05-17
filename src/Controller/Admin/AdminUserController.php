@@ -24,7 +24,7 @@ class AdminUserController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        $deleteUser = Action::new('deleteUser text-danger', 'Supprimer', 'fa fa-delete')
+        $deleteUser = Action::new('deleteUser text-danger', 'delete', 'fa fa-delete')
             ->linkToRoute('delete_user_admin', function (User $entity) {
                 return [
                     'email'        => $entity->getEmail(),
@@ -43,7 +43,7 @@ class AdminUserController extends AbstractCrudController
 
         return $actions
             ->update(Crud::PAGE_INDEX, Action::NEW,
-                fn(Action $action) => $action->setIcon('fa fa-user-plus')->setLabel('Nouveau compte'))
+                fn(Action $action) => $action->setIcon('fa fa-user-plus')->setLabel('new.user'))
             ->add(Crud::PAGE_INDEX, $deleteUser)
 //            ->add(Crud::PAGE_INDEX, $newUser)
 //            ->disable(Action::DELETE, Action::EDIT);
@@ -55,23 +55,23 @@ class AdminUserController extends AbstractCrudController
     {
 
         return [
-            TextField::new('email', 'Adresse E-mail'),
-            BooleanField::new('accountActivated', 'Compte actif'),
-            BooleanField::new('isVerified', 'Adresse E-mail vérifié'),
-            TextField::new('password', 'Mot de passe',)
+            TextField::new('email', 'email'),
+            BooleanField::new('accountActivated', 'actif.account'),
+            BooleanField::new('isVerified', 'verified.email'),
+            TextField::new('password', 'password',)
                 ->setFormType(PasswordType::class)
                 ->setRequired($pageName === Crud::PAGE_NEW)
                 ->onlyOnForms(),
 
 
-            ChoiceField::new('roles', 'Roles')
+            ChoiceField::new('roles', 'roles')
                 ->allowMultipleChoices()
                 ->autocomplete()
                 ->setChoices([
-                        'Administrateur' => 'ROLE_SUPER_ADMIN'
+                        'admin' => 'ROLE_SUPER_ADMIN'
                     ]
                 ),
-            AssociationField::new('societyID', 'ID Societer')
+            AssociationField::new('societyID', 'id.society')
         ];
     }
 

@@ -1,0 +1,146 @@
+my:
+    orders: 'My orders'
+    account: 'My account'
+
+products: 'products'
+
+customer:
+    area: 'CUSTOMER AREA'
+
+password: 'Password'
+
+stay:
+    connected: 'Stay connected'
+
+
+login: 'login'
+
+Forgot:
+    your:
+        password: 'Forgot your password'
+
+Home: 'Home'
+
+Welcome:
+    at:
+        costomer:
+            area: 'Welcome in costomer area.'
+
+your:
+    space:
+        take:
+            advantage: 'This is your space, Take advantage of all your online services:'
+
+Ckeck:
+    your:
+        pricing: 'Ckeck your pricing'
+    current:
+        promotional:
+            offers: 'Ckeck the current promotional offers (which in developement phase)'
+
+
+order:
+    online: 'Order online directly'
+    ref: 'Order ref'
+    date: 'Order date'
+    status: 'Order status'
+    substatus: 'status details'
+
+Track:
+    their:
+        progress: 'Track their progress'
+
+Logout: 'Logout'
+
+Shopping:
+    bag: 'Shopping bag'
+
+Customer:
+    - 'utilisateur'
+    - account:
+        id: 'Customer account ID'
+
+
+save: 'save'
+
+Confirm:
+    password: 'Confirm password'
+
+
+Cart: 'Cart'
+
+
+Subtotal: 'Sub-total'
+
+Validate:
+    order: 'Validate order'
+
+Product: 'Product'
+
+Designation: 'Designation'
+
+quantity: 'Quantity'
+
+Quantity:
+    counts: 'Quantity count'
+    ordered: 'Quantity ordered'
+    shipped: 'Quantity shipped'
+
+price:
+    unit: Unit Price (EUR)
+    total: Total price (EUR)
+
+Price: 'Price'
+
+Date: 'Date'
+
+state: 'state'
+
+add:
+    to:
+        cart: 'Add to cart'
+
+
+settings:
+    user: 'User settings'
+    order: 'Order settings'
+    society: 'Society settings'
+
+
+User: 'User'
+Order: 'Order'
+Society: 'Society'
+
+
+new:
+    user: 'New user'
+
+
+email: 'E-mail'
+
+actif:
+    account: 'Actif account'
+
+verified:
+    email: 'Verified E-mail'
+
+id:
+    society: 'Society ID'
+    order: 'Order ID'
+    X3: 'ID X3'
+admin: 'Administrator'
+
+delete: 'Delete'
+
+roles: 'Roles'
+
+date:
+    shipping: 'Shipping date'
+    latest:
+        shipped: 'Date of last delivery'
+
+Reference: 'Reference'
+
+Name: 'Name'
+
+Id Customer: 'Id Customer'

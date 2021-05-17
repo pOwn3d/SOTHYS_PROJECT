@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Coedi Sothys - Mes commandes{% endblock %}
+{% block title %}Coedi Sothys -  {{ 'my.orders' | trans }}{% endblock %}
 {% block body %}
 
     <div id="content" role="main">
@@ -9,7 +9,7 @@
                     <div class="col-12 aos-init aos-animate" data-aos="fade-up">
                         {% include 'flash_messages.html.twig' %}
                         <div class="title--border title--border--margin">
-                            <h2>Mes commandes</h2>
+                            <h2> {{ 'my.orders' | trans }}</h2>
                         </div>
                     </div>
                     {% include 'components/nav_customer.html.twig' %}
@@ -17,10 +17,10 @@
                         <table class="compte__commandes table-responsive">
                             <thead>
                             <tr>
-                                <th>Réf commande</th>
-                                <th>Date</th>
-                                <th>Prix total</th>
-                                <th>État</th>
+                                <th>{{'order.ref' | trans}}</th>
+                                <th>{{'Date' | trans}}</th>
+                                <th>{{'price.total' | trans}}</th>
+                                <th>{{'state' | trans}}</th>
                             </tr>
                             </thead>
                             <tbody>

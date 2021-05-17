@@ -9,7 +9,7 @@
                     <div class="row justify-content-center">
                         <div class="col-12">
                             <div class="title--border ">
-                                <h2>Mon compte</h2>
+                                <h2>{{ 'my.account' | trans }}</h2>
                             </div>
                         </div>
                         <div class="col-12">
@@ -34,7 +34,7 @@
                                                    class="form-control" required autofocus>
 
                                         <p class="form__item" data-children-count="1">
-                                            <label for="inputPassword">Mot de passe<sup
+                                            <label for="inputPassword">{{'password' | trans}}<sup
                                                     data-children-count="0">*</sup></label>
                                             <input type="password" name="password" id="inputPassword"
                                                    class="form-control" required>
@@ -44,17 +44,17 @@
                                         <div class="form__footer">
                                             <p class="form__item form__item--checkbox" data-children-count="1">
                                                 <input type="checkbox" id="rememberMe" name="rememberMe">
-                                                <label for="rememberMe">Rester connecté(e)</label>
+                                                <label for="rememberMe">{{'stay.connected' | trans}}</label>
                                             </p>
                                             <p class="form__item">
                                                 <a class="fs--1"
-                                                   href="{{ path('app_forgot_password_request') }}">Mot de passe oublié
+                                                   href="{{ path('app_forgot_password_request') }}">{{ 'Forgot.your.password' | trans}}
                                                 </a>
                                             </p>
                                         </div>
                                         <div class="form__item flex flex--center">
                                             <span class="button button--primary-fill button--submit" style="margin: 0 auto;">
-                                                  <input type="submit" value="Se connecter">
+                                                  <input type="submit" value="{{'login' | trans}}">
                                             </span>
                                         </div>
                                     </fieldset>

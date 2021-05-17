@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Coedi Sothys - Mon compte{% endblock %}
+{% block title %}Coedi Sothys - {{ 'my.account' | trans }}{% endblock %}
 
 {% block body %}
 
@@ -11,7 +11,7 @@
                     <div class="col-12 aos-init aos-animate" data-aos="fade-up">
                         {% include 'flash_messages.html.twig' %}
                         <div class="title--border title--border--margin">
-                            <h2>Mon compte</h2>
+                            <h2>{{ 'my.account' | trans }}</h2>
                         </div>
                     </div>
                     {% include 'components/nav_customer.html.twig' %}
@@ -23,20 +23,20 @@
                                 <input type="text" id="email" name="email" value="{{ user.email }}" disabled="">
                             </p>
                             <p class="form__item">
-                                <label for="id_society">Identifiant compte client</label>
+                                <label for="id_society">{{'Customer.account.id' | trans}}</label>
                                 <input type="text" id="id_society" name="text" value="{{ user.societyID.idCustomer }}  {{ user.societyID.name|upper }} " disabled="">
                             </p>
                             <p class="form__item">
-                                <label for="password">Mot de passe</label>
-                                {{ form_row(form.password.first, {'label' : false,  'attr' : {'placeholder' : 'Mot de passe',  'class' : 'form-control' ,'name' : 'password' }}) }}
+                                <label for="password">{{'password' | trans}}</label>
+                                {{ form_row(form.password.first, {'label' : false,  'attr' : {'placeholder' : 'password' | trans ,  'class' : 'form-control' ,'name' : 'password' }}) }}
                             </p>
                             <p class="form__item">
-                                <label for="password_confirm">Confirmer le mot de passe</label>
-                                {{ form_row(form.password.second, {'label' : false,  'attr' : {'placeholder' : 'Mot de passe',  'class' : 'form-control' , 'name' : 'password_confirm' }}) }}
+                                <label for="password_confirm">{{'Confirm.password' | trans}}</label>
+                                {{ form_row(form.password.second, {'label' : false,  'attr' : {'placeholder' : 'password' | trans ,  'class' : 'form-control' , 'name' : 'password_confirm' }}) }}
                             </p>
                             <p>
                                         <span class="button button--secondary-fill button--submit">
-                                            <input type="submit" value="Sauvegarder">
+                                            <input type="submit" value="{{'save' | trans}}">
                                         </span>
                             </p>
                         </fieldset>

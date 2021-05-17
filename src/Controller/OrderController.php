@@ -16,7 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class OrderController extends AbstractController
 {
     /**
-     * @Route("/mes-commandes", name="app_order")
+     * @Route("/{_locale}/mes-commandes", name="app_order", requirements={
+    * "_locale"="%app.locales%"
+    * })
      * @param OrderRepository $orderRepository
      * @param CartItem        $cartItem
      * @param OrderServices   $orderServices

@@ -16,7 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class DashboardController extends AbstractDashboardController
 {
     /**
-     * @Route("/admin", name="admin")
+     * @Route("/{_locale}/admin", name="admin", requirements={
+    * "_locale"="%app.locales%"
+    * })
      */
     public function index(): Response
     {
@@ -28,17 +30,16 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-      
-        ->setTitle('<a href="/"><img src="assets/images/logo_register.png"></a>');
+                ->setTitle('<a href="/"><img src="../assets/images/logo_register.png"></a>');
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::section('Gestion des Utilisateurs');
-        yield MenuItem::linkToCrud('Utilisateur', 'fas fa-user', User::class);
-        yield MenuItem::section('Gestion des commandes');
-        yield MenuItem::linkToCrud('Commande', 'fas fa-store-alt', Order::class);
-        yield MenuItem::section('Gestion des societe');
-        yield MenuItem::linkToCrud('Societe', 'fas fa-store-alt', Society::class);
+        yield MenuItem::section('settings.user');
+        yield MenuItem::linkToCrud('User', 'fas fa-user', User::class);
+        yield MenuItem::section('settings.order');
+        yield MenuItem::linkToCrud('Order', 'fas fa-store-alt', Order::class);
+        yield MenuItem::section('settings.society');
+        yield MenuItem::linkToCrud('Society', 'fas fa-store-alt', Society::class);
     }
 }

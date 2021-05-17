@@ -16,7 +16,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AccountController extends AbstractController
 {
     /**
-     * @Route("/mon-compte", name="app_account")
+     * @Route("/{_locale}/mon-compte", name="app_account", requirements={
+    * "_locale"="%app.locales%"
+    * })
      * @param Request                      $request
      * @param UserRepository               $userRepository
      * @param UserPasswordEncoderInterface $encoder

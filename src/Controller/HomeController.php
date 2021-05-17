@@ -10,7 +10,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/accueil", name="app_home")
+    * @Route("/{_locale}/accueil", name="app_home", requirements={
+    * "_locale"="%app.locales%"
+    * })
      * @param CartItem $cartItem
      *
      * @return Response

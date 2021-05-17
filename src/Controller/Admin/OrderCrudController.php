@@ -19,15 +19,15 @@ class OrderCrudController extends AbstractCrudController
     {
 
         return [
-            IntegerField::new('idOrder', 'ID Commande'),
-            IntegerField::new('idOrderX3', 'ID X3'),
-            DateTimeField::new('dateOrder', 'Date de commande'),
-            DateTimeField::new('dateDelivery', 'Date de livraison'),
-            IntegerField::new('idStatut', 'Statut de la commande'),
-            IntegerField::new('idDownStatut', 'idDownStatut'),
-            TextField::new('reference', 'Référence'),
-            DateTimeField::new('dateLastDelivery', 'Date de dernière livraison'),
-           
+            IntegerField::new('idOrder', 'id.order'),
+            IntegerField::new('idOrderX3', 'id.X3'),
+            DateTimeField::new('dateOrder', 'order.date'),
+            DateTimeField::new('dateDelivery', 'date.shipping'),
+            IntegerField::new('idStatut', 'order.status'),
+            IntegerField::new('idDownStatut', 'order.substatus'),
+            TextField::new('reference', 'Reference'),
+            DateTimeField::new('dateLastDelivery', 'date.latest.shipped'),
+
         ];
     }
 }

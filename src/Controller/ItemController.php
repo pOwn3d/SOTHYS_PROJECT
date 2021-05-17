@@ -15,7 +15,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class ItemController extends AbstractController
 {
     /**
-     * @Route("/produit/{id}", name="app_item_id")
+     * @Route("/{_locale}/produit/{id}", name="app_item_id", requirements={
+    * "_locale"="%app.locales%"
+    * })
      * @param Request              $request
      * @param GammeProductServices $gammeProductServices
      * @param GammeServices        $gammeServices

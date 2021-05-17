@@ -28,22 +28,22 @@
                             <span class="complement">{{ product.capacityFR }}</span>
                         </div>
                         <ul class="features">
-                            <li><strong>Description : </strong>
+                            <li><strong>Description: </strong>
                                 <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores dicta eius ipsa maxime minus officia quo sequi sit temporibus? Culpa debitis doloremque ea fugit impedit incidunt ipsam, non provident sapiente?</span>
                             </li>
                             {% if  itemPrice != null %}
-                            <li><strong>Prix : </strong>
+                            <li><strong>{{'Price' | trans}}: </strong>
                                 <span>{{ itemPrice.price }} €</span>
                             </li>
-                            <li><strong>Quantité groupage : </strong>
+                            <li><strong>{{'Quantity.counts' | trans}}: </strong>
                                 <span>{{ quantity.quantity|default(1)}} </span>
                             </li>
-                            <li><strong>Quantité : </strong>
+                            <li><strong>{{'quantity' | trans}}: </strong>
                                 <input type="number" id="quantity" name="quantity" value="1" min="1">
                             </li>
                         </ul>
                         <div class="button__wrapper" style="flex-wrap: wrap">
-                            <a href="{{ path('app_add_to_cart_id', { 'item': product.id ,  'qty': "qty" }) }} " id="addToCart" class="button button--primary-fill button--small modal--show add-to-cart">Ajouter au panier</a>
+                            <a href="{{ path('app_add_to_cart_id', { 'item': product.id ,  'qty': "qty" }) }} " id="addToCart" class="button button--primary-fill button--small modal--show add-to-cart">{{'add.to.cart' | trans}}</a>
                         </div>
                         {% endif %}
                     </div>

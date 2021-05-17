@@ -35,13 +35,13 @@
 {#                                        </div>#}
 {#                                        <div class="row gx-3">#}
 {#                                            <div class="mb-3 col-sm-6">#}
-{#                                                <label class="form-label" for="split-password">Mot de passe</label>#}
-{#                                                {{ form_row(registrationForm.plainPassword.first, {'label' : false,  'attr' : {'placeholder' : 'Mot de passe',  'class' : 'form-control'  }}) }}#}
+{#                                                <label class="form-label" for="split-password">{{'password' | trans}}</label>#}
+{#                                                {{ form_row(registrationForm.plainPassword.first, {'label' : false,  'attr' : {'placeholder' : '{{'password' | trans}}',  'class' : 'form-control'  }}) }}#}
 {#                                            </div>#}
 {#                                            <div class="mb-3 col-sm-6">#}
 {#                                                <label class="form-label" for="split-confirm-password">Confirmer mot de#}
 {#                                                    passe</label>#}
-{#                                                {{ form_row(registrationForm.plainPassword.second, {'label' : false,  'attr' : {'placeholder' : 'Mot de passe',  'class' : 'form-control'  }}) }}#}
+{#                                                {{ form_row(registrationForm.plainPassword.second, {'label' : false,  'attr' : {'placeholder' : '{{'password' | trans}}',  'class' : 'form-control'  }}) }}#}
 {#                                            </div>#}
 {#                                        </div>#}
 {#                                        <div class="form-check">#}

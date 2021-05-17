@@ -1,0 +1,143 @@
+my:
+    orders: 'Mes commandes'
+    account: 'Mon compte'
+
+products: 'produits'
+
+customer:
+    area: 'MON ESPACE CLIENT'
+
+password: 'Mot de passe'
+
+stay:
+    connected: 'Rester connecté(e)'
+
+
+login: 'Se connecter'
+
+Forgot:
+    your:
+        password: 'Mot de passe oublié'
+
+Home: 'Page d''accueil'
+
+
+Welcome:
+    at:
+        costomer:
+            area: 'Bienvenue dans votre espace client.'
+
+your:
+    space:
+        take:
+            advantage: 'Cet espace vous est dédié, Profitez de tous vos services en ligne:'
+
+Ckeck:
+    your:
+        pricing: 'Consultez vos tarifs'
+    current:
+        promotional:
+            offers: 'Accédez aux offres promotionnelles en cours (en cours de développement)'
+
+order:
+    online: 'Passez vos commandes en direct'
+    ref: 'Réf commande'
+    date: 'Date de commande'
+    status: 'Statut de la commande'
+    substatus: 'détail du status'
+
+Track:
+    their:
+        progress: 'Suivez leur état d''avancement'
+
+Logout: 'Déconnexion'
+
+Shopping:
+    bag: 'Accéder à mon panier'
+
+Customer:
+    account:
+        id: 'Identifiant compte client'
+
+save: 'Sauvegarder'
+
+Confirm:
+    password: 'Confirmer le mot de passe'
+
+Cart: 'Récapitulatif panier'
+
+
+Subtotal: 'Sous-total'
+
+Validate:
+    order: 'Valider ma commande'
+
+Product: 'produit'
+
+Designation: 'Désignation'
+
+quantity: 'Quantité'
+
+Quantity:
+    counts: 'Quantité Groupage'
+    ordered: 'Quantité commandée'
+    shipped: 'Quantité Livrée'
+
+price:
+    unit: Prix unitaire (EUR)
+    total: Prix total (EUR)
+
+Price: 'Prix'
+
+Date: 'Date'
+
+state: 'État'
+
+add:
+    to:
+        cart: 'Ajouter au panier'
+
+settings:
+    user: 'Gestion des Utilisateurs'
+    order: 'Gestion des commandes'
+    society: 'Gestion des societe'
+
+User: 'Utilisateur'
+Order: 'Commande'
+Society: 'Société'
+
+
+new:
+    user: 'Nouveau compte'
+
+
+email: 'Adresse E-mail'
+
+actif:
+    account: 'Compte actif'
+
+verified:
+    email: 'Adresse E-mail vérifié'
+
+id:
+    society: 'ID Société'
+    order: 'ID Commande'
+    X3: 'ID X3'
+
+admin: 'Administrateur'
+
+delete: 'Supprimer'
+
+roles: 'Roles'
+
+date:
+    shipping: 'Date de livraison'
+    latest:
+        shipped: 'Date de dernière livraison'
+
+Reference: 'Référence'
+
+Name: 'Nom'
+
+
+Id Customer: 'Id utilisateur'

@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
-{% block title %}Page d'accueil{% endblock %}
+{% block title %}{{'Home' | trans}}{% endblock %}
 {% block body %}
 
     <div class="container">
-        <h2> MON ESPACE CLIENT </h2>
-        <h3>Bienvenue dans votre espace client. </h3>
-        <h4> Cet espace vous est dédié. Profitez de tous vos services en ligne :</h4>
+        <h2> {{'customer.area' | trans}}</h2>
+        <h3>{{'Welcome.at.costomer.area' | trans}} </h3>
+        <h4>{{'your.space.take.advantage' | trans}}</h4>
         <ul>
-            <li> Consultez vos tarifs</li>
-            <li> Passez vos commandes en direct</li>
-            <li> Suivez leur état d'avancement</li>
-            <li> Accédez aux offres promotionnelles en cours (en cours de développement)</li>
+            <li> {{'Ckeck.your.pricing' | trans}}</li>
+            <li> {{'order.online' | trans}}</li>
+            <li> {{'Track.their.progress' | trans}}</li>
+            <li> {{'Ckeck.current.promotional.offers' | trans}}</li>
         </ul>
     </div>
 
