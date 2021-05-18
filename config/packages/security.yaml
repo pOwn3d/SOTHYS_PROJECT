@@ -45,10 +45,9 @@ security:
     # Note: Only the *first* access control that matches will be used
     role_hierarchy:
         ROLE_CLIENT: ROLE_USER
-        ROLE_CUSTOMER: ROLE_CUSTOMER
-        ROLE_ADMIN: [ ROLE_USER, ROLE_ADMIN, ROLE_CUSTOMER ]
-        ROLE_SUPER_ADMIN: [ ROLE_USER, ROLE_ADMIN, ROLE_CUSTOMER ]
+        ROLE_GESTIONNAIRE_PROMO: ROLE_GESTIONNAIRE_PROMO
+        ROLE_SUPER_ADMIN:  ROLE_ADMIN
     access_control:
-         - { path: ^/admin, roles: ROLE_SUPER_ADMIN }
+         - { path: ^/admin, roles: ROLE_GESTIONNAIRE_PROMO }
          - { path: ^/home, roles: ROLE_USER }
          - { path: ^/mon-compte, roles: ROLE_USER }

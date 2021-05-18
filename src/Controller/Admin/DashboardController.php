@@ -28,17 +28,17 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-      
+
         ->setTitle('<a href="/"><img src="assets/images/logo_register.png"></a>');
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::section('Gestion des Utilisateurs');
-        yield MenuItem::linkToCrud('Utilisateur', 'fas fa-user', User::class);
+        yield MenuItem::section('Gestion des Utilisateurs')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToCrud('Utilisateur', 'fas fa-user', User::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::section('Gestion des commandes');
         yield MenuItem::linkToCrud('Commande', 'fas fa-store-alt', Order::class);
-        yield MenuItem::section('Gestion des societe');
-        yield MenuItem::linkToCrud('Societe', 'fas fa-store-alt', Society::class);
+        yield MenuItem::section('Gestion des societe')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToCrud('Societe', 'fas fa-store-alt', Society::class)->setPermission('ROLE_ADMIN');
     }
 }
