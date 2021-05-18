@@ -46,7 +46,7 @@ security:
     role_hierarchy:
         ROLE_CLIENT: ROLE_USER
         ROLE_GESTIONNAIRE_PROMO: ROLE_GESTIONNAIRE_PROMO
-        ROLE_SUPER_ADMIN:  ROLE_ADMIN
+        ROLE_ADMIN:  [ ROLE_GESTIONNAIRE_PROMO , ROLE_ADMIN ]
     access_control:
          - { path: ^/admin, roles: ROLE_GESTIONNAIRE_PROMO }
          - { path: ^/home, roles: ROLE_USER }
