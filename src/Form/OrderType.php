@@ -26,6 +26,7 @@ class OrderType extends AbstractType
 //            ->add('idDownStatut')
             // SELECT * FROM `customer_incoterm` INNER JOIN incoterm WHERE `society_customer_incoterm_id` = 8 AND incoterm.id = customer_incoterm.reference_id
             ->add('reference')
+
             ->add("incoterm", EntityType::class, [
                 'class'         => CustomerIncoterm::class,
                 'query_builder' => function (EntityRepository $er) {

@@ -86,6 +86,7 @@ package.tar
 /web/uploads/
 /web/test.php
 /public/.htaccess
+/Documents
 
 ## Composer related (symfony-specific)
 /bin/*
