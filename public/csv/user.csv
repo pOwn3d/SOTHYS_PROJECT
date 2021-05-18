@@ -5,5 +5,5 @@ dorothee.guilletat@sothys.net,310211,1,1,"$argon2id$v=19$m=65536,t=4,p=1$bnM5Wjl
 adve@sothys.net,310211,1,1,"$argon2id$v=19$m=65536,t=4,p=1$bnM5WjlnVFFkZURDNlQuYw$mRc2Rxng96ERn2SxcwyyWuBuL5WF/2tWzyAK5xe2iTE",ROLE_USER
 demo3@example.com,310260,1,1,"$argon2id$v=19$m=65536,t=4,p=1$bnM5WjlnVFFkZURDNlQuYw$mRc2Rxng96ERn2SxcwyyWuBuL5WF/2tWzyAK5xe2iTE",ROLE_USER
 demo@example.com,310028,1,1,"$argon2id$v=19$m=65536,t=4,p=1$bnM5WjlnVFFkZURDNlQuYw$mRc2Rxng96ERn2SxcwyyWuBuL5WF/2tWzyAK5xe2iTE",ROLE_USER
-clopez@nexton-group.com,310034,1,1,"$argon2id$v=19$m=65536,t=4,p=1$bnM5WjlnVFFkZURDNlQuYw$mRc2Rxng96ERn2SxcwyyWuBuL5WF/2tWzyAK5xe2iTE",ROLE_SUPER_ADMIN
+clopez@nexton-group.com,310034,1,1,"$argon2id$v=19$m=65536,t=4,p=1$bnM5WjlnVFFkZURDNlQuYw$mRc2Rxng96ERn2SxcwyyWuBuL5WF/2tWzyAK5xe2iTE",ROLE_ADMIN
 
