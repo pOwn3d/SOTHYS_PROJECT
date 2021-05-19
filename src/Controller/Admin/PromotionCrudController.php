@@ -20,10 +20,10 @@ class PromotionCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id'),
-            TextField::new('labelFr'),
-            TextField::new('labelEn'),
-            DateTimeField::new('dateStart'),
-            DateTimeField::new('dateEnd'),
+            TextField::new('labelFr', 'Label Français'),
+            TextField::new('labelEn', 'Label Anglais'),
+            DateTimeField::new('dateStart', 'Date début de validité'),
+            DateTimeField::new('dateEnd', 'Date de fin de validité'),
         ];
     }
 

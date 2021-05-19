@@ -41,7 +41,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Gestion des commandes');
         yield MenuItem::linkToCrud('Commande', 'fas fa-store-alt', Order::class);
         yield MenuItem::linkToCrud('Promotion', 'fas fa-percentage', Promotion::class);
-        yield MenuItem::linkToCrud('PLV', 'fas fa-percentage', Plv::class);
+        yield MenuItem::linkToCrud('PLV', 'fas fa-toolbox', Plv::class);
         yield MenuItem::section('Gestion des societe')->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Societe', 'fas fa-store-alt', Society::class)->setPermission('ROLE_ADMIN');
     }
