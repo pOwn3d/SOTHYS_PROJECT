@@ -141,3 +141,12 @@ Name: 'Nom'
 
 
 Id Customer: 'Id utilisateur'
+
+promotions: 'Promotions'
+
+upload:
+    orders: 'Télécharger mes commandes'
+
+Promotion:
+    no:
+        display: 'Il n y'a pas de promotions !'

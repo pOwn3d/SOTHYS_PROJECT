@@ -36,3 +36,53 @@
     50% { transform: scale(2.0); }
     100% { transform: scale(1.0); }
 }
+
+.Error {
+    color: red;
+}
+
+.upload-box{
+    font-size: 13px;
+    background: white;
+    border: 0.1rem solid #394147;
+    width: 35rem;
+    outline: none;
+    margin-top: 2px;
+}
+
+input[type=file]::file-selector-button{
+    color: white;
+    background: #394147;
+    padding: 10px;
+    border:none;
+    outline: none;
+}
+
+.list-style-none{
+    list-style: none;
+}
+
+.Upload-csv-container{
+    text-align: center;
+}
+
+ul.promo > * {
+    margin: 1rem;
+}
+
+ul.promo {
+    margin-top: 2rem;
+}
+
+.promo-container{
+    width: 40rem;
+    padding: 1.5rem 2rem;
+    margin: 2rem;
+}
+
+.inline-block-upload{
+    display: inline-block;
+    padding: 0.5rem 5.6rem;
+    border: 0.01rem solid black;
+    min-width: 35rem;
+}

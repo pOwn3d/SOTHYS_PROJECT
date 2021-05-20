@@ -60,6 +60,9 @@ class ShopServices extends AbstractController
     {
         $itemID   = $this->itemRepository->findOneBy([ 'id' => $item ]);
         $cart     = $this->orderDraftRepository->findOneBy([ 'idSociety' => $society ]);
+        if(empty($itemID)){
+            throw new \Exception("no item found with this id ");
+        }
         $cartItem = $this->orderDraftRepository->findOneBy([ 'idItem' => $itemID->getId() ]);
         $price    = $this->itemPriceRepository->getPriceBySociety($item, $society);
 

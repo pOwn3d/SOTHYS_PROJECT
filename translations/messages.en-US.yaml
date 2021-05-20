@@ -144,3 +144,12 @@ Reference: 'Reference'
 Name: 'Name'
 
 Id Customer: 'Id Customer'
+
+promotions: 'Promotions'
+
+upload:
+    orders: 'upload my orders'
+
+Promotion:
+    no:
+        display: 'there's no promotions available to display'
