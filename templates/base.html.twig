@@ -34,32 +34,31 @@
                 </div>
                 <div class="col-3 col-lg-5 col-xl-4">
                     {% if app.user != null %}
-                        <div class="navbar-tools">
-                            <ul class="list--horizontal">
-                                <li>
-                                    <a href="{{ path('app_shop') }}" aria-label="{{'Shopping.bag' | trans}}"
-                                       title="Accéder à mon panier" data-microtip-position="bottom" role="tooltip"
-                                       class="cart__access js-cart-toggler">
-                                        <i class="icon icon-panier">
-                                            <span class="hidden">mon panier</span>
-                                        </i>
-                                        <span id="cartItem">{{ cartItem|default('0') }}</span>
-                                    </a>
-                                </li>
-                                <li class="account__access_button d-none d-lg-block">
-                                    <a href="{{ path('app_login') }}" aria-label="Accéder à l'espace mon compte"
-                                    title="Accéder à l'espace mon compte">
-                                        <i class="icon icon-compte">
-                                            <span class="hidden">mon compte</span>
-                                        </i>
-                                    </a>
-                                    <div class="account__access_wrapper">
-                                        <div class="account__access_inner">
-                                            <a href="{{ path('app_account') }}"
-                                            class="button button--small button--dark" title="Mon compte">{{ 'my.account' | trans }}</a>
-                                            <a href="{{ path('app_logout') }}"
-                                            class="button button--small button--dark" title="Mon compte">{{'Logout' | trans}}</a>
-                                        </div>
+                    <div class="navbar-tools">
+                        <ul class="list--horizontal">
+                            <li>
+                                <a href="{{ path('app_shop') }}" aria-label="Accéder à mon panier"
+                                   title="Accéder à mon panier" data-microtip-position="bottom" role="tooltip"
+                                   class="cart__access js-cart-toggler">
+                                    <i class="icon icon-panier">
+                                        <span class="hidden">mon panier</span>
+                                    </i>
+                                    <span id="cartItem">{{ cartItem|default('0') }}</span>
+                                </a>
+                            </li>
+                            <li class="account__access_button d-none d-lg-block">
+                                <a href="{{ path('app_login') }}" aria-label="Accéder à l'espace mon compte"
+                                   title="Accéder à l'espace mon compte">
+                                    <i class="icon icon-compte">
+                                        <span class="hidden">mon compte</span>
+                                    </i>
+                                </a>
+                                <div class="account__access_wrapper">
+                                    <div class="account__access_inner">
+                                        <a href="{{ path('app_account') }}"
+                                           class="button button--small button--dark" title="Mon compte">Mon compte</a>
+                                        <a href="{{ path('app_logout') }}"
+                                           class="button button--small button--dark" title="Mon compte">Déconnexion</a>
                                     </div>
                                 </div>
                             </li>
@@ -99,31 +98,24 @@
                                                 {{ 'Mes commandes' | trans }}
                                             </a>
                                         </li>
-                                    </ul>
-                                </div>
-                                <ul class="navbar__menu navbar__menu--desktop">
-                                    <li class="menu-item">
-                                        <a href="{{ path('app_order') }}">
-                                            {{ 'my.orders' | trans }}
-                                        </a>
-                                    </li>
-                                    <li class="menu-item menu-item--has-child">
-                                        <a>{{'products'|trans}}</a>
-                                        <div class="menu-item__submenu">
-                                            <div class="container">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <ul class="menu-item__submenu--large">
-                                                            {% for gamme in categories.getGamme(app.user.societyID) %}
-                                                                <li class="menu-item__submenu-item">
-                                                                    <a href="{{ path('app_gamme', {
-                                                                        gamme_id: gamme.id
-                                                                    }) }}" class="nav-link">
-                                                                        {{ gamme.labelFR }}
-                                                                    </a>
-                                                                </li>
-                                                            {% endfor %}
-                                                        </ul>
+                                        <li class="menu-item menu-item--has-child">
+                                            <a>Produits</a>
+                                            <div class="menu-item__submenu">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <ul class="menu-item__submenu--large">
+                                                                {% for gamme in categories.getGamme(app.user.societyID) %}
+                                                                    <li class="menu-item__submenu-item">
+                                                                        <a href="{{ path('app_gamme', {
+                                                                            gamme_id: gamme.id
+                                                                        }) }}" class="nav-link">
+                                                                            {{ gamme.labelFR }}
+                                                                        </a>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
