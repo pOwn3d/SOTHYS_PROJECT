@@ -10,7 +10,7 @@
             {% if promos != '' %}
             <ul class="promo">
                 {% for promo in promos %}
-                <li class="list-style-none"><a href="#" class="button button--secondary"> {{promo.name}} <br> {{promo.start | date('d/m/Y')}}-{{promo.end | date('d/m/Y')}}  </a></li>
+                <li class="list-style-none"><a href="#" class="button button--secondary"> {{promo.nameFr}} <br> {{promo.dateStart | date('d/m/Y')}}-{{promo.dateEnd | date('d/m/Y')}}  </a></li>
                 {% endfor %}
             </ul>
             {% else %}
@@ -21,7 +21,7 @@
 
 
     <div id="content" role="main">
-        <section class="section section--product-information">
+        {# <section class="section section--product-information">
             <div class="container">
                 {% for promo in promos %}
                 <div class="col-12 col-md-12 col-lg-5">
@@ -32,7 +32,7 @@
                     {% endfor %}
                 </div>
             </div>
-        </section>
+        </section> #}
     </div>
 
 {% endblock %}

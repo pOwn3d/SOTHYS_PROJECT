@@ -19,6 +19,18 @@ class PromotionRepository extends ServiceEntityRepository
         parent::__construct($registry, Promotion::class);
     }
 
+    public function findAllValidPromos()
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.dateStart <= :date')
+            ->andWhere('p.dateEnd >= :date')
+            ->setParameter('date', (new \DateTime()))
+            ->orderBy('p.dateEnd', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Promotion[] Returns an array of Promotion objects
     //  */

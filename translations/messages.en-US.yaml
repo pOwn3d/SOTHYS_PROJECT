@@ -152,4 +152,4 @@ upload:
 
 Promotion:
     no:
-        display: 'there's no promotions available to display'
+        display: 'there''s no promotions available to display'

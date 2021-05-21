@@ -6,7 +6,7 @@ use App\Services\Cart\CartItem;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\PromoRepository;
+use App\Repository\PromotionRepository;
 
 class HomeController extends AbstractController
 {
@@ -18,12 +18,10 @@ class HomeController extends AbstractController
 
      * @return Response
      */
-    public function index(CartItem $cartItem, PromoRepository $promoRepo): Response
+    public function index(CartItem $cartItem, PromotionRepository $promotionItemRepository): Response
     {
 
-//        $promos = $promotionItemRepository->findAll();
-
-        $promos  = '';
+        $promos = $promotionItemRepository->findAllValidPromos();
 
         $society = $this->getUser()->getSocietyID()->getId();
         return $this->render('home/index.html.twig', [
