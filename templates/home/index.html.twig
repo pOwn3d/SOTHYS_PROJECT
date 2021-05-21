@@ -14,4 +14,20 @@
         </ul>
     </div>
 
+
+    <div id="content" role="main">
+        <section class="section section--product-information">
+            <div class="container">
+                {% for promo in promos %}
+                <div class="col-12 col-md-12 col-lg-5">
+                    <h3>{{ promo.item }}</h3>
+                    <div class="button__wrapper" style="flex-wrap: wrap">
+                        <a href="{{ path('app_cart_promo', { 'id': promo.id }) }} "  class="button button--primary-fill button--small modal--show add-to-cart">Ajouter au panier</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </div>
+
 {% endblock %}

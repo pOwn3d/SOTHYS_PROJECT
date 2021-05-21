@@ -106,12 +106,19 @@ class Item
      */
     private $orderDrafts;
 
+    /**
+     * @ORM\OneToMany(targetEntity=PromotionItem::class, mappedBy="item")
+     */
+    private $promotionItems;
+
+
     public function __construct()
     {
         $this->orderLines = new ArrayCollection();
         $this->itemPrices = new ArrayCollection();
         $this->itemQuantities = new ArrayCollection();
         $this->orderDrafts = new ArrayCollection();
+        $this->promotionItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -375,6 +382,36 @@ class Item
                 $orderDraft->setIdItem(null);
             }
         }
+        return $this;
+    }
+
+    /**
+     * @return Collection|PromotionItem[]
+     */
+    public function getPromotionItems(): Collection
+    {
+        return $this->promotionItems;
+    }
+
+    public function addPromotionItem(PromotionItem $promotionItem): self
+    {
+        if (!$this->promotionItems->contains($promotionItem)) {
+            $this->promotionItems[] = $promotionItem;
+            $promotionItem->setItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removePromotionItem(PromotionItem $promotionItem): self
+    {
+        if ($this->promotionItems->removeElement($promotionItem)) {
+            // set the owning side to null (unless already changed)
+            if ($promotionItem->getItem() === $this) {
+                $promotionItem->setItem(null);
+            }
+        }
+
         return $this;
     }
 

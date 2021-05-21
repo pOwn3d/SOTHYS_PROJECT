@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210518133225 extends AbstractMigration
+final class Version20210521073348 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,13 +20,13 @@ final class Version20210518133225 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE plv (id INT AUTO_INCREMENT NOT NULL, promotion_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, INDEX IDX_DB9E41E0139DF194 (promotion_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE plv ADD CONSTRAINT FK_DB9E41E0139DF194 FOREIGN KEY (promotion_id) REFERENCES promotion (id)');
+        $this->addSql('CREATE TABLE promotion_item (id INT AUTO_INCREMENT NOT NULL, item_id INT DEFAULT NULL, price DOUBLE PRECISION NOT NULL, INDEX IDX_A9E1AD81126F525E (item_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE promotion_item ADD CONSTRAINT FK_A9E1AD81126F525E FOREIGN KEY (item_id) REFERENCES item (id)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP TABLE plv');
+        $this->addSql('DROP TABLE promotion_item');
     }
 }

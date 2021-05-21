@@ -22,12 +22,12 @@ class Promotion
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $labelFr;
+    private $nameFr;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $labelEn;
+    private $nameEn;
 
     /**
      * @ORM\Column(type="datetime")
@@ -40,13 +40,20 @@ class Promotion
     private $dateEnd;
 
     /**
-     * @ORM\OneToMany(targetEntity=Plv::class, mappedBy="promotion")
+     * @ORM\ManyToMany(targetEntity=Society::class, inversedBy="promotions")
      */
-    private $plvs;
+    private $society;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Plv::class, inversedBy="promotions")
+     */
+    private $plv;
+
 
     public function __construct()
     {
-        $this->plvs = new ArrayCollection();
+        $this->society = new ArrayCollection();
+        $this->plv = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -54,29 +61,30 @@ class Promotion
         return $this->id;
     }
 
-    public function getLabelFr(): ?string
+    public function getNameFr(): ?string
     {
-        return $this->labelFr;
+        return $this->nameFr;
     }
 
-    public function setLabelFr(?string $labelFr): self
+    public function setNameFr(?string $nameFr): self
     {
-        $this->labelFr = $labelFr;
+        $this->nameFr = $nameFr;
 
         return $this;
     }
 
-    public function getLabelEn(): ?string
+    public function getNameEn(): ?string
     {
-        return $this->labelEn;
+        return $this->nameEn;
     }
 
-    public function setLabelEn(?string $labelEn): self
+    public function setNameEn(?string $nameEn): self
     {
-        $this->labelEn = $labelEn;
+        $this->nameEn = $nameEn;
 
         return $this;
     }
+
 
     public function getDateStart(): ?\DateTimeInterface
     {
@@ -103,18 +111,41 @@ class Promotion
     }
 
     /**
+     * @return Collection|society[]
+     */
+    public function getSociety(): Collection
+    {
+        return $this->society;
+    }
+
+    public function addSociety(society $society): self
+    {
+        if (!$this->society->contains($society)) {
+            $this->society[] = $society;
+        }
+
+        return $this;
+    }
+
+    public function removeSociety(society $society): self
+    {
+        $this->society->removeElement($society);
+
+        return $this;
+    }
+
+    /**
      * @return Collection|Plv[]
      */
-    public function getPlvs(): Collection
+    public function getPlv(): Collection
     {
-        return $this->plvs;
+        return $this->plv;
     }
 
     public function addPlv(Plv $plv): self
     {
-        if (!$this->plvs->contains($plv)) {
-            $this->plvs[] = $plv;
-            $plv->setPromotion($this);
+        if (!$this->plv->contains($plv)) {
+            $this->plv[] = $plv;
         }
 
         return $this;
@@ -122,17 +153,10 @@ class Promotion
 
     public function removePlv(Plv $plv): self
     {
-        if ($this->plvs->removeElement($plv)) {
-            // set the owning side to null (unless already changed)
-            if ($plv->getPromotion() === $this) {
-                $plv->setPromotion(null);
-            }
-        }
+        $this->plv->removeElement($plv);
 
         return $this;
     }
 
-    public function __toString(){
-        return $this->labelFr;
-    }
+
 }

@@ -5,7 +5,7 @@ namespace App\Form;
 use App\Entity\CustomerIncoterm;
 use App\Entity\Incoterm;
 use App\Entity\Order;
-use Cassandra\Custom;
+use App\Repository\CustomerIncotermRepository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -26,26 +26,36 @@ class OrderType extends AbstractType
 //            ->add('idDownStatut')
             // SELECT * FROM `customer_incoterm` INNER JOIN incoterm WHERE `society_customer_incoterm_id` = 8 AND incoterm.id = customer_incoterm.reference_id
             ->add('reference')
+//            En cours de refactorisation
+//            ->add("incoterm", EntityType::class, [
+//                'class' => CustomerIncoterm::class,
+//                'query_builder' => function (CustomerIncotermRepository $er){
+//                return $er->getIncotermSociety();
+//                },
+//                'choice_label' => function (CustomerIncoterm $customerIncoterm) {
+//                    return $customerIncoterm->getReference() . ' ' . $customerIncoterm->getModeTransport();
+//                }
+//            ])
 
-            ->add("incoterm", EntityType::class, [
-                'class'         => CustomerIncoterm::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->innerJoin(
-                            Incoterm::class,    // Entity
-                            'p',               // Alias
-                            Join::WITH,        // Join type
-                            'p.id = u.reference' // Join columns
-                        )
-                        ->andWhere('u.societyCustomerIncoterm =  9');
-                },
-                'choice_label' => function (CustomerIncoterm $customerIncoterm) {
-                    return $customerIncoterm->getReference() . ' ' . $customerIncoterm->getModeTransport();
-
-                    // or better, move this logic to Customer, and return:
-                    // return $customer->getFullname();
-                },
-            ])
+//            ->add("incoterm", EntityType::class, [
+//                'class'         => CustomerIncoterm::class,
+//                'query_builder' => function (EntityRepository $er) {
+//                    return $er->createQueryBuilder('u')
+//                        ->innerJoin(
+//                            Incoterm::class,    // Entity
+//                            'p',               // Alias
+//                            Join::WITH,        // Join type
+//                            'p.id = u.reference' // Join columns
+//                        )
+//                        ->andWhere('u.societyCustomerIncoterm =  9');
+//                },
+//                'choice_label' => function (CustomerIncoterm $customerIncoterm) {
+//                    return $customerIncoterm->getReference() . ' ' . $customerIncoterm->getModeTransport();
+//
+//                    // or better, move this logic to Customer, and return:
+//                    // return $customer->getFullname();
+//                },
+//            ])
 
 
             // TEST inner join

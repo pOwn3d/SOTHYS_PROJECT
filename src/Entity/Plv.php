@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PlvRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,41 +20,82 @@ class Plv
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $name;
+    private $labelFr;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Promotion::class, inversedBy="plvs")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $promotion;
+    private $labelEn;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Promotion::class, mappedBy="plv")
+     */
+    private $promotions;
+
+    public function __construct()
+    {
+        $this->promotions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getLabelFr(): ?string
     {
-        return $this->name;
+        return $this->labelFr;
     }
 
-    public function setName(string $name): self
+    public function setLabelFr(?string $labelFr): self
     {
-        $this->name = $name;
+        $this->labelFr = $labelFr;
 
         return $this;
     }
 
-    public function getPromotion(): ?Promotion
+    public function getLabelEn(): ?string
     {
-        return $this->promotion;
+        return $this->labelEn;
     }
 
-    public function setPromotion(?Promotion $promotion): self
+    public function setLabelEn(?string $labelEn): self
     {
-        $this->promotion = $promotion;
+        $this->labelEn = $labelEn;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Promotion[]
+     */
+    public function getPromotions(): Collection
+    {
+        return $this->promotions;
+    }
+
+    public function addPromotion(Promotion $promotion): self
+    {
+        if (!$this->promotions->contains($promotion)) {
+            $this->promotions[] = $promotion;
+            $promotion->addPlv($this);
+        }
+
+        return $this;
+    }
+
+    public function removePromotion(Promotion $promotion): self
+    {
+        if ($this->promotions->removeElement($promotion)) {
+            $promotion->removePlv($this);
+        }
+
+        return $this;
+    }
+
+    public function __toString(){
+        return $this->getLabelFr();
     }
 }

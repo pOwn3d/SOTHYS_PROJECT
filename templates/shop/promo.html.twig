@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+{% block title %}Mon panier {% endblock %}
+{% block body %}
+
+    <section class="section section--checkout">
+        <div class="container">
+            {% include 'flash_messages.html.twig' %}
+            <form action="#" class="">
+                <div class="row">
+                    <div class="col-12 col-md-8">
+                        <div class="cart--checkout-table">
+                            <table class="cart--table  table-responsive">
+                                <thead>
+                                <tr>
+                                    <th>Produit</th>
+                                    <th>Désignation</th>
+                                    <th>Quantité</th>
+                                    <th>Quantité Groupage</th>
+                                    <th>Prix unitaire (EUR)</th>
+                                    <th>Prix total (EUR)</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                 {% set totalCabine = 0 %}
+                                 {% set total = 0 %}
+                                 {% for order in orders %}
+
+                                 {% set total = total + (order.price *  order.quantity ) %}
+                                 {% if  order.idItem.idPresentation == "Cabine" %}
+                                 {% set totalCabine = totalCabine + (order.price) %}
+                                 {% endif %}
+
+                                <tr class="product-291">
+                                    <td class="product-name">
+                                         <a href="{{ path('app_item_id', { 'id': order.idItem.id }) }}">{{ order.idItem.itemId }}</a>
+                                    </td>
+                                    <td class="product-designation ">
+                                        <span class="text--category">
+ <a href="{{ path('app_item_id', { 'id': order.idItem.id }) }}">{{ order.idItem.labelFR }}</a>
+                                        </span>
+                                    </td>
+                                    <td class="product-quantity">
+                                         <span class="text--category show--mobile">  <a href="{{ path('app_item_id', { 'id': order.idItem.id }) }}">{{ order.idItem.labelFR }}</a></span>
+                                        <div class="quantity">
+                                            <label for="product-quantity--291">Quantité</label>
+                                             <input type="number" class="qty input-text js-update-cart-quantity" step="1" min="1" data-product="{{ order.idItem.id }}" value="{{ order.quantity }}" style="text-align: center;">
+                                            <div class="quantity-nav">
+                                                <div class="quantity-button quantity-up">+</div>
+                                                <div class="quantity-button quantity-down">-</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="product-quantityGroupage">
+                                         <span class="text--category" id="qty_update_{{ order.idItem.id }}">{{ order.quantity }} x {{ order.quantityBundling }} </span>
+                                    </td>
+                                    <td class="product-priceUnit">
+                                         <span class="text--category">  {{ order.price }} €</span>
+                                    </td>
+                                    <td class="product-priceTotal">
+                                         <span class="text--category" id="price_update_{{ order.idItem.id }}">{{ order.price *  order.quantity|round }} € </span>
+                                    </td>
+                                    <td>
+                                         <a href="{{ path('app_order_product_delete', { 'id': order.id }) }}"><i class="icon icon-close"></i></a>
+                                    </td>
+                                </tr>
+                                 {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="cart--checkout-total">
+                            <div class="cart--totals cart--totals-default">
+                                <h3>Récapitulatif panier</h3>
+                                <table class="table-responsive cart--table-totals">
+                                    <tbody>
+                                    <tr class="cart-subtotal">
+                                         <th>Sous-total</th>
+                                         <td>
+                                         </td>
+                                    </tr>
+                                    <tr class="order-total">
+                                        <th>
+                                            Total
+                                        </th>
+                                        <td>
+                                             <span class="price total" id="priceTotal">{{ total }} €</span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="checkout-wrapper">
+                                    <a href="{{ path("app_order_publish") }}" class=" checkout button button--primary-fill">
+                                        Valider ma commande </a>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+
+{% endblock %}
