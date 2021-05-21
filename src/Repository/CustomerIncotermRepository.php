@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\CustomerIncoterm;
+use App\Entity\Incoterm;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @method CustomerIncoterm|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,10 +17,26 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CustomerIncotermRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    /**
+     * @var \Symfony\Component\Security\Core\Security
+     */
+    private Security $security;
+
+    public function __construct(ManagerRegistry $registry, Security $security)
     {
         parent::__construct($registry, CustomerIncoterm::class);
+        $this->security = $security;
     }
+//   En cours de refactorisation
+//    public function getIncotermSociety(){
+//
+//       return $this->createQueryBuilder('c')
+//            ->innerJoin(Incoterm::class, 'i', Join::WITH, 'i.id = c.reference')
+//            ->andWhere('c.societyCustomerIncoterm = ' . $this->security->getUser()->getSocietyId()->getId())
+//            ->getQuery()
+//            ->getResult()
+//            ;
+//    }
 
     // /**
     //  * @return CustomerIncoterm[] Returns an array of CustomerIncoterm objects

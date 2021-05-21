@@ -40,10 +40,14 @@ class CustomerIncoterm
     private $societyCustomerIncoterm;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity=TransportMode::class, inversedBy="customerIncoterms")
      */
-    private $idModeTransport;
+    private $modeTransport;
 
+//    /**
+//     * @ORM\Column(type="integer")
+//     */
+//    private $idModeTransport;
 
 
     public function __construct()
@@ -122,15 +126,27 @@ class CustomerIncoterm
 
         return $this;
     }
+//
+//    public function getIdModeTransport(): ?int
+//    {
+//        return $this->idModeTransport;
+//    }
+//
+//    public function setIdModeTransport(int $idModeTransport): self
+//    {
+//        $this->idModeTransport = $idModeTransport;
+//
+//        return $this;
+//    }
 
-    public function getIdModeTransport(): ?int
+    public function getModeTransport(): ?transportMode
     {
-        return $this->idModeTransport;
+        return $this->modeTransport;
     }
 
-    public function setIdModeTransport(int $idModeTransport): self
+    public function setModeTransport(?transportMode $modeTransport): self
     {
-        $this->idModeTransport = $idModeTransport;
+        $this->modeTransport = $modeTransport;
 
         return $this;
     }

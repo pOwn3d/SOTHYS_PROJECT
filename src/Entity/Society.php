@@ -57,25 +57,25 @@ class Society
     private $orderDrafts;
 
     /**
-     * @ORM\OneToMany(targetEntity=Quote::class, mappedBy="society")
-     */
-    private $quotes;
-
-    /**
      * @ORM\OneToMany(targetEntity=CustomerIncoterm::class, mappedBy="societyCustomerIncoterm")
      */
     private $customerIncoterms;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Promotion::class, mappedBy="society")
+     */
+    private $promotions;
 
 
     public function __construct()
     {
         $this->orders = new ArrayCollection();
-        $this->users  = new ArrayCollection();
+        $this->users = new ArrayCollection();
         $this->itemPrices = new ArrayCollection();
         $this->itemQuantities = new ArrayCollection();
         $this->orderDrafts = new ArrayCollection();
-        $this->quotes = new ArrayCollection();
         $this->customerIncoterms = new ArrayCollection();
+        $this->promotions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -252,36 +252,6 @@ class Society
     }
 
     /**
-     * @return Collection|Quote[]
-     */
-    public function getQuotes(): Collection
-    {
-        return $this->quotes;
-    }
-
-    public function addQuote(Quote $quote): self
-    {
-        if (!$this->quotes->contains($quote)) {
-            $this->quotes[] = $quote;
-            $quote->setSociety($this);
-        }
-
-        return $this;
-    }
-
-    public function removeQuote(Quote $quote): self
-    {
-        if ($this->quotes->removeElement($quote)) {
-            // set the owning side to null (unless already changed)
-            if ($quote->getSociety() === $this) {
-                $quote->setSociety(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|CustomerIncoterm[]
      */
     public function getCustomerIncoterms(): Collection
@@ -306,6 +276,33 @@ class Society
             if ($customerIncoterm->getSocietyCustomerIncoterm() === $this) {
                 $customerIncoterm->setSocietyCustomerIncoterm(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Promotion[]
+     */
+    public function getPromotions(): Collection
+    {
+        return $this->promotions;
+    }
+
+    public function addPromotion(Promotion $promotion): self
+    {
+        if (!$this->promotions->contains($promotion)) {
+            $this->promotions[] = $promotion;
+            $promotion->addSociety($this);
+        }
+
+        return $this;
+    }
+
+    public function removePromotion(Promotion $promotion): self
+    {
+        if ($this->promotions->removeElement($promotion)) {
+            $promotion->removeSociety($this);
         }
 
         return $this;

@@ -1,0 +1,162 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\PromotionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass=PromotionRepository::class)
+ */
+class Promotion
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $nameFr;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $nameEn;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $dateStart;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $dateEnd;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Society::class, inversedBy="promotions")
+     */
+    private $society;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Plv::class, inversedBy="promotions")
+     */
+    private $plv;
+
+
+    public function __construct()
+    {
+        $this->society = new ArrayCollection();
+        $this->plv = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getNameFr(): ?string
+    {
+        return $this->nameFr;
+    }
+
+    public function setNameFr(?string $nameFr): self
+    {
+        $this->nameFr = $nameFr;
+
+        return $this;
+    }
+
+    public function getNameEn(): ?string
+    {
+        return $this->nameEn;
+    }
+
+    public function setNameEn(?string $nameEn): self
+    {
+        $this->nameEn = $nameEn;
+
+        return $this;
+    }
+
+
+    public function getDateStart(): ?\DateTimeInterface
+    {
+        return $this->dateStart;
+    }
+
+    public function setDateStart(\DateTimeInterface $dateStart): self
+    {
+        $this->dateStart = $dateStart;
+
+        return $this;
+    }
+
+    public function getDateEnd(): ?\DateTimeInterface
+    {
+        return $this->dateEnd;
+    }
+
+    public function setDateEnd(\DateTimeInterface $dateEnd): self
+    {
+        $this->dateEnd = $dateEnd;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|society[]
+     */
+    public function getSociety(): Collection
+    {
+        return $this->society;
+    }
+
+    public function addSociety(society $society): self
+    {
+        if (!$this->society->contains($society)) {
+            $this->society[] = $society;
+        }
+
+        return $this;
+    }
+
+    public function removeSociety(society $society): self
+    {
+        $this->society->removeElement($society);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Plv[]
+     */
+    public function getPlv(): Collection
+    {
+        return $this->plv;
+    }
+
+    public function addPlv(Plv $plv): self
+    {
+        if (!$this->plv->contains($plv)) {
+            $this->plv[] = $plv;
+        }
+
+        return $this;
+    }
+
+    public function removePlv(Plv $plv): self
+    {
+        $this->plv->removeElement($plv);
+
+        return $this;
+    }
+
+
+}

@@ -15,12 +15,16 @@ class HomeController extends AbstractController
     * "_locale"="%app.locales%"
     * })
      * @param CartItem $cartItem
-     *
+
      * @return Response
      */
     public function index(CartItem $cartItem, PromoRepository $promoRepo): Response
     {
-        $promos = $promoRepo->findAllValidPromos();
+
+//        $promos = $promotionItemRepository->findAll();
+
+        $promos  = '';
+
         $society = $this->getUser()->getSocietyID()->getId();
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',

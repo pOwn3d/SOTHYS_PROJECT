@@ -45,3 +45,15 @@ echo ""
 echo "localhost$port/import-quantity-item"
 curl -o /dev/null "localhost$port/import-quantity-item"
 echo ""
+
+echo "localhost$port/import-mode-transport"
+curl -o /dev/null "localhost$port/import-mode-transport"
+echo ""
+
+echo "localhost$port/import-incoterm"
+curl -o /dev/null "localhost$port/import-incoterm"
+echo ""
+
+echo "localhost$port/import-customer-incoterm"
+curl -o /dev/null "localhost$port/import-customer-incoterm"
+echo ""

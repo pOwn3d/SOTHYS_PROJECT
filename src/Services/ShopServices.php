@@ -3,7 +3,6 @@
 
 namespace App\Services;
 
-use App\Entity\Incoterm;
 use App\Entity\Order;
 use App\Entity\OrderDraft;
 use App\Entity\OrderLine;
@@ -81,7 +80,8 @@ class ShopServices extends AbstractController
                 ->setPriceOrder($price->getPrice() * $qty)
                 ->setQuantity($qty)
                 ->setQuantityBundling($quantity)
-                ->setState(0);
+                ->setState(0)
+          ;
         }
 
         if ($cartItem != null) {
@@ -102,7 +102,6 @@ class ShopServices extends AbstractController
     public function createOrder($society,  $data)
     {
 
-//dd(->getId());
         $orders = $this->orderDraftRepository->findBy([ 'idSociety' => $society->getId() ]);
         $incoterm = $this->incotermRepository->findBy([ 'id' => $society->getId() ]);
         if ($orders == []) {

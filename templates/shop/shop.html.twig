@@ -5,7 +5,6 @@
     <section class="section section--checkout">
         <div class="container">
             {% include 'flash_messages.html.twig' %}
-            {{ dump() }}
             {{ form_start(form) }}
             <div class="row">
                 <div class="col-12 col-md-12">
@@ -17,7 +16,6 @@
                         <label for="incoterm">Incoterm</label>
                         {{ form_row(form.incoterm, {'label' : false,  'attr' : {'placeholder' : 'Référence',  'class' : 'form-control' ,'name' : 'incoterm' }}) }}
                     </p>
-
                     <p class="form__item">
                         <label for="">Email</label>
                         {{ form_row(form.email, {'label' : false,  'attr' : {'placeholder' : 'Email',  'class' : 'form-control' ,'name' : 'email',   'value' :  user.email  }}) }}
