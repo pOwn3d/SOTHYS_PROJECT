@@ -164,10 +164,7 @@ class Item
         $this->gammeString = $gammeString;
         return $this;
     }
-    public function __toString(): ?string
-    {
-       return $this->getLabelFR();
-    }
+
 
     public function getLabelFR(): ?string
     {

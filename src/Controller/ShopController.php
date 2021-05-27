@@ -77,7 +77,9 @@ class ShopController extends AbstractController
     }
 
     /**
-     * @Route("/promo", name="app_promo_shop")
+     *  @Route("/{_locale}/promo", name="app_promo_shop", requirements={
+     * "_locale"="%app.locales%"
+     * })
      */
     public function panierPromo(ShopServices $shopServices, CartItem $cartItem): Response
     {
@@ -125,14 +127,19 @@ class ShopController extends AbstractController
      */
     public function orderEdit(Request $request, OrderServices $orderServices, OrderDraftServices $orderDraftServices, ShopServices $shopServices): Response
     {
-        $id        = $request->get('id');
-        $society   = $this->getUser()->getSocietyID();
-        $order     = $orderServices->editOrderID($id);
+        $id = $request->get('id');
+        $society = $this->getUser()->getSocietyID();
+        $order = $orderServices->editOrderID($id);
         $orderLine = $orderServices->editOrderLineID($id);
-        $orderDraftServices->editOrderDraft($order, $society, $orderLine);
+        $promo = $orderDraftServices->editOrderDraft($order, $society, $orderLine);
         $shopServices->deleteOrderLine($id);
 
-        return $this->redirect('/panier');
+
+        if ($promo == true) {
+            return $this->redirectToRoute('app_promo_shop');
+        }
+        return $this->redirectToRoute('app_shop');
+
     }
 
     /**

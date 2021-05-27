@@ -51,6 +51,7 @@ class OrderLineRepository extends ServiceEntityRepository
     }
 
     public function deleteOrderLine($id){
+
         return $this->createQueryBuilder('s')
             ->delete('')
             ->where('s.idOrder = :id')

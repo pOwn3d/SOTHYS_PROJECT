@@ -40,32 +40,44 @@
                     {% set totalCabine = 0 %}
                     {% set totalAutre = 0 %}
                     {% for order in ordersLine %}
-                        <tr>
-                            <td><a href="{{ path('app_item_id', { 'id': order.itemID.id }) }}">{{ order.itemID.id }}</a></td>
-                            <td><a href="{{ path('app_item_id', { 'id': order.itemID.id }) }}">{{ order.itemID.labelFR }}</a></td>
-                            <td>{{ order.quantity }}</td>
-                            <td>{{ order.quantity }}</td>
-                            <td>{{ order.priceUnit }} €</td>
-                            <td>{{ order.price }} €</td>
-                        </tr>
+                        {% if order.promo == true %}
+                            <tr>
+                                <td>{{ order.itemID.id }}</td>
+                                <td>{{ order.itemID.labelFR }}</td>
+                                <td>{{ order.quantity }}</td>
+                                <td>{{ order.quantity }}</td>
+                                <td>{{ order.priceUnit }} €</td>
+                                <td>{{ order.price }} €</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td><a href="{{ path('app_item_id', { 'id': order.itemID.id }) }}">{{ order.itemID.id }}</a></td>
+                                <td><a href="{{ path('app_item_id', { 'id': order.itemID.id }) }}">{{ order.itemID.labelFR }}</a></td>
+                                <td>{{ order.quantity }}</td>
+                                <td>{{ order.quantity }}</td>
+                                <td>{{ order.priceUnit }} €</td>
+                                <td>{{ order.price }} €</td>
+                            </tr>
+                        {% endif %}
                         {% if  order.itemID.idPresentation == "Cabine" %}
                             {% set totalCabine = totalCabine + (order.price) %}
                         {% else %}
                             {% set totalAutre = totalAutre + (order.price) %}
                         {% endif %}
+
+                        <tr>
+                            <td colspan="5">Dont Vente/Cabine (EUR)</td>
+                            <td colspan="1">{{ totalCabine }} €</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">Dont Autre (EUR)</td>
+                            <td colspan="1">{{ totalAutre }} €</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">Total HT (EUR)</td>
+                            <td colspan="1">{{ totalAutre  + totalCabine }} €</td>
+                        </tr>
                     {% endfor %}
-                    <tr>
-                        <td colspan="5">Dont Vente/Cabine (EUR)</td>
-                        <td colspan="1">{{ totalCabine }} €</td>
-                    </tr>
-                    <tr>
-                        <td colspan="5">Dont Autre (EUR)</td>
-                        <td colspan="1">{{ totalAutre }} €</td>
-                    </tr>
-                    <tr>
-                        <td colspan="5">Total HT (EUR)</td>
-                        <td colspan="1">{{ totalAutre  + totalCabine }} €</td>
-                    </tr>
                     </tbody>
                 </table>
             </div>
