@@ -27,7 +27,6 @@ class ItemController extends AbstractController
      */
     public function index(Request $request, GammeProductServices $gammeProductServices, GammeServices $gammeServices, ShopServices $shopServices, ItemQuantityService $itemQuantityService, CartItem $cartItem): Response
     {
-
         $society = $this->getUser()->getSocietyID()->getId();
         $id      = $request->get('id');
         $product = $gammeProductServices->getProductInfo($id);
@@ -40,6 +39,5 @@ class ItemController extends AbstractController
             'quantity'        => $itemQuantityService->quantityItemSociety($id, $society),
             'cartItem'        => $cartItem->getItemCart($society)['0']['quantity']
         ]);
-
     }
 }

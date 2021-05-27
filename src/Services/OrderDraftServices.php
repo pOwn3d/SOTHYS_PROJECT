@@ -28,6 +28,7 @@ class OrderDraftServices
     public function editOrderDraft($id, $society, $orderLine)
     {
 
+
         foreach ($orderLine as $item) {
 
             $draft = new OrderDraft();
@@ -36,6 +37,7 @@ class OrderDraftServices
                 ->setPrice($item->getPriceUnit())
                 ->setQuantity($item->getQuantity())
                 ->setQuantityBundling($item->getItemId()->getAmountBulking())
+                ->setPromo($item->getPromo())
                 ->setState(0);
 
             $this->em->persist($draft);
@@ -48,9 +50,9 @@ class OrderDraftServices
         $this->em->flush();
     }
 
-    public function getSumOrderDraft($id)
+    public function getSumOrderDraft($id, $promo)
     {
-        return $this->orderDraftRepository->findSumOrderDraftSociety($id);
+        return $this->orderDraftRepository->findSumOrderDraftSociety($id, $promo);
     }
 
     public function getSumItemOrderDraft($id)

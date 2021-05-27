@@ -49,11 +49,17 @@ class Promotion
      */
     private $plv;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=PromotionItem::class, inversedBy="promotions")
+     */
+    private $promotionItem;
+
 
     public function __construct()
     {
         $this->society = new ArrayCollection();
         $this->plv = new ArrayCollection();
+        $this->promotionItem = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -154,6 +160,30 @@ class Promotion
     public function removePlv(Plv $plv): self
     {
         $this->plv->removeElement($plv);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PromotionItem[]
+     */
+    public function getPromotionItem(): Collection
+    {
+        return $this->promotionItem;
+    }
+
+    public function addPromotionItem(PromotionItem $promotionItem): self
+    {
+        if (!$this->promotionItem->contains($promotionItem)) {
+            $this->promotionItem[] = $promotionItem;
+        }
+
+        return $this;
+    }
+
+    public function removePromotionItem(PromotionItem $promotionItem): self
+    {
+        $this->promotionItem->removeElement($promotionItem);
 
         return $this;
     }

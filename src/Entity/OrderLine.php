@@ -64,6 +64,11 @@ class OrderLine
      */
     private $orderDraftID;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $promo;
+
 
     public function getId(): ?int
     {
@@ -166,6 +171,18 @@ class OrderLine
     public function setOrderDraftID(?OrderDraft $orderDraftID): self
     {
         $this->orderDraftID = $orderDraftID;
+
+        return $this;
+    }
+
+    public function getPromo(): ?bool
+    {
+        return $this->promo;
+    }
+
+    public function setPromo(?bool $promo): self
+    {
+        $this->promo = $promo;
 
         return $this;
     }

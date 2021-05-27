@@ -31,7 +31,6 @@ class OrderController extends AbstractController
         $orders  = null;
         $orders  = $orderRepository->findOrderCustomer($society);
 
-
         return $this->render('order/index.html.twig', [
             'controller_name' => 'OrderController',
             'orders'          => $orders,
@@ -40,7 +39,7 @@ class OrderController extends AbstractController
     }
 
     /**
-     * @Route("/add-to-cart/{item}/{qty}", name="app_add_to_cart_id")
+     * @Route("/add-to-cart/{item}/{qty}/{promo}", name="app_add_to_cart_id" , defaults={"promo" = null})
      * @param Request            $request
      * @param ShopServices       $shopServices
      * @param OrderDraftServices $orderDraftServices
@@ -52,10 +51,15 @@ class OrderController extends AbstractController
     {
 
         $item    = $request->get('item');
+        $promo    = $request->get('promo');
+        if ($promo == 'undefined'){
+            $promo = 0;
+        }
+
         $society = $this->getUser()->getSocietyID();
-        $shopServices->cartSociety($society, $item, $request->get('qty'));
+        $shopServices->cartSociety($society, $item, $request->get('qty'), $promo);
         $orders = $orderDraftServices->getOrderDraftID($society->getId(), $item);
-        $sum    = $orderDraftServices->getSumOrderDraft($society->getId());
+        $sum    = $orderDraftServices->getSumOrderDraft($society->getId(), $promo);
 
         $data = [
             'total'            => $sum[0]['price'],
@@ -65,7 +69,6 @@ class OrderController extends AbstractController
             'id'               => $orders->getId(),
             'cartItem'         => $cartItem->getItemCart($society)['0']['quantity']
         ];
-
         return new JsonResponse(json_encode($data));
     }
 

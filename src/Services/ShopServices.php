@@ -12,6 +12,7 @@ use App\Repository\ItemPriceRepository;
 use App\Repository\ItemRepository;
 use App\Repository\OrderDraftRepository;
 use App\Repository\OrderLineRepository;
+use App\Repository\PromotionItemRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -24,50 +25,47 @@ class ShopServices extends AbstractController
     private ItemQuantityService $itemQuantityService;
     private OrderLineRepository $orderLineRepository;
     private IncotermRepository $incotermRepository;
-    private GammeProductRepository $gammeProductRepository;
+    /**
+     * @var \App\Repository\PromotionItemRepository
+     */
+    private PromotionItemRepository $promotionItemRepository;
 
 
-    public function __construct(ItemRepository $itemRepository, GammeProductRepository $gammeProductRepository, ItemPriceRepository $itemPriceRepository, OrderDraftRepository $orderDraftRepository, EntityManagerInterface $em, ItemQuantityService $itemQuantityService, OrderLineRepository $orderLineRepository, IncotermRepository $incotermRepository)
+    public function __construct(ItemRepository $itemRepository, ItemPriceRepository $itemPriceRepository, OrderDraftRepository $orderDraftRepository, EntityManagerInterface $em, ItemQuantityService $itemQuantityService, OrderLineRepository $orderLineRepository, IncotermRepository $incotermRepository, PromotionItemRepository $promotionItemRepository)
     {
-        $this->itemRepository         = $itemRepository;
-        $this->gammeProductRepository = $gammeProductRepository;
-        $this->itemPriceRepository    = $itemPriceRepository;
-        $this->orderDraftRepository   = $orderDraftRepository;
-        $this->em                     = $em;
-        $this->itemQuantityService    = $itemQuantityService;
-        $this->orderLineRepository    = $orderLineRepository;
-        $this->incotermRepository    = $incotermRepository;
+        $this->itemRepository = $itemRepository;
+
+        $this->itemPriceRepository = $itemPriceRepository;
+        $this->orderDraftRepository = $orderDraftRepository;
+        $this->em = $em;
+        $this->itemQuantityService = $itemQuantityService;
+        $this->orderLineRepository = $orderLineRepository;
+        $this->incotermRepository = $incotermRepository;
+        $this->promotionItemRepository = $promotionItemRepository;
     }
-
-
-//    public function getItemShop()
-//    {
-//        return $this->itemRepository->findAll();
-//    }
-//
-//    public function getItemGammeShop()
-//    {
-//        return $this->gammeProductRepository->findAll();
-//    }
 
     public function getPriceItemIDSociety($item, $society)
     {
         return $this->itemPriceRepository->getPriceBySociety($item, $society);
     }
 
-    public function cartSociety($society, $item, $qty)
+    public function cartSociety($society, $item, $qty, $promo)
     {
-        $itemID   = $this->itemRepository->findOneBy([ 'id' => $item ]);
-        $cart     = $this->orderDraftRepository->findOneBy([ 'idSociety' => $society ]);
-        $cartItem = $this->orderDraftRepository->findOneBy([ 'idItem' => $itemID->getId() ]);
-        $price    = $this->itemPriceRepository->getPriceBySociety($item, $society);
+        $itemID = $this->itemRepository->findOneBy(['id' => $item]);
+        $cart = $this->orderDraftRepository->findOneBy(['idSociety' => $society]);
+        $cartItem = $this->orderDraftRepository->findOneBy(['idItem' => $itemID->getId()]);
+
+        if ($promo == true) {
+            $price = $this->promotionItemRepository->findOneBy(['id' => $item]);
+        } else {
+            $price = $this->itemPriceRepository->getPriceBySociety($item, $society);
+        }
 
         if ($this->itemQuantityService->quantityItemSociety($item, $society) == null) {
             $quantity = '1';
         } else {
             $quantity = $this->itemQuantityService->quantityItemSociety($item, $society)->getQuantity();
         }
-
 
         if ($cart == null || $cartItem == null) {
             $order = new OrderDraft();
@@ -96,15 +94,19 @@ class ShopServices extends AbstractController
         return $this->orderDraftRepository->findOrderDraftSociety($society);
     }
 
-    public function createOrder($society,  $data)
+    public function getOrderDraftPromo($society)
     {
+        return $this->orderDraftRepository->findOrderDraftSocietyPromo($society);
+    }
 
-        $orders = $this->orderDraftRepository->findBy([ 'idSociety' => $society->getId() ]);
-        $incoterm = $this->incotermRepository->findBy([ 'id' => $society->getId() ]);
+    public function createOrder($society, $data, $promo)
+    {
+        $orders = $this->orderDraftRepository->findOrderDraft($society->getId(), $promo);
+        $incoterm = $this->incotermRepository->findBy(['id' => $society->getId()]);
         if ($orders == []) {
             return [
                 'type' => 'error',
-                'msg'  => 'Commande vide',
+                'msg' => 'Commande vide',
             ];
         }
 
@@ -141,9 +143,11 @@ class ShopServices extends AbstractController
                 ->setPriceUnit($order->getPrice())
                 ->setItemID($order->getIdItem())
                 ->setIdOrder($orderId)
+                ->setPromo($promo)
 //                ->setIdOrderLine()
 //                ->setIdOrderX3()
-                ->setPriceUnit($order->getPrice())//                ->setRemainingQtyOrder()
+                ->setPriceUnit($order->getPrice())
+                //                ->setRemainingQtyOrder()
             ;
 
             $this->em->remove($order);
@@ -155,6 +159,7 @@ class ShopServices extends AbstractController
 
     public function deleteItemOrderDraft($id)
     {
+
         $orders = $this->orderDraftRepository->findOneBy([ 'id' => $id ]);
         $this->em->remove($orders);
         $this->em->flush();

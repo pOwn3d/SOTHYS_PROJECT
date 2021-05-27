@@ -37,25 +37,25 @@ class OrderType extends AbstractType
 //                }
 //            ])
 
-//            ->add("incoterm", EntityType::class, [
-//                'class'         => CustomerIncoterm::class,
-//                'query_builder' => function (EntityRepository $er) {
-//                    return $er->createQueryBuilder('u')
-//                        ->innerJoin(
-//                            Incoterm::class,    // Entity
-//                            'p',               // Alias
-//                            Join::WITH,        // Join type
-//                            'p.id = u.reference' // Join columns
-//                        )
-//                        ->andWhere('u.societyCustomerIncoterm =  9');
-//                },
-//                'choice_label' => function (CustomerIncoterm $customerIncoterm) {
-//                    return $customerIncoterm->getReference() . ' ' . $customerIncoterm->getModeTransport();
-//
-//                    // or better, move this logic to Customer, and return:
-//                    // return $customer->getFullname();
-//                },
-//            ])
+            ->add("incoterm", EntityType::class, [
+                'class'         => CustomerIncoterm::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->innerJoin(
+                            Incoterm::class,    // Entity
+                            'p',               // Alias
+                            Join::WITH,        // Join type
+                            'p.id = u.reference' // Join columns
+                        )
+                        ->andWhere('u.societyCustomerIncoterm =  9');
+                },
+                'choice_label' => function (CustomerIncoterm $customerIncoterm) {
+                    return $customerIncoterm->getReference() . ' ' . $customerIncoterm->getModeTransport();
+
+                    // or better, move this logic to Customer, and return:
+                    // return $customer->getFullname();
+                },
+            ])
 
 
             // TEST inner join
