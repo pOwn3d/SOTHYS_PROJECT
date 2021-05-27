@@ -17,12 +17,12 @@ class PromoController extends AbstractController
      * @Route("/add-cart-promo/{id}", name="app_cart_promo")
      * @param Request $request
      * @param \App\Services\PromoServices $promoServices
-     * @return void
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function addToCartPromo(Request $request, PromoServices $promoServices)
+    public function addToCartPromo(Request $request, PromoServices $promoServices): \Symfony\Component\HttpFoundation\RedirectResponse
     {
-        $id    = $request->get('id');
-        $promoServices->addtoCartPromo($id);
+        $promoServices->addtoCartPromo($request->get('id'));
+        return $this->redirectToRoute('app_promo_shop');
     }
 
     /**
@@ -31,7 +31,7 @@ class PromoController extends AbstractController
     public function index(ShopServices $shopServices, CartItem $cartItem): Response
     {
         $society = $this->getUser()->getSocietyID();
-        $orders  = $shopServices->getOrderDraft($society);
+        $orders  = $shopServices->getOrderDraftPromo($society);
 
         return $this->render('shop/promo.html.twig', [
             'controller_name' => 'ShopController',

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\PromotionItemRepository;
 use App\Services\Cart\CartItem;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,13 +16,13 @@ class HomeController extends AbstractController
     * "_locale"="%app.locales%"
     * })
      * @param CartItem $cartItem
-
+     * @param \App\Repository\PromotionItemRepository $promotionItemRepository
      * @return Response
      */
-    public function index(CartItem $cartItem, PromotionRepository $promotionItemRepository): Response
+    public function index(CartItem $cartItem, PromotionRepository $promotionRepository): Response
     {
 
-        $promos = $promotionItemRepository->findAllValidPromos();
+        $promos = $promotionRepository->findAllValidPromos();
 
         $society = $this->getUser()->getSocietyID()->getId();
         return $this->render('home/index.html.twig', [

@@ -26,7 +26,6 @@ class ShopController extends AbstractController
     {
         $society = $this->getUser()->getSocietyID();
 
-
         $form = $this->createForm(CsvOrderUploaderType::class);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
@@ -78,20 +77,32 @@ class ShopController extends AbstractController
     }
 
     /**
-     * @Route("/order-publish", name="app_order_publish")
+     * @Route("/promo", name="app_promo_shop")
+     */
+    public function panierPromo(ShopServices $shopServices, CartItem $cartItem): Response
+    {
+        $society = $this->getUser()->getSocietyID();
+        $orders = $shopServices->getOrderDraftPromo($society);
+
+        return $this->render('shop/promo.html.twig', [
+            'controller_name' => 'ShopController',
+            'orders' => $orders,
+            'cartItem' => $cartItem->getItemCart($society)['0']['quantity']
+        ]);
+    }
+
+    /**
+     * @Route("/order-publish/{promo}", name="app_order_publish")
      */
     public function orderPublish(CartItem $cartItem, Request $request, ShopServices $shopServices): Response
     {
         $society = $this->getUser()->getSocietyID();
-
         $form = $this->createForm(OrderType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $society = $this->getUser()->getSocietyID();
-            $order   = $shopServices->createOrder($society, $form->getData());
-
+            $order   = $shopServices->createOrder($society, $form->getData(), $request->get('promo'));
             if ($order != null) {
                 $this->addFlash($order['type'], $order['msg']);
                 return $this->redirectToRoute('app_shop');
@@ -108,21 +119,6 @@ class ShopController extends AbstractController
         ]);
     }
 
-//    /**
-//     * @Route("/order-publish", name="app_order_publish")
-//     */
-//    public function orderSave(ShopServices $shopServices): Response
-//    {
-//        $society = $this->getUser()->getSocietyID();
-//        $order   = $shopServices->createOrder($society);
-//
-//        if ($order != null) {
-//            $this->addFlash($order['type'], $order['msg']);
-//            return $this->redirectToRoute('app_shop');
-//        }
-//
-//        return $this->redirectToRoute('app_order');
-//    }
 
     /**
      * @Route("/order-edit/{id}", name="app_order_edit")

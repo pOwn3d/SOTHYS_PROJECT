@@ -25,7 +25,7 @@ class PromotionController extends AbstractCrudController
             DateTimeField::new('dateEnd', 'Date de fin'),
             TextField::new('nameFr', 'Nom FR'),
             TextField::new('nameEn', 'Nom EN'),
-//            AssociationField::new('promotionItem'),
+            AssociationField::new('promotionItem'),
             AssociationField::new('plv'),
             AssociationField::new('society'),
 
