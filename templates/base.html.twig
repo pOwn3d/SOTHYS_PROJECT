@@ -38,42 +38,44 @@
                 </div>
                 <div class="col-3 col-lg-5 col-xl-4">
                     {% if app.user != null %}
-                    <div class="navbar-tools">
-                        <ul class="list--horizontal">
-                            <li>
-                                <a href="{{ path('app_shop') }}" aria-label="{{ 'access_my_cart' | trans }}"
-                                   title="{{ 'access_my_cart' | trans }}" data-microtip-position="bottom" role="tooltip"
-                                   class="cart__access js-cart-toggler">
-                                    <i class="icon icon-panier">
-                                        <span class="hidden">{{ 'my_cart' | trans }}</span>
-                                    </i>
-                                    <span id="cartItem">{{ cartItem|default('0') }}</span>
-                                </a>
-                            </li>
-                            <li class="account__access_button d-none d-lg-block">
-                                <a
-                                    href="{{ path('app_login') }}" aria-label="{{ 'access_my_account' | trans }}"
-                                    title="{{ 'access_my_account' | trans }}"
-                                >
-                                    <i class="icon icon-compte">
-                                        <span class="hidden">{{ 'my_account' | trans }}</span>
-                                    </i>
-                                </a>
-                                <div class="account__access_wrapper">
-                                    <div class="account__access_inner">
-                                        <a href="{{ path('app_account') }}" class="button button--small button--dark" title="{{ 'my_account' | trans }}">
-                                            {{ 'my_account' | trans }}
-                                        </a>
-                                        <a href="{{ path('app_logout') }}" class="button button--small button--dark" title="{{ 'logout' | trans }}">
-                                            {{ 'logout' | trans }}
-                                        </a>
+                        <div class="navbar-tools">
+                            <ul class="list--horizontal">
+                                <li>
+                                    <a href="{{ path('app_shop') }}" aria-label="{{ 'access_my_cart' | trans }}"
+                                        title="{{ 'access_my_cart' | trans }}" data-microtip-position="bottom" role="tooltip"
+                                        class="cart__access js-cart-toggler"
+                                    >
+                                        <i class="icon icon-panier">
+                                            <span class="hidden">{{ 'my_cart' | trans }}</span>
+                                        </i>
+                                        <span id="cartItem">{{ cartItem|default('0') }}</span>
+                                    </a>
+                                </li>
+                                <li class="account__access_button d-none d-lg-block">
+                                    <a
+                                        href="{{ path('app_login') }}" aria-label="{{ 'access_my_account' | trans }}"
+                                        title="{{ 'access_my_account' | trans }}"
+                                    >
+                                        <i class="icon icon-compte">
+                                            <span class="hidden">{{ 'my_account' | trans }}</span>
+                                        </i>
+                                    </a>
+                                    <div class="account__access_wrapper">
+                                        <div class="account__access_inner">
+                                            <a href="{{ path('app_account') }}" class="button button--small button--dark" title="{{ 'my_account' | trans }}">
+                                                {{ 'my_account' | trans }}
+                                            </a>
+                                            <a href="{{ path('app_logout') }}" class="button button--small button--dark" title="{{ 'logout' | trans }}">
+                                                {{ 'logout' | trans }}
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                                </li>
+                            </ul>
+                            {{ app.user.email }}
+                        </div>
+                    {% endif %}
                 </div>
-                {% endif %}
             </div>
         </div>
     </div>
