@@ -138,10 +138,13 @@ Name: 'Name'
 
 Id Customer: 'Id Customer'
 
-promotions: 'Promotions'
+promotions: 'Offers'
 
 upload:
     orders: 'upload my orders'
 
 home:
     no_promotions: ''
+
+cta:
+    show_promo: 'Access to offer'

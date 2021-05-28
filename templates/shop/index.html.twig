@@ -106,7 +106,7 @@
                     <div class="col-12 col-md-4">
                         {{ form_start(form) }}
                             <div class="Upload-csv-container">
-                                <div class="Error">
+                                <div class="error">
                                     {{ form_errors(form.update_csv_order) }}
                                 </div>
                                 {{ form_widget(form.update_csv_order, {'attr': {'class': 'upload-box'}}) }}
@@ -116,13 +116,13 @@
                         {{ form_end(form) }}
                         {# Error handling messages  #}
                         {% if invalidExtention %}
-                            <p class="Error"> {{invalidExtention}} </p>
+                            <p class="error"> {{invalidExtention}} </p>
                         {% endif %}
                         {% if ErrorFile %}
-                            <p class="Error"> {{ErrorFile}} </p>
+                            <p class="error"> {{ErrorFile}} </p>
                         {% endif %}
                         {% if IdError %}
-                            <p class="Error"> {{IdError}} </p>
+                            <p class="error"> {{IdError}} </p>
                         {% endif %}
                     </div>
                 </div>

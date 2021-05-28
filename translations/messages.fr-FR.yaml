@@ -143,3 +143,6 @@ upload:
 
 home:
     no_promotions: ''
+
+cta:
+    show_promo: 'Accéder à la promotion'
