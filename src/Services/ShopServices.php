@@ -53,7 +53,12 @@ class ShopServices extends AbstractController
             throw new \Exception("no item found with this id ");
         }
         $cartItem = $this->orderDraftRepository->findOneBy([ 'idItem' => $itemID->getId() ]);
-        $price    = $this->itemPriceRepository->getPriceBySociety($item, $society);
+
+        if ($promo == true) {
+            $price = $this->promotionItemRepository->findOneBy(['id' => $item]);
+        } else {
+            $price = $this->itemPriceRepository->getPriceBySociety($item, $society);
+        }
 
         if ($this->itemQuantityService->quantityItemSociety($item, $society) == null) {
             $quantity = '1';
