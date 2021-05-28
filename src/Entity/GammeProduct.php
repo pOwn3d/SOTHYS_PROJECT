@@ -51,7 +51,7 @@ class GammeProduct
         return $this->id;
     }
 
-       public function getLabelFR(): ?string
+    public function getLabelFR(): ?string
     {
         return $this->labelFR;
     }
@@ -64,6 +64,14 @@ class GammeProduct
 
     public function getLabelEN(): ?string
     {
+        return $this->labelEN;
+    }
+
+    public function getLabel($locale): ?string
+    {
+        if($locale === 'fr-FR') {
+            return $this->labelFR;
+        }
         return $this->labelEN;
     }
 

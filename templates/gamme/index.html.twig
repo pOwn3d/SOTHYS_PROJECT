@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
-{% block title %}Gamme  : {% endblock %}
+
+{% block title %}
+    {{ gamme.getLabel(app.request.locale) }}
+{% endblock %}
 
 {% block body %}
 
@@ -7,7 +10,7 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-12">
-                    <h1 style="text-align: center">{{ gamme.labelFR }}</h1>
+                    <h1 style="text-align: center">{{ gamme.getLabel(app.request.locale) }}</h1>
                 </div>
                 {% for product in products %}
                     <div class="col-6 col-md-6 col-lg-4 productBox aos-init aos-animate" data-aos="fade-up">
@@ -22,9 +25,9 @@
                             </div>
                             <div class="card__content__wrapper">
                                 <div class="card__content">
-                                    <span class="card__title">{{ product.labelFR }}</span>
+                                    <span class="card__title">{{ product.getLabel(app.request.locale) }}</span>
                                     <span class="complement">
-                                        {{ product.capacityFR }}
+                                        {{ product.getCapacity(app.request.locale) }}
                                     </span>
                                 </div>
                             </div>

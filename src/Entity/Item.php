@@ -412,6 +412,24 @@ class Item
         return $this;
     }
 
+    public function getLabel($locale) {
+
+        if($locale === 'fr-FR') {
+            return $this->labelFR;
+        }
+
+        return $this->labelEN;
+    }
+
+    public function getCapacity($locale) {
+
+        if($locale === 'fr-FR') {
+            return $this->capacityFR;
+        }
+
+        return $this->capacityEN;
+    }
+
     public function __toString(): string
     {
         return $this->getLabelEN();
