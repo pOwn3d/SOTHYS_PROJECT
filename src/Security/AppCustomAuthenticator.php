@@ -101,10 +101,13 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator implements P
             return $roles;
         }, $roles);
 
-        if (in_array('ROLE_USER', $rolesTab, true) && in_array('ROLE_SUPER_ADMIN', $rolesTab, true))
+        $redirection = new RedirectResponse($this->urlGenerator->generate('app_home'));
+
+        if (in_array('ROLE_GESTIONNAIRE_PROMO', $rolesTab, true) || in_array('ROLE_ADMIN', $rolesTab, true)) {
             return $redirection = new RedirectResponse($this->urlGenerator->generate('admin'));
-        else
-            return $redirection = new RedirectResponse($this->urlGenerator->generate('app_home'));
+        }
+
+        return $redirection;
     }
 
     protected function getLoginUrl(): string
