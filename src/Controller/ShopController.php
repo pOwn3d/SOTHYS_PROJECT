@@ -2,19 +2,21 @@
 
 namespace App\Controller;
 
-use App\Form\OrderType;
 use App\Form\CsvOrderUploaderType;
-use League\Csv\Reader;
+use App\Form\OrderType;
+use App\Repository\OrderDraftRepository;
 use App\Services\Cart\CartItem;
 use App\Services\OrderDraftServices;
 use App\Services\OrderServices;
 use App\Services\ShopServices;
+use League\Csv\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
+
 class ShopController extends AbstractController
 {
     /**
@@ -145,11 +147,17 @@ class ShopController extends AbstractController
     /**
      * @Route("/order-delete-item/{id}", name="app_order_product_delete")
      */
-    public function orderDeleteItem(Request $request, ShopServices $shopServices): Response
+    public function orderDeleteItem(Request $request, ShopServices $shopServices, OrderDraftRepository $orderDraftRepository): Response
     {
         // TODO : Checker si la société est bien celle de la personne qui supprime le produit.
         $id = $request->get('id');
+        $order = $orderDraftRepository->find($id);
         $shopServices->deleteItemOrderDraft($id);
+
+        if ($order->getPromo() == true) {
+            return $this->redirectToRoute('app_promo_shop');
+        }
+
         return $this->redirectToRoute('app_shop');
     }
 
