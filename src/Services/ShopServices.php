@@ -6,7 +6,6 @@ namespace App\Services;
 use App\Entity\Order;
 use App\Entity\OrderDraft;
 use App\Entity\OrderLine;
-use App\Repository\GammeProductRepository;
 use App\Repository\IncotermRepository;
 use App\Repository\ItemPriceRepository;
 use App\Repository\ItemRepository;
@@ -25,9 +24,6 @@ class ShopServices extends AbstractController
     private ItemQuantityService $itemQuantityService;
     private OrderLineRepository $orderLineRepository;
     private IncotermRepository $incotermRepository;
-    /**
-     * @var \App\Repository\PromotionItemRepository
-     */
     private PromotionItemRepository $promotionItemRepository;
 
 

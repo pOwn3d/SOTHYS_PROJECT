@@ -42,12 +42,13 @@ class OrderController extends AbstractController
 
     /**
      * @Route("/add-to-cart/{item}/{qty}/{promo}", name="app_add_to_cart_id" , defaults={"promo" = null})
-     * @param Request            $request
-     * @param ShopServices       $shopServices
+     * @param Request $request
+     * @param ShopServices $shopServices
      * @param OrderDraftServices $orderDraftServices
-     * @param CartItem           $cartItem
+     * @param CartItem $cartItem
      *
      * @return JsonResponse
+     * @throws \Exception
      */
     public function addToCart(Request $request, ShopServices $shopServices, OrderDraftServices $orderDraftServices, CartItem $cartItem): JsonResponse
     {
