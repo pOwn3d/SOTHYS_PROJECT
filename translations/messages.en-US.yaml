@@ -12,7 +12,6 @@ password: 'Password'
 stay:
     connected: 'Stay connected'
 
-
 login: 'login'
 
 Forgot:
@@ -38,7 +37,6 @@ Ckeck:
         promotional:
             offers: 'Ckeck the current promotional offers (which in developement phase)'
 
-
 order:
     online: 'Order online directly'
     ref: 'Order ref'
@@ -60,7 +58,6 @@ Customer:
     - account:
         id: 'Customer account ID'
 
-
 save: 'save'
 
 Confirm:
@@ -68,7 +65,6 @@ Confirm:
 
 
 Cart: 'Cart'
-
 
 Subtotal: 'Sub-total'
 
@@ -100,21 +96,17 @@ add:
     to:
         cart: 'Add to cart'
 
-
 settings:
     user: 'User settings'
     order: 'Order settings'
     society: 'Society settings'
 
-
 User: 'User'
 Order: 'Order'
 Society: 'Society'
 
-
 new:
     user: 'New user'
-
 
 email: 'E-mail'
 
@@ -128,6 +120,7 @@ id:
     society: 'Society ID'
     order: 'Order ID'
     X3: 'ID X3'
+
 admin: 'Administrator'
 
 delete: 'Delete'
@@ -150,6 +143,5 @@ promotions: 'Promotions'
 upload:
     orders: 'upload my orders'
 
-Promotion:
-    no:
-        display: 'there''s no promotions available to display'
+home:
+    no_promotions: ''

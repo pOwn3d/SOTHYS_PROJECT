@@ -43,7 +43,9 @@
                             </li>
                         </ul>
                         <div class="button__wrapper" style="flex-wrap: wrap">
-                            <a href="{{ path('app_add_to_cart_id', { 'item': product.id ,  'qty': "qty" }) }} " id="addToCart" class="button button--primary-fill button--small modal--show add-to-cart">{{'add.to.cart' | trans}}</a>
+                            <a href="{{ path('app_add_to_cart_id', { 'item': product.id ,  'qty': "qty" }) }} " id="addToCart" class="button button--primary-fill button--small modal--show add-to-cart">
+                                {{'add.to.cart' | trans}}
+                            </a>
                         </div>
                         {% endif %}
                     </div>

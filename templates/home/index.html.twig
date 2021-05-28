@@ -1,20 +1,21 @@
 {% extends 'base.html.twig' %}
+
 {% block title %}{{'Home' | trans}}{% endblock %}
+
 {% block body %}
 
     <div class="container">
-        <h2> {{'customer.area' | trans}}</h2>
         <div class="promo-container">
-            <h2> {{'promotions' | trans}}</h2>
-            <hr>
-            {% if promos != '' %}
-            <ul class="promo">
-                {% for promo in promos %}
-                <li class="list-style-none"><a href="#" class="button button--secondary"> {{promo.nameFr}} <br> {{promo.dateStart | date('d/m/Y')}}-{{promo.dateEnd | date('d/m/Y')}} </a></li>
-                {% endfor %}
-            </ul>
+            {% if promos %}
+                <h2>{{'promotions' | trans}}</h2>
+                <hr>
+                <ul class="promo">
+                    {% for promo in promos %}
+                    <li class="list-style-none"><a href="#" class="button button--secondary"> {{promo.nameFr}} <br> {{promo.dateStart | date('d/m/Y')}}-{{promo.dateEnd | date('d/m/Y')}} </a></li>
+                    {% endfor %}
+                </ul>
             {% else %}
-                <h4>{{ 'Promotion.no.display' | trans }}</h4>
+                <h4>{{ 'home.no_promotions' | trans }}</h4>
             {% endif %}
         </div>
     </div>
@@ -24,13 +25,14 @@
         <section class="section section--product-information">
             <div class="container">
                 {% for promo in promos %}
-                <div class="col-12 col-md-12 col-lg-5">
-                    {# <h3>{{ promo.item }}</h3> #}
-                    <div class="button__wrapper" style="flex-wrap: wrap">
-                        <a href="{{ path('app_cart_promo', { 'id': promo.id }) }} "  class="button button--primary-fill button--small modal--show add-to-cart">Ajouter au panier</a>
+                    <div class="col-12 col-md-12 col-lg-5">
+                        <div class="button__wrapper" style="flex-wrap: wrap">
+                            <a href="{{ path('app_cart_promo', { 'id': promo.id }) }}" class="button button--primary-fill button--small modal--show add-to-cart">
+                                {{'add.to.cart' | trans}}
+                            </a>
+                        </div>
                     </div>
-                    {% endfor %}
-                </div>
+                {% endfor %}
             </div>
         </section>
     </div>

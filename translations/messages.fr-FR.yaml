@@ -12,7 +12,6 @@ password: 'Mot de passe'
 stay:
     connected: 'Rester connecté(e)'
 
-
 login: 'Se connecter'
 
 Forgot:
@@ -20,7 +19,6 @@ Forgot:
         password: 'Mot de passe oublié'
 
 Home: 'Page d''accueil'
-
 
 Welcome:
     at:
@@ -66,7 +64,6 @@ Confirm:
 
 Cart: 'Récapitulatif panier'
 
-
 Subtotal: 'Sous-total'
 
 Validate:
@@ -106,10 +103,8 @@ User: 'Utilisateur'
 Order: 'Commande'
 Society: 'Société'
 
-
 new:
     user: 'Nouveau compte'
-
 
 email: 'Adresse E-mail'
 
@@ -139,7 +134,6 @@ Reference: 'Référence'
 
 Name: 'Nom'
 
-
 Id Customer: 'Id utilisateur'
 
 promotions: 'Promotions'
@@ -147,6 +141,5 @@ promotions: 'Promotions'
 upload:
     orders: 'Télécharger mes commandes'
 
-Promotion:
-    no:
-        display: 'Il n y''a pas de promotions !'
+home:
+    no_promotions: ''
