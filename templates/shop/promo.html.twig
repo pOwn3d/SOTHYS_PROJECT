@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
-{% block title %}Mon panier {% endblock %}
+
+{% block title %}
+    {{ 'my_cart' | trans }}
+{% endblock %}
+
 {% block body %}
 
     <section class="section section--checkout">
@@ -92,7 +96,6 @@
                                     <a href="{{ path("app_order_publish" , { 'promo': true}) }}" class=" checkout button button--primary-fill">
                                         Valider ma commande </a>
                                 </div>
-                                <br>
                             </div>
                         </div>
                     </div>
@@ -100,6 +103,5 @@
             </form>
         </div>
     </section>
-
 
 {% endblock %}

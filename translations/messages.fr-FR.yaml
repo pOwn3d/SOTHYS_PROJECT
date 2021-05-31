@@ -50,9 +50,6 @@ Track:
 
 Logout: 'Déconnexion'
 
-Shopping:
-    bag: 'Accéder à mon panier'
-
 Customer:
     account:
         id: 'Identifiant compte client'
@@ -146,3 +143,11 @@ home:
 
 cta:
     show_promo: 'Accéder à la promotion'
+
+my_account: 'Mon compte'
+
+my_cart: 'Mon panier'
+
+access_my_account: 'Accéder à mon compte'
+
+access_my_cart: 'Accéder à mon panier'

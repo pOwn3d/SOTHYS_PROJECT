@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
-{% block title %}Mon panier {% endblock %}
-{% block body %}
 
+{% block title %}
+    {{ 'my_cart' | trans }}
+{% endblock %}
+
+{% block body %}
     <section class="section section--checkout">
         <div class="container">
             {% include 'flash_messages.html.twig' %}
-            <form action="#" class="">
+            <form action="#">
                 <div class="row">
                     <div class="col-12 col-md-8">
                         <div class="cart--checkout-table">
@@ -95,37 +98,39 @@
                                         {{'Validate.order' | trans}}
                                     </a>
                                 </div>
-                                <br>
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
-                <div class="row">
-                    <div class="col-12 col-md-8"></div>
-                    <div class="col-12 col-md-4">
-                        {{ form_start(form) }}
-                            <div class="Upload-csv-container">
-                                <div class="error">
-                                    {{ form_errors(form.update_csv_order) }}
-                                </div>
-                                {{ form_widget(form.update_csv_order, {'attr': {'class': 'upload-box'}}) }}
 
-                                {{ form_row(form.upload, { 'label' :  'upload.orders' ,'attr': {'class': 'inline-block-upload button button--primary-fill'}}) }}
+            <br />
+
+            <div class="row">
+                <div class="col-12 col-md-8"></div>
+                <div class="col-12 col-md-4">
+                    {{ form_start(form) }}
+                        <div class="Upload-csv-container">
+                            <div class="error">
+                                {{ form_errors(form.update_csv_order) }}
                             </div>
-                        {{ form_end(form) }}
-                        {# Error handling messages  #}
-                        {% if invalidExtention %}
-                            <p class="error"> {{invalidExtention}} </p>
-                        {% endif %}
-                        {% if ErrorFile %}
-                            <p class="error"> {{ErrorFile}} </p>
-                        {% endif %}
-                        {% if IdError %}
-                            <p class="error"> {{IdError}} </p>
-                        {% endif %}
-                    </div>
+                            {{ form_widget(form.update_csv_order, {'attr': {'class': 'upload-box'}}) }}
+
+                            {{ form_row(form.upload, { 'label' :  'upload.orders' ,'attr': {'class': 'inline-block-upload button button--primary-fill'}}) }}
+                        </div>
+                    {{ form_end(form) }}
+                    {# Error handling messages  #}
+                    {% if invalidExtention %}
+                        <p class="error"> {{invalidExtention}} </p>
+                    {% endif %}
+                    {% if ErrorFile %}
+                        <p class="error"> {{ErrorFile}} </p>
+                    {% endif %}
+                    {% if IdError %}
+                        <p class="error"> {{IdError}} </p>
+                    {% endif %}
                 </div>
+            </div>
         </div>
     </section>
 {% endblock %}

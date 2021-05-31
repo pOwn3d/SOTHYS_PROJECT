@@ -50,9 +50,6 @@ Track:
 
 Logout: 'Logout'
 
-Shopping:
-    bag: 'Shopping bag'
-
 Customer:
     - 'utilisateur'
     - account:
@@ -148,3 +145,11 @@ home:
 
 cta:
     show_promo: 'Access to offer'
+
+my_account: 'My account'
+
+my_cart: 'My cart'
+
+access_my_account: 'Access to my account'
+
+access_my_cart: 'Access to my cart'
