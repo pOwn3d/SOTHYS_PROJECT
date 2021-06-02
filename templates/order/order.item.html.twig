@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
-{% block title %}Commande{% endblock %}
-{% block body %}
+{% block title %}
+    {{ 'order'| trans }}
+{% endblock %}
 
+{% block body %}
     <div id="content" role="main">
         <section class="section section--compte">
             <div class="container">
@@ -14,12 +16,11 @@
                     </div>
                     {% include 'components/nav_customer.html.twig' %}
                     <div class="col-4 col-md-4">
-                        <p>Reference :<br/>
-                            N° de commande : {{ orderX3.idOrder }}<br/>
-                            Date commande : {{ orderX3.dateOrder|format_datetime('short', 'none', locale='fr') }} <br/>
+                        <p>
+                            {{ 'reference' | trans }}: {{ orderX3.reference}}<br/>
+                            {{ 'order_number' | trans }}: {{ orderX3.idOrder }}<br/>
+                            Date commande : {{ orderX3.dateOrder|format_datetime('short', 'none' ) }} <br/>
                             N° de chrono : ??<br/>
-                            Client : ??<br/>
-                            Identifiant Client : {{ orderX3.societyID.idCustomer }} <br/>
                             Statut commande : ??<br/>
                             Etat de livraison : ??<br/>
                             Mode Transport : ??<br/>

@@ -9,19 +9,19 @@
     <section class="section section--checkout">
         <div class="container">
             {% include 'flash_messages.html.twig' %}
-            <form action="#" class="">
+            <form action="#">
                 <div class="row">
                     <div class="col-12 col-md-8">
                         <div class="cart--checkout-table">
-                            <table class="cart--table  table-responsive">
+                            <table class="cart--table table-responsive">
                                 <thead>
                                 <tr>
-                                    <th>Produit</th>
-                                    <th>Désignation</th>
-                                    <th>Quantité</th>
-                                    <th>Quantité Groupage</th>
-                                    <th>Prix unitaire (EUR)</th>
-                                    <th>Prix total (EUR)</th>
+                                    <th>{{'Product' | trans}}</th>
+                                    <th>{{'Designation' | trans}}</th>
+                                    <th>{{'quantity' | trans}}</th>
+                                    <th>{{'Quantity.counts' | trans}}</th>
+                                    <th>{{'price.unit' | trans}}</th>
+                                    <th>{{'price.total' | trans}}</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -29,7 +29,6 @@
                                  {% set totalCabine = 0 %}
                                  {% set total = 0 %}
                                  {% for order in orders %}
-
                                      {% set total = total + (order.price *  order.quantity ) %}
                                      {% if  order.idItem.idPresentation == "Cabine" %}
                                          {% set totalCabine = totalCabine + (order.price) %}
@@ -74,18 +73,15 @@
                     <div class="col-12 col-md-4">
                         <div class="cart--checkout-total">
                             <div class="cart--totals cart--totals-default">
-                                <h3>Récapitulatif panier</h3>
+                                <h3>{{'Cart' | trans}}</h3>
                                 <table class="table-responsive cart--table-totals">
                                     <tbody>
                                     <tr class="cart-subtotal">
-                                         <th>Sous-total</th>
-                                         <td>
-                                         </td>
+                                        <th>{{'Subtotal' | trans}}</th>
+                                        <td></td>
                                     </tr>
                                     <tr class="order-total">
-                                        <th>
-                                            Total
-                                        </th>
+                                        <th>{{ 'Total'| trans }} </th>
                                         <td>
                                             <span class="price total" id="priceTotal">{{ total }} €</span>
                                         </td>
@@ -94,7 +90,8 @@
                                 </table>
                                 <div class="checkout-wrapper">
                                     <a href="{{ path("app_order_publish" , { 'promo': true}) }}" class=" checkout button button--primary-fill">
-                                        Valider ma commande </a>
+                                        {{'Validate.order' | trans}}
+                                    </a>
                                 </div>
                             </div>
                         </div>
