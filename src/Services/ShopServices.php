@@ -91,7 +91,7 @@ class ShopServices extends AbstractController
         if ($cartItem != null) {
             $order = $cartItem;
             $order->setQuantity($qty)
-                ->setPriceOrder($price->getPrice() * $qty);
+                ->setPriceOrder($itemPrice->getPrice() * $qty);
         }
 
         $this->em->persist($order);
