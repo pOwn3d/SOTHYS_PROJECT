@@ -6,12 +6,14 @@ namespace App\Services;
 use App\Entity\Order;
 use App\Entity\OrderDraft;
 use App\Entity\OrderLine;
+use App\Entity\Society;
 use App\Repository\IncotermRepository;
 use App\Repository\ItemPriceRepository;
 use App\Repository\ItemRepository;
 use App\Repository\OrderDraftRepository;
 use App\Repository\OrderLineRepository;
 use App\Repository\PromotionItemRepository;
+use App\Repository\SocietyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -27,8 +29,17 @@ class ShopServices extends AbstractController
     private PromotionItemRepository $promotionItemRepository;
 
 
-    public function __construct(ItemRepository $itemRepository, ItemPriceRepository $itemPriceRepository, OrderDraftRepository $orderDraftRepository, EntityManagerInterface $em, ItemQuantityService $itemQuantityService, OrderLineRepository $orderLineRepository, IncotermRepository $incotermRepository, PromotionItemRepository $promotionItemRepository)
-    {
+    public function __construct(
+            ItemRepository $itemRepository,
+            ItemPriceRepository $itemPriceRepository,
+            OrderDraftRepository $orderDraftRepository,
+            EntityManagerInterface $em,
+            ItemQuantityService $itemQuantityService,
+            OrderLineRepository $orderLineRepository,
+            IncotermRepository $incotermRepository,
+            PromotionItemRepository $promotionItemRepository,
+            SocietyRepository $societyRepository
+    ) {
         $this->itemRepository = $itemRepository;
 
         $this->itemPriceRepository = $itemPriceRepository;
@@ -38,6 +49,7 @@ class ShopServices extends AbstractController
         $this->orderLineRepository = $orderLineRepository;
         $this->incotermRepository = $incotermRepository;
         $this->promotionItemRepository = $promotionItemRepository;
+        $this->societyRepository = $societyRepository;
     }
 
     public function getPriceItemIDSociety($item, $society)
@@ -45,32 +57,35 @@ class ShopServices extends AbstractController
         return $this->itemPriceRepository->getPriceBySociety($item, $society);
     }
 
-    public function cartSociety($society, $item, $qty, $promo)
+    public function addToCart(Society $society, $itemId, $qty)
     {
-        $itemID   = $this->itemRepository->findOneBy([ 'id' => $item ]);
-        $cart     = $this->orderDraftRepository->findOneBy([ 'idSociety' => $society ]);
-        if(empty($itemID)){
-            throw new \Exception("no item found with this id ");
+        $societyId = $society->getId();
+
+        $item   = $this->itemRepository->findOneBy([ 'id' => $itemId ]);
+        $cart     = $this->orderDraftRepository->findOneBy([ 'idSociety' => $societyId ]);
+        $cartItem  = $this->orderDraftRepository->findOneBy(['idItem' => $item->getId() ]);
+        $society   = $this->societyRepository->findOneBy(['id' => $societyId]);
+        $itemPrice = $this->itemPriceRepository->getItemPriceBySociety($itemId, $societyId);
+
+        if(empty($item) || empty($itemPrice)){
+            throw new \Exception("No item found with this id ");
         }
-        $cartItem = $this->orderDraftRepository->findOneBy([ 'idItem' => $itemID->getId() ]);
-        $price    = $this->itemPriceRepository->getPriceBySociety($item, $society);
 
         if ($this->itemQuantityService->quantityItemSociety($item, $society) == null) {
-            $quantity = '1';
+            $quantity = 1;
         } else {
             $quantity = $this->itemQuantityService->quantityItemSociety($item, $society)->getQuantity();
         }
 
         if ($cart == null || $cartItem == null) {
             $order = new OrderDraft();
-            $order->setIdItem($itemID)
+            $order->setIdItem($item)
                 ->setIdSociety($society)
-                ->setPrice($price->getPrice())
-                ->setPriceOrder($price->getPrice() * $qty)
+                ->setPrice($itemPrice->getPrice())
+                ->setPriceOrder($itemPrice->getPrice() * $qty)
                 ->setQuantity($qty)
                 ->setQuantityBundling($quantity)
-                ->setState(0)
-          ;
+                ->setState(0);
         }
 
         if ($cartItem != null) {

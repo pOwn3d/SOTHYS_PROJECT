@@ -25,29 +25,29 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                 {% set totalCabine = 0 %}
-                                 {% set total = 0 %}
-                                 {% for order in orders %}
+                                {% set totalCabine = 0 %}
+                                {% set total = 0 %}
+                                {% for order in orders %}
 
-                                 {% set total = total + (order.price *  order.quantity ) %}
-                                 {% if  order.idItem.idPresentation == "Cabine" %}
-                                 {% set totalCabine = totalCabine + (order.price) %}
-                                 {% endif %}
+                                {% set total = total + (order.price *  order.quantity ) %}
+                                {% if  order.idItem.idPresentation == "Cabine" %}
+                                {% set totalCabine = totalCabine + (order.price) %}
+                                {% endif %}
 
-                                <tr class="product-291">
+                                <tr>
                                     <td class="product-name">
-                                         <a href="{{ path('app_item_id', { 'id': order.idItem.id }) }}">{{ order.idItem.itemId }}</a>
+                                        <a href="{{ path('app_item_id', { 'id': order.idItem.id }) }}">{{ order.idItem.itemId }}</a>
                                     </td>
                                     <td class="product-designation ">
                                         <span class="text--category">
- <a href="{{ path('app_item_id', { 'id': order.idItem.id }) }}">{{ order.idItem.labelFR }}</a>
+                                            <a href="{{ path('app_item_id', { 'id': order.idItem.id }) }}">{{ order.idItem.labelFR }}</a>
                                         </span>
                                     </td>
                                     <td class="product-quantity">
-                                         <span class="text--category show--mobile">  <a href="{{ path('app_item_id', { 'id': order.idItem.id }) }}">{{ order.idItem.labelFR }}</a></span>
+                                        <span class="text--category show--mobile">  <a href="{{ path('app_item_id', { 'id': order.idItem.id }) }}">{{ order.idItem.labelFR }}</a></span>
                                         <div class="quantity">
                                             <label for="product-quantity--291">Quantité</label>
-                                             <input type="number" class="qty input-text js-update-cart-quantity" step="1" min="1" data-product="{{ order.idItem.id }}" value="{{ order.quantity }}" style="text-align: center;">
+                                            <input type="number" class="qty input-text js-update-cart-quantity" step="1" min="1" data-product="{{ order.idItem.id }}" value="{{ order.quantity }}" style="text-align: center;">
                                             <div class="quantity-nav">
                                                 <div class="quantity-button quantity-up">+</div>
                                                 <div class="quantity-button quantity-down">-</div>
@@ -55,19 +55,19 @@
                                         </div>
                                     </td>
                                     <td class="product-quantityGroupage">
-                                         <span class="text--category" id="qty_update_{{ order.idItem.id }}">{{ order.quantity }} x {{ order.quantityBundling }} </span>
+                                        <span class="text--category" id="qty_update_{{ order.idItem.id }}">{{ order.quantity }} x {{ order.quantityBundling }} </span>
                                     </td>
                                     <td class="product-priceUnit">
-                                         <span class="text--category">  {{ order.price }} €</span>
+                                        <span class="text--category">  {{ order.price }} €</span>
                                     </td>
                                     <td class="product-priceTotal">
-                                         <span class="text--category" id="price_update_{{ order.idItem.id }}">{{ order.price *  order.quantity|round }} € </span>
+                                        <span class="text--category" id="price_update_{{ order.idItem.id }}">{{ order.price *  order.quantity|round }} € </span>
                                     </td>
                                     <td>
-                                         <a href="{{ path('app_order_product_delete', { 'id': order.id }) }}"><i class="icon icon-close"></i></a>
+                                        <a href="{{ path('app_order_product_delete', { 'id': order.id }) }}"><i class="icon icon-close"></i></a>
                                     </td>
                                 </tr>
-                                 {% endfor %}
+                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -79,16 +79,14 @@
                                 <table class="table-responsive cart--table-totals">
                                     <tbody>
                                     <tr class="cart-subtotal">
-                                         <th>{{'Subtotal' | trans}}</th>
-                                         <td>
-                                         </td>
+                                        <th>{{'Subtotal' | trans}}</th>
+                                        <td>
+                                        </td>
                                     </tr>
                                     <tr class="order-total">
-                                        <th>
-                                            Total
-                                        </th>
+                                        <th>{{ 'Total'| trans }} </th>
                                         <td>
-                                             <span class="price total" id="priceTotal">{{ total }} €</span>
+                                            <span class="price total" id="priceTotal">{{ total }} €</span>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -119,15 +117,10 @@
                             {{ form_row(form.upload, { 'label' :  'upload.orders' ,'attr': {'class': 'inline-block-upload button button--primary-fill'}}) }}
                         </div>
                     {{ form_end(form) }}
-                    {# Error handling messages  #}
-                    {% if invalidExtention %}
-                        <p class="error"> {{invalidExtention}} </p>
-                    {% endif %}
-                    {% if ErrorFile %}
-                        <p class="error"> {{ErrorFile}} </p>
-                    {% endif %}
-                    {% if IdError %}
-                        <p class="error"> {{IdError}} </p>
+                    {% if errors|length %}
+                        {% for error in errors %}
+                            <p class="error">{{error | trans }}</p>
+                        {% endfor%}
                     {% endif %}
                 </div>
             </div>
