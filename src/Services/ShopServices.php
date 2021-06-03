@@ -63,20 +63,14 @@ class ShopServices extends AbstractController
 
         $item   = $this->itemRepository->findOneBy([ 'id' => $itemId ]);
         $cart     = $this->orderDraftRepository->findOneBy([ 'idSociety' => $societyId ]);
-        $cartItem  = $this->orderDraftRepository->findOneBy(['idItem' => $item->getId() ]);
         $society   = $this->societyRepository->findOneBy(['id' => $societyId]);
         $itemPrice = $this->itemPriceRepository->getItemPriceBySociety($itemId, $societyId);
 
         if(empty($item) || empty($itemPrice)){
             throw new \Exception("No item found with this id ");
         }
-        $cartItem = $this->orderDraftRepository->findOneBy([ 'idItem' => $itemID->getId() ]);
 
-        if ($promo == true) {
-            $price = $this->promotionItemRepository->findOneBy(['id' => $item]);
-        } else {
-            $price = $this->itemPriceRepository->getPriceBySociety($item, $society);
-        }
+        $cartItem = $this->orderDraftRepository->findOneBy([ 'idItem' => $item->getId() ]);
 
         if ($this->itemQuantityService->quantityItemSociety($item, $society) == null) {
             $quantity = 1;
@@ -94,7 +88,7 @@ class ShopServices extends AbstractController
                 ->setQuantityBundling($quantity)
                 ->setState(0)
                 ->setPromo(0)
-          ;
+            ;
         }
 
         if ($cartItem != null) {
@@ -177,7 +171,6 @@ class ShopServices extends AbstractController
 
     public function deleteItemOrderDraft($id)
     {
-
         $orders = $this->orderDraftRepository->findOneBy([ 'id' => $id ]);
         $this->em->remove($orders);
         $this->em->flush();
