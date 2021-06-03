@@ -53,15 +53,15 @@ class OrderController extends AbstractController
     public function addToCart(Request $request, ShopServices $shopServices, OrderDraftServices $orderDraftServices, CartItem $cartItem): JsonResponse
     {
 
-        $item    = $request->get('item');
+        $itemId = $request->get('item');
         $promo    = $request->get('promo');
         if ($promo == 'undefined'){
             $promo = 0;
         }
 
         $society = $this->getUser()->getSocietyID();
-        $shopServices->cartSociety($society, $item, $request->get('qty'), $promo);
-        $orders = $orderDraftServices->getOrderDraftID($society->getId(), $item);
+        $shopServices->addToCart($society, $itemId, $request->get('qty'));
+        $orders = $orderDraftServices->getOrderDraftID($society->getId(), $itemId);
         $sum    = $orderDraftServices->getSumOrderDraft($society->getId(), $promo);
 
         $data = [
