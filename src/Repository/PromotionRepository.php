@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\FreeRules;
 use App\Entity\Promotion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -27,8 +29,7 @@ class PromotionRepository extends ServiceEntityRepository
             ->setParameter('date', (new \DateTime()))
             ->orderBy('p.dateEnd', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     // /**

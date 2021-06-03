@@ -28,6 +28,8 @@ class PromotionController extends AbstractCrudController
             AssociationField::new('promotionItem'),
             AssociationField::new('plv'),
             AssociationField::new('society'),
+            AssociationField::new('freeRules', 'Règles de promotions'),
+
 
         ];
     }

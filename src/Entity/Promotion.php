@@ -54,12 +54,18 @@ class Promotion
      */
     private $promotionItem;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=FreeRules::class, inversedBy="promotions" , fetch="EAGER")
+     */
+    private $freeRules;
+
 
     public function __construct()
     {
         $this->society = new ArrayCollection();
         $this->plv = new ArrayCollection();
         $this->promotionItem = new ArrayCollection();
+        $this->freeRules = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -184,6 +190,30 @@ class Promotion
     public function removePromotionItem(PromotionItem $promotionItem): self
     {
         $this->promotionItem->removeElement($promotionItem);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FreeRules[]
+     */
+    public function getFreeRules(): Collection
+    {
+        return $this->freeRules;
+    }
+
+    public function addFreeRule(FreeRules $freeRule): self
+    {
+        if (!$this->freeRules->contains($freeRule)) {
+            $this->freeRules[] = $freeRule;
+        }
+
+        return $this;
+    }
+
+    public function removeFreeRule(FreeRules $freeRule): self
+    {
+        $this->freeRules->removeElement($freeRule);
 
         return $this;
     }

@@ -36,6 +36,8 @@ $(document).ready(function () {
                             url: url,
                             success: function (result) {
                                 var data = JSON.parse(result)
+
+console.log(result)
                                 document.getElementById('qty_update_' + product).innerHTML = data.quantity + ' x ' + data.quantityBundling
                                 document.getElementById('price_update_' + product).innerHTML = (data.price * data.quantity).toFixed(2) + ' € '
                                     document.getElementById('priceTotal').innerHTML              = data.total + ' € '
@@ -69,7 +71,6 @@ $(document).ready(function () {
                             method: "POST",
                             url: url,
                             success: function (result) {
-                                var data                                                     = JSON.parse(result)
                                 document.getElementById('qty_update_' + product).innerHTML   = data.quantity + ' x ' + data.quantityBundling
                                 document.getElementById('price_update_' + product).innerHTML = (data.price * data.quantity).toFixed(2) + ' € '
                                 document.getElementById('priceTotal').innerHTML              = data.total + ' € '

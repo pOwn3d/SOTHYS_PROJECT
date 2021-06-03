@@ -111,6 +111,11 @@ class Item
      */
     private $promotionItems;
 
+    /**
+     * @ORM\OneToMany(targetEntity=FreeRules::class, mappedBy="idItemPurchased")
+     */
+    private $freeRules;
+
 
     public function __construct()
     {
@@ -119,6 +124,7 @@ class Item
         $this->itemQuantities = new ArrayCollection();
         $this->orderDrafts = new ArrayCollection();
         $this->promotionItems = new ArrayCollection();
+        $this->freeRules = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -433,5 +439,35 @@ class Item
     public function __toString(): string
     {
         return $this->getLabelEN();
+    }
+
+    /**
+     * @return Collection|FreeRules[]
+     */
+    public function getFreeRules(): Collection
+    {
+        return $this->freeRules;
+    }
+
+    public function addFreeRule(FreeRules $freeRule): self
+    {
+        if (!$this->freeRules->contains($freeRule)) {
+            $this->freeRules[] = $freeRule;
+            $freeRule->setIdItemPurchased($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFreeRule(FreeRules $freeRule): self
+    {
+        if ($this->freeRules->removeElement($freeRule)) {
+            // set the owning side to null (unless already changed)
+            if ($freeRule->getIdItemPurchased() === $this) {
+                $freeRule->setIdItemPurchased(null);
+            }
+        }
+
+        return $this;
     }
 }

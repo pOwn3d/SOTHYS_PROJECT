@@ -34,6 +34,7 @@ class OrderDraftRepository extends ServiceEntityRepository
 
     public function findOrderDraft($society, $promo)
     {
+
         return $this->createQueryBuilder('o')
             ->andWhere('o.idSociety = :val')
             ->andWhere('o.promo = :promo')

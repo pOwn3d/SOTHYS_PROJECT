@@ -70,6 +70,13 @@ class ShopServices extends AbstractController
         if(empty($item) || empty($itemPrice)){
             throw new \Exception("No item found with this id ");
         }
+        $cartItem = $this->orderDraftRepository->findOneBy([ 'idItem' => $itemID->getId() ]);
+
+        if ($promo == true) {
+            $price = $this->promotionItemRepository->findOneBy(['id' => $item]);
+        } else {
+            $price = $this->itemPriceRepository->getPriceBySociety($item, $society);
+        }
 
         if ($this->itemQuantityService->quantityItemSociety($item, $society) == null) {
             $quantity = 1;
@@ -85,7 +92,9 @@ class ShopServices extends AbstractController
                 ->setPriceOrder($itemPrice->getPrice() * $qty)
                 ->setQuantity($qty)
                 ->setQuantityBundling($quantity)
-                ->setState(0);
+                ->setState(0)
+                ->setPromo(0)
+          ;
         }
 
         if ($cartItem != null) {
