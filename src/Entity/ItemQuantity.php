@@ -23,7 +23,7 @@ class ItemQuantity
     private $IdSociety;
 
     /**
-     * @ORM\ManyToOne(targetEntity=item::class, inversedBy="itemQuantities")
+     * @ORM\ManyToOne(targetEntity=Item::class, inversedBy="itemQuantities")
      */
     private $idItem;
 

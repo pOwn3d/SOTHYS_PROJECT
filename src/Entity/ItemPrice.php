@@ -18,7 +18,7 @@ class ItemPrice
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Item::class, inversedBy="itemPrices")
+     * @ORM\ManyToOne(targetEntity=Item::class, inversedBy="itemPrices" )
      */
     private $idItem;
 

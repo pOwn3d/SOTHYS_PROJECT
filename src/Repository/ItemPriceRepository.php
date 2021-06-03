@@ -22,6 +22,7 @@ class ItemPriceRepository extends ServiceEntityRepository
 
     public function getPriceBySociety($item, $society)
     {
+   
         $query = $this->createQueryBuilder('i')
             ->andWhere('i.idItem = :val')
             ->setParameter('val', $item)

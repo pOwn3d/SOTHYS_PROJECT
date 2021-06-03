@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 
+use App\Entity\FreeRules;
 use App\Entity\Order;
 use App\Entity\Plv;
 use App\Entity\Promotion;
@@ -45,6 +46,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Promotion', 'fas fa-percent', Promotion::class);
         yield MenuItem::linkToCrud('Promotion Produit', 'fas fa-asterisk', PromotionItem::class);
         yield MenuItem::linkToCrud('PLV', 'fas fa-toolbox', Plv::class);
+        yield MenuItem::linkToCrud('Règle de gratuité', 'fas fa-store-alt', FreeRules::class);
         yield MenuItem::section('settings.society');
         yield MenuItem::linkToCrud('Society', 'fas fa-store-alt', Society::class);
     }

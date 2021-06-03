@@ -64,6 +64,11 @@ class OrderDraft
      */
     private $promo;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $freeRules;
+
     public function __construct()
     {
         $this->orderLines = new ArrayCollection();
@@ -191,6 +196,18 @@ class OrderDraft
     public function setPromo(?bool $promo): self
     {
         $this->promo = $promo;
+
+        return $this;
+    }
+
+    public function getFreeRules(): ?bool
+    {
+        return $this->freeRules;
+    }
+
+    public function setFreeRules(?bool $freeRules): self
+    {
+        $this->freeRules = $freeRules;
 
         return $this;
     }

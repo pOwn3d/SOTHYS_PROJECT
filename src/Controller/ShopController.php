@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Form\CsvOrderUploaderType;
 use App\Form\OrderType;
 use App\Repository\OrderDraftRepository;
+use App\Repository\PromotionRepository;
 use App\Services\Cart\CartItem;
 use App\Services\OrderDraftServices;
 use App\Services\OrderServices;
+use App\Services\PromoServices;
 use App\Services\ShopServices;
 use League\Csv\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -83,15 +85,18 @@ class ShopController extends AbstractController
      * "_locale"="%app.locales%"
      * })
      */
-    public function panierPromo(ShopServices $shopServices, CartItem $cartItem): Response
+    public function panierPromo(ShopServices $shopServices, CartItem $cartItem, PromoServices $promoServices): Response
     {
         $society = $this->getUser()->getSocietyID();
         $orders = $shopServices->getOrderDraftPromo($society);
+        $promo = $promoServices->getPromoSociety();
+
 
         return $this->render('shop/promo.html.twig', [
             'controller_name' => 'ShopController',
             'orders' => $orders,
-            'cartItem' => $cartItem->getItemCart($society)['0']['quantity']
+            'cartItem' => $cartItem->getItemCart($society)['0']['quantity'],
+            'promos' => $promo
         ]);
     }
 

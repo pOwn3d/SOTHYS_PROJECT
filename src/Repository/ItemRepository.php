@@ -37,6 +37,16 @@ class ItemRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findProduct($value)
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+    }
+
 //    public function findProduct($id)
 //    {
 //        $x = $this->createQueryBuilder('i')

@@ -75,6 +75,7 @@ class ShopServices extends AbstractController
                 ->setQuantity($qty)
                 ->setQuantityBundling($quantity)
                 ->setState(0)
+                ->setPromo(0)
           ;
         }
 
