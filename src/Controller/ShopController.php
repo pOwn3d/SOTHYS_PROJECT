@@ -7,6 +7,7 @@ use App\Form\OrderType;
 use App\Repository\OrderDraftRepository;
 use App\Repository\PromotionRepository;
 use App\Services\Cart\CartItem;
+use App\Services\ItemServices;
 use App\Services\OrderDraftServices;
 use App\Services\OrderServices;
 use App\Services\PromoServices;
@@ -26,7 +27,7 @@ class ShopController extends AbstractController
     * "_locale"="%app.locales%"
     * })
     */
-    public function index(ShopServices $shopServices, CartItem $cartItem, Request $request, SluggerInterface $slugger): Response
+    public function index(ShopServices $shopServices, CartItem $cartItem, Request $request, SluggerInterface $slugger, ItemServices $itemService): Response
     {
         $society = $this->getUser()->getSocietyID();
         $errors = [];
@@ -62,7 +63,8 @@ class ShopController extends AbstractController
                     $records = $csv->getRecords();
                     try {
                         foreach($records as $row){
-                            $shopServices->addToCart($society, $row[0], $row[1]);
+                            $item = $itemService->getItemByX3Id($row[0]);
+                            $shopServices->addToCart($society, $item->getId(), $row[1]);
                         }
                     } catch(\Exception $e) {
                         $errors[] = "We have no item with this id : " . $row[0];
