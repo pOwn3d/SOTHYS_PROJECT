@@ -145,6 +145,8 @@ home:
 cta:
     show_promo: 'Accéder à la promotion'
 
+my_promotion: 'Mes promotions'
+
 my_account: 'Mon compte'
 
 my_cart: 'Mon panier'
