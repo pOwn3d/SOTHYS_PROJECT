@@ -48,11 +48,24 @@ class PromoServices
         $this->itemPriceRepository = $itemPriceRepository;
     }
 
+    public function getPromoItem($promoItems)
+    {
+
+        foreach ($promoItems->getPromotionItems() as $promoItem) {
+            dd($promoItem->getItem());
+            $x = $this->itemRepository->findProduct($promoItem->getItem());
+            dd($x);
+        }
+    }
+
     //   TODO :: ETAPE 1  ::
     public function promoItem($promoItems)
     {
         $order = new OrderDraft();
         foreach ($promoItems as $promoItem) {
+
+            $promo = $this->promotionRepository->findOneBy(["id" => $promoItem->getPromotions()->getOwner()->getId()]);
+
             $itemInfo = $this->itemRepository->findProduct($promoItem->getItem());
             $order->setIdItem($promoItem->getItem())
                 ->setIdSociety($this->security->getUser()->getSocietyID())
@@ -62,8 +75,10 @@ class PromoServices
                 ->setQuantityBundling($itemInfo->getAmountBulking())
                 ->setState(0)
                 ->setPromo(1)
+                ->setPromotionId($promo)
                 ->setFreeRules(0);
         }
+
         $this->em->persist($order);
         $this->em->flush();
     }
@@ -75,6 +90,8 @@ class PromoServices
             if ($promoRule->getQtyPurchased() != null || $promoRule->getQtyFree() != null) {
                 $item = $this->itemRepository->findOneBy(["id" => $promoRule->getIdItemPurchased()]);
                 $itemPrice = $this->itemPriceRepository->findOneBy(["id" => $item]);
+                $promo = $this->promotionRepository->findOneBy(["id" => $promoRule->getPromotions()->getValues()[0]]);
+
                 $order = new OrderDraft();
                 $order->setIdItem($item)
                     ->setIdSociety($this->security->getUser()->getSocietyID())
@@ -84,6 +101,7 @@ class PromoServices
                     ->setQuantityBundling($item->getAmountBulking())
                     ->setState(0)
                     ->setPromo(1)
+                    ->setPromotionId($promo)
                     ->setFreeRules(1);
             }
             $this->em->persist($order);
@@ -96,6 +114,8 @@ class PromoServices
     {
         $order = new OrderDraft();
         if ($qty != null && ($promoRule->getQtyPurchased() % $qty > 0 || $promoRule->getQtyPurchased() == $qty)) {
+            $promo = $this->promotionRepository->findOneBy(["id" => $promoRule->getPromotions()->getValues()[0]]);
+
             $order->setIdItem($promoRule->getIdItemFree())
                 ->setIdSociety($this->security->getUser()->getSocietyID())
                 ->setPrice(0)
@@ -104,9 +124,31 @@ class PromoServices
                 ->setQuantityBundling($promoRule->getIdItemFree()->getAmountBulking())
                 ->setState(0)
                 ->setPromo(1)
+                ->setPromotionId($promo)
                 ->setFreeRules(1);
             $this->em->persist($order);
             $this->em->flush();
+
+        } else {
+
+            if ($qty == null) $qty = 1;
+            $orderSum = $this->orderDraftRepository->findSumOrderDraftSociety($this->security->getUser()->getSocietyID(), true);
+            if ($orderSum[0]['price'] >= $promoRule->getAmountPurchasedMin() && $orderSum[0]['price'] <= $promoRule->getAmountPurchasedMax()) {
+                $item = $this->itemRepository->findOneBy(["id" => $promoRule->getIdItemPurchased()]);
+                $itemPrice = $this->itemPriceRepository->findOneBy(["id" => $item]);
+                $priceItem = $itemPrice->getPrice() - ($itemPrice->getPrice() * $promoRule->getAmountFree() / 100);
+                $order->setIdItem($promoRule->getIdItemFree())
+                    ->setIdSociety($this->security->getUser()->getSocietyID())
+                    ->setPrice($priceItem)
+                    ->setPriceOrder($priceItem * $qty)
+                    ->setQuantity($qty)
+                    ->setQuantityBundling($promoRule->getIdItemFree()->getAmountBulking())
+                    ->setState(0)
+                    ->setPromo(1)
+                    ->setFreeRules(1);
+                $this->em->persist($order);
+                $this->em->flush();
+            }
         }
     }
 
@@ -131,10 +173,6 @@ class PromoServices
         // TODO ::  ETAPE 3 :: REGLE DE GRATUITE Ajout des items gratuits en fonction du nombre d'item commander
         foreach ($promo->getFreeRules() as $promoRule) {
             $this->promoItemFree($promoRule, $promoRule->getQtyPurchased());
-
-            // TODO ::  ETAPE 4 :: REGLE DE GRATUITE echelle de prix avec pourcentage de réduction
-
-
         }
 
 

@@ -20,7 +20,7 @@ class PromotionItem
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Item::class, inversedBy="promotionItems")
+     * @ORM\ManyToOne(targetEntity=Item::class, inversedBy="promotionItems", fetch="EAGER")
      */
     private $item;
 

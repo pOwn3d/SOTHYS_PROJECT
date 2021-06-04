@@ -93,6 +93,8 @@ class ShopController extends AbstractController
         $promo = $promoServices->getPromoSociety();
 
 
+
+
         return $this->render('shop/promo.html.twig', [
             'controller_name' => 'ShopController',
             'orders' => $orders,

@@ -27,18 +27,21 @@ class ShopServices extends AbstractController
     private OrderLineRepository $orderLineRepository;
     private IncotermRepository $incotermRepository;
     private PromotionItemRepository $promotionItemRepository;
+    private SocietyRepository $societyRepository;
+    private PromoServices $promoServices;
 
 
     public function __construct(
-            ItemRepository $itemRepository,
-            ItemPriceRepository $itemPriceRepository,
-            OrderDraftRepository $orderDraftRepository,
-            EntityManagerInterface $em,
-            ItemQuantityService $itemQuantityService,
-            OrderLineRepository $orderLineRepository,
-            IncotermRepository $incotermRepository,
-            PromotionItemRepository $promotionItemRepository,
-            SocietyRepository $societyRepository
+        ItemRepository $itemRepository,
+        ItemPriceRepository $itemPriceRepository,
+        OrderDraftRepository $orderDraftRepository,
+        EntityManagerInterface $em,
+        ItemQuantityService $itemQuantityService,
+        OrderLineRepository $orderLineRepository,
+        IncotermRepository $incotermRepository,
+        PromotionItemRepository $promotionItemRepository,
+        SocietyRepository $societyRepository,
+        PromoServices $promoServices
     ) {
         $this->itemRepository = $itemRepository;
 
@@ -50,11 +53,12 @@ class ShopServices extends AbstractController
         $this->incotermRepository = $incotermRepository;
         $this->promotionItemRepository = $promotionItemRepository;
         $this->societyRepository = $societyRepository;
+        $this->promoServices = $promoServices;
     }
 
     public function getPriceItemIDSociety($item, $society)
     {
-        return $this->itemPriceRepository->getPriceBySociety($item, $society);
+        return $this->itemPriceRepository->getItemPriceBySociety($item, $society);
     }
 
     public function addToCart(Society $society, $itemId, $qty)
@@ -93,10 +97,19 @@ class ShopServices extends AbstractController
 
         if ($cartItem != null) {
             $order = $cartItem;
-            $order->setQuantity($qty)
-                ->setPriceOrder($itemPrice->getPrice() * $qty);
-        }
+            if ($cart->getPromo() == true) {
 
+                // TODO :: Ajouter les produits gratuit si la condition est ok : x = 10 / y = 1 ... x = 20 / y = 2
+
+
+                $order->setQuantity($qty)
+                    ->setPriceOrder($cart->getPrice() * $qty);
+
+            } else {
+                $order->setQuantity($qty)
+                    ->setPriceOrder($itemPrice->getPrice() * $qty);
+            }
+        }
         $this->em->persist($order);
         $this->em->flush();
     }

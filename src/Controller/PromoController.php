@@ -6,6 +6,7 @@ use App\Services\Cart\CartItem;
 use App\Services\PromoServices;
 use App\Services\ShopServices;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +20,7 @@ class PromoController extends AbstractController
      * @param \App\Services\PromoServices $promoServices
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function addToCartPromo(Request $request, PromoServices $promoServices): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function addToCartPromo(Request $request, PromoServices $promoServices): RedirectResponse
     {
         $promoServices->addtoCartPromo($request->get('id'));
         return $this->redirectToRoute('app_promo_shop');
