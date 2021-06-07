@@ -59,6 +59,11 @@ class Promotion
      */
     private $freeRules;
 
+    /**
+     * @ORM\OneToMany(targetEntity=OrderDraft::class, mappedBy="promotionId")
+     */
+    private $orderDrafts;
+
 
     public function __construct()
     {
@@ -66,6 +71,7 @@ class Promotion
         $this->plv = new ArrayCollection();
         $this->promotionItem = new ArrayCollection();
         $this->freeRules = new ArrayCollection();
+        $this->orderDrafts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -214,6 +220,36 @@ class Promotion
     public function removeFreeRule(FreeRules $freeRule): self
     {
         $this->freeRules->removeElement($freeRule);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderDraft[]
+     */
+    public function getOrderDrafts(): Collection
+    {
+        return $this->orderDrafts;
+    }
+
+    public function addOrderDraft(OrderDraft $orderDraft): self
+    {
+        if (!$this->orderDrafts->contains($orderDraft)) {
+            $this->orderDrafts[] = $orderDraft;
+            $orderDraft->setPromotionId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderDraft(OrderDraft $orderDraft): self
+    {
+        if ($this->orderDrafts->removeElement($orderDraft)) {
+            // set the owning side to null (unless already changed)
+            if ($orderDraft->getPromotionId() === $this) {
+                $orderDraft->setPromotionId(null);
+            }
+        }
 
         return $this;
     }

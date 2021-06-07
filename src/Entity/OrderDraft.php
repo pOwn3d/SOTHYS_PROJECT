@@ -69,6 +69,11 @@ class OrderDraft
      */
     private $freeRules;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Promotion::class, inversedBy="orderDrafts")
+     */
+    private $promotionId;
+
     public function __construct()
     {
         $this->orderLines = new ArrayCollection();
@@ -208,6 +213,18 @@ class OrderDraft
     public function setFreeRules(?bool $freeRules): self
     {
         $this->freeRules = $freeRules;
+
+        return $this;
+    }
+
+    public function getPromotionId(): ?Promotion
+    {
+        return $this->promotionId;
+    }
+
+    public function setPromotionId(?Promotion $promotionId): self
+    {
+        $this->promotionId = $promotionId;
 
         return $this;
     }

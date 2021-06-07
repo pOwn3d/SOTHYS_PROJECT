@@ -64,20 +64,19 @@
                         {% else %}
                             {% set totalAutre = totalAutre + (order.price) %}
                         {% endif %}
-
-                        <tr>
-                            <td colspan="5">Dont Vente/Cabine (EUR)</td>
-                            <td colspan="1">{{ totalCabine }} €</td>
-                        </tr>
-                        <tr>
-                            <td colspan="5">Dont Autre (EUR)</td>
-                            <td colspan="1">{{ totalAutre }} €</td>
-                        </tr>
-                        <tr>
-                            <td colspan="5">Total HT (EUR)</td>
-                            <td colspan="1">{{ totalAutre  + totalCabine }} €</td>
-                        </tr>
                     {% endfor %}
+                    <tr>
+                        <td colspan="5">Dont Vente/Cabine (EUR)</td>
+                        <td colspan="1">{{ totalCabine }} €</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">Dont Autre (EUR)</td>
+                        <td colspan="1">{{ totalAutre }} €</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">Total HT (EUR)</td>
+                        <td colspan="1">{{ totalAutre  + totalCabine }} €</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>

@@ -45,7 +45,7 @@ class FreeRules
     private $amountPurchasedMin;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="float", nullable=true)
      */
     private $amountPurchasedMax;
 
