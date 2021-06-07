@@ -26,7 +26,7 @@ class PromoController extends AbstractController
     }
 
     /**
-     * @Route("/panier-promo", name="app_promo")
+     * @Route("/{_locale}/panier", name="app_shop", requirements={"_locale"="%app.locales%"})
      */
     public function index(ShopServices $shopServices, CartItem $cartItem): Response
     {

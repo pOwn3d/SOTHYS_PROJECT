@@ -23,10 +23,8 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ShopController extends AbstractController
 {
     /**
-    * @Route("/{_locale}/panier", name="app_shop", requirements={
-    * "_locale"="%app.locales%"
-    * })
-    */
+     * @Route("/{_locale}/panier", name="app_shop", requirements={"_locale"="%app.locales%"})
+     */
     public function index(ShopServices $shopServices, CartItem $cartItem, Request $request, SluggerInterface $slugger, ItemServices $itemService): Response
     {
         $society = $this->getUser()->getSocietyID();
@@ -84,16 +82,13 @@ class ShopController extends AbstractController
     }
 
     /**
-     *  @Route("/{_locale}/promo", name="app_promo_shop", requirements={
-     * "_locale"="%app.locales%"
-     * })
+     *  @Route("/{_locale}/promo", name="app_promo_shop", requirements={"_locale"="%app.locales%"})
      */
     public function panierPromo(ShopServices $shopServices, CartItem $cartItem, PromoServices $promoServices): Response
     {
         $society = $this->getUser()->getSocietyID();
         $orders = $shopServices->getOrderDraftPromo($society);
         $promo = $promoServices->getPromoSociety();
-
 
         return $this->render('shop/promo.html.twig', [
             'controller_name' => 'ShopController',
@@ -122,7 +117,6 @@ class ShopController extends AbstractController
             return $this->redirectToRoute('app_order');
         }
 
-
         return $this->render('shop/shop.html.twig', [
             'controller_name' => 'ShopController',
             'cartItem'        => $cartItem->getItemCart($society)['0']['quantity'],
@@ -144,12 +138,11 @@ class ShopController extends AbstractController
         $promo = $orderDraftServices->editOrderDraft($order, $society, $orderLine);
         $shopServices->deleteOrderLine($id);
 
-
         if ($promo == true) {
             return $this->redirectToRoute('app_promo_shop');
         }
-        return $this->redirectToRoute('app_shop');
 
+        return $this->redirectToRoute('app_shop');
     }
 
     /**
@@ -168,6 +161,4 @@ class ShopController extends AbstractController
 
         return $this->redirectToRoute('app_shop');
     }
-
-
 }

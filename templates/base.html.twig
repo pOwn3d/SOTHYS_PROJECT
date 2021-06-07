@@ -55,10 +55,12 @@
                                     <a
                                         href="{{ path('app_login') }}" aria-label="{{ 'access_my_account' | trans }}"
                                         title="{{ 'access_my_account' | trans }}"
+                                        style="display: flex"
                                     >
                                         <i class="icon icon-compte">
                                             <span class="hidden">{{ 'my_account' | trans }}</span>
                                         </i>
+                                        <span style="font-size:1.5rem">{{ app.user.email }}</span>
                                     </a>
                                     <div class="account__access_wrapper">
                                         <div class="account__access_inner">
@@ -72,7 +74,6 @@
                                     </div>
                                 </li>
                             </ul>
-                            {{ app.user.email }}
                         </div>
                     {% endif %}
                 </div>
