@@ -52,4 +52,8 @@ security:
         - { path: ^/(%app.locales%)/accueil, roles: ROLE_USER }
         - { path: ^/(%app.locales%)/mon-compte, roles: ROLE_USER }
         - { path: ^/(%app.locales%)/panier, roles: ROLE_USER }
+        - { path: ^/(%app.locales%)/gamme, roles: ROLE_USER }
+        - { path: ^/(%app.locales%)/produit, roles: ROLE_USER }
+        - { path: ^/(%app.locales%)/promo, roles: ROLE_USER }
         - { path: ^/(%app.locales%)/panier-promo, roles: ROLE_USER }
+        - { path: ^/(%app.locales%)/mes-commandes, roles: ROLE_USER }
