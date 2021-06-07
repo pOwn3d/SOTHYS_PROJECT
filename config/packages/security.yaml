@@ -48,6 +48,12 @@ security:
         ROLE_GESTIONNAIRE_PROMO: [ ROLE_USER, ROLE_GESTIONNAIRE_PROMO ]
         ROLE_ADMIN:  [ ROLE_GESTIONNAIRE_PROMO , ROLE_ADMIN ]
     access_control:
-         - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/home, roles: ROLE_USER }
-         - { path: ^/mon-compte, roles: ROLE_USER }
+        - { path: ^/(%app.locales%)/admin, roles: ROLE_ADMIN }
+        - { path: ^/(%app.locales%)/accueil, roles: ROLE_USER }
+        - { path: ^/(%app.locales%)/mon-compte, roles: ROLE_USER }
+        - { path: ^/(%app.locales%)/panier, roles: ROLE_USER }
+        - { path: ^/(%app.locales%)/gamme, roles: ROLE_USER }
+        - { path: ^/(%app.locales%)/produit, roles: ROLE_USER }
+        - { path: ^/(%app.locales%)/promo, roles: ROLE_USER }
+        - { path: ^/(%app.locales%)/panier-promo, roles: ROLE_USER }
+        - { path: ^/(%app.locales%)/mes-commandes, roles: ROLE_USER }

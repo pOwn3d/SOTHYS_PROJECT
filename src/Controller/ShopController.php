@@ -6,6 +6,7 @@ use App\Form\CsvOrderUploaderType;
 use App\Form\OrderType;
 use App\Repository\OrderDraftRepository;
 use App\Services\Cart\CartItem;
+use App\Services\ItemServices;
 use App\Services\OrderDraftServices;
 use App\Services\OrderServices;
 use App\Services\PromoServices;
@@ -21,11 +22,9 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ShopController extends AbstractController
 {
     /**
-    * @Route("/{_locale}/panier", name="app_shop", requirements={
-    * "_locale"="%app.locales%"
-    * })
-    */
-    public function index(ShopServices $shopServices, CartItem $cartItem, Request $request, SluggerInterface $slugger): Response
+     * @Route("/{_locale}/panier", name="app_shop", requirements={"_locale"="%app.locales%"})
+     */
+    public function index(ShopServices $shopServices, CartItem $cartItem, Request $request, SluggerInterface $slugger, ItemServices $itemService): Response
     {
         $society = $this->getUser()->getSocietyID();
         $errors = [];
@@ -61,7 +60,8 @@ class ShopController extends AbstractController
                     $records = $csv->getRecords();
                     try {
                         foreach($records as $row){
-                            $shopServices->addToCart($society, $row[0], $row[1]);
+                            $item = $itemService->getItemByX3Id($row[0]);
+                            $shopServices->addToCart($society, $item->getId(), $row[1]);
                         }
                     } catch(\Exception $e) {
                         $errors[] = "We have no item with this id : " . $row[0];
@@ -81,9 +81,7 @@ class ShopController extends AbstractController
     }
 
     /**
-     *  @Route("/{_locale}/promo", name="app_promo_shop", requirements={
-     * "_locale"="%app.locales%"
-     * })
+     *  @Route("/{_locale}/promo", name="app_promo_shop", requirements={"_locale"="%app.locales%"})
      */
     public function panierPromo(ShopServices $shopServices, CartItem $cartItem, PromoServices $promoServices): Response
     {
@@ -118,7 +116,6 @@ class ShopController extends AbstractController
             return $this->redirectToRoute('app_order');
         }
 
-
         return $this->render('shop/shop.html.twig', [
             'controller_name' => 'ShopController',
             'cartItem'        => $cartItem->getItemCart($society)['0']['quantity'],
@@ -140,12 +137,11 @@ class ShopController extends AbstractController
         $promo = $orderDraftServices->editOrderDraft($order, $society, $orderLine);
         $shopServices->deleteOrderLine($id);
 
-
         if ($promo == true) {
             return $this->redirectToRoute('app_promo_shop');
         }
-        return $this->redirectToRoute('app_shop');
 
+        return $this->redirectToRoute('app_shop');
     }
 
     /**
@@ -164,6 +160,4 @@ class ShopController extends AbstractController
 
         return $this->redirectToRoute('app_shop');
     }
-
-
 }

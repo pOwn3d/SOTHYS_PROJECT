@@ -127,7 +127,6 @@ class ShopServices extends AbstractController
     public function createOrder($society, $data, $promo)
     {
         $orders = $this->orderDraftRepository->findOrderDraft($society->getId(), $promo);
-        $incoterm = $this->incotermRepository->findBy(['id' => $society->getId()]);
         if ($orders == []) {
             return [
                 'type' => 'error',

@@ -31,5 +31,9 @@ class ItemServices
 
     }
 
-
+    function getItemByX3Id($x3Id) {
+        return $this->itemRepository->findOneBy([
+            'itemID' => $x3Id
+        ]);
+    }
 }
