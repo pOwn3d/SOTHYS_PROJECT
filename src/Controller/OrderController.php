@@ -46,11 +46,11 @@ class OrderController extends AbstractController
      * @param ShopServices $shopServices
      * @param OrderDraftServices $orderDraftServices
      * @param CartItem $cartItem
-     *
+     * @param \App\Repository\PromotionItemRepository $promotionItemRepository
      * @return JsonResponse
      * @throws \Exception
      */
-    public function addToCart(Request $request, ShopServices $shopServices, OrderDraftServices $orderDraftServices, CartItem $cartItem): JsonResponse
+    public function addToCart(Request $request, ShopServices $shopServices, OrderDraftServices $orderDraftServices, CartItem $cartItem, PromotionItemRepository$promotionItemRepository): JsonResponse
     {
 
         $itemId = $request->get('item');
@@ -60,9 +60,12 @@ class OrderController extends AbstractController
         }
 
         $society = $this->getUser()->getSocietyID();
-        $shopServices->addToCart($society, $itemId, $request->get('qty'));
+        $cartUpdate = $shopServices->addToCart($society, $itemId, $request->get('qty'), $promo);
         $orders = $orderDraftServices->getOrderDraftID($society->getId(), $itemId);
         $sum    = $orderDraftServices->getSumOrderDraft($society->getId(), $promo);
+
+
+        // Récupérer la promo pour vérifier si le solde de promo est atteind
 
         $data = [
             'total'            => $sum[0]['price'],
@@ -70,8 +73,10 @@ class OrderController extends AbstractController
             'price'            => $orders->getPrice(),
             'quantityBundling' => $orders->getQuantityBundling(),
             'id'               => $orders->getId(),
-            'cartItem'         => $cartItem->getItemCart($society)['0']['quantity']
+            'cartItem'         => $cartItem->getItemCart($society)['0']['quantity'],
+            'cartUpdate' => $cartUpdate
         ];
+
         return new JsonResponse(json_encode($data));
     }
 
