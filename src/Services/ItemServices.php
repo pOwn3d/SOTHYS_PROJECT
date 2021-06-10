@@ -16,24 +16,37 @@ class ItemServices
         $this->itemRepository = $itemRepository;
     }
 
-    public function getItems($items)
-    {
-
-        foreach ($items as $item) {
-
-
-            $x =
-                $this->itemRepository->find($item->getIdItem()->getId());
-
-
-            dd($x);
-        }
-
-    }
-
     function getItemByX3Id($x3Id) {
         return $this->itemRepository->findOneBy([
             'itemID' => $x3Id
         ]);
+    }
+
+    function getItemsByTerm(string $text, string $locale = 'en-US') {
+
+        $qb = $this->itemRepository
+            ->createQueryBuilder('i')
+            ->join('i.gamme', 'g');
+
+        if($locale === 'fr-FR') {
+            $qb->where('i.labelFR LIKE :text');
+        } else {
+            $qb->where('i.labelEN LIKE :text');
+        }
+
+        $qb->orWhere('i.itemID LIKE :text');
+
+        if($locale === 'fr-FR') {
+            $qb->orWhere('g.labelFR LIKE :text');
+        } else {
+            $qb->orWhere('g.labelEN LIKE :text');
+        }
+
+        $results = $qb->setParameter('text', "%$text%")
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+
+        return $results;
     }
 }

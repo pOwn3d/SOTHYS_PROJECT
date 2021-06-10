@@ -36,8 +36,6 @@ $(document).ready(function () {
                             url: url,
                             success: function (result) {
                                 var data = JSON.parse(result)
-
-console.log(result)
                                 document.getElementById('qty_update_' + product).innerHTML = data.quantity + ' x ' + data.quantityBundling
                                 document.getElementById('price_update_' + product).innerHTML = (data.price * data.quantity).toFixed(2) + ' € '
                                     document.getElementById('priceTotal').innerHTML              = data.total + ' € '
@@ -111,6 +109,38 @@ console.log(result)
             },
         });
     });
+
+    $('.js-cart-search-button').on('click', function(e) {
+
+        e.preventDefault();
+
+        let term = $('.js-cart-search-term').val()
+
+        $.post('/search', {
+            term: term
+        }).then((res) => {
+
+            var results = res.reduce(function(text, result) {
+                text += '<div class="js-cart-add-button" data-product-id="' + result.id + '">' + result.gamme + ' - ' + result.label + ' - ' + result.reference + '</div>';
+                return text;
+            }, '');
+
+            $('.search-results').html(results)
+        })
+    });
+
+    $('.section--checkout').on('click', '.js-cart-add-button', function() {
+        var id = $(this).attr('data-product-id');
+        let qty = $(this).val();
+        let promo = this.dataset.promo
+        const url = "/add-to-cart/" + id + "/1/undefined"
+
+        $.ajax({
+            method: "POST",
+            url: url,
+            success: function (result) {
+                window.location.reload();
+            },
+        });
+    });
 });
-
-
