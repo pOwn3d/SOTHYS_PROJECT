@@ -13,6 +13,7 @@ use App\Repository\ItemRepository;
 use App\Repository\OrderDraftRepository;
 use App\Repository\OrderLineRepository;
 use App\Repository\PromotionItemRepository;
+use App\Repository\PromotionRepository;
 use App\Repository\SocietyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,6 +30,7 @@ class ShopServices extends AbstractController
     private PromotionItemRepository $promotionItemRepository;
     private SocietyRepository $societyRepository;
     private PromoServices $promoServices;
+    private PromotionRepository $promotionRepository;
 
 
     public function __construct(
@@ -41,7 +43,8 @@ class ShopServices extends AbstractController
         IncotermRepository $incotermRepository,
         PromotionItemRepository $promotionItemRepository,
         SocietyRepository $societyRepository,
-        PromoServices $promoServices
+        PromoServices $promoServices,
+        PromotionRepository $promotionRepository
     ) {
         $this->itemRepository = $itemRepository;
 
@@ -54,6 +57,7 @@ class ShopServices extends AbstractController
         $this->promotionItemRepository = $promotionItemRepository;
         $this->societyRepository = $societyRepository;
         $this->promoServices = $promoServices;
+        $this->promotionRepository = $promotionRepository;
     }
 
     public function getPriceItemIDSociety($item, $society)
@@ -61,16 +65,25 @@ class ShopServices extends AbstractController
         return $this->itemPriceRepository->getItemPriceBySociety($item, $society);
     }
 
-    public function addToCart(Society $society, $itemId, $qty)
+    public function addToCart(Society $society, $itemId, $qty, $promoID)
     {
         $societyId = $society->getId();
+        $promo = $this->promotionRepository->findOneBy(["id" => $promoID]);
 
-        $item   = $this->itemRepository->findOneBy([ 'id' => $itemId ]);
-        $cart     = $this->orderDraftRepository->findOneBy([ 'idSociety' => $societyId ]);
-        $society   = $this->societyRepository->findOneBy(['id' => $societyId]);
+
+        if ($promo != null) {
+            foreach ($promo->getFreeRules() as $promoRule) {
+                $this->promoServices->promoItemFreeAdd($promoRule, $qty, $itemId);
+            }
+        }
+
+
+        $item = $this->itemRepository->findOneBy(['id' => $itemId]);
+        $cart = $this->orderDraftRepository->findOneBy(['idSociety' => $societyId]);
+        $society = $this->societyRepository->findOneBy(['id' => $societyId]);
         $itemPrice = $this->itemPriceRepository->getItemPriceBySociety($itemId, $societyId);
 
-        if(empty($item) || empty($itemPrice)){
+        if (empty($item) || empty($itemPrice)) {
             throw new \Exception("No item found with this id ");
         }
 
@@ -100,8 +113,6 @@ class ShopServices extends AbstractController
             if ($cart->getPromo() == true) {
 
                 // TODO :: Ajouter les produits gratuit si la condition est ok : x = 10 / y = 1 ... x = 20 / y = 2
-
-
                 $order->setQuantity($qty)
                     ->setPriceOrder($cart->getPrice() * $qty);
 

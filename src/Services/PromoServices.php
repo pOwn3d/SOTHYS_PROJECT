@@ -8,6 +8,8 @@ use App\Entity\OrderDraft;
 use App\Repository\ItemPriceRepository;
 use App\Repository\ItemRepository;
 use App\Repository\OrderDraftRepository;
+use App\Repository\OrderLineRepository;
+use App\Repository\PromotionItemRepository;
 use App\Repository\PromotionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
@@ -37,8 +39,16 @@ class PromoServices
      * @var \App\Repository\ItemPriceRepository
      */
     private ItemPriceRepository $itemPriceRepository;
+    /**
+     * @var \App\Repository\PromotionItemRepository
+     */
+    private PromotionItemRepository $promotionItemRepository;
+    /**
+     * @var \App\Repository\OrderLineRepository
+     */
+    private OrderLineRepository $orderLineRepository;
 
-    public function __construct(PromotionRepository $promotionRepository, ItemRepository $itemRepository, Security $security, EntityManagerInterface $em, OrderDraftRepository $orderDraftRepository, ItemPriceRepository $itemPriceRepository)
+    public function __construct(PromotionRepository $promotionRepository, ItemRepository $itemRepository, Security $security, EntityManagerInterface $em, OrderDraftRepository $orderDraftRepository, ItemPriceRepository $itemPriceRepository, PromotionItemRepository $promotionItemRepository, OrderLineRepository $orderLineRepository)
     {
         $this->promotionRepository = $promotionRepository;
         $this->itemRepository = $itemRepository;
@@ -46,6 +56,8 @@ class PromoServices
         $this->orderDraftRepository = $orderDraftRepository;
         $this->em = $em;
         $this->itemPriceRepository = $itemPriceRepository;
+        $this->promotionItemRepository = $promotionItemRepository;
+        $this->orderLineRepository = $orderLineRepository;
     }
 
     public function getPromoItem($promoItems)
@@ -65,7 +77,6 @@ class PromoServices
         foreach ($promoItems as $promoItem) {
 
             $promo = $this->promotionRepository->findOneBy(["id" => $promoItem->getPromotions()->getOwner()->getId()]);
-
             $itemInfo = $this->itemRepository->findProduct($promoItem->getItem());
             $order->setIdItem($promoItem->getItem())
                 ->setIdSociety($this->security->getUser()->getSocietyID())
@@ -77,10 +88,9 @@ class PromoServices
                 ->setPromo(1)
                 ->setPromotionId($promo)
                 ->setFreeRules(0);
+            $this->em->persist($order);
+            $this->em->flush();
         }
-
-        $this->em->persist($order);
-        $this->em->flush();
     }
 
     //  TODO :: ETAPE 2  ::
@@ -108,6 +118,27 @@ class PromoServices
             $this->em->flush();
         }
     }
+
+
+    public function promoItemFreeAdd($promoRule, $qty, $itemId)
+    {
+        $cart = $this->orderDraftRepository->findBy(['idSociety' => $this->security->getUser()->getSocietyID()]);
+        foreach ($cart as $item) {
+            if ($item->getIdItem()->getId() == $promoRule->getIdItemFree()->getId() && $item->getPrice() == 0) {
+
+                $qty = $promoRule->getQtyFree() * floor($qty / $promoRule->getQtyPurchased());
+                $order = $item->setQuantity($qty);
+
+                $this->em->persist($order);
+                $this->em->flush();
+
+            }
+        }
+
+
+
+    }
+
 
     // TODO :: ETAPE 3  ::
     public function promoItemFree($promoRule, ?string $qty)
@@ -155,6 +186,9 @@ class PromoServices
     public function addtoCartPromo($id)
     {
         $promo = $this->promotionRepository->findOneBy(["id" => $id]);
+        $promoItem = $this->promotionItemRepository->findOneBy(["id" => $id]);
+
+        // Récupérer les items de la promo pour les enregistrer
         $carts = $this->orderDraftRepository->findOrderDraftSocietyPromo($this->security->getUser()->getSocietyID());
 
         if (!empty($carts)) {

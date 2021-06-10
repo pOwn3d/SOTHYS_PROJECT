@@ -177,7 +177,7 @@ class Promotion
     }
 
     /**
-     * @return Collection|PromotionItem[]
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPromotionItem(): Collection
     {
