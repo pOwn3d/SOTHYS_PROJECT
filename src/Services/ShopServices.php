@@ -115,14 +115,13 @@ class ShopServices extends AbstractController
                 // TODO :: Ajouter les produits gratuit si la condition est ok : x = 10 / y = 1 ... x = 20 / y = 2
                 $order->setQuantity($qty)
                     ->setPriceOrder($cart->getPrice() * $qty);
+                $this->em->persist($order);
+                $this->em->flush();
 
-            } else {
-                $order->setQuantity($qty)
-                    ->setPriceOrder($itemPrice->getPrice() * $qty);
             }
         }
-        $this->em->persist($order);
-        $this->em->flush();
+
+
     }
 
     public function getOrderDraft($society)

@@ -25,6 +25,11 @@ class OrderDraftServices
         return $this->orderDraftRepository->findOneBy([ 'idSociety' => $id, 'idItem' => $item ]);
     }
 
+    public function getAllOrderDraftID($id, $item)
+    {
+        return $this->orderDraftRepository->findBy([ 'idSociety' => $id, 'idItem' => $item ]);
+    }
+
     public function editOrderDraft($id, $society, $orderLine)
     {
 

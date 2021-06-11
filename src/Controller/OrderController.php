@@ -47,10 +47,10 @@ class OrderController extends AbstractController
      * @param OrderDraftServices $orderDraftServices
      * @param CartItem $cartItem
      * @param \App\Repository\PromotionItemRepository $promotionItemRepository
-     * @return JsonResponse
+     * @return string
      * @throws \Exception
      */
-    public function addToCart(Request $request, ShopServices $shopServices, OrderDraftServices $orderDraftServices, CartItem $cartItem, PromotionItemRepository$promotionItemRepository): JsonResponse
+    public function addToCart(Request $request, ShopServices $shopServices, OrderDraftServices $orderDraftServices, CartItem $cartItem, PromotionItemRepository$promotionItemRepository)
     {
 
         $itemId = $request->get('item');
@@ -61,11 +61,16 @@ class OrderController extends AbstractController
 
         $society = $this->getUser()->getSocietyID();
         $cartUpdate = $shopServices->addToCart($society, $itemId, $request->get('qty'), $promo);
-        $orders = $orderDraftServices->getOrderDraftID($society->getId(), $itemId);
+        $orders = $orderDraftServices->getAllOrderDraftID($society->getId(), $itemId);
         $sum    = $orderDraftServices->getSumOrderDraft($society->getId(), $promo);
 
 
-        // Récupérer la promo pour vérifier si le solde de promo est atteind
+       if ($promo != 0 ){
+           $x = $this->renderView('shop/promo_ajax.html.twig', [
+                'orders'          => $orders,
+           ]);
+           return new Response(json_encode($x));
+       }
 
         $data = [
             'total'            => $sum[0]['price'],
@@ -78,6 +83,7 @@ class OrderController extends AbstractController
         ];
 
         return new JsonResponse(json_encode($data));
+
     }
 
 }
