@@ -12,27 +12,39 @@
                 <div class="row">
                     <div class="col-12 col-md-8">
                         <div class="cart--checkout-table">
+
+                            <div class="search-wrapper" style="display:flex">
+                                <input class="js-cart-search-term" type="text" style="outline:none" />
+                                <button class="button button--primary-fill js-cart-search-button">
+                                    {{ 'search' | trans}}
+                                </button>
+                            </div>
+
+                            <div class="search-results"></div>
+
+                            <br />
+
                             <table class="cart--table table-responsive">
                                 <thead>
-                                <tr>
-                                    <th>{{'Product' | trans}}</th>
-                                    <th>{{'Designation' | trans}}</th>
-                                    <th>{{'quantity' | trans}}</th>
-                                    <th>{{'Quantity.counts' | trans}}</th>
-                                    <th>{{'price.unit' | trans}}</th>
-                                    <th>{{'price.total' | trans}}</th>
-                                    <th></th>
-                                </tr>
+                                    <tr>
+                                        <th>{{'Product' | trans}}</th>
+                                        <th>{{'Designation' | trans}}</th>
+                                        <th>{{'quantity' | trans}}</th>
+                                        <th>{{'Quantity.counts' | trans}}</th>
+                                        <th>{{'price.unit' | trans}}</th>
+                                        <th>{{'price.total' | trans}}</th>
+                                        <th></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                {% set totalCabine = 0 %}
-                                {% set total = 0 %}
-                                {% for order in orders %}
+                                    {% set totalCabine = 0 %}
+                                    {% set total = 0 %}
+                                    {% for order in orders %}
 
-                                {% set total = total + (order.price *  order.quantity ) %}
-                                {% if  order.idItem.idPresentation == "Cabine" %}
-                                {% set totalCabine = totalCabine + (order.price) %}
-                                {% endif %}
+                                    {% set total = total + (order.price *  order.quantity ) %}
+                                    {% if  order.idItem.idPresentation == "Cabine" %}
+                                    {% set totalCabine = totalCabine + (order.price) %}
+                                    {% endif %}
 
                                 <tr>
                                     <td class="product-name">
@@ -52,21 +64,20 @@
                                                 <div class="quantity-button quantity-up shop-up" >+</div>
                                                 <div class="quantity-button quantity-down shop-down">>-</div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-quantityGroupage">
-                                        <span class="text--category" id="qty_update_{{ order.idItem.id }}">{{ order.quantity }} x {{ order.quantityBundling }} </span>
-                                    </td>
-                                    <td class="product-priceUnit">
-                                        <span class="text--category">  {{ order.price }} €</span>
-                                    </td>
-                                    <td class="product-priceTotal">
-                                        <span class="text--category" id="price_update_{{ order.idItem.id }}">{{ order.price *  order.quantity|round }} € </span>
-                                    </td>
-                                    <td>
-                                        <a href="{{ path('app_order_product_delete', { 'id': order.id }) }}"><i class="icon icon-close"></i></a>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td class="product-quantityGroupage">
+                                            <span class="text--category" id="qty_update_{{ order.idItem.id }}">{{ order.quantity }} x {{ order.quantityBundling }} </span>
+                                        </td>
+                                        <td class="product-priceUnit">
+                                            <span class="text--category">  {{ order.price }} €</span>
+                                        </td>
+                                        <td class="product-priceTotal">
+                                            <span class="text--category" id="price_update_{{ order.idItem.id }}">{{ order.price *  order.quantity|round }} € </span>
+                                        </td>
+                                        <td>
+                                            <a href="{{ path('app_order_product_delete', { 'id': order.id }) }}"><i class="icon icon-close"></i></a>
+                                        </td>
+                                    </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>

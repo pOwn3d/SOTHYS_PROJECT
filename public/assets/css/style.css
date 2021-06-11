@@ -92,3 +92,8 @@ ul.promo {
     border: 0.01rem solid black;
     min-width: 35rem;
 }
+
+.js-cart-add-button {
+    padding: 1rem 0;
+    cursor: pointer;
+}
