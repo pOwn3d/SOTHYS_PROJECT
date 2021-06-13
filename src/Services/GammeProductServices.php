@@ -28,9 +28,14 @@ class GammeProductServices
 //        dd($x);
     }
 
-    public function findByGammeId($id, $societyId): array
+    public function findProductsByGammeId($id, $societyId, $page = 1): array
     {
-        return $this->itemRepository->findByGammeId($id, $societyId);
+        return $this->itemRepository->findProductsByGammeId($id, $societyId, $page);
+    }
+
+    public function getPaginationByGammeId($id, $societyId, $page = 1)
+    {
+        return $this->itemRepository->getPaginationByGammeId($id, $societyId, $page);
     }
 
 }

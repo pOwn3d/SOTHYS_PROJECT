@@ -13,9 +13,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class GammeController extends AbstractController
 {
     /**
-     * @Route("/{_locale}/gamme/{gamme_id}", name="app_gamme", requirements={
-    * "_locale"="%app.locales%"
-    * })
+     * @Route("/{_locale}/gamme/{gamme_id}/page/{page?1}", name="app_gamme", requirements={
+     *      "_locale"="%app.locales%"
+     * })
      * @param Request              $request
      * @param GammeServices        $gammeServices
      * @param GammeProductServices $gammeProductServices
@@ -25,10 +25,18 @@ class GammeController extends AbstractController
      */
     public function index(Request $request, GammeServices $gammeServices, GammeProductServices $gammeProductServices, CartItem $cartItem): Response
     {
+
+        $page = $request->attributes->getInt('page');
+
+        $products = $gammeProductServices->findProductsByGammeId($request->get('gamme_id'), $this->getUser()->getSocietyID(), $page);
+
+        $pagination = $gammeProductServices->getPaginationByGammeId($request->get('gamme_id'), $this->getUser()->getSocietyID(), $page);
+
         return $this->render('gamme/index.html.twig', [
             'controller_name' => 'GammeController',
             'gamme'           => $gammeServices->getGammeID($request->get('gamme_id')),
-            'products'        => $gammeProductServices->findByGammeId($request->get('gamme_id'), $this->getUser()->getSocietyID()),
+            'products'        => $products,
+            'pagination'      => $pagination,
             'cartItem'        => $cartItem->getItemCart($this->getUser()->getSocietyID())['0']['quantity']
         ]);
     }

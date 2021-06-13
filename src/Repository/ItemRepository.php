@@ -23,8 +23,10 @@ class ItemRepository extends ServiceEntityRepository
     /**
      * @return Item[] Returns an array of Item objects
      */
-    public function findByGammeId($value, $societyId): array
+    public function findProductsByGammeId($value, $societyId, $page = 1): array
     {
+        $limit = 12;
+
         return $this->createQueryBuilder('i')
             ->leftJoin('i.gamme', 'gamme')
             ->join('i.itemPrices', 'p', Join::WITH, 'p.idItem = i.id AND p.idSociety = :societyId')
@@ -32,9 +34,32 @@ class ItemRepository extends ServiceEntityRepository
             ->setParameter('societyId', $societyId)
             ->setParameter('val', $value)
             ->orderBy('i.id', 'ASC')
-            ->setMaxResults(10)
+            ->setMaxResults($limit)
+            ->setFirstResult(($page - 1) * $limit)
             ->getQuery()
             ->getResult();
+    }
+
+    public function getPaginationByGammeId($value, $societyId, $page = 1)
+    {
+        $pagination = new \stdClass();
+
+        $itemCount = $this->createQueryBuilder('i')
+            ->leftJoin('i.gamme', 'gamme')
+            ->join('i.itemPrices', 'p', Join::WITH, 'p.idItem = i.id AND p.idSociety = :societyId')
+            ->andWhere('gamme.id = :val')
+            ->setParameter('societyId', $societyId)
+            ->setParameter('val', $value)
+            ->select('count(i.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        $pagination->pageCount = (int) ceil($itemCount / 12);
+        $pagination->itemCount = $itemCount;
+        $pagination->range = range(1, $pagination->pageCount);
+        $pagination->currentPage = $page;
+
+        return $pagination;
     }
 
     public function findProduct($value)
@@ -44,7 +69,6 @@ class ItemRepository extends ServiceEntityRepository
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult();
-
     }
 
 //    public function findProduct($id)
