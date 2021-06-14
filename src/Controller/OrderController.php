@@ -3,11 +3,9 @@
 namespace App\Controller;
 
 use App\Repository\OrderRepository;
-use App\Repository\PromotionItemRepository;
 use App\Services\Cart\CartItem;
 use App\Services\OrderDraftServices;
 use App\Services\OrderServices;
-use App\Services\PromoServices;
 use App\Services\ShopServices;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -46,42 +44,43 @@ class OrderController extends AbstractController
      * @param ShopServices $shopServices
      * @param OrderDraftServices $orderDraftServices
      * @param CartItem $cartItem
-     * @param \App\Repository\PromotionItemRepository $promotionItemRepository
-     * @return string
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function addToCart(Request $request, ShopServices $shopServices, OrderDraftServices $orderDraftServices, CartItem $cartItem, PromotionItemRepository$promotionItemRepository)
+    public function addToCart(Request $request, ShopServices $shopServices, OrderDraftServices $orderDraftServices, CartItem $cartItem)
     {
 
         $itemId = $request->get('item');
-        $promo    = $request->get('promo');
-        if ($promo == 'undefined'){
+        $promo = $request->get('promo');
+        if ($promo == 'undefined') {
             $promo = 0;
         }
 
         $society = $this->getUser()->getSocietyID();
         $cartUpdate = $shopServices->addToCart($society, $itemId, $request->get('qty'), $promo);
         $orders = $orderDraftServices->getAllOrderDraftID($society->getId(), $itemId);
-        $sum    = $orderDraftServices->getSumOrderDraft($society->getId(), $promo);
+        $sum = $orderDraftServices->getSumOrderDraft($society->getId(), $promo);
 
 
-       if ($promo != 0 ){
-           $x = $this->renderView('shop/promo_ajax.html.twig', [
-                'orders'          => $orders,
-           ]);
-           return new Response(json_encode($x));
-       }
+        if ($promo != 0) {
+            $orders = $orderDraftServices->getAllOrderDraftPromoID($society->getId());
+            $x = $this->renderView('shop/promo_ajax.html.twig', [
+                'orders' => $orders,
+            ]);
+            return new Response(json_encode($x));
+        }
 
-        $data = [
-            'total'            => $sum[0]['price'],
-            'quantity'         => $orders->getQuantity(),
-            'price'            => $orders->getPrice(),
-            'quantityBundling' => $orders->getQuantityBundling(),
-            'id'               => $orders->getId(),
-            'cartItem'         => $cartItem->getItemCart($society)['0']['quantity'],
-            'cartUpdate' => $cartUpdate
-        ];
-
+        foreach ($orders as $order) {
+            $data = [
+                'total' => $sum[0]['price'],
+                'quantity' => $order->getQuantity(),
+                'price' => $order->getPrice(),
+                'quantityBundling' => $order->getQuantityBundling(),
+                'id' => $order->getId(),
+                'cartItem' => $cartItem->getItemCart($society)['0']['quantity'],
+                'cartUpdate' => $cartUpdate
+            ];
+        }
         return new JsonResponse(json_encode($data));
 
     }

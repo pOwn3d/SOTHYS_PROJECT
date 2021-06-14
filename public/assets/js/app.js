@@ -69,6 +69,7 @@ $(document).ready(function () {
                             url: url,
                             success: function (result) {
                                 var data = JSON.parse(result)
+                                console.log(data)
 
                                 document.getElementById('qty_update_' + product).innerHTML   = data.quantity + ' x ' + data.quantityBundling
                                 document.getElementById('price_update_' + product).innerHTML = (data.price * data.quantity).toFixed(2) + ' € '
@@ -130,10 +131,8 @@ $(document).ready(function () {
 
                                     $('#clear').remove()
                                     $('#formPromo').html(data)
-
                                 },
                             });
-
                         }
                     )
                 ))
@@ -224,4 +223,4 @@ $(document).ready(function () {
             },
         });
     });
-});
+

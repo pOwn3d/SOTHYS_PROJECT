@@ -33,9 +33,6 @@
                                     {% if  order.idItem.idPresentation == "Cabine" %}
                                         {% set totalCabine = totalCabine + (order.price) %}
                                     {% endif %}
-
-
-
                                     {% if order.priceOrder > 0 %}
                                         <tr>
                                             <td class="product-name">{{ order.idItem.id }}  </td>

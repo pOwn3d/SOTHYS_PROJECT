@@ -70,7 +70,6 @@ class ShopServices extends AbstractController
         $societyId = $society->getId();
         $promo = $this->promotionRepository->findOneBy(["id" => $promoID]);
 
-
         if ($promo != null) {
             foreach ($promo->getFreeRules() as $promoRule) {
                 $this->promoServices->promoItemFreeAdd($promoRule, $qty, $itemId);
@@ -106,19 +105,23 @@ class ShopServices extends AbstractController
                 ->setState(0)
                 ->setPromo(0)
             ;
+            $this->em->persist($order);
+            $this->em->flush();
         }
 
         if ($cartItem != null) {
             $order = $cartItem;
-            if ($cart->getPromo() == true) {
+
+//            if ($cartItem->getPromo() != true) {
+
 
                 // TODO :: Ajouter les produits gratuit si la condition est ok : x = 10 / y = 1 ... x = 20 / y = 2
                 $order->setQuantity($qty)
-                    ->setPriceOrder($cart->getPrice() * $qty);
+                    ->setPriceOrder($order->getPrice() * $qty);
                 $this->em->persist($order);
                 $this->em->flush();
 
-            }
+//            }
         }
 
 
