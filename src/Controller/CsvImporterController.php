@@ -161,4 +161,16 @@ class CsvImporterController extends AbstractController
         $csvImporter->customerImportIncoterm();
         dd();
     }
+
+    /**
+     * @Route("/import-society-address", name="import_society_address")
+     * @param CsvImporter $csvImporter
+     *
+     * @return Response
+     */
+    public function importSocietyAddress(CsvImporter $csvImporter): Response
+    {
+        $csvImporter->importSocietyAddress();
+        dd();
+    }
 }

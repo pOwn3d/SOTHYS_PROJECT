@@ -98,7 +98,7 @@ class ShopController extends AbstractController
     }
 
     /**
-     * @Route("/order-publish/{promo}", name="app_order_publish")
+     * @Route("/{_locale}/order-publish/{promo}", name="app_order_publish")
      */
     public function orderPublish(CartItem $cartItem, Request $request, ShopServices $shopServices): Response
     {

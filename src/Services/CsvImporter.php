@@ -3,7 +3,7 @@
 
 namespace App\Services;
 
-
+use App\Entity\Address as EntityAddress;
 use App\Entity\CustomerIncoterm;
 use App\Entity\GammeProduct;
 use App\Entity\Incoterm;
@@ -407,6 +407,33 @@ class CsvImporter
                 ->setReference($incoterm)
                 ->setCity($row[4]);
             $this->em->persist($gamme);
+            $this->em->flush();
+        }
+    }
+
+    public function importSocietyAddress()
+    {
+        $csv = Reader::createFromPath('../public/csv/Adresse.csv');
+        $csv->setDelimiter(';');
+        $csv->fetchColumn();
+
+        foreach ($csv as $row) {
+
+            $society = $this->em->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[0] ]);
+
+            $address = new EntityAddress();
+            $address
+                ->setSociety($society)
+                ->setLabel($row[1])
+                ->setAddress1(\utf8_encode($row[3]))
+                ->setAddress2(\utf8_encode($row[4]))
+                ->setAddress3(\utf8_encode($row[5]))
+                ->setPostalCode($row[6])
+                ->setCity($row[7])
+                ->setRegion($row[8])
+                ->setCountry(\utf8_encode($row[9]));
+
+            $this->em->persist($address);
             $this->em->flush();
         }
     }

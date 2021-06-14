@@ -38,12 +38,13 @@ Ckeck:
             offers: 'Ckeck the current promotional offers (which in developement phase)'
 
 order:
-    - 'Order'
-    - online: 'Order online directly'
-    - ref: 'Order ref'
-    - date: 'Order date'
-    - status: 'Order status'
-    - substatus: 'status details'
+    online: 'Order online directly'
+    date: 'Order date'
+    status: 'Order status'
+    substatus: 'status details'
+    creation_date: 'Creation date'
+    delivery_date: 'Desired date of availability'
+    save: 'Save my order'
 
 Track:
     their:
@@ -158,3 +159,5 @@ access_my_account: 'Access to my account'
 access_my_cart: 'Access to my cart'
 
 order_number: 'Order number'
+
+search: 'Search'
