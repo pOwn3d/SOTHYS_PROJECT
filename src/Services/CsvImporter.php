@@ -265,6 +265,11 @@ class CsvImporter
 
             $price = new ItemPrice();
 
+            /*
+            if ($items == null){
+                dd("aie");
+            }
+            */
             $item = null;
 
             $foundItems = array_filter($items, function ($item) use ($row) {
@@ -410,4 +415,19 @@ class CsvImporter
             $this->em->flush();
         }
     }
+
+    public function remove()
+    {
+
+        return $this->em->getRepository(Item::class)->removeOldProduct();
+
+
+    //        SELECT * FROM item LEFT JOIN item_price ON item.id = item_price.id_item_id WHERE price is null
+
+
+
+
+    }
+
+
 }

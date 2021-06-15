@@ -161,4 +161,20 @@ class CsvImporterController extends AbstractController
         $csvImporter->customerImportIncoterm();
         dd();
     }
+
+    /**
+     * @Route("/delete", name="import_remove")
+     * @param CsvImporter $csvImporter
+     *
+     * @return Response
+     */
+    public function removeCSV(CsvImporter $csvImporter): Response
+    {
+
+        $csvImporter->remove();
+
+
+
+        dd();
+    }
 }

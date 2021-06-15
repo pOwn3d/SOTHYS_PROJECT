@@ -71,27 +71,25 @@ class ItemRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-//    public function findProduct($id)
-//    {
-//        $x = $this->createQueryBuilder('i')
-//            ->andWhere('i. = :val')
-//            ->setParameter('val', $id)
-//            ->andWhere('itemQuantities')
-//            ->orderBy()
-//            ->getQuery()
-//            ->getResult();
-//    }
-//        dd($id);
-//
-//        $x = $this->createQueryBuilder('i')
-//            ->andWhere('i. = :val')
-//            ->setParameter('val', $id)
-//            ->orderBy('i.idItem', 'ASC')
-//            ->setMaxResults(1)
-//            ->getQuery()
-//            ->getResult();
-//
-//        dd($x);
-//
-//    }
+
+    //   SELECT * FROM item LEFT JOIN item_price ON item.id = item_price.id_item_id WHERE price is null
+
+    public function removeOldProduct()
+    {
+        $items = $this->createQueryBuilder('i')
+            ->leftJoin('i.itemPrices', 'ip')
+            ->where('ip.price is NULL ')
+            ->getQuery()
+            ->getResult();
+
+        foreach ($items as $item) {
+
+            $this->getEntityManager()->remove($item);
+            $this->getEntityManager()->flush();
+
+        }
+
+
+    }
+
 }
