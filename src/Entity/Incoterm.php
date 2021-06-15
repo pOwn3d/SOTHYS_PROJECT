@@ -85,6 +85,4 @@ class Incoterm
     public function __toString(){
         return $this->getReference();
     }
-
-
 }

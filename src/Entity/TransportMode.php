@@ -115,9 +115,16 @@ class TransportMode
         return $this;
     }
 
+    public function getName($locale): ?string
+    {
+        if($locale === 'fr-FR') {
+            return $this->nameFR;
+        }
+        return $this->nameEN;
+    }
+
     public function __toString()
     {
         return $this->nameFR . '  -  ' . $this->nameEN;
-
     }
 }

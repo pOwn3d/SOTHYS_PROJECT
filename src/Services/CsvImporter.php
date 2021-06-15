@@ -3,7 +3,7 @@
 
 namespace App\Services;
 
-
+use App\Entity\Address as EntityAddress;
 use App\Entity\CustomerIncoterm;
 use App\Entity\GammeProduct;
 use App\Entity\Incoterm;
@@ -12,6 +12,7 @@ use App\Entity\ItemPrice;
 use App\Entity\ItemQuantity;
 use App\Entity\Order;
 use App\Entity\OrderLine;
+use App\Entity\PaymentMethod;
 use App\Entity\Society;
 use App\Entity\TransportMode;
 use App\Entity\User;
@@ -54,6 +55,25 @@ class CsvImporter
 
         // See here: https://www.doctrine-project.org/projects/doctrine-orm/en/2.8/reference/batch-processing.html
         $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
+    }
+
+    public function importPaymentMethod()
+    {
+        $csv = Reader::createFromPath('../public/csv/ConditionPaiement.csv');
+        $csv->setDelimiter(';');
+        $csv->fetchColumn();
+
+        foreach ($csv as $row) {
+
+            $paymentMethod = new PaymentMethod();
+            $paymentMethod
+                ->setIdX3(\utf8_encode($row[0]))
+                ->setLabelFR(\utf8_encode($row[1]))
+                ->setLabelEN(\utf8_encode($row[2]));
+
+            $this->em->persist($paymentMethod);
+            $this->em->flush();
+        }
     }
 
     public function importUser(bool $shouldSendMail = true)
@@ -139,11 +159,28 @@ class CsvImporter
         $csv = Reader::createFromPath('../public/csv/society.csv');
         $csv->fetchColumn();
 
+        $paymentMethods = $this->em->getRepository(PaymentMethod::class)->findAll();
+
         foreach ($csv as $row) {
+            $paymentMethod = null;
+
+            $foundPaymentMethods = array_filter($paymentMethods, function ($paymentMethod) use ($row) {
+                return $paymentMethod->getIdX3() == $row[1];
+            });
+
+            if (count($foundPaymentMethods)) {
+                $paymentMethod = array_shift($foundItems);
+            }
+
+            if ($paymentMethod == null) {
+                continue;
+            }
+
             $newSociety = new Society();
             $newSociety
                 ->setIdCustomer($row[0])
-                ->setName($row[1]);
+                ->setName($row[1])
+                ->setPaymentMethod($paymentMethod);
 
             $this->em->persist($newSociety);
             $this->em->flush();
@@ -265,11 +302,6 @@ class CsvImporter
 
             $price = new ItemPrice();
 
-            /*
-            if ($items == null){
-                dd("aie");
-            }
-            */
             $item = null;
 
             $foundItems = array_filter($items, function ($item) use ($row) {
@@ -416,18 +448,37 @@ class CsvImporter
         }
     }
 
-    public function remove()
+
+    public function importSocietyAddress()
     {
+        $csv = Reader::createFromPath('../public/csv/Adresse.csv');
+        $csv->setDelimiter(';');
+        $csv->fetchColumn();
 
-        return $this->em->getRepository(Item::class)->removeOldProduct();
+        foreach ($csv as $row) {
 
+            $society = $this->em->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[0] ]);
 
-    //        SELECT * FROM item LEFT JOIN item_price ON item.id = item_price.id_item_id WHERE price is null
+            $address = new EntityAddress();
+            $address
+                ->setSociety($society)
+                ->setLabel($row[1])
+                ->setAddress1(\utf8_encode($row[3]))
+                ->setAddress2(\utf8_encode($row[4]))
+                ->setAddress3(\utf8_encode($row[5]))
+                ->setPostalCode($row[6])
+                ->setCity($row[7])
+                ->setRegion($row[8])
+                ->setCountry(\utf8_encode($row[9]));
 
-
-
-
+            $this->em->persist($address);
+            $this->em->flush();
+        }
     }
 
-
+    public function remove()
+    {
+        return $this->em->getRepository(Item::class)->removeOldProduct();
+        // SELECT * FROM item LEFT JOIN item_price ON item.id = item_price.id_item_id WHERE price is null
+    }
 }

@@ -81,6 +81,11 @@ class Order
      */
     private $email;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=TransportMode::class)
+     */
+    private $transportMode;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -217,6 +222,18 @@ class Order
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getTransportMode(): ?TransportMode
+    {
+        return $this->transportMode;
+    }
+
+    public function setTransportMode(?TransportMode $transportMode): self
+    {
+        $this->transportMode = $transportMode;
 
         return $this;
     }

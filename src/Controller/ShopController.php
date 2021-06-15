@@ -116,7 +116,7 @@ class ShopController extends AbstractController
             return $this->redirectToRoute('app_order');
         }
 
-        return $this->render('shop/shop.html.twig', [
+        return $this->render('shop/publish.html.twig', [
             'controller_name' => 'ShopController',
             'cartItem'        => $cartItem->getItemCart($society)['0']['quantity'],
             'form'            => $form->createView(),

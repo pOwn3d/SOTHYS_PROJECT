@@ -71,6 +71,11 @@ class Society
      */
     private $addresses;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=PaymentMethod::class)
+     */
+    private $paymentMethod;
+
 
     public function __construct()
     {
@@ -340,6 +345,18 @@ class Society
                 $address->setSociety(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPaymentMethod(): ?PaymentMethod
+    {
+        return $this->paymentMethod;
+    }
+
+    public function setPaymentMethod(?PaymentMethod $paymentMethod): self
+    {
+        $this->paymentMethod = $paymentMethod;
 
         return $this;
     }
