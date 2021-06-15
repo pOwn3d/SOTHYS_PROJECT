@@ -71,9 +71,7 @@ class ItemRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-
     //   SELECT * FROM item LEFT JOIN item_price ON item.id = item_price.id_item_id WHERE price is null
-
     public function removeOldProduct()
     {
         $items = $this->createQueryBuilder('i')
@@ -83,13 +81,9 @@ class ItemRepository extends ServiceEntityRepository
             ->getResult();
 
         foreach ($items as $item) {
-
             $this->getEntityManager()->remove($item);
             $this->getEntityManager()->flush();
-
         }
-
-
     }
 
 }

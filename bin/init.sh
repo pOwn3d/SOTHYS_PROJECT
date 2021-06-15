@@ -62,6 +62,6 @@ echo "localhost$port/import-incoterm"
 curl -o /dev/null "localhost$port/import-incoterm"
 echo ""
 
-echo "localhost$port/import-customer-incoterm"
+echo "localhost$port/import-remove-old-item"
 curl -o /dev/null "localhost$port/import-customer-incoterm"
 echo ""

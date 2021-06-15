@@ -22,7 +22,7 @@ class Item
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderLine::class, mappedBy="itemID")
+     * @ORM\OneToMany(targetEntity=OrderLine::class, mappedBy="itemID" , cascade={"remove"})
      */
     private $orderLines;
 
@@ -97,7 +97,7 @@ class Item
     private $itemPrices;
 
     /**
-     * @ORM\OneToMany(targetEntity=ItemQuantity::class, mappedBy="idItem" )
+     * @ORM\OneToMany(targetEntity=ItemQuantity::class, mappedBy="idItem", cascade={"remove"} )
      */
     private $itemQuantities;
 
