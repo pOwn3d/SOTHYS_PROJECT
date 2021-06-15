@@ -418,15 +418,7 @@ class CsvImporter
 
     public function remove()
     {
-
         return $this->em->getRepository(Item::class)->removeOldProduct();
-
-
-    //        SELECT * FROM item LEFT JOIN item_price ON item.id = item_price.id_item_id WHERE price is null
-
-
-
-
     }
 
 

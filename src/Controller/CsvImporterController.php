@@ -163,18 +163,14 @@ class CsvImporterController extends AbstractController
     }
 
     /**
-     * @Route("/delete", name="import_remove")
+     * @Route("/import-remove-old-item", name="import_remove")
      * @param CsvImporter $csvImporter
      *
      * @return Response
      */
     public function removeCSV(CsvImporter $csvImporter): Response
     {
-
         $csvImporter->remove();
-
-
-
         dd();
     }
 }
