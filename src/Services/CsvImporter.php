@@ -156,7 +156,8 @@ class CsvImporter
 
     public function importSociety()
     {
-        $csv = Reader::createFromPath('../public/csv/society.csv');
+        $csv = Reader::createFromPath('../public/csv/Client.csv');
+        $csv->setDelimiter(';');
         $csv->fetchColumn();
 
         $paymentMethods = $this->em->getRepository(PaymentMethod::class)->findAll();
@@ -165,21 +166,17 @@ class CsvImporter
             $paymentMethod = null;
 
             $foundPaymentMethods = array_filter($paymentMethods, function ($paymentMethod) use ($row) {
-                return $paymentMethod->getIdX3() == $row[1];
+                return $paymentMethod->getIdX3() == $row[15];
             });
 
             if (count($foundPaymentMethods)) {
-                $paymentMethod = array_shift($foundItems);
-            }
-
-            if ($paymentMethod == null) {
-                continue;
+                $paymentMethod = array_shift($foundPaymentMethods);
             }
 
             $newSociety = new Society();
             $newSociety
                 ->setIdCustomer($row[0])
-                ->setName($row[1])
+                ->setName($row[5])
                 ->setPaymentMethod($paymentMethod);
 
             $this->em->persist($newSociety);
