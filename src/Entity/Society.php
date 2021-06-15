@@ -66,6 +66,11 @@ class Society
      */
     private $promotions;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Address::class, mappedBy="society")
+     */
+    private $addresses;
+
 
     public function __construct()
     {
@@ -76,6 +81,7 @@ class Society
         $this->orderDrafts = new ArrayCollection();
         $this->customerIncoterms = new ArrayCollection();
         $this->promotions = new ArrayCollection();
+        $this->addresses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -303,6 +309,36 @@ class Society
     {
         if ($this->promotions->removeElement($promotion)) {
             $promotion->removeSociety($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Address[]
+     */
+    public function getAddresses(): Collection
+    {
+        return $this->addresses;
+    }
+
+    public function addAddress(Address $address): self
+    {
+        if (!$this->addresses->contains($address)) {
+            $this->addresses[] = $address;
+            $address->setSociety($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAddress(Address $address): self
+    {
+        if ($this->addresses->removeElement($address)) {
+            // set the owning side to null (unless already changed)
+            if ($address->getSociety() === $this) {
+                $address->setSociety(null);
+            }
         }
 
         return $this;

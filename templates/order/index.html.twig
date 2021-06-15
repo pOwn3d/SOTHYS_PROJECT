@@ -17,8 +17,9 @@
                         <table class="compte__commandes table-responsive">
                             <thead>
                             <tr>
-                                <th>{{'order.ref' | trans}}</th>
-                                <th>{{'Date' | trans}}</th>
+                                <th>{{'reference' | trans}}</th>
+                                <th>{{'order.creation_date' | trans}}</th>
+                                <th>{{'order.delivery_date' | trans}}</th>
                                 <th>{{'price.total' | trans}}</th>
                                 <th>{{'state' | trans}}</th>
                             </tr>
@@ -28,12 +29,13 @@
                                 <tr>
                                     <td class="ref">
                                         {% if order.idOrderX3 != null %}
-                                            <a href="{{ path('app_order_item_id' , { 'id': order.idOrderX3 }) }}">#{{ order.idOrder }} </a>
+                                            <a href="{{ path('app_order_item_id' , { 'id': order.idOrderX3 }) }}">{{ order.reference }} </a>
                                         {% else %}
-                                            <a href="{{ path('app_order_item_id_draft' , { 'id': order.id }) }}">#{{ order.id }} </a>
+                                            <a href="{{ path('app_order_item_id_draft' , { 'id': order.id }) }}">{{ order.reference }} </a>
                                         {% endif %}
                                     </td>
                                     <td class="date">{{ order.dateOrder|date('d/m/Y') }}</td>
+                                    <td class="date">{{ order.dateDelivery|date('d/m/Y') }}</td>
                                     <td class="price">{{ order.priceOrder }} €</td>
                                     <td class="status">
                                         {% if order.idStatut == 1 %}

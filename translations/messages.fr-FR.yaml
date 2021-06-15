@@ -38,12 +38,13 @@ Ckeck:
             offers: 'Accédez aux offres promotionnelles en cours (en cours de développement)'
 
 order:
-    - 'Commande'
-    - online: 'Passez vos commandes en direct'
-    - ref: 'Réf commande'
-    - date: 'Date de commande'
-    - status: 'Statut de la commande'
-    - substatus: 'détail du status'
+    online: 'Passez vos commandes en direct'
+    date: 'Date de commande'
+    status: 'Statut de la commande'
+    substatus: 'détail du status'
+    creation_date: 'Date de création'
+    delivery_date: 'Date de mise à disposition souhaitée'
+    save: 'Enregistrer ma commande'
 
 Track:
     their:
@@ -130,6 +131,8 @@ date:
 
 reference: 'Référence'
 
+dateDelivery: 'Date de mise à disposition Ussac souhaitée'
+
 Name: 'Nom'
 
 Id Customer: 'Id utilisateur'
@@ -156,3 +159,5 @@ access_my_account: 'Accéder à mon compte'
 access_my_cart: 'Accéder à mon panier'
 
 order_number: 'N° de commande'
+
+search: 'Rechercher'

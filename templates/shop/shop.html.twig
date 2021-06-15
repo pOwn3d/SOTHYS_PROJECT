@@ -13,21 +13,34 @@
             <div class="row">
                 <div class="col-12 col-md-12">
                     <p class="form__item">
-                        <label for="reference">Référence</label>
-                        {{ form_row(form.reference, {'label' : false,  'attr' : {'placeholder' : 'Référence',  'class' : 'form-control' ,'name' : 'reference' }}) }}
+                        <label for="reference">{{ 'reference' | trans }} </label>
+                        {{ form_row(form.reference, {
+                            'label' : false,  'attr' : {'placeholder' : 'reference', 'class' : 'form-control', 'name' : 'reference'
+                        }}) }}
                     </p>
                     <p class="form__item">
-                        <label for="incoterm">Incoterm</label>
-                        {{ form_row(form.incoterm, {'label' : false,  'attr' : {'placeholder' : 'Référence',  'class' : 'form-control' ,'name' : 'incoterm' }}) }}
+                        <label for="delivery_date">{{ 'order.delivery_date' | trans }}</label>
+                        {{ form_row(form.dateDelivery, {
+                            'label' : false,  'attr' : {'placeholder' : 'order.delivery_date', 'class' : 'form-control', 'name' : 'delivery_date'
+                        }}) }}
                     </p>
                     <p class="form__item">
-                        <label for="">Email</label>
-                        {{ form_row(form.email, {'label' : false,  'attr' : {'placeholder' : 'Email',  'class' : 'form-control' ,'name' : 'email',   'value' :  user.email  }}) }}
+                        <label for="address">{{ 'address' | trans }}</label>
+                        {{ form_row(form.address, {
+                            'label' : false,  'attr' : {'class' : 'form-control', 'name' : 'address' }
+                        }) }}
+                    </p>
+                    <p class="form__item">
+                        <label for="incoterm">{{ 'incoterm' | trans }}</label>
+                        {{ form_row(form.incoterm, {
+                            'label' : false,  'attr' : {'class' : 'form-control', 'name' : 'incoterm' }
+                        }) }}
                     </p>
                 </div>
             </div>
             <div class="checkout-wrapper">
-                <button type="submit" class=" checkout button button--primary-fill">Enregistrer ma commande
+                <button type="submit" class=" checkout button button--primary-fill">
+                    {{ 'order.save' | trans }}
                 </button>
             </div>
             {{ form_end(form) }}
