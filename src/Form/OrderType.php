@@ -95,7 +95,7 @@ class OrderType extends AbstractType
                 },
                 'choice_label' => function(Society $society) {
                     return $society->getPaymentMethod()->getLabel($this->translator->getLocale());
-                }
+                },
             ]);
 
     }

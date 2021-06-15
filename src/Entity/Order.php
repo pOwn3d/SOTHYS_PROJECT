@@ -86,6 +86,16 @@ class Order
      */
     private $transportMode;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Address::class)
+     */
+    private $address;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=PaymentMethod::class)
+     */
+    private $paymentMethod;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -234,6 +244,30 @@ class Order
     public function setTransportMode(?TransportMode $transportMode): self
     {
         $this->transportMode = $transportMode;
+
+        return $this;
+    }
+
+    public function getAddress(): ?Address
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?Address $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getPaymentMethod(): ?PaymentMethod
+    {
+        return $this->paymentMethod;
+    }
+
+    public function setPaymentMethod(?PaymentMethod $paymentMethod): self
+    {
+        $this->paymentMethod = $paymentMethod;
 
         return $this;
     }
