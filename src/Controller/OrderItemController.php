@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class OrderItemController extends AbstractController
 {
     /**
-     * @Route("/commande/{id}", name="app_order_item_id")
+     * @Route("/{_locale}/commande/{id}", name="app_order_item_id")
      * @param Request             $request
      * @param OrderLineRepository $orderLineRepository
      * @param OrderServices       $orderServices
@@ -33,7 +33,7 @@ class OrderItemController extends AbstractController
     }
 
     /**
-     * @Route("/commande/draft/{id}", name="app_order_item_id_draft")
+     * @Route("/{_locale}/commande/draft/{id}", name="app_order_item_id_draft")
      * @param Request             $request
      * @param OrderServices       $orderServices
      * @param OrderLineRepository $orderLineRepository

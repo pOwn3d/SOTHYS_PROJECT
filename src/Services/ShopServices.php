@@ -137,7 +137,7 @@ class ShopServices extends AbstractController
         return $this->orderDraftRepository->findOrderDraftSocietyPromo($society);
     }
 
-    public function createOrder($society, $data, $promo)
+    public function createOrder($user, $society, $data, $promo)
     {
         $orders = $this->orderDraftRepository->findOrderDraft($society->getId(), $promo);
         if ($orders == []) {
@@ -159,12 +159,13 @@ class ShopServices extends AbstractController
 //                ->setIdDownStatut()
             ->setPriceOrder($total)
             ->setDateOrder(new \DateTime())
-//                ->setDateDelivery()
+            ->setDateDelivery($data->getDateDelivery())
             ->setSocietyID($society)
             ->setIdStatut(1)
             ->setIncoterm($data->getIncoterm())
             ->setReference($data->getReference())
-            ->setEmail($data->getEmail())
+            ->setAddress($data->getAddress())
+            ->setEmail($user->getEmail())
         ;
 
         $this->em->persist($newOrder);
