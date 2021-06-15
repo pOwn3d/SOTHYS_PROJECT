@@ -11,6 +11,7 @@ use App\Entity\Society;
 use App\Entity\TransportMode;
 use App\Repository\CustomerIncotermRepository;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -72,14 +73,30 @@ class OrderType extends AbstractType
                             Join::WITH,
                             's.id = a.society'
                         )
-                        ->andWhere('s.id =  :societyId')
+                        ->andWhere('s.id = :societyId')
                         ->setParameter('societyId', $this->security->getUser()->getSocietyID());
                 },
                 'choice_label' => function(Address $address) {
                     return $address->getLabel() . ' - ' . $address->getAddress1() . ' ' . $address->getPostalCode() . ' ' . $address->getCity() . ' ' . $address->getCountry();
                 }
             ])
-            ->add('paymentMethod');
+            ->add('paymentMethod', EntityType::class, [
+                'class' => Society::class,
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('s')
+                    ->innerJoin(
+                        PaymentMethod::class,
+                        'p',
+                        Join::WITH,
+                        's.paymentMethod = p.id'
+                    )
+                    ->andWhere('s.id = :societyId')
+                    ->setParameter('societyId', $this->security->getUser()->getSocietyID());
+                },
+                'choice_label' => function(Society $society) {
+                    return $society->getPaymentMethod()->getLabel($this->translator->getLocale());
+                }
+            ]);
 
     }
 

@@ -97,3 +97,17 @@ ul.promo {
     padding: 1rem 0;
     cursor: pointer;
 }
+
+.search-results {
+    position: absolute;
+    background: #fff;
+    border: 1px solid;
+    margin: 1rem 0;
+    padding: 0 1rem;
+    display:block;
+    border-radius: 3px;
+}
+
+.search-results:empty {
+    display: none;
+}

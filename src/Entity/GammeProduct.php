@@ -70,9 +70,9 @@ class GammeProduct
     public function getLabel($locale): ?string
     {
         if($locale === 'fr-FR') {
-            return $this->labelFR;
+            return $this->getLabelFR();
         }
-        return $this->labelEN;
+        return $this->getLabelEN();
     }
 
     public function setLabelEN(?string $labelEN): self

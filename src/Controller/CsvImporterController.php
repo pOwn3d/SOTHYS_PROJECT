@@ -38,6 +38,18 @@ class CsvImporterController extends AbstractController
     }
 
     /**
+     * @Route("/import-society-address", name="import_csv_society_address")
+     * @param CsvImporter $csvImporter
+     *
+     * @return Response
+     */
+    public function importSocietyAddress(CsvImporter $csvImporter): Response
+    {
+        $csvImporter->importSocietyAddress();
+        dd();
+    }
+
+    /**
      * @Route("/import-user/{should_send_mail}", name="import_csv_user")
      * @param CsvImporter $csvImporter
      * @param Request     $request

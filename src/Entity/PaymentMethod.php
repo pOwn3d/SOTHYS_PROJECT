@@ -72,4 +72,13 @@ class PaymentMethod
 
         return $this;
     }
+
+    public function getLabel($locale) {
+
+        if($locale === 'fr-FR') {
+            return $this->getlabelFR();
+        }
+
+        return $this->getlabelEN();
+    }
 }

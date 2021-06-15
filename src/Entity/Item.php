@@ -421,10 +421,10 @@ class Item
     public function getLabel($locale) {
 
         if($locale === 'fr-FR') {
-            return $this->labelFR;
+            return $this->getLabelFR();
         }
 
-        return $this->labelEN;
+        return $this->getLabelEN();
     }
 
     public function getCapacity($locale) {
