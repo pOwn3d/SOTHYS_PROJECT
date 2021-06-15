@@ -44,6 +44,7 @@ order:
     substatus: 'status details'
     creation_date: 'Creation date'
     delivery_date: 'Desired date of availability'
+    payment_method: 'Payment method'
     save: 'Save my order'
 
 Track:

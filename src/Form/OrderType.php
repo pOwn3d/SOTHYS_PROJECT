@@ -6,7 +6,9 @@ use App\Entity\Address;
 use App\Entity\CustomerIncoterm;
 use App\Entity\Incoterm;
 use App\Entity\Order;
+use App\Entity\PaymentMethod;
 use App\Entity\Society;
+use App\Entity\TransportMode;
 use App\Repository\CustomerIncotermRepository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
@@ -16,15 +18,17 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class OrderType extends AbstractType
 {
 
     private $security;
 
-    public function __construct(Security $security)
+    public function __construct(Security $security, TranslatorInterface $translator)
     {
         $this->security = $security;
+        $this->translator = $translator;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -51,13 +55,11 @@ class OrderType extends AbstractType
                             Join::WITH,        // Join type
                             'p.id = u.reference' // Join columns
                         )
-                        ->andWhere('u.societyCustomerIncoterm =  9');
+                        ->andWhere('u.societyCustomerIncoterm =  :societyId')
+                        ->setParameter('societyId', $this->security->getUser()->getSocietyID());
                 },
                 'choice_label' => function (CustomerIncoterm $customerIncoterm) {
-                    return $customerIncoterm->getReference() . ' ' . $customerIncoterm->getModeTransport();
-
-                    // or better, move this logic to Customer, and return:
-                    // return $customer->getFullname();
+                    return $customerIncoterm->getModeTransport()->getName('fr-FR') . ' - ' . $customerIncoterm->getReference() . ' : ' . $customerIncoterm->getCity();
                 },
             ])
             ->add('address', EntityType::class, [
@@ -76,54 +78,9 @@ class OrderType extends AbstractType
                 'choice_label' => function(Address $address) {
                     return $address->getLabel() . ' - ' . $address->getAddress1() . ' ' . $address->getPostalCode() . ' ' . $address->getCity() . ' ' . $address->getCountry();
                 }
-            ]);
+            ])
+            ->add('paymentMethod');
 
-
-            // TEST inner join
-//            ->add("incoterm", EntityType::class, [
-//                'class'         => CustomerIncoterm::class,
-//                'query_builder' => function (EntityRepository $er) {
-//                    $x = $er->createQueryBuilder('u')
-//                        ->innerJoin(
-//                            Incoterm::class,    // Entity
-//                            'p',               // Alias
-//                            Join::WITH,        // Join type
-//                            'p.id = u.reference' // Join columns
-//                        )
-//                        ->innerJoin(
-//                            User::class,    // Entity
-//                            'o',               // Alias
-//                            Join::WITH ,       // Join type
-//                              'o.societyID = u.societyCustomerIncoterm' // Join colu
-//                        )
-//                        ->andWhere('o.societyID = u.societyCustomerIncoterm')
-//                        ->getQuery()->getResult();
-//                    dd($x);
-////
-//                },
-//                'choice_label'  => 'reference',
-//            ])
-
-
-//            ->add("society", EntityType::class, [
-//                'class'         => Society::class,
-//                'query_builder' => function (EntityRepository $er) {
-//                    return $er->createQueryBuilder('u')
-//                        ->innerJoin(
-//                            Society::class,    // Entity
-//                            's',               // Alias
-//                            Join::WITH,        // Join type
-//                             // Join columns
-//                        );
-//
-//                },
-//                'choice_label'  => 'name',
-//            ])
-
-
-//            ->add('dateLastDelivery')
-//            ->add('priceOrder')
-//            ->add('SocietyID');
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -163,6 +163,18 @@ class CsvImporterController extends AbstractController
     }
 
     /**
+     * @Route("/import-payment-method", name="import_payment_method")
+     * @param CsvImporter $csvImporter
+     *
+     * @return Response
+     */
+    public function importPaymentMethod(CsvImporter $csvImporter): Response
+    {
+        $csvImporter->importPaymentMethod();
+        dd();
+    }
+
+    /**
      * @Route("/import-remove-old-item", name="import_remove")
      * @param CsvImporter $csvImporter
      *
