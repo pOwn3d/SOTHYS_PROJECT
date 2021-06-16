@@ -11,9 +11,7 @@ $(document).ready(function () {
             url: res,
             success: function (result) {
                 var data = JSON.parse(result)
-                console.log(result)
-                console.log('ok')
-                document.getElementById('cartItem').innerHTML = data.cartItem
+                    document.getElementById('cartItem').innerHTML = data.cartItem
                 $('.cart__access').removeClass('--scale-2x');
                 setTimeout(() => {
                     $('.cart__access').addClass('--scale-2x');
@@ -38,7 +36,7 @@ $(document).ready(function () {
                                 var data = JSON.parse(result)
                                 document.getElementById('qty_update_' + product).innerHTML = data.quantity + ' x ' + data.quantityBundling
                                 document.getElementById('price_update_' + product).innerHTML = (data.price * data.quantity).toFixed(2) + ' € '
-                                document.getElementById('priceTotal').innerHTML = data.total + ' € '
+                                document.getElementById('priceTotal').innerHTML = parseFloat(data.total).toFixed(2) + ' € '
                                 document.getElementById('cartItem').innerHTML = data.cartItem
                                 $('#clear').remove()
                                 $('#formPromo').html(data)
@@ -69,12 +67,10 @@ $(document).ready(function () {
                             url: url,
                             success: function (result) {
                                 var data = JSON.parse(result)
-                                console.log(data)
-
                                 document.getElementById('qty_update_' + product).innerHTML   = data.quantity + ' x ' + data.quantityBundling
                                 document.getElementById('price_update_' + product).innerHTML = (data.price * data.quantity).toFixed(2) + ' € '
-                                document.getElementById('priceTotal').innerHTML              = data.total + ' € '
-                                document.getElementById('cartItem').innerHTML                = data.cartItem
+                                document.getElementById('priceTotal').innerHTML = parseFloat(data.total).toFixed(2) + ' € '
+                                document.getElementById('cartItem').innerHTML = data.cartItem
                                 $('.cart__access').removeClass('--scale-2x');
                                 setTimeout(() => {
                                     $('.cart__access').addClass('--scale-2x');
@@ -101,7 +97,7 @@ $(document).ready(function () {
                 var data = JSON.parse(result)
                 document.getElementById('qty_update_' + product).innerHTML = data.quantity + ' x ' + data.quantityBundling
                 document.getElementById('price_update_' + product).innerHTML = (data.price * data.quantity).toFixed(2) + ' € '
-                document.getElementById('priceTotal').innerHTML = data.total + ' € '
+                document.getElementById('priceTotal').innerHTML = parseFloat(data.total).toFixed(2) + ' € '
                 document.getElementById('cartItem').innerHTML = data.cartItem
                 $('#clear').remove()
                 $('#formPromo').html(data)

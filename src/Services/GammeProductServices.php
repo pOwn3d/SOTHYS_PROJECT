@@ -23,9 +23,6 @@ class GammeProductServices
     public function getProductInfo($id): ?Item
     {
         return $this->itemRepository->findOneBy([ 'id' => $id ]);
-
-//        $x =  $this->itemRepository->findProduct($id);
-//        dd($x);
     }
 
     public function findProductsByGammeId($id, $societyId, $page = 1): array
