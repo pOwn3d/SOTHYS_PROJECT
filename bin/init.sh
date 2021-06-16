@@ -13,6 +13,8 @@ fi
 php bin/console d:d:d --force
 php bin/console d:d:c
 php bin/console d:m:m --no-interaction
+php bin/console d:s:u --force --no-interaction
+
 
 echo "localhost$port/import-payment-method"
 curl -o /dev/null "localhost$port/import-payment-method"
