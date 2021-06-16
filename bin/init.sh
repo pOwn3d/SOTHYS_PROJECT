@@ -34,6 +34,10 @@ echo "localhost$port/import-gamme"
 curl -o /dev/null "localhost$port/import-gamme"
 echo ""
 
+echo "localhost$port/import-generic-name"
+curl -o /dev/null "localhost$port/import-generic-name"
+echo ""
+
 echo "localhost$port/import-order-item"
 curl -o /dev/null "localhost$port/import-order-item"
 echo ""

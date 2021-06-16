@@ -116,6 +116,11 @@ class Item
      */
     private $freeRules;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=GenericName::class, inversedBy="items")
+     */
+    private $genericName;
+
 
     public function __construct()
     {
@@ -467,6 +472,18 @@ class Item
                 $freeRule->setIdItemPurchased(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGenericName(): ?GenericName
+    {
+        return $this->genericName;
+    }
+
+    public function setGenericName(?GenericName $genericName): self
+    {
+        $this->genericName = $genericName;
 
         return $this;
     }

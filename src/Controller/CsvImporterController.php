@@ -187,6 +187,18 @@ class CsvImporterController extends AbstractController
     }
 
     /**
+     * @Route("/import-generic-name", name="import_generic_name")
+     * @param CsvImporter $csvImporter
+     *
+     * @return Response
+     */
+    public function importGenericName(CsvImporter $csvImporter): Response
+    {
+        $csvImporter->importGenericName();
+        dd();
+    }
+
+    /**
      * @Route("/import-remove-old-item", name="import_remove")
      * @param CsvImporter $csvImporter
      *
