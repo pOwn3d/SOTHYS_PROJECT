@@ -92,6 +92,9 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "serve": [
+            "php -S localhost:8000 -t public/"
         ]
     },
     "conflict": {
