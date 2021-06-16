@@ -1,3 +1,11 @@
+function getLanguage() {
+    if(!!navigator.language.match('fr')) {
+        return 'fr-FR';
+    }
+
+    return 'en-US';
+}
+
 $(document).ready(function () {
 
     $("#addToCart").click(function (e) {
@@ -190,9 +198,11 @@ $(document).ready(function () {
 
         e.preventDefault();
 
-        let term = $('.js-cart-search-term').val()
+        var term = $('.js-cart-search-term').val()
 
-        $.post('/search', {
+        var language = getLanguage();
+
+        $.post('/' + language +'/search', {
             term: term
         }).then((res) => {
 

@@ -57,3 +57,4 @@ security:
         - { path: ^/(%app.locales%)/promo, roles: ROLE_USER }
         - { path: ^/(%app.locales%)/panier-promo, roles: ROLE_USER }
         - { path: ^/(%app.locales%)/mes-commandes, roles: ROLE_USER }
+        - { path: ^/(%app.locales%)/search, roles: ROLE_USER }

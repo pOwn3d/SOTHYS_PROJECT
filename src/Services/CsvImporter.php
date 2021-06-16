@@ -6,6 +6,7 @@ namespace App\Services;
 use App\Entity\Address as EntityAddress;
 use App\Entity\CustomerIncoterm;
 use App\Entity\GammeProduct;
+use App\Entity\GenericName;
 use App\Entity\Incoterm;
 use App\Entity\Item;
 use App\Entity\ItemPrice;
@@ -248,6 +249,7 @@ class CsvImporter
 
         $gammes = $this->em->getRepository(GammeProduct::class)->findAll();
         $divers = $this->em->getRepository(GammeProduct::class)->findOneBy([ 'refID' => 'DIVERS' ]);
+        $genericNames = $this->em->getRepository(GenericName::class)->findAll();
 
         foreach ($csv as $row) {
 
@@ -267,6 +269,17 @@ class CsvImporter
                 $gamme       = $divers;
             }
 
+            $genericName = null;
+            if ($row[10] != null) {
+                $foundGenericNames = array_filter($genericNames, function ($genericName) use ($row) {
+                    return $genericName->getItemId() == $row[10];
+                });
+
+                if (count($foundGenericNames)) {
+                    $genericName = array_shift($foundGenericNames);
+                }
+            }
+
             $product
                 ->setItemID($row[0])
                 ->setGamme($gamme)
@@ -280,7 +293,8 @@ class CsvImporter
                 ->setGammeString($gammeString)
                 ->setAmountBulking($row[11])
                 ->setCodeEAN($row[12])
-                ->setIdAtTheRate($row[13]);
+                ->setIdAtTheRate($row[13])
+                ->setGenericName($genericName);
             $this->em->persist($product);
         }
         $this->em->flush();
@@ -445,7 +459,6 @@ class CsvImporter
         }
     }
 
-
     public function importSocietyAddress()
     {
         $csv = Reader::createFromPath('../public/csv/Adresse.csv');
@@ -469,6 +482,23 @@ class CsvImporter
                 ->setCountry(\utf8_encode($row[9]));
 
             $this->em->persist($address);
+            $this->em->flush();
+        }
+    }
+
+    public function importGenericName()
+    {
+        $csv = Reader::createFromPath('../public/csv/NomGenerique.csv');
+        $csv->setDelimiter(';');
+        $csv->fetchColumn();
+
+        foreach ($csv as $row) {
+            $genericName = new GenericName();
+            $genericName
+                ->setItemId($row[0])
+                ->setNameFR($row[1])
+                ->setNameEN($row[2]);
+            $this->em->persist($genericName);
             $this->em->flush();
         }
     }

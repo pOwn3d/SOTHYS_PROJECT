@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Repository\ItemRepository;
+use Doctrine\ORM\Query\Expr\Join;
 
 class ItemServices
 {
@@ -22,11 +23,12 @@ class ItemServices
         ]);
     }
 
-    function getItemsByTerm(string $text, string $locale = 'en-US') {
+    function getItemsByTerm(int $societyId, string $text, string $locale = 'en-US') {
 
         $qb = $this->itemRepository
             ->createQueryBuilder('i')
-            ->join('i.gamme', 'g');
+            ->join('i.gamme', 'g')
+            ->innerJoin('i.itemPrices', 'p', Join::WITH, 'i.id = p.idItem AND p.idSociety = :societyId');
 
         if($locale === 'fr-FR') {
             $qb->where('i.labelFR LIKE :text');
@@ -42,7 +44,9 @@ class ItemServices
             $qb->orWhere('g.labelEN LIKE :text');
         }
 
-        $results = $qb->setParameter('text', "%$text%")
+        $results = $qb
+            ->setParameter('text', "%$text%")
+            ->setParameter('societyId', $societyId)
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
