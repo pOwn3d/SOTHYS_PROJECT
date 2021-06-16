@@ -34,6 +34,11 @@ class Plv
      */
     private $promotions;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $idX3;
+
     public function __construct()
     {
         $this->promotions = new ArrayCollection();
@@ -97,5 +102,17 @@ class Plv
 
     public function __toString(){
         return $this->getLabelFr();
+    }
+
+    public function getIdX3(): ?string
+    {
+        return $this->idX3;
+    }
+
+    public function setIdX3(?string $idX3): self
+    {
+        $this->idX3 = $idX3;
+
+        return $this;
     }
 }

@@ -21,6 +21,7 @@ class PlvController extends AbstractCrudController
         return [
             TextField::new('labelFr', 'Nom FR'),
             TextField::new('labelEn', 'Nom EN'),
+            TextField::new('idX3', 'ID X3'),
             ];
     }
 

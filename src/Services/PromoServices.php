@@ -113,9 +113,9 @@ class PromoServices
                     ->setPromo(1)
                     ->setPromotionId($promo)
                     ->setFreeRules(1);
+                $this->em->persist($order);
+                $this->em->flush();
             }
-            $this->em->persist($order);
-            $this->em->flush();
         }
     }
 
@@ -141,9 +141,8 @@ class PromoServices
     public function promoItemFree($promoRule, ?string $qty)
     {
         $order = new OrderDraft();
+        $promo = $this->promotionRepository->findOneBy(["id" => $promoRule->getPromotions()->getValues()[0]]);
         if ($qty != null && ($promoRule->getQtyPurchased() % $qty > 0 || $promoRule->getQtyPurchased() == $qty)) {
-            $promo = $this->promotionRepository->findOneBy(["id" => $promoRule->getPromotions()->getValues()[0]]);
-
             $order->setIdItem($promoRule->getIdItemFree())
                 ->setIdSociety($this->security->getUser()->getSocietyID())
                 ->setPrice(0)
@@ -158,7 +157,6 @@ class PromoServices
             $this->em->flush();
 
         } else {
-
             if ($qty == null) $qty = 1;
             $orderSum = $this->orderDraftRepository->findSumOrderDraftSociety($this->security->getUser()->getSocietyID(), true);
             if ($orderSum[0]['price'] >= $promoRule->getAmountPurchasedMin() && $orderSum[0]['price'] <= $promoRule->getAmountPurchasedMax()) {
@@ -173,6 +171,7 @@ class PromoServices
                     ->setQuantityBundling($promoRule->getIdItemFree()->getAmountBulking())
                     ->setState(0)
                     ->setPromo(1)
+                    ->setPromotionId($promo)
                     ->setFreeRules(1);
                 $this->em->persist($order);
                 $this->em->flush();
