@@ -23,7 +23,7 @@ curl -o /dev/null "localhost$port/import-society"
 echo ""
 
 echo "localhost$port/import-society-address"
-curl -o /dev/null "localhost$port/import-society"
+curl -o /dev/null "localhost$port/import-society-address"
 echo ""
 
 echo "localhost$port/import-user/0"
