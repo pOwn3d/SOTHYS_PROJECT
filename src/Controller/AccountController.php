@@ -33,7 +33,7 @@ class AccountController extends AbstractController
             ->getRepository(User::class)
             ->find($this->getUser()->getId());
         $userId   = $this->getDoctrine()->getRepository(User::class)->find($dataUser);
-        $society = $this->getUser()->getSocietyID()->getId();
+        $societyId = $this->getUser()->getSocietyID()->getId();
 
         $form = $this->createForm(UserType::class, $dataUser);
         $form->handleRequest($request);
@@ -48,7 +48,7 @@ class AccountController extends AbstractController
             'controller_name' => 'AccountController',
             'form'            => $form->createView(),
             'user'            => $userId,
-            'cartItem'        => $cartItem->getItemCart($society)
+            'cartItem'        => $cartItem->getItemCart($societyId)
         ]);
     }
 }

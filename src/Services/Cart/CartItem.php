@@ -19,9 +19,9 @@ class CartItem
         $this->session = $session;
     }
 
-    public function getItemCart($society)
+    public function getItemCart(?int $societyId): ?int
     {
-        $qty = $this->orderDraftRepository->findLineOrderDraftSociety($society);
+        $qty = $this->orderDraftRepository->findLineOrderDraftSociety($societyId);
 
         $this->session->set('itemNumber', count($qty));
         return $this->session->get('itemNumber');

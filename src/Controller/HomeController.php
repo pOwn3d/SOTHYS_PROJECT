@@ -24,10 +24,10 @@ class HomeController extends AbstractController
 
         $promos = $promotionRepository->findAllValidPromos();
 
-        $society = $this->getUser()->getSocietyID()->getId();
+        $societyId = $this->getUser()->getSocietyID()->getId();
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
-            'cartItem'        => $cartItem->getItemCart($society),
+            'cartItem'        => $cartItem->getItemCart($societyId),
             'promos'          => $promos
         ]);
     }

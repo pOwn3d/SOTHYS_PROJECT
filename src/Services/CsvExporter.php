@@ -33,18 +33,55 @@ class CsvExporter
         $rows = [];
         foreach ($orders as $order) {
 
-            $society = $this->societyRepository->findSociety($order->getSocietyID()->getId());
+            $orderData = [
+                'E',
+                $order->getId(),
+                $order->getSocietyID()->getIdCustomer(),
+                $order->getDateOrder()->format("Ymd"),
+                $order->getDateDelivery()->format("Ymd"),
+                $order->getSocietyID()->getPaymentMethod()->getIdX3(),
+                '2',
+                '3',
+                '3',
+                $order->getAddress()->getLabel(),
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                'COEDI',
+                '2',
+                '',
+                $order->getReference(),
+                $order->getEmail(),
+                $order->getIncoterm()->getModeTransport()->getId(), // Id transport a clarifié
+                $order->getIncoterm()->getId(),
+                $order->getIncoterm()->getCity(),
+                ''
+            ];
 
-
-            array_push($rows, [ 'E|' . $order->getId() . '|' . $society->getIdCustomer() . '|' . $order->getDateOrder()->format("Ymd") . '|Date livraison demandée|Condition paiement|2|3|3|Code Adresse livraison|||||||||COEDI|2|Urgent Order|' . $order->getReference() . '|' . $order->getEmail() . '|Mode livraison|' . $order->getIncoterm()->getId() . '|' . $order->getIncoterm()->getCity() . '|' ]);
+            array_push($rows, [implode('|', $orderData)]);
             $orderLines = $this->orderLineRepository->findByOrderID($order->getId());
 
             foreach ($orderLines as $orderLine) {
-                array_push($rows, [ 'L|' . $orderLine->getItemID()->getId() . '|' . $orderLine->getQuantity() . '|' . $orderLine->getPrice() . '|Valeur1 remise/frais|Prix net|Motif gratuit|' . $order->getId() . '|Projet|Valeur2 remise/frais' ]);
+                $lineData = [
+                    'L',
+                    $orderLine->getItemID()->getId(),
+                    $orderLine->getQuantity(),
+                    $orderLine->getPrice(),
+                    $orderLine->getDiscount1(),
+                    $orderLine->getDiscountedPrice(),
+                    $orderLine->getGratuityCode(),
+                    $order->getId(),
+                    $orderLine->getCode(),
+                    $orderLine->getDiscount2(),
+                ];
+                array_push($rows, [ implode('|',$lineData) ]);
             }
 
         }
-
 
         $encoder = (new CharsetConverter())
             ->inputEncoding('utf-8')

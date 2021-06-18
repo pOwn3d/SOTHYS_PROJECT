@@ -37,7 +37,7 @@ class PromoController extends AbstractController
 //        return $this->render('shop/promo.html.twig', [
 //            'controller_name' => 'ShopController',
 //            'orders'          => $orders,
-//            'cartItem'        => $cartItem->getItemCart($society)['0']['quantity']
+//            'cartItem'        => $cartItem->getItemCart($society->getId())
 //        ]);
 //    }
 }

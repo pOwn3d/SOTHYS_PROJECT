@@ -68,25 +68,25 @@ class OrderDraftRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findSumItemOrderDraftSociety($society)
+    public function findSumItemOrderDraftSociety(?int $societyId)
     {
         return $this->createQueryBuilder('o')
             ->select('SUM(o.quantity) as quantity')
             ->andWhere('o.idSociety = :val')
             ->andWhere('o.promo IS  NULL')
             ->orWhere('o.promo = false')
-            ->setParameter('val', $society)
+            ->setParameter('val', $societyId)
             ->getQuery()
             ->getResult();
     }
 
-    public function findLineOrderDraftSociety($society)
+    public function findLineOrderDraftSociety(?int $societyId)
     {
         return $this->createQueryBuilder('o')
             ->andWhere('o.idSociety = :val')
             ->andWhere('o.promo IS  NULL')
             ->orWhere('o.promo = false')
-            ->setParameter('val', $society)
+            ->setParameter('val', $societyId)
             ->getQuery()
             ->getResult();
     }

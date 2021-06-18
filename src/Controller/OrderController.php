@@ -27,14 +27,13 @@ class OrderController extends AbstractController
      */
     public function index(OrderRepository $orderRepository, CartItem $cartItem, OrderServices $orderServices): Response
     {
-        $society = $this->getUser()->getSocietyID()->getId();
-        $orders  = null;
+        $society = $this->getUser()->getSocietyID();
         $orders  = $orderRepository->findOrderCustomer($society);
 
         return $this->render('order/index.html.twig', [
             'controller_name' => 'OrderController',
             'orders'          => $orders,
-            'cartItem'        => $cartItem->getItemCart($society)
+            'cartItem'        => $cartItem->getItemCart($society->getId())
         ]);
     }
 
@@ -77,7 +76,7 @@ class OrderController extends AbstractController
                 'price' => $order->getPrice(),
                 'quantityBundling' => $order->getQuantityBundling(),
                 'id' => $order->getId(),
-                'cartItem' => $cartItem->getItemCart($society),
+                'cartItem' => $cartItem->getItemCart($society->getId()),
                 'cartUpdate' => $cartUpdate
             ];
         }

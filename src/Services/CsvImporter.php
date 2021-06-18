@@ -468,7 +468,6 @@ class CsvImporter
         foreach ($csv as $row) {
 
             $society = $this->em->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[0] ]);
-
             $address = new EntityAddress();
             $address
                 ->setSociety($society)

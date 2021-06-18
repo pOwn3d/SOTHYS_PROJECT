@@ -28,7 +28,7 @@ class OrderItemController extends AbstractController
             'orders'          => $orderLineRepository->findAllByX3($request->get('id')),
             'orderX3'         => $orderServices->getOrderByX3($request->get('id')),
             'orderSum'        => $orderServices->getSumOrderLine($request->get('id')),
-            'cartItem'        => $cartItem->getItemCart($this->getUser()->getSocietyID())['0']['quantity']
+            'cartItem'        => $cartItem->getItemCart($this->getUser()->getSocietyID()->getId())
         ]);
     }
 
@@ -43,11 +43,12 @@ class OrderItemController extends AbstractController
      */
     public function commandDraft(Request $request, OrderServices $orderServices, OrderLineRepository $orderLineRepository, CartItem $cartItem): Response
     {
+
         return $this->render('order/order_draft.item.html.twig', [
             'controller_name' => 'OrderItemController',
             'ordersLine'      => $orderLineRepository->findByOrderID($request->get('id')),
             'order'           => $orderServices->getOrderByID($request->get('id')),
-            'cartItem'        => $cartItem->getItemCart($this->getUser()->getSocietyID())['0']['quantity']
+            'cartItem'        => $cartItem->getItemCart($this->getUser()->getSocietyID()->getId())
         ]);
     }
 }

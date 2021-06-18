@@ -187,4 +187,24 @@ class OrderLine
         return $this;
     }
 
+    public function getDiscount1(): int {
+        return 0;
+    }
+
+    public function getDiscount2(): int {
+        return 0;
+    }
+
+    public function getDiscountedPrice() {
+        return $this->getPrice() * (100 - $this->getDiscount1()) - $this->getDiscount2();
+    }
+
+    public function getGratuityCode() {
+        return '';
+    }
+
+    public function getCode() {
+        return '';
+    }
+
 }

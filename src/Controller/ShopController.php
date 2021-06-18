@@ -75,7 +75,7 @@ class ShopController extends AbstractController
         return $this->render('shop/index.html.twig', [
             'controller_name' => 'ShopController',
             'orders'          => $orders,
-            'cartItem'        => $cartItem->getItemCart($society),
+            'cartItem'        => $cartItem->getItemCart($society->getId()),
             'form'            => $form->createView(),
             'errors'          => $errors,
         ]);
@@ -95,7 +95,7 @@ class ShopController extends AbstractController
         return $this->render('shop/promo.html.twig', [
             'controller_name' => 'ShopController',
             'orders' => $orders,
-            'cartItem' => $cartItem->getItemCart($society),
+            'cartItem' => $cartItem->getItemCart($society->getId()),
             'promos' => $promo
         ]);
     }
@@ -119,7 +119,7 @@ class ShopController extends AbstractController
             return $this->redirectToRoute('app_order');
         }
 
-        $cartItem = $cartItem->getItemCart($society);
+        $cartItem = $cartItem->getItemCart($society->getId());
         if ($cartItem == 0){
             $this->addFlash('error', 'Panier vide');
             return $this->redirectToRoute('app_shop');

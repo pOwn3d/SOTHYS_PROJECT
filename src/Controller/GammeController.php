@@ -35,7 +35,7 @@ class GammeController extends AbstractController
             'gamme'           => $gammeServices->getGammeID($request->get('gamme_id')),
             'products'        => $products,
             'pagination'      => $pagination,
-            'cartItem'        => $cartItem->getItemCart($this->getUser()->getSocietyID())
+            'cartItem'        => $cartItem->getItemCart($this->getUser()->getSocietyID()->getId())
         ]);
     }
 }
