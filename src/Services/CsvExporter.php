@@ -51,13 +51,14 @@ class CsvExporter
                 '',
                 '',
                 '',
-                'COEDI',
-                '2',
                 '',
+                'COEDI',
+                '',
+                '2',
                 $order->getReference(),
                 $order->getEmail(),
-                $order->getIncoterm()->getModeTransport()->getId(), // Id transport a clarifié
-                $order->getIncoterm()->getId(),
+                $order->getIncoterm()->getModeTransport()->getIdTransport(),
+                $order->getIncoterm()->getReference(),
                 $order->getIncoterm()->getCity(),
                 ''
             ];
