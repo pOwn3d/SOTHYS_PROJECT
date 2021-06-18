@@ -25,19 +25,19 @@ class PromoController extends AbstractController
         $promoServices->addtoCartPromo($request->get('id'));
         return $this->redirectToRoute('app_promo_shop');
     }
-
-    /**
-     * @Route("/{_locale}/panier", name="app_shop", requirements={"_locale"="%app.locales%"})
-     */
-    public function index(ShopServices $shopServices, CartItem $cartItem): Response
-    {
-        $society = $this->getUser()->getSocietyID();
-        $orders  = $shopServices->getOrderDraftPromo($society);
-
-        return $this->render('shop/promo.html.twig', [
-            'controller_name' => 'ShopController',
-            'orders'          => $orders,
-            'cartItem'        => $cartItem->getItemCart($society)['0']['quantity']
-        ]);
-    }
+//
+//    /**
+//     * @Route("/{_locale}/panier", name="app_shop", requirements={"_locale"="%app.locales%"})
+//     */
+//    public function index(ShopServices $shopServices, CartItem $cartItem): Response
+//    {
+//        $society = $this->getUser()->getSocietyID();
+//        $orders  = $shopServices->getOrderDraftPromo($society);
+//
+//        return $this->render('shop/promo.html.twig', [
+//            'controller_name' => 'ShopController',
+//            'orders'          => $orders,
+//            'cartItem'        => $cartItem->getItemCart($society)['0']['quantity']
+//        ]);
+//    }
 }

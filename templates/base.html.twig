@@ -6,6 +6,9 @@
     <title>{% block title %}Sothys{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% block stylesheets %}
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+              integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp"
+              crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/main.css') }} ">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }} ">
     {% endblock %}
@@ -106,8 +109,13 @@
                                         </ul>
                                     </div>
                                     <ul class="navbar__menu navbar__menu--desktop">
+                                        <li class="menu-item">
+                                            <a href="{{ path('app_home') }}" class="{% if app.request.attributes.get('_route') starts with 'app_home' %} e-shop{% endif %}">
+                                                {{ 'homePage' | trans }}
+                                            </a>
+                                        </li>
                                         <li class="menu-item menu-item--has-child">
-                                            <a>{{ 'products' | trans }} </a>
+                                            <a class="{% if app.request.attributes.get('_route') starts with 'app_gamme'  or app.request.attributes.get('_route') starts with 'app_item_id' %} e-shop {% endif %}">{{ 'products' | trans }}</a>
                                             <div class="menu-item__submenu">
                                                 <div class="container">
                                                     <div class="row">
@@ -129,12 +137,12 @@
                                             </div>
                                         </li>
                                         <li class="menu-item">
-                                            <a href="{{ path('app_order') }}">
+                                            <a href="{{ path('app_order') }}" class="{% if app.request.attributes.get('_route') starts with 'app_shop' %} e-shop{% endif %}">
                                                 {{ 'my.orders' | trans }}
                                             </a>
                                         </li>
                                         <li class="menu-item">
-                                            <a class="e-shop" href="{{ path('app_home') }}">
+                                            <a class="{% if app.request.attributes.get('_route') starts with 'app_promo' %} e-shop{% endif %}" href="{{ path('app_home') }}">
                                                 {{ 'my_promotion' | trans }}
                                             </a>
                                         </li>
@@ -150,9 +158,11 @@
 </header>
 {% block body %}
 {% endblock %}
+
 {% block javascripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
 {% endblock %}
+<div class="up-button" style="display: block;"><i class="fas fa-chevron-up"></i></div>
 </body>
 </html>

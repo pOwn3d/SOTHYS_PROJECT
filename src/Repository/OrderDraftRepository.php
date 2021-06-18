@@ -80,6 +80,16 @@ class OrderDraftRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findLineOrderDraftSociety($society)
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.idSociety = :val')
+            ->andWhere('o.promo IS  NULL')
+            ->orWhere('o.promo = false')
+            ->setParameter('val', $society)
+            ->getQuery()
+            ->getResult();
+    }
     // /**
     //  * @return OrderDraft[] Returns an array of OrderDraft objects
     //  */

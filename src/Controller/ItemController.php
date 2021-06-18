@@ -6,6 +6,7 @@ use App\Services\Cart\CartItem;
 use App\Services\GammeProductServices;
 use App\Services\GammeServices;
 use App\Services\ItemQuantityService;
+use App\Services\ItemServices;
 use App\Services\ShopServices;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,22 +17,23 @@ class ItemController extends AbstractController
 {
     /**
      * @Route("/{_locale}/produit/{id}", name="app_item_id", requirements={
-    * "_locale"="%app.locales%"
-    * })
-     * @param Request              $request
+     * "_locale"="%app.locales%"
+     * })
+     * @param Request $request
      * @param GammeProductServices $gammeProductServices
-     * @param GammeServices        $gammeServices
-     * @param ShopServices         $shopServices
-     * @param ItemQuantityService  $itemQuantityService
-     * @param CartItem             $cartItem
-     *
+     * @param GammeServices $gammeServices
+     * @param ShopServices $shopServices
+     * @param ItemQuantityService $itemQuantityService
+     * @param CartItem $cartItem
+     * @param \App\Services\ItemServices $itemServices
      * @return Response
      */
-    public function index(Request $request, GammeProductServices $gammeProductServices, GammeServices $gammeServices, ShopServices $shopServices, ItemQuantityService $itemQuantityService, CartItem $cartItem): Response
+    public function index(Request $request, GammeProductServices $gammeProductServices, GammeServices $gammeServices, ShopServices $shopServices, ItemQuantityService $itemQuantityService, CartItem $cartItem, ItemServices $itemServices): Response
     {
         $society = $this->getUser()->getSocietyID()->getId();
         $id      = $request->get('id');
         $product = $gammeProductServices->getProductInfo($id);
+        $relatedProducts =  $itemServices->relatedProduct($product->getGenericName()->getId());
 
         return $this->render('item/index.html.twig', [
             'controller_name' => 'ItemController',
@@ -39,7 +41,8 @@ class ItemController extends AbstractController
             'gamme'           => $gammeServices->getGammeID($product->getGamme()->getId()),
             'itemPrice'       => $shopServices->getPriceItemIDSociety($id, $society),
             'quantity'        => $itemQuantityService->quantityItemSociety($id, $society),
-            'cartItem'        => $cartItem->getItemCart($society)['0']['quantity']
+            'cartItem'        => $cartItem->getItemCart($society),
+            'relatedProducts' => $relatedProducts
         ]);
     }
 }

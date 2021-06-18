@@ -20,6 +20,8 @@ Forgot:
 
 Home: 'Home'
 
+homePage : 'Home'
+
 Welcome:
     at:
         costomer:
@@ -149,7 +151,7 @@ home:
 cta:
     show_promo: 'Access to offer'
 
-my_promotion: 'My offers'
+my_promotion: 'Promotions'
 
 my_account: 'My account'
 

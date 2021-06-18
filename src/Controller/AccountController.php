@@ -48,7 +48,7 @@ class AccountController extends AbstractController
             'controller_name' => 'AccountController',
             'form'            => $form->createView(),
             'user'            => $userId,
-            'cartItem'        => $cartItem->getItemCart($society)['0']['quantity']
+            'cartItem'        => $cartItem->getItemCart($society)
         ]);
     }
 }

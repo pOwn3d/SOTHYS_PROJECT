@@ -12,11 +12,11 @@ use App\Repository\PromotionRepository;
 class HomeController extends AbstractController
 {
     /**
-    * @Route("/{_locale}/accueil", name="app_home", requirements={
-    * "_locale"="%app.locales%"
-    * })
+     * @Route("/{_locale}/accueil", name="app_home", requirements={
+     * "_locale"="%app.locales%"
+     * })
      * @param CartItem $cartItem
-     * @param \App\Repository\PromotionItemRepository $promotionItemRepository
+     * @param \App\Repository\PromotionRepository $promotionRepository
      * @return Response
      */
     public function index(CartItem $cartItem, PromotionRepository $promotionRepository): Response
@@ -27,7 +27,7 @@ class HomeController extends AbstractController
         $society = $this->getUser()->getSocietyID()->getId();
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
-            'cartItem'        => $cartItem->getItemCart($society)['0']['quantity'],
+            'cartItem'        => $cartItem->getItemCart($society),
             'promos'          => $promos
         ]);
     }

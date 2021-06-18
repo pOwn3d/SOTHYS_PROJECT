@@ -34,7 +34,7 @@ class OrderController extends AbstractController
         return $this->render('order/index.html.twig', [
             'controller_name' => 'OrderController',
             'orders'          => $orders,
-            'cartItem'        => $cartItem->getItemCart($society)['0']['quantity']
+            'cartItem'        => $cartItem->getItemCart($society)
         ]);
     }
 
@@ -77,7 +77,7 @@ class OrderController extends AbstractController
                 'price' => $order->getPrice(),
                 'quantityBundling' => $order->getQuantityBundling(),
                 'id' => $order->getId(),
-                'cartItem' => $cartItem->getItemCart($society)['0']['quantity'],
+                'cartItem' => $cartItem->getItemCart($society),
                 'cartUpdate' => $cartUpdate
             ];
         }

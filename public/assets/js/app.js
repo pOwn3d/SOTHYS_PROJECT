@@ -8,6 +8,18 @@ function getLanguage() {
 
 $(document).ready(function () {
 
+
+    $(window).on('scroll', function () {
+        $(window).scrollTop() > 300 ? $('.up-button').show(500) : $('.up-button').hide(500);
+    });
+    $(window).scrollTop() > 300 ? $('.up-button').show(500) : $('.up-button').hide(500);
+    $('.up-button').on('click', function () {
+        var body = $("html, body");
+        body.stop().animate({scrollTop: 0}, 500, 'swing');
+    });
+
+
+
     $("#addToCart").click(function (e) {
         e.preventDefault();
         const url = this.href;
@@ -19,11 +31,7 @@ $(document).ready(function () {
             url: res,
             success: function (result) {
                 var data = JSON.parse(result)
-                    document.getElementById('cartItem').innerHTML = data.cartItem
-                $('.cart__access').removeClass('--scale-2x');
-                setTimeout(() => {
-                    $('.cart__access').addClass('--scale-2x');
-                }, 10);
+                document.getElementById('cartItem').innerHTML = data.cartItem
             },
         });
     });
@@ -48,11 +56,6 @@ $(document).ready(function () {
                                 document.getElementById('cartItem').innerHTML = data.cartItem
                                 $('#clear').remove()
                                 $('#formPromo').html(data)
-
-                                $('.cart__access').removeClass('--scale-2x');
-                                setTimeout(() => {
-                                    $('.cart__access').addClass('--scale-2x');
-                                }, 10);
                             },
                         });
                         t.trigger("change")
@@ -75,14 +78,10 @@ $(document).ready(function () {
                             url: url,
                             success: function (result) {
                                 var data = JSON.parse(result)
-                                document.getElementById('qty_update_' + product).innerHTML   = data.quantity + ' x ' + data.quantityBundling
+                                document.getElementById('qty_update_' + product).innerHTML = data.quantity + ' x ' + data.quantityBundling
                                 document.getElementById('price_update_' + product).innerHTML = (data.price * data.quantity).toFixed(2) + ' € '
                                 document.getElementById('priceTotal').innerHTML = parseFloat(data.total).toFixed(2) + ' € '
                                 document.getElementById('cartItem').innerHTML = data.cartItem
-                                $('.cart__access').removeClass('--scale-2x');
-                                setTimeout(() => {
-                                    $('.cart__access').addClass('--scale-2x');
-                                }, 10);
                             },
                         });
                         t.trigger("change")
@@ -109,10 +108,7 @@ $(document).ready(function () {
                 document.getElementById('cartItem').innerHTML = data.cartItem
                 $('#clear').remove()
                 $('#formPromo').html(data)
-                $('.cart__access').removeClass('--scale-2x');
-                setTimeout(() => {
-                    $('.cart__access').addClass('--scale-2x');
-                }, 10);
+
             },
         });
     });
@@ -187,7 +183,6 @@ $(document).ready(function () {
                 var data = JSON.parse(result)
                 $('#clear').remove()
                 $('#formPromo').html(data)
-
             },
         });
     });
@@ -195,11 +190,8 @@ $(document).ready(function () {
 });
 
     $('.js-cart-search-button').on('click', function(e) {
-
         e.preventDefault();
-
         var term = $('.js-cart-search-term').val()
-
         var language = getLanguage();
 
         $.post('/' + language +'/search', {
@@ -210,7 +202,6 @@ $(document).ready(function () {
                 text += '<div class="js-cart-add-button" data-product-id="' + result.id + '">' + result.gamme + ' - ' + result.label + ' - ' + result.reference + '</div>';
                 return text;
             }, '');
-
             $('.search-results').html(results)
         })
     });
@@ -229,4 +220,7 @@ $(document).ready(function () {
             },
         });
     });
+
+
+
 

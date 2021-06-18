@@ -25,19 +25,17 @@ class GammeController extends AbstractController
      */
     public function index(Request $request, GammeServices $gammeServices, GammeProductServices $gammeProductServices, CartItem $cartItem): Response
     {
-
         $page = $request->attributes->getInt('page');
-
         $products = $gammeProductServices->findProductsByGammeId($request->get('gamme_id'), $this->getUser()->getSocietyID(), $page);
-
         $pagination = $gammeProductServices->getPaginationByGammeId($request->get('gamme_id'), $this->getUser()->getSocietyID(), $page);
+
 
         return $this->render('gamme/index.html.twig', [
             'controller_name' => 'GammeController',
             'gamme'           => $gammeServices->getGammeID($request->get('gamme_id')),
             'products'        => $products,
             'pagination'      => $pagination,
-            'cartItem'        => $cartItem->getItemCart($this->getUser()->getSocietyID())['0']['quantity']
+            'cartItem'        => $cartItem->getItemCart($this->getUser()->getSocietyID())
         ]);
     }
 }

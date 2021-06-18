@@ -36,6 +36,7 @@ class ItemRepository extends ServiceEntityRepository
             ->orderBy('i.id', 'ASC')
             ->setMaxResults($limit)
             ->setFirstResult(($page - 1) * $limit)
+//            ->addOrderBy('i.idPresentation = "vente"')
             ->getQuery()
             ->getResult();
     }

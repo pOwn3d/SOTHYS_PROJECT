@@ -22,29 +22,42 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-12 col-lg-5">
-                        <a href="{{ path('app_gamme', { gamme_id: gamme.id }) }}" class="nav-link"> {{ gamme.labelFR }}</a>
-                        <h1>{{ product.labelFR }}</h1>
+                        <a href="{{ path('app_gamme', { gamme_id: gamme.id }) }}" class="nav-link"> {{ gamme.getLabel(app.request.locale) }} </a>
+                        <h1>{{ product.getLabel(app.request.locale) }}</h1>
                         <div>
-                            <span class="complement">{{ product.capacityFR }}</span>
+                            <span class="complement">{{ product.getCapacity(app.request.locale) }}</span>
+                        </div>
+                        <div>
+                            <ul>
+                                {% for relatedProduct in relatedProducts %}
+                                    <li>
+                                        {% if app.request.attributes.get('id')  == relatedProduct.id %}
+                                           {{ relatedProduct.idPresentation }}
+                                        {% else %}
+                                            <a href="{{ relatedProduct.id }}">{{ relatedProduct.idPresentation }}</a>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
                         </div>
                         <ul class="features">
                             <li><strong>Description: </strong>
                                 <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores dicta eius ipsa maxime minus officia quo sequi sit temporibus? Culpa debitis doloremque ea fugit impedit incidunt ipsam, non provident sapiente?</span>
                             </li>
                             {% if  itemPrice != null %}
-                            <li><strong>{{'Price' | trans}}: </strong>
+                            <li><strong>{{ 'Price' | trans }}: </strong>
                                 <span>{{ itemPrice.price }} €</span>
                             </li>
-                            <li><strong>{{'Quantity.counts' | trans}}: </strong>
-                                <span>{{ quantity.quantity|default(1)}} </span>
+                            <li><strong>{{ 'Quantity.counts' | trans }}: </strong>
+                                <span>{{ quantity.quantity|default(1) }} </span>
                             </li>
-                            <li><strong>{{'quantity' | trans}}: </strong>
+                            <li><strong>{{ 'quantity' | trans }}: </strong>
                                 <input type="number" id="quantity" name="quantity" value="1" min="1">
                             </li>
                         </ul>
                         <div class="button__wrapper" style="flex-wrap: wrap">
                             <a href="{{ path('app_add_to_cart_id', { 'item': product.id ,  'qty': "qty" }) }} " id="addToCart" class="button button--primary-fill button--small modal--show add-to-cart">
-                                {{'add.to.cart' | trans}}
+                                {{ 'add.to.cart' | trans }}
                             </a>
                         </div>
                         {% endif %}

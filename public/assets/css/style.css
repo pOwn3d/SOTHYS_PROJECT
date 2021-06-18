@@ -112,3 +112,21 @@ ul.promo {
 .search-results:empty {
     display: none;
 }
+
+
+.up-button {
+    display: none;
+    width: 42px;
+    height: 42px;
+    box-shadow: 0 3px 6px #00000029;
+    border: 1px solid #030F40;
+    border-radius: 4px;
+    background: #FFFFFF 0 0 no-repeat padding-box;
+    font-size: 20px;
+    text-align: center;
+    line-height: 42px;
+    position: fixed;
+    right: 0;
+    bottom: 100px;
+    cursor: pointer;
+}

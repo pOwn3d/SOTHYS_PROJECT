@@ -53,4 +53,8 @@ class ItemServices
 
         return $results;
     }
+
+    public function relatedProduct($id){
+      return  $this->itemRepository->findBy(['genericName' => $id]);
+    }
 }

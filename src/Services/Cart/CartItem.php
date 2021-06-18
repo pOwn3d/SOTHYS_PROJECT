@@ -16,16 +16,16 @@ class CartItem
     public function __construct(OrderDraftRepository $orderDraftRepository, SessionInterface $session)
     {
         $this->orderDraftRepository = $orderDraftRepository;
-        $this->session              = $session;
+        $this->session = $session;
     }
 
     public function getItemCart($society)
     {
-        $qty = $this->orderDraftRepository->findSumItemOrderDraftSociety($society);
-        $this->session->set('itemNumber', $qty);
+        $qty = $this->orderDraftRepository->findLineOrderDraftSociety($society);
+
+        $this->session->set('itemNumber', count($qty));
         return $this->session->get('itemNumber');
 
     }
-
 
 }

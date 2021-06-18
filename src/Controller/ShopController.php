@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\OrderDraft;
 use App\Form\CsvOrderUploaderType;
 use App\Form\OrderType;
 use App\Repository\OrderDraftRepository;
@@ -74,7 +75,7 @@ class ShopController extends AbstractController
         return $this->render('shop/index.html.twig', [
             'controller_name' => 'ShopController',
             'orders'          => $orders,
-            'cartItem'        => $cartItem->getItemCart($society)['0']['quantity'],
+            'cartItem'        => $cartItem->getItemCart($society),
             'form'            => $form->createView(),
             'errors'          => $errors,
         ]);
@@ -94,7 +95,7 @@ class ShopController extends AbstractController
         return $this->render('shop/promo.html.twig', [
             'controller_name' => 'ShopController',
             'orders' => $orders,
-            'cartItem' => $cartItem->getItemCart($society)['0']['quantity'],
+            'cartItem' => $cartItem->getItemCart($society),
             'promos' => $promo
         ]);
     }
@@ -118,9 +119,15 @@ class ShopController extends AbstractController
             return $this->redirectToRoute('app_order');
         }
 
+        $cartItem = $cartItem->getItemCart($society);
+        if ($cartItem == 0){
+            $this->addFlash('error', 'Panier vide');
+            return $this->redirectToRoute('app_shop');
+        }
+
         return $this->render('shop/publish.html.twig', [
             'controller_name' => 'ShopController',
-            'cartItem'        => $cartItem->getItemCart($society)['0']['quantity'],
+            'cartItem'        => $cartItem,
             'form'            => $form->createView(),
             'user' => $this->getUser(),
         ]);
