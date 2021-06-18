@@ -19,69 +19,65 @@
     <div class="header__top">
         <div class="container">
             <div class="row">
-                <div class="col-3 col-lg-5 col-xl-4">
-                </div>
                 <div class="col-6 col-lg-2 col-xl-4">
-                    {% if app.user != null %}
-                        <a class="logo" href="{{ path('app_home') }}">
-                            <img
-                                src="{{ asset('assets/images/logo-sothys.png') }}"
-                                srcset="{{ asset('assets/images/logo-sothys.png') }}"
-                                alt="Sothys"
-                            />
-                        </a>
-                    {% else %}
-                        <a class="logo" href="/">
-                            <img
-                                src="{{ asset('assets/images/logo-sothys.png') }}"
-                                srcset="{{ asset('assets/images/logo-sothys.png') }}"
-                                alt="Sothys"
-                            />
-                        </a>
-                    {% endif %}
-
+                    <a class="logo" href="{{ path('app_home') }}">
+                        <img
+                            src="{{ asset('assets/images/logo-sothys.png') }}"
+                            srcset="{{ asset('assets/images/logo-sothys.png') }}"
+                            alt="Sothys"
+                        />
+                    </a>
                 </div>
-                <div class="col-3 col-lg-5 col-xl-4">
-                    {% if app.user != null %}
-                        <div class="navbar-tools">
-                            <ul class="list--horizontal">
-                                <li>
-                                    <a href="{{ path('app_shop') }}" aria-label="{{ 'access_my_cart' | trans }}"
-                                        title="{{ 'access_my_cart' | trans }}" data-microtip-position="bottom" role="tooltip"
-                                        class="cart__access js-cart-toggler"
-                                    >
-                                        <i class="icon icon-panier">
-                                            <span class="hidden">{{ 'my_cart' | trans }}</span>
-                                        </i>
-                                        <span id="cartItem">{{ cartItem|default('0') }}</span>
-                                    </a>
-                                </li>
-                                <li class="account__access_button d-none d-lg-block">
-                                    <a
-                                        href="{{ path('app_login') }}" aria-label="{{ 'access_my_account' | trans }}"
-                                        title="{{ 'access_my_account' | trans }}"
-                                        style="display: flex"
-                                    >
-                                        <i class="icon icon-compte">
-                                            <span class="hidden">{{ 'my_account' | trans }}</span>
-                                        </i>
-                                        <span style="font-size:1.5rem">{{ app.user.email }}</span>
-                                    </a>
-                                    <div class="account__access_wrapper">
-                                        <div class="account__access_inner">
-                                            <a href="{{ path('app_account') }}" class="button button--small button--dark" title="{{ 'my_account' | trans }}">
-                                                {{ 'my_account' | trans }}
-                                            </a>
-                                            <a href="{{ path('app_logout') }}" class="button button--small button--dark" title="{{ 'logout' | trans }}">
-                                                {{ 'logout' | trans }}
-                                            </a>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                {% if app.user != null %}
+                    <div class="col-3 col-lg-5 col-xl-4">
+                        <div class="search-wrapper" style="display:flex">
+                            <input class="js-global-search-term" type="text" style="outline:none" />
+                            <button class="button button--primary-fill js-global-search-button">
+                                {{ 'search' | trans}}
+                            </button>
                         </div>
-                    {% endif %}
-                </div>
+                        <div class="search-results"></div>
+                    </div>
+                    <div class="col-3 col-lg-5 col-xl-4">
+                            <div class="navbar-tools">
+                                <ul class="list--horizontal">
+                                    <li>
+                                        <a href="{{ path('app_shop') }}" aria-label="{{ 'access_my_cart' | trans }}"
+                                            title="{{ 'access_my_cart' | trans }}" data-microtip-position="bottom" role="tooltip"
+                                            class="cart__access js-cart-toggler"
+                                        >
+                                            <i class="icon icon-panier">
+                                                <span class="hidden">{{ 'my_cart' | trans }}</span>
+                                            </i>
+                                            <span id="cartItem">{{ cartItem|default('0') }}</span>
+                                        </a>
+                                    </li>
+                                    <li class="account__access_button d-none d-lg-block">
+                                        <a
+                                            href="{{ path('app_login') }}" aria-label="{{ 'access_my_account' | trans }}"
+                                            title="{{ 'access_my_account' | trans }}"
+                                            style="display: flex"
+                                        >
+                                            <i class="icon icon-compte">
+                                                <span class="hidden">{{ 'my_account' | trans }}</span>
+                                            </i>
+                                            <span style="font-size:1.5rem">{{ app.user.email }}</span>
+                                        </a>
+                                        <div class="account__access_wrapper">
+                                            <div class="account__access_inner">
+                                                <a href="{{ path('app_account') }}" class="button button--small button--dark" title="{{ 'my_account' | trans }}">
+                                                    {{ 'my_account' | trans }}
+                                                </a>
+                                                <a href="{{ path('app_logout') }}" class="button button--small button--dark" title="{{ 'logout' | trans }}">
+                                                    {{ 'logout' | trans }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

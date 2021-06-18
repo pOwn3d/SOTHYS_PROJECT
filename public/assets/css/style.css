@@ -93,7 +93,7 @@ ul.promo {
     min-width: 35rem;
 }
 
-.js-cart-add-button {
+.js-cart-add-button, .js-global-add-button {
     padding: 1rem 0;
     cursor: pointer;
 }

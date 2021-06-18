@@ -221,6 +221,27 @@ $(document).ready(function () {
         });
     });
 
+    $('.js-global-search-button').on('click', function(e) {
+        e.preventDefault();
+        var term = $('.js-global-search-term').val()
+        if(!term.length) {
+            return
+        }
+        var language = getLanguage();
 
+        $.post('/' + language +'/search', {
+            term: term
+        }).then((res) => {
+            var results = res.reduce(function(text, result) {
+                text += '<div class="js-global-add-button" data-product-id="' + result.id + '">' + result.gamme + ' - ' + result.label + ' - ' + result.reference + '</div>';
+                return text;
+            }, '');
+            $('.search-results').html(results)
+        })
+    });
 
+    $(document).on('click', '.js-global-add-button', function() {
+        var id = $(this).attr('data-product-id');
+        window.location.href = '/' + getLanguage() + '/produit/' + id;
+    });
 
