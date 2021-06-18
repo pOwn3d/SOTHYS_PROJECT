@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Commande{% endblock %}
+{% block title %} {{ 'Order' | trans }}{% endblock %}
 {% block body %}
 
     <div id="content" role="main">
@@ -8,23 +8,20 @@
                 <div class="row">
                     <div class="col-12 aos-init aos-animate" data-aos="fade-up">
                         {% include 'flash_messages.html.twig' %}
-                        <div class="title--border title--border--margin">
-                            <h2> {{ 'my.orders' | trans }}</h2>
-                        </div>
                     </div>
-                    {% include 'components/nav_customer.html.twig' %}
-                    <div class="col-4 col-md-4">
-                        <p>{{ 'reference' | trans }}:<br/>
-                            {{ order.reference }}
-                        </p>
+
+                    <div class="col-6">
+                        {% include 'order/order_details.html.twig' %}
                     </div>
-                    <div class="col-4 col-md-4">
+                    <div class="col-6">
                         <div class="checkout-wrapper">
                             <a href="{{ path('app_order_edit', { 'id': order.id }) }}" class=" checkout button button--primary-fill">
-                                Modifier ma commande </a>
+                                {{ 'order.edit' | trans }}
+                            </a>
                         </div>
                     </div>
                 </div>
+
                 <table class="compte__commandes table-responsive">
                     <thead>
                     <tr>
@@ -75,7 +72,7 @@
                     </tr>
                     <tr>
                         <td colspan="5">Total HT (EUR)</td>
-                        <td colspan="1">{{ totalAutre  + totalCabine }} €</td>
+                        <td colspan="1"><strong>{{ totalAutre  + totalCabine }} €</strong></td>
                     </tr>
                     </tbody>
                 </table>

@@ -10,35 +10,19 @@
                 <div class="row">
                     <div class="col-12 aos-init aos-animate" data-aos="fade-up">
                         {% include 'flash_messages.html.twig' %}
-                        <div class="title--border title--border--margin">
-                            <h2> {{ 'my.orders' | trans }}</h2>
-                        </div>
                     </div>
-                    {% include 'components/nav_customer.html.twig' %}
-                    <div class="col-4 col-md-4">
-                        <p>
-                            {{ 'reference' | trans }}: {{ orderX3.reference}}<br/>
-                            {{ 'order_number' | trans }}: {{ orderX3.idOrder }}<br/>
-                            Date commande : {{ orderX3.dateOrder|format_datetime('short', 'none' ) }} <br/>
-                            N° de chrono : ??<br/>
-                            Statut commande : ??<br/>
-                            Etat de livraison : ??<br/>
-                            {% if orderX3.transportMode %}
-                                {{ 'transport_mode' | trans }}: {{ orderX3.transportMode.getName(app.request.locale) }}<br/>
-                            {% endif %}
-                            Incoterm : ??<br/>
-                            Condition Paiement : ??<br/>
-                            Type commande : ??<br/>
-                        </p>
+
+                    <div class="col-6">
+                        {% include 'order/order_details.html.twig' %}
                     </div>
-                    <div class="col-4 col-md-4">
+                    <div class="col-6">
                         SOTHYS EXPORT <br/>
                         <h3> Adresse Facturation</h3><br>
                         REGINA'S BEAUTY<br/>
                         Israël<br/>
-                        {% if orderX3.address %}
+                        {% if order.address %}
                             <h3> {{ 'order.delivery_address' | trans }}</h3><br>
-                            {{ 'transport_mode' | trans }}: {{ orderX3.address }}<br/>
+                            {{ 'transport_mode' | trans }}: {{ order.address }}<br/>
                         {% endif %}
                     </div>
                 </div>
@@ -55,7 +39,7 @@
                     </thead>
                     <tbody>
                     {% set totalCabine = 0 %}
-                    {% for order in orders %}
+                    {% for order in ordersLine %}
                         <tr>
                             <td><a href="{{ path('app_item_id', { 'id': order.itemID.id }) }}">{{ order.itemID.id }}</a></td>
                             <td><a href="{{ path('app_item_id', { 'id': order.itemID.id }) }}">{{ order.itemID.labelFR }}</a></td>

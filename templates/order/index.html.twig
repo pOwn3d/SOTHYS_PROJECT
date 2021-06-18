@@ -25,29 +25,29 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for order in orders %}
-                                <tr>
-                                    <td class="ref">
-                                        {% if order.idOrderX3 != null %}
-                                            <a href="{{ path('app_order_item_id' , { 'id': order.idOrderX3 }) }}">{{ order.reference }} </a>
-                                        {% else %}
-                                            <a href="{{ path('app_order_item_id_draft' , { 'id': order.id }) }}">{{ order.reference }} </a>
-                                        {% endif %}
-                                    </td>
-                                    <td class="date">{{ order.dateOrder|date('d/m/Y') }}</td>
-                                    <td class="date">{{ order.dateDelivery|date('d/m/Y') }}</td>
-                                    <td class="price">{{ order.priceOrder }} €</td>
-                                    <td class="status">
-                                        {% if order.idStatut == 1 %}
-                                            <span class="status status--pendind">Brouillon</span>
-                                        {% elseif  order.idStatut == 2 %}
-                                            <span class="status status--processing">En cours d'analyse</span>
-                                        {% else %}
-                                            <span class="status status--completed">Complète</span>
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                                {% for order in orders %}
+                                    <tr>
+                                        <td class="ref">
+                                            {% if order.idOrderX3 != null %}
+                                                <a href="{{ path('app_order_item_id' , { 'id': order.idOrderX3 }) }}">{{ order.reference }} </a>
+                                            {% else %}
+                                                <a href="{{ path('app_order_item_id_draft' , { 'id': order.id }) }}">{{ order.reference }} </a>
+                                            {% endif %}
+                                        </td>
+                                        <td class="date">{{ order.dateOrder|date('d/m/Y') }}</td>
+                                        <td class="date">{{ order.dateDelivery|date('d/m/Y') }}</td>
+                                        <td class="price">{{ order.priceOrder }} €</td>
+                                        <td class="status">
+                                            {% if order.idStatut == 1 %}
+                                                <span class="status status--pendind">{{ 'status.draft' | trans }}</span>
+                                            {% elseif  order.idStatut == 2 %}
+                                                <span class="status status--processing">{{ 'status.pending' | trans }}</span>
+                                            {% else %}
+                                                <span class="status status--completed">{{ 'status.done' | trans }}</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>

@@ -25,10 +25,12 @@ class OrderItemController extends AbstractController
     {
         return $this->render('order/order.item.html.twig', [
             'controller_name' => 'OrderItemController',
-            'orders'          => $orderLineRepository->findAllByX3($request->get('id')),
-            'orderX3'         => $orderServices->getOrderByX3($request->get('id')),
+            'ordersLine'      => $orderLineRepository->findAllByX3($request->get('id')),
+            'order'         => $orderServices->getOrderByX3($request->get('id')),
             'orderSum'        => $orderServices->getSumOrderLine($request->get('id')),
-            'cartItem'        => $cartItem->getItemCart($this->getUser()->getSocietyID()->getId())
+            'cartItem'        => $cartItem->getItemCart($this->getUser()->getSocietyID()->getId()),
+            'incoterm'        => $this->getUser()->getSocietyId()->getCustomerIncoterms()->first(),
+            'paymentMethod'   => $this->getUser()->getSocietyId()->getPaymentMethod(),
         ]);
     }
 
@@ -48,7 +50,9 @@ class OrderItemController extends AbstractController
             'controller_name' => 'OrderItemController',
             'ordersLine'      => $orderLineRepository->findByOrderID($request->get('id')),
             'order'           => $orderServices->getOrderByID($request->get('id')),
-            'cartItem'        => $cartItem->getItemCart($this->getUser()->getSocietyID()->getId())
+            'cartItem'        => $cartItem->getItemCart($this->getUser()->getSocietyID()->getId()),
+            'incoterm'        => $this->getUser()->getSocietyId()->getCustomerIncoterms()->first(),
+            'paymentMethod'   => $this->getUser()->getSocietyId()->getPaymentMethod(),
         ]);
     }
 }

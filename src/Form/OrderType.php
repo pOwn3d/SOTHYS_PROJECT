@@ -44,7 +44,6 @@ class OrderType extends AbstractType
             ])
 //            ->add('idStatut')
 //            ->add('idDownStatut')
-            // SELECT * FROM `customer_incoterm` INNER JOIN incoterm WHERE `society_customer_incoterm_id` = 8 AND incoterm.id = customer_incoterm.reference_id
             ->add('reference')
             ->add("incoterm", EntityType::class, [
                 'class'         => CustomerIncoterm::class,
@@ -56,11 +55,11 @@ class OrderType extends AbstractType
                             Join::WITH,        // Join type
                             'p.id = u.reference' // Join columns
                         )
-                        ->andWhere('u.societyCustomerIncoterm =  :societyId')
-                        ->setParameter('societyId', $this->security->getUser()->getSocietyID());
+                        ->andWhere('u.societyCustomerIncoterm = :societyId')
+                        ->setParameter('societyId', $this->security->getUser()->getSocietyID()->getId());
                 },
                 'choice_label' => function (CustomerIncoterm $customerIncoterm) {
-                    return $customerIncoterm->getModeTransport()->getName('fr-FR') . ' - ' . $customerIncoterm->getReference() . ' : ' . $customerIncoterm->getCity();
+                    return $customerIncoterm->getModeTransport()->getName($this->translator->getLocale()) . ' - ' . $customerIncoterm->getReference() . ' : ' . $customerIncoterm->getCity();
                 },
             ])
             ->add('address', EntityType::class, [

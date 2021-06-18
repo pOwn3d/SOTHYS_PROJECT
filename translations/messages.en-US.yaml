@@ -47,7 +47,9 @@ order:
     creation_date: 'Creation date'
     delivery_date: 'Desired date of availability'
     payment_method: 'Payment method'
+    transport_mode_incoterm: 'Transport - Incoterm'
     save: 'Save my order'
+    edit: 'Edit my order'
 
 Track:
     their:
@@ -92,7 +94,7 @@ Price: 'Price'
 
 Date: 'Date'
 
-state: 'state'
+state: 'Status'
 
 add:
     to:
@@ -164,3 +166,10 @@ access_my_cart: 'Access to my cart'
 order_number: 'Order number'
 
 search: 'Search'
+
+status:
+    draft: 'Draft'
+    pending: 'Validated'
+    done: 'Done'
+
+address: 'Address'
