@@ -45,8 +45,14 @@
                 </div>
             </div>
             <div class="checkout-wrapper">
-                <button type="submit" class=" checkout button button--primary-fill">
+                <button type="submit" class=" checkout button button--primary-fill" name="order[save]">
                     {{ 'order.save' | trans }}
+                </button>
+
+                <br />
+
+                <button type="submit" class="checkout button button--secondary" name="order[saveDraft]">
+                    {{ 'order.save_draft' | trans }}
                 </button>
             </div>
             {{ form_end(form) }}

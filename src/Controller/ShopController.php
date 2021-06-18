@@ -110,8 +110,15 @@ class ShopController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $society = $this->getUser()->getSocietyID();
-            $order   = $shopServices->createOrder($this->getUser(), $society, $form->getData(), $request->get('promo'));
+
+            $formData = $form->getData();
+            $formData->setIdStatut(2);
+            if(!empty($form->getExtraData()) && array_keys($form->getExtraData())[0] === 'saveDraft') {
+                $formData->setIdStatut(1);
+            }
+            $order   = $shopServices->createOrder($this->getUser(), $society, $formData, $request->get('promo'));
             if ($order != null) {
                 $this->addFlash($order['type'], $order['msg']);
                 return $this->redirectToRoute('app_shop');

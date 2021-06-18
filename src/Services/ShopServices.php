@@ -161,7 +161,7 @@ class ShopServices extends AbstractController
             ->setDateOrder(new \DateTime())
             ->setDateDelivery($data->getDateDelivery())
             ->setSocietyID($society)
-            ->setIdStatut(1)
+            ->setIdStatut($data->getIdStatut())
             ->setIncoterm($data->getIncoterm())
             ->setReference($data->getReference())
             ->setAddress($data->getAddress())

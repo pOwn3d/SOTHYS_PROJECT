@@ -49,6 +49,7 @@ order:
     payment_method: 'Payment method'
     transport_mode_incoterm: 'Transport - Incoterm'
     save: 'Save my order'
+    save_draft: 'Save my draft'
     edit: 'Edit my order'
 
 Track:

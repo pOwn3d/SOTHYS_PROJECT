@@ -49,6 +49,7 @@ order:
     transport_mode_incoterm: 'Mode de transport - Incoterm'
     payment_method: 'Méthode de payment'
     save: 'Enregistrer ma commande'
+    save_draft: 'Enregistrer mon brouillon'
     edit: 'Modifier ma commande'
 
 Track:
