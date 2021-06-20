@@ -69,15 +69,15 @@ class CsvExporter
             foreach ($orderLines as $orderLine) {
                 $lineData = [
                     'L',
-                    $orderLine->getItemID()->getId(),
+                    $orderLine->getItemID()->getItemID(),
                     $orderLine->getQuantity(),
                     $orderLine->getPrice(),
                     $orderLine->getDiscount1(),
                     $orderLine->getDiscountedPrice(),
                     $orderLine->getGratuityCode(),
-                    $order->getId(),
+                    $orderLine->getId(),
                     $orderLine->getCode(),
-                    $orderLine->getDiscount2(),
+                    '',
                 ];
                 array_push($rows, [ implode('|',$lineData) ]);
             }
@@ -87,6 +87,8 @@ class CsvExporter
         $encoder = (new CharsetConverter())
             ->inputEncoding('utf-8')
             ->outputEncoding('iso-8859-15');
+
+        // TODO : virer les quotes
 
         $writer = Writer::createFromFileObject(new SplTempFileObject());
         $writer->addFormatter($encoder);
