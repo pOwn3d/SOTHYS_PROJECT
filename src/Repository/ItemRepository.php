@@ -94,7 +94,7 @@ class ItemRepository extends ServiceEntityRepository
         $limit = 12;
         $sql = 'select *, item.id as itemId from item   INNER JOIN generic_name on item.generic_name_id = generic_name.id
   INNER JOIN item_price on item_price.id_item_id = item.id   AND item_price.id_society_id = ' . $societyId . '    AND item.gamme_id = ' . $value . '
-    where item.id in ( select min(id) from item group by generic_name_id )    LIMIT ' . $limit .' OFFSET '.($page - 1) * $limit;
+    where item.id AND id_presentation = "vente"  in ( select min(id) from item group by generic_name_id )  and id_presentation = "Vente"  LIMIT ' . $limit .' OFFSET '.($page - 1) * $limit;
 
         $conn = $this->getEntityManager()->getConnection();
 
@@ -109,7 +109,7 @@ class ItemRepository extends ServiceEntityRepository
         $pagination = new \stdClass();
         $conn = $this->getEntityManager()
             ->getConnection();
-        $sql = 'select COUNT(*) as total from item INNER JOIN generic_name on item.generic_name_id = generic_name.id INNER JOIN item_price on item_price.id_item_id = item.id AND item_price.id_society_id = ' . $societyId . ' AND item.gamme_id = ' . $value . ' where item.id in ( select min(id) from item group by generic_name_id )';
+        $sql = 'select COUNT(*) as total from item INNER JOIN generic_name on item.generic_name_id = generic_name.id INNER JOIN item_price on item_price.id_item_id = item.id AND item_price.id_society_id = ' . $societyId . ' AND item.gamme_id = ' . $value . ' where item.id  in ( select min(id) from item group by generic_name_id )';
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $itemCount = $stmt->fetch();
