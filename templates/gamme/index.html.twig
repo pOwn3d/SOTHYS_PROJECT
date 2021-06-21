@@ -14,7 +14,7 @@
                 </div>
                 {% for product in products %}
                     <div class="col-3 col-md-3 col-lg-3 productBox aos-init aos-animate" data-aos="fade-up">
-                        <a href="{{ path('app_item_id', {id: product.id}) }} " class="card card--product card--overlay ">
+                        <a href="{{ path('app_item_id', {id: product.itemId}) }} " class="card card--product card--overlay ">
                             <div class="card__visuel">
                                 <picture>
                                     <img class="blur-up ls-is-cached lazyloaded" alt="" src="https://place-hold.it/450">
@@ -25,9 +25,9 @@
                             </div>
                             <div class="card__content__wrapper">
                                 <div class="card__content">
-                                    <span class="card__title">{{ product.genericName.nameFr }}</span>
+                                    <span class="card__title">{{ product.label_fr }}</span>
                                     <span class="complement">
-                                        {{ product.getCapacity(app.request.locale) }}
+                                        {{ product.name_fr }}
                                     </span>
                                 </div>
                             </div>

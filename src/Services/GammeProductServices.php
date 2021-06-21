@@ -35,4 +35,14 @@ class GammeProductServices
         return $this->itemRepository->getPaginationByGammeId($id, $societyId, $page);
     }
 
+    public function findProductsByGenericName($id, $societyId, $page = 1, $genericName): array
+    {
+        return $this->itemRepository->findProductsByGenericName($id, $societyId, $page, $genericName);
+    }
+
+    public function getPaginationByGenericName($id, $societyId, $page = 1)
+    {
+        return $this->itemRepository->getPaginationByGenericnameRepo($id, $societyId, $page);
+    }
+
 }
