@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-12 col-lg-5">
-                        <a href="{{ path('app_gamme', { gamme_id: gamme.id }) }}" class="nav-link"> {{ gamme.getLabel(app.request.locale) }} </a>
+                        <a href="{{ path('app_gamme', { gamme_id: gamme.id, type: itemPrice.idItem.idPresentation}) }}" class="nav-link"> {{ gamme.getLabel(app.request.locale) }} </a>
                         <h1>{{ product.getLabel(app.request.locale) }}</h1>
                         <div>
                             <span class="complement">{{ product.getCapacity(app.request.locale) }}</span>

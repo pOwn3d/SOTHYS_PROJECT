@@ -43,6 +43,7 @@
                                     <li class="page-item {{ page == pagination.currentPage ? 'active' : ''}}">
                                         <a href="{{ path('app_gamme', {
                                             gamme_id: gamme.id,
+                                            type : app.request.get('type'),
                                             page: page
                                         }) }}" class="page-link">
                                             {{ page }}
