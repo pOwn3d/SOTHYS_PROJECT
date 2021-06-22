@@ -120,7 +120,31 @@
                                                                 {% for gamme in categories.getGamme(app.user.societyID) %}
                                                                     <li class="menu-item__submenu-item">
                                                                         <a href="{{ path('app_gamme', {
-                                                                            gamme_id: gamme.id
+                                                                            gamme_id: gamme.id,
+                                                                            type : 'vente'
+                                                                        }) }}" class="nav-link">
+                                                                            {{ gamme.getLabel(app.request.locale) }}
+                                                                        </a>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="menu-item menu-item--has-child">
+                                            <a class="{% if app.request.attributes.get('_route') starts with 'app_gamme'  or app.request.attributes.get('_route') starts with 'app_item_id' %} e-shop {% endif %}">PLV</a>
+                                            <div class="menu-item__submenu">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <ul class="menu-item__submenu--large">
+                                                                {% for gamme in categories.getGamme(app.user.societyID) %}
+                                                                    <li class="menu-item__submenu-item">
+                                                                        <a href="{{ path('app_gamme', {
+                                                                            gamme_id: gamme.id,
+                                                                            type : 'plv'
                                                                         }) }}" class="nav-link">
                                                                             {{ gamme.getLabel(app.request.locale) }}
                                                                         </a>

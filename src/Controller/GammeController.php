@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GammeController extends AbstractController
 {
     /**
-     * @Route("/{_locale}/gamme/{gamme_id}/page/{page?1}", name="app_gamme", requirements={
+     * @Route("/{_locale}/gamme/{type}/{gamme_id}/page/{page?1}", name="app_gamme", requirements={
      *      "_locale"="%app.locales%"
      * })
      * @param Request $request
@@ -27,6 +27,7 @@ class GammeController extends AbstractController
     public function index(Request $request, GammeServices $gammeServices, GammeProductServices $gammeProductServices, CartItem $cartItem, GenericNameServices $genericNameServices): Response
     {
         $page = $request->attributes->getInt('page');
+        $type = $request->attributes->get('type');
         $genericName  =  $genericNameServices->allGenericName();
         $products = $gammeProductServices->findProductsByGenericName($request->get('gamme_id'), $this->getUser()->getSocietyID()->getId(), $page, $genericName);
         $pagination = $gammeProductServices->getPaginationByGenericname($request->get('gamme_id'), $this->getUser()->getSocietyID()->getId(), $page);

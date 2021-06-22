@@ -89,31 +89,30 @@ class ItemRepository extends ServiceEntityRepository
         }
     }
 
-    public function findProductsByGenericName($value, $societyId, $page = 1, $genericName): array
+    public function findProductsByGenericName($value, $societyId, $page = 1, $genericName, $type): array
     {
         $limit = 12;
         $sql = 'select *, item.id as itemId from item   INNER JOIN generic_name on item.generic_name_id = generic_name.id
   INNER JOIN item_price on item_price.id_item_id = item.id   AND item_price.id_society_id = ' . $societyId . '    AND item.gamme_id = ' . $value . '
-    where item.id AND id_presentation = "vente"  in ( select min(id) from item group by generic_name_id )  and id_presentation = "Vente"  LIMIT ' . $limit .' OFFSET '.($page - 1) * $limit;
+    where item.id AND id_presentation = "' . $type . '" in ( select min(id) from item group by generic_name_id )  and id_presentation = "' . $type . '" LIMIT ' . $limit .' OFFSET '.($page - 1) * $limit;
 
         $conn = $this->getEntityManager()->getConnection();
-
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAllAssociative();
 
     }
 
-    public function getPaginationByGenericnameRepo($value, $societyId, $page = 1): \stdClass
+    public function getPaginationByGenericnameRepo($value, $societyId, $page = 1, $type): \stdClass
     {
         $pagination = new \stdClass();
         $conn = $this->getEntityManager()
             ->getConnection();
-        $sql = 'select COUNT(*) as total from item INNER JOIN generic_name on item.generic_name_id = generic_name.id INNER JOIN item_price on item_price.id_item_id = item.id AND item_price.id_society_id = ' . $societyId . ' AND item.gamme_id = ' . $value . ' where item.id  in ( select min(id) from item group by generic_name_id )';
+        $sql = 'select COUNT(*) as total from item INNER JOIN generic_name on item.generic_name_id = generic_name.id INNER JOIN item_price on item_price.id_item_id = item.id AND item_price.id_society_id =  ' . $societyId . ' AND item.gamme_id = ' . $value . '  where item.id AND id_presentation = "' . $type . '" in ( select min(id) from item group by generic_name_id ) and id_presentation = "' . $type . '"';
+
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $itemCount = $stmt->fetch();
-
         $pagination->pageCount = (int)ceil($itemCount['total'] / 12);
         $pagination->itemCount = $itemCount['total'];
         $pagination->range = range(1, $pagination->pageCount);
