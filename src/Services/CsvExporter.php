@@ -63,7 +63,7 @@ class CsvExporter
                 ''
             ];
 
-            array_push($rows, [implode('|', $orderData)]);
+            array_push($rows, implode('|', $orderData));
             $orderLines = $this->orderLineRepository->findByOrderID($order->getId());
 
             foreach ($orderLines as $orderLine) {
@@ -79,21 +79,24 @@ class CsvExporter
                     $orderLine->getCode(),
                     '',
                 ];
-                array_push($rows, [ implode('|',$lineData) ]);
+                array_push($rows, implode('|',$lineData) );
             }
 
         }
 
-        $encoder = (new CharsetConverter())
-            ->inputEncoding('utf-8')
-            ->outputEncoding('iso-8859-15');
+        // $encoder = (new CharsetConverter())
+        //     ->inputEncoding('utf-8')
+        //     ->outputEncoding('iso-8859-15');
 
-        // TODO : virer les quotes
+        // // TODO : virer les quotes
 
-        $writer = Writer::createFromFileObject(new SplTempFileObject());
-        $writer->addFormatter($encoder);
-        $writer->insertAll($rows); //using an array
-        $writer->output('test.csv');
+        // $writer = Writer::createFromFileObject(new SplTempFileObject());
+        // $writer->addFormatter($encoder);
+        // $writer->insertAll($rows); //using an array
+        // $writer->output('test.csv');
+
+        file_put_contents('test.csv', implode("\n", $rows) . "\n", FILE_APPEND);
+
     }
 
 }

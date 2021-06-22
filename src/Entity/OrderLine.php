@@ -192,7 +192,7 @@ class OrderLine
     }
 
     public function getDiscountedPrice() {
-        return $this->getPrice() * (100 - $this->getDiscount1());
+        return $this->getPrice() * (1 - $this->getDiscount1());
     }
 
     public function getGratuityCode() {
