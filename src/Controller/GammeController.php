@@ -30,7 +30,6 @@ class GammeController extends AbstractController
         $type = $request->attributes->get('type');
         $genericName  =  $genericNameServices->allGenericName();
         $products = $gammeProductServices->findProductsByGenericName($request->get('gamme_id'), $this->getUser()->getSocietyID()->getId(), $page, $genericName, $type);
-        dd($products);
        $pagination = $gammeProductServices->getPaginationByGenericname($request->get('gamme_id'), $this->getUser()->getSocietyID()->getId(), $page, $type);
         return $this->render('gamme/index.html.twig', [
             'controller_name' => 'GammeController',
