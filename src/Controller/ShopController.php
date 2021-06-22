@@ -63,7 +63,7 @@ class ShopController extends AbstractController
                     try {
                         foreach($records as $row){
                             $item = $itemService->getItemByX3Id($row[0]);
-                            $shopServices->addToCart($society, $item->getId(), $row[1]);
+                            $shopServices->addToCart($society, $item->getId(), $row[1], 0);
                         }
                     } catch(\Exception $e) {
                         $errors[] = "We have no item with this id : " . $row[0];
