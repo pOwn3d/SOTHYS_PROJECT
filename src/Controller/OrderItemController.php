@@ -54,7 +54,7 @@ class OrderItemController extends AbstractController
             'order'           => $order,
             'cartItem'        => $cartItem->getItemCart($this->getUser()->getSocietyID()->getId()),
             'incoterm'        => $order->getIncoterm(),
-            'paymentMethod'   => $this->getUser()->getSocietyId()->getPaymentMethod(),
+            'paymentMethod'   => $order->getPaymentMethod(),
         ]);
     }
 }

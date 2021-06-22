@@ -160,6 +160,7 @@ class ShopServices extends AbstractController
             ->setReference($data->getReference())
             ->setAddress($data->getAddress())
             ->setEmail($user->getEmail())
+            ->setPaymentMethod($data->getPaymentMethod())
         ;
 
         $this->em->persist($newOrder);
