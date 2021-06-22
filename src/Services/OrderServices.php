@@ -35,12 +35,7 @@ class OrderServices
         return $this->orderLineRepository->sumOrderByX3([ 'idOrderX3' => $id ]);
     }
 
-    public function editOrderID($id)
-    {
-        return $this->orderRepository->findOneBy([ 'id' => $id ]);
-    }
-
-    public function editOrderLineID($id)
+    public function getOrderLinesByID($id): array
     {
         return $this->orderLineRepository->findBy([ 'idOrder' => $id ]);
     }

@@ -29,7 +29,7 @@
                 <table class="compte__commandes table-responsive">
                     <thead>
                     <tr>
-                        <th>Code</th>
+                        <th>{{ 'reference' | trans}}</th>
                         <th>{{'Designation' | trans}}</th>
                         <th>{{'Quantity.ordered' | trans}}</th>
                         <th>{{'Quantity.shipped' | trans}}</th>
@@ -41,7 +41,7 @@
                     {% set totalCabine = 0 %}
                     {% for order in ordersLine %}
                         <tr>
-                            <td><a href="{{ path('app_item_id', { 'id': order.itemID.id }) }}">{{ order.itemID.id }}</a></td>
+                            <td><a href="{{ path('app_item_id', { 'id': order.itemID.id }) }}">{{ order.itemID.itemID }}</a></td>
                             <td><a href="{{ path('app_item_id', { 'id': order.itemID.id }) }}">{{ order.itemID.labelFR }}</a></td>
                             <td>{{ order.quantity }}</td>
                             <td>{{ order.quantity }}</td>

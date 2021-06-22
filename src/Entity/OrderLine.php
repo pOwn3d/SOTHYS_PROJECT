@@ -191,12 +191,8 @@ class OrderLine
         return 0;
     }
 
-    public function getDiscount2(): int {
-        return 0;
-    }
-
     public function getDiscountedPrice() {
-        return $this->getPrice() * (100 - $this->getDiscount1()) - $this->getDiscount2();
+        return $this->getPrice() * (100 - $this->getDiscount1());
     }
 
     public function getGratuityCode() {
@@ -205,6 +201,14 @@ class OrderLine
 
     public function getCode() {
         return '';
+    }
+
+    public function getIdItem() {
+        return $this->getItemID();
+    }
+
+    public function quantityBundling() {
+        return $this->getItemID()->getAmountBulking();
     }
 
 }

@@ -192,7 +192,19 @@ class ShopServices extends AbstractController
             $this->em->persist($newOrderLine);
             $this->em->flush();
         }
+    }
 
+    public function updateOrder($order, $data) {
+        $order->setDateDelivery($data->getDateDelivery())
+            ->setIdStatut($data->getIdStatut())
+            ->setIncoterm($data->getIncoterm())
+            ->setReference($data->getReference())
+            ->setAddress($data->getAddress());
+
+        $this->em->persist($order);
+        $this->em->flush();
+
+        return $order;
     }
 
     public function deleteItemOrderDraft($id)
@@ -205,6 +217,16 @@ class ShopServices extends AbstractController
     public function deleteOrderLine($id)
     {
         $this->orderLineRepository->deleteOrderLine($id);
+    }
+
+    public function deleteOrderLineById($id)
+    {
+        $orderLine = $this->orderLineRepository->findOneBy([
+            'id' => $id,
+        ]);
+
+        $this->em->remove($orderLine);
+        $this->em->flush();
     }
 
 }

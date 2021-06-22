@@ -108,16 +108,18 @@
 
                         <br />
 
-                        {{ form_start(form) }}
-                            <div class="Upload-csv-container">
-                                <div class="error">
-                                    {{ form_errors(form.update_csv_order) }}
-                                </div>
-                                {{ form_widget(form.update_csv_order, {'attr': {'class': 'upload-box'}}) }}
+                        {% if form %}
+                            {{ form_start(form) }}
+                                <div class="Upload-csv-container">
+                                    <div class="error">
+                                        {{ form_errors(form.update_csv_order) }}
+                                    </div>
+                                    {{ form_widget(form.update_csv_order, {'attr': {'class': 'upload-box'}}) }}
 
-                                {{ form_row(form.upload, { 'label' :  'upload.orders' ,'attr': {'class': 'inline-block-upload button button--primary-fill'}}) }}
-                            </div>
-                        {{ form_end(form) }}
+                                    {{ form_row(form.upload, { 'label' :  'upload.orders' ,'attr': {'class': 'inline-block-upload button button--primary-fill'}}) }}
+                                </div>
+                            {{ form_end(form) }}
+                        {% endif %}
                         {% if errors|length %}
                             {% for error in errors %}
                                 <p class="error">{{error | trans }}</p>

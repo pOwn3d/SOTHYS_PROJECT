@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'my_cart' | trans }}
+{% endblock %}
+
+{% block body %}
+    <section class="section section--checkout">
+        <div class="container">
+            {% include 'flash_messages.html.twig' %}
+            <form action="#">
+                <div class="row">
+                    <div class="col-12 col-md-8">
+                        <div class="cart--checkout-table">
+                            <div class="search-wrapper" style="display:flex">
+                                <input class="js-cart-search-term" type="text" style="outline:none" />
+                                <button class="button button--primary-fill js-cart-search-button">
+                                    {{ 'search' | trans}}
+                                </button>
+                            </div>
+                            <div class="search-results"></div>
+                            <br />
+                            <table class="cart--table table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>{{'Product' | trans}}</th>
+                                        <th>{{'Designation' | trans}}</th>
+                                        <th>{{'quantity' | trans}}</th>
+                                        <th>{{'Quantity.counts' | trans}}</th>
+                                        <th>{{'price.unit' | trans}}</th>
+                                        <th>{{'price.total' | trans}}</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% set totalCabine = 0 %}
+                                    {% set total = 0 %}
+                                    {% for item in orders %}
+
+                                        {% set total = total + (item.price *  item.quantity ) %}
+                                        {% if  item.idItem.idPresentation == "Cabine" %}
+                                        {% set totalCabine = totalCabine + (item.price) %}
+                                        {% endif %}
+
+                                        <tr>
+                                            <td class="product-name">
+                                                <a href="{{ path('app_item_id', { 'id': item.idItem.id }) }}">{{ item.idItem.itemId }}</a>
+                                            </td>
+                                            <td class="product-designation ">
+                                                <span class="text--category">
+                                                    <a href="{{ path('app_item_id', { 'id': item.idItem.id }) }}">{{ item.idItem.labelFR }}</a>
+                                                </span>
+                                            </td>
+                                            <td class="product-quantity">
+                                                <span class="text--category show--mobile">  <a href="{{ path('app_item_id', { 'id': item.idItem.id }) }}">{{ item.idItem.labelFR }}</a></span>
+                                                <div class="quantity">
+                                                    <label for="product-quantity--291">Quantité</label>
+                                                    <input type="number" class="qty input-text js-update-item-quantity" step="1" min="1" data-product="{{ item.idItem.id }}" value="{{ item.quantity }}" style="text-align: center;">
+                                                    <div class="quantity-nav">
+                                                        <div class="quantity-button quantity-up order-up" >+</div>
+                                                        <div class="quantity-button quantity-down order-down">-</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="product-quantityGroupage">
+                                                <span class="text--category" id="qty_update_{{ item.idItem.id }}">{{ item.quantity }} x {{ item.quantityBundling }} </span>
+                                            </td>
+                                            <td class="product-priceUnit">
+                                                <span class="text--category">  {{ item.price }} €</span>
+                                            </td>
+                                            <td class="product-priceTotal">
+                                                <span class="text--category" id="price_update_{{ item.idItem.id }}">{{ item.price *  item.quantity|round }} € </span>
+                                            </td>
+                                            <td>
+                                                <a href="{{ path('app_order_product_edit_delete', {
+                                                    'orderLineId': item.id,
+                                                    'orderId': order.id,
+                                                }) }}"><i class="icon icon-close"></i></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="cart--checkout-total">
+                            <div class="cart--totals cart--totals-default">
+                                <h3>{{'Cart' | trans}}</h3>
+                                <table class="table-responsive cart--table-totals">
+                                    <tbody>
+                                    <tr class="cart-subtotal">
+                                        <th>{{'Subtotal' | trans}}</th>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="order-total">
+                                        <th>{{ 'Total'| trans }} </th>
+                                        <td>
+                                            <span class="price total" id="priceTotal">{{ total }} €</span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="checkout-wrapper">
+                                    <a href="{{ path("app_order_edit_publish", { 'id': order.id}) }}" class=" checkout button button--primary-fill">
+                                        {{'Validate.order' | trans}}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

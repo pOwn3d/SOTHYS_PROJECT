@@ -46,12 +46,14 @@ class OrderItemController extends AbstractController
     public function commandDraft(Request $request, OrderServices $orderServices, OrderLineRepository $orderLineRepository, CartItem $cartItem): Response
     {
 
+        $order = $orderServices->getOrderByID($request->get('id'));
+
         return $this->render('order/order_draft.item.html.twig', [
             'controller_name' => 'OrderItemController',
             'ordersLine'      => $orderLineRepository->findByOrderID($request->get('id')),
-            'order'           => $orderServices->getOrderByID($request->get('id')),
+            'order'           => $order,
             'cartItem'        => $cartItem->getItemCart($this->getUser()->getSocietyID()->getId()),
-            'incoterm'        => $this->getUser()->getSocietyId()->getCustomerIncoterms()->first(),
+            'incoterm'        => $order->getIncoterm(),
             'paymentMethod'   => $this->getUser()->getSocietyId()->getPaymentMethod(),
         ]);
     }

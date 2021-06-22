@@ -35,32 +35,6 @@ class OrderDraftServices
         return $this->orderDraftRepository->findOrderDraftSocietyPromo($society);
     }
 
-    public function editOrderDraft($id, $society, $orderLine)
-    {
-
-
-        foreach ($orderLine as $item) {
-
-            $draft = new OrderDraft();
-            $draft->setIdItem($item->getItemId())
-                ->setIdSociety($society)
-                ->setPrice($item->getPriceUnit())
-                ->setQuantity($item->getQuantity())
-                ->setQuantityBundling($item->getItemId()->getAmountBulking())
-                ->setPromo($item->getPromo())
-                ->setState(0);
-
-            $this->em->persist($draft);
-            $this->em->flush();
-
-
-        }
-
-        $order = $this->em->getRepository(Order::class)->find($id);
-        $this->em->remove($order);
-        $this->em->flush();
-    }
-
     public function getSumOrderDraft($id, $promo)
     {
         return $this->orderDraftRepository->findSumOrderDraftSociety($id, $promo);
@@ -70,6 +44,4 @@ class OrderDraftServices
     {
         return $this->orderDraftRepository->findSumItemOrderDraftSociety($id);
     }
-
-
 }

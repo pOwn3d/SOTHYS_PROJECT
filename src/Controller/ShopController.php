@@ -6,6 +6,7 @@ use App\Entity\OrderDraft;
 use App\Form\CsvOrderUploaderType;
 use App\Form\OrderType;
 use App\Repository\OrderDraftRepository;
+use App\Repository\OrderLineRepository;
 use App\Services\Cart\CartItem;
 use App\Services\ItemServices;
 use App\Services\OrderDraftServices;
@@ -140,24 +141,78 @@ class ShopController extends AbstractController
         ]);
     }
 
-
     /**
-     * @Route("/order-edit/{id}", name="app_order_edit")
+     * @Route("/{_locale}/order-edit/{id}", name="app_order_edit")
      */
-    public function orderEdit(Request $request, OrderServices $orderServices, OrderDraftServices $orderDraftServices, ShopServices $shopServices): Response
+    public function orderEdit(Request $request, OrderServices $orderServices, CartItem $cartItem): Response
     {
+
         $id = $request->get('id');
         $society = $this->getUser()->getSocietyID();
-        $order = $orderServices->editOrderID($id);
-        $orderLine = $orderServices->editOrderLineID($id);
-        $promo = $orderDraftServices->editOrderDraft($order, $society, $orderLine);
-        $shopServices->deleteOrderLine($id);
+        $order = $orderServices->getOrderByID($id);
+        $orderLines = $orderServices->getOrderLinesByID($id);
 
-        if ($promo == true) {
-            return $this->redirectToRoute('app_promo_shop');
+        if($order->getIdStatut() !== 1 || in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
+            return $this->redirectToRoute('app_order');
         }
 
-        return $this->redirectToRoute('app_shop');
+        // TODO : handle promo edition ?
+        // if ($promo == true) {
+        //     return $this->redirectToRoute('app_promo_shop');
+        // }
+
+        return $this->render('shop/edit.html.twig', [
+            'controller_name' => 'ShopController',
+            'order'           => $order,
+            'orders'          => $orderLines,
+            'cartItem'        => $cartItem->getItemCart($society->getId()),
+            'form'            => null,
+            'errors'          => [],
+        ]);
+    }
+
+    /**
+     * @Route("/{_locale}/order-publish-edit/{id}", name="app_order_edit_publish")
+     */
+    public function orderEditPublish(CartItem $cartItem, Request $request, ShopServices $shopServices, OrderServices $orderServices): Response
+    {
+
+        $id = $request->get('id');
+        $society = $this->getUser()->getSocietyID();
+        $order = $orderServices->getOrderByID($id);
+
+        $form = $this->createForm(OrderType::class);
+        $form->handleRequest($request);
+
+        if(!$form->isSubmitted()) {
+            $form->setData($order);
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $society = $this->getUser()->getSocietyID();
+
+            $formData = $form->getData();
+            $formData->setIdStatut(2);
+            if(!empty($form->getExtraData()) && array_keys($form->getExtraData())[0] === 'saveDraft') {
+                $formData->setIdStatut(1);
+            }
+
+            $order   = $shopServices->updateOrder($order, $form->getData());
+            if ($order != null) {
+                return $this->redirectToRoute('app_order');
+            }
+            return $this->redirectToRoute('app_order_edit', [
+                'id' => $id,
+            ]);
+        }
+
+        return $this->render('shop/publish.html.twig', [
+            'controller_name' => 'ShopController',
+            'form'            => $form->createView(),
+            'user' => $this->getUser(),
+            'order' => $order,
+        ]);
     }
 
     /**
@@ -176,4 +231,20 @@ class ShopController extends AbstractController
 
         return $this->redirectToRoute('app_shop');
     }
+
+    /**
+     * @Route("/order-delete-item/order/{orderId}/item/{orderLineId}", name="app_order_product_edit_delete")
+     */
+    public function orderEditDeleteItem(Request $request, ShopServices $shopServices): Response
+    {
+        $orderId = $request->get('orderId');
+        $orderLineId = $request->get('orderLineId');
+
+        $shopServices->deleteOrderLineById($orderLineId);
+
+        return $this->redirectToRoute('app_order_edit', [
+            'id' => $orderId,
+        ]);
+    }
+
 }
