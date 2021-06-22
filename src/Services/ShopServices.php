@@ -88,11 +88,12 @@ class ShopServices extends AbstractController
 
         $cartItem = $this->orderDraftRepository->findOneBy([ 'idItem' => $item->getId() ]);
 
-        if ($this->itemQuantityService->quantityItemSociety($item, $society) == null) {
-            $quantity = 1;
-        } else {
-            $quantity = $this->itemQuantityService->quantityItemSociety($item, $society)->getQuantity();
-        }
+//        if ($this->itemQuantityService->quantityItemSociety($item, $society) == null) {
+//            $quantity = 1;
+//        } else {
+//            $quantity = $this->itemQuantityService->quantityItemSociety($item, $society)->getQuantity();
+//                 }
+
 
         if ($cart == null || $cartItem == null) {
             $order = new OrderDraft();
@@ -101,7 +102,7 @@ class ShopServices extends AbstractController
                 ->setPrice($itemPrice->getPrice())
                 ->setPriceOrder($itemPrice->getPrice() * $qty)
                 ->setQuantity($qty)
-                ->setQuantityBundling($quantity)
+                ->setQuantityBundling($item->getAmountBulking())
                 ->setState(0)
                 ->setPromo(0)
             ;
@@ -111,17 +112,10 @@ class ShopServices extends AbstractController
 
         if ($cartItem != null) {
             $order = $cartItem;
-
-//            if ($cartItem->getPromo() != true) {
-
-
-                // TODO :: Ajouter les produits gratuit si la condition est ok : x = 10 / y = 1 ... x = 20 / y = 2
                 $order->setQuantity($qty)
                     ->setPriceOrder($order->getPrice() * $qty);
                 $this->em->persist($order);
                 $this->em->flush();
-
-//            }
         }
 
 
@@ -186,7 +180,7 @@ class ShopServices extends AbstractController
 //                ->setIdOrderLine()
 //                ->setIdOrderX3()
                 ->setPriceUnit($order->getPrice())
-                //                ->setRemainingQtyOrder()
+//                ->setRemainingQtyOrder()
             ;
 
             $this->em->remove($order);
