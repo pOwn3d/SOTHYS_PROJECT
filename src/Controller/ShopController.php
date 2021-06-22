@@ -148,11 +148,15 @@ class ShopController extends AbstractController
     {
 
         $id = $request->get('id');
-        $society = $this->getUser()->getSocietyID();
         $order = $orderServices->getOrderByID($id);
         $orderLines = $orderServices->getOrderLinesByID($id);
 
-        if($order->getIdStatut() !== 1 || in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
+        $cartItemCount = 0;
+        if($request->get('token') !== 'token') {
+            $cartItemCount = $cartItem->getItemCart($this->getUser()->getSocietyID()->getId());
+        }
+
+        if($request->get('token') !== 'token' && ($order->getIdStatut() !== 1 || in_array('ROLE_ADMIN', $this->getUser()->getRoles()))) {
             return $this->redirectToRoute('app_order');
         }
 
@@ -165,7 +169,7 @@ class ShopController extends AbstractController
             'controller_name' => 'ShopController',
             'order'           => $order,
             'orders'          => $orderLines,
-            'cartItem'        => $cartItem->getItemCart($society->getId()),
+            'cartItem'        => $cartItemCount,
             'form'            => null,
             'errors'          => [],
         ]);
@@ -174,11 +178,10 @@ class ShopController extends AbstractController
     /**
      * @Route("/{_locale}/order-publish-edit/{id}", name="app_order_edit_publish")
      */
-    public function orderEditPublish(CartItem $cartItem, Request $request, ShopServices $shopServices, OrderServices $orderServices): Response
+    public function orderEditPublish(Request $request, ShopServices $shopServices, OrderServices $orderServices): Response
     {
 
         $id = $request->get('id');
-        $society = $this->getUser()->getSocietyID();
         $order = $orderServices->getOrderByID($id);
 
         $form = $this->createForm(OrderType::class);
@@ -189,8 +192,6 @@ class ShopController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $society = $this->getUser()->getSocietyID();
 
             $formData = $form->getData();
             $formData->setIdStatut(2);
