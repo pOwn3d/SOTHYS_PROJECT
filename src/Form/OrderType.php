@@ -87,20 +87,20 @@ class OrderType extends AbstractType
                 }
             ])
             ->add('paymentMethod', EntityType::class, [
-                'class' => Society::class,
+                'class' => PaymentMethod::class,
                 'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('s')
+                    return $er->createQueryBuilder('p')
                     ->innerJoin(
-                        PaymentMethod::class,
-                        'p',
+                        Society::class,
+                        's',
                         Join::WITH,
                         's.paymentMethod = p.id'
                     )
                     ->andWhere('s.id = :societyId')
                     ->setParameter('societyId', $this->security->getUser()->getSocietyID());
                 },
-                'choice_label' => function(Society $society) {
-                    return $society->getPaymentMethod()->getLabel($this->translator->getLocale());
+                'choice_label' => function(PaymentMethod $paymentMethod) {
+                    return $paymentMethod->getLabel($this->translator->getLocale());
                 },
             ]);
     }
