@@ -38,7 +38,7 @@
                                     {% for order in orders %}
 
                                     {% set total = total + (order.price *  order.quantity ) %}
-                                    {% if  order.idItem.idPresentation == "Cabine" %}
+                                    {% if order.idItem.idPresentation == "Cabine" or order.idItem.idPresentation == "Vente" %}
                                     {% set totalCabine = totalCabine + (order.price) %}
                                     {% endif %}
 
@@ -55,7 +55,7 @@
                                         <span class="text--category show--mobile">  <a href="{{ path('app_item_id', { 'id': order.idItem.id }) }}">{{ order.idItem.labelFR }}</a></span>
                                             <form>
                                                 <div class="quantity">
-                                                    <label for="product-quantity--291">Quantité</label>
+                                                    <label>{{ 'quantity' | trans }}</label>
                                                     <input type="number" class="qty input-text js-update-cart-quantity" step="1" min="1" data-product="{{ order.idItem.id }}" value="{{ order.quantity }}" style="text-align: center;">
                                                     <div class="quantity-nav">
                                                         <div class="quantity-button quantity-up shop-up" >+</div>
