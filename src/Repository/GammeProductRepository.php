@@ -27,7 +27,7 @@ class GammeProductRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('g')
             ->select('g, i')
-            ->join('g.items', 'i', Join::WITH, 'i.gamme = g.id')
+            ->join('g.items', 'i', Join::WITH, 'i.gamme = g.id AND i.idPresentation IN (\'Cabine\', \'Vente\')')
             ->join('i.itemPrices', 'p', Join::WITH, 'p.idItem = i.id AND p.idSociety = :societyId')
             ->setParameter('societyId', $societyId)
             ->orderBy('g.id', 'ASC')
