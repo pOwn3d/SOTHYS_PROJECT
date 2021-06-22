@@ -203,7 +203,7 @@ $(document).ready(function () {
                 text += '<div class="js-cart-add-button" data-product-id="' + result.id + '">' + result.gamme + ' - ' + result.label + ' - ' + result.reference + '</div>';
                 return text;
             }, '');
-            $('.search-results').html(results)
+            $(this).parents('.search-wrapper').next('.search-results').html(results);
         })
     });
 
@@ -237,7 +237,7 @@ $(document).ready(function () {
                 text += '<div class="js-global-add-button" data-product-id="' + result.id + '">' + result.gamme + ' - ' + result.label + ' - ' + result.reference + '</div>';
                 return text;
             }, '');
-            $('.search-results').html(results)
+            $(this).parents('.search-wrapper').next('.search-results').html(results);
         })
     });
 
