@@ -36,10 +36,16 @@ class OrderType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $minOrderDate = new \DateTime();
+        $minOrderDate->add(\DateInterval::createFromDateString('15 days'));
+
         $builder
             ->add('dateDelivery', DateType::class, [
                 'widget' => 'single_text',
                 'label' => 'order.delivery_date',
+                'attr' => [
+                    'min' => $minOrderDate->format('Y-m-d'),
+                ]
             ])
             ->add('reference', TextType::class, [
                 'attr' => [
