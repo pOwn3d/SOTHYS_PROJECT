@@ -207,6 +207,18 @@ class ShopServices extends AbstractController
         return $order;
     }
 
+    public function updateQuantityOrderLineById($orderLineId, $quantity) {
+
+        $orderLine = $this->orderLineRepository->findOneBy([
+            'id' => $orderLineId,
+        ]);
+
+        $orderLine->setQuantity($quantity);
+
+        $this->em->persist($orderLine);
+        $this->em->flush();
+    }
+
     public function deleteItemOrderDraft($id)
     {
         $orders = $this->orderDraftRepository->findOneBy([ 'id' => $id ]);

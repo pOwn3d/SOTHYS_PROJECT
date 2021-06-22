@@ -232,6 +232,21 @@ class ShopController extends AbstractController
         return $this->redirectToRoute('app_shop');
     }
 
+/**
+     * @Route("/add-to-order/{orderLineId}/{qty}", name="app_order_edit_quantity_item")
+     */
+    public function orderEditQuantityItem(Request $request, ShopServices $shopServices): Response
+    {
+        $orderLineId = $request->get('orderLineId');
+        $quantity = $request->get('qty');
+
+        $shopServices->updateQuantityOrderLineById($orderLineId, $quantity);
+
+        return $this->redirectToRoute('app_order_edit', [
+            'id' => $orderId,
+        ]);
+    }
+
     /**
      * @Route("/order-delete-item/order/{orderId}/item/{orderLineId}", name="app_order_product_edit_delete")
      */

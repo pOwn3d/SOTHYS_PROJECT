@@ -18,8 +18,6 @@ $(document).ready(function () {
         body.stop().animate({scrollTop: 0}, 500, 'swing');
     });
 
-
-
     $("#addToCart").click(function (e) {
         e.preventDefault();
         const url = this.href;
@@ -36,59 +34,62 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on("mouseup", ".shop-down", (function () {
-            var t = $(this).parent().prev();
-            let product = t['0'].dataset.product
-            let qty = t.val() - 1
-            let promo = t['0'].dataset.promo
-            const url = "/add-to-cart/" + product + "/" + qty + "/" + promo
-
-            t.val() > 1 && (t.val(parseInt(t.val()) - 1),
-                setTimeout((function () {
-                        $.ajax({
-                            method: "POST",
-                            url: url,
-                            success: function (result) {
-                                var data = JSON.parse(result)
-                                document.getElementById('qty_update_' + product).innerHTML = data.quantity + ' x ' + data.quantityBundling
-                                document.getElementById('price_update_' + product).innerHTML = (data.price * data.quantity).toFixed(2) + ' € '
-                                document.getElementById('priceTotal').innerHTML = parseFloat(data.total).toFixed(2) + ' € '
-                                document.getElementById('cartItem').innerHTML = data.cartItem
-                                $('#clear').remove()
-                                $('#formPromo').html(data)
-                            },
-                        });
-                        t.trigger("change")
-                    }
-                ), 0))
-        }
-    ))
-
-    $(document).on("mouseup", ".shop-up", (function () {
+    function createCartUpDownCallback(direction) {
+        return function () {
             var t = $(this).parent().prev();
             let promo = t['0'].dataset.promo
-            t.val(parseInt(t.val()) + 1),
-                setTimeout((function () {
-                        let product = t['0'].dataset.product
-                        let qty = t.val()
-                        const url = "/add-to-cart/" + product + "/" + qty + "/" + promo
+            t.val(parseInt(t.val()) + direction)
+            setTimeout((function () {
+                let product = t['0'].dataset.product
+                let qty = t.val()
+                const url = "/add-to-cart/" + product + "/" + qty + "/" + promo
 
-                        $.ajax({
-                            method: "POST",
-                            url: url,
-                            success: function (result) {
-                                var data = JSON.parse(result)
-                                document.getElementById('qty_update_' + product).innerHTML = data.quantity + ' x ' + data.quantityBundling
-                                document.getElementById('price_update_' + product).innerHTML = (data.price * data.quantity).toFixed(2) + ' € '
-                                document.getElementById('priceTotal').innerHTML = parseFloat(data.total).toFixed(2) + ' € '
-                                document.getElementById('cartItem').innerHTML = data.cartItem
-                            },
-                        });
-                        t.trigger("change")
-                    }
-                ), 100)
+                $.ajax({
+                    method: "POST",
+                    url: url,
+                    success: function (result) {
+                        var data = JSON.parse(result)
+                        document.getElementById('qty_update_' + product).innerHTML = data.quantity + ' x ' + data.quantityBundling
+                        document.getElementById('price_update_' + product).innerHTML = (data.price * data.quantity).toFixed(2) + ' € '
+                        document.getElementById('priceTotal').innerHTML = parseFloat(data.total).toFixed(2) + ' € '
+                        document.getElementById('cartItem').innerHTML = data.cartItem
+                    },
+                });
+                t.trigger("change")
+            }), 100)
         }
-    ))
+    }
+
+    $(document).on("mouseup", ".shop-up", createCartUpDownCallback(+1));
+    $(document).on("mouseup", ".shop-down", createCartUpDownCallback(-1));
+
+    function createOrderUpDownCallback(direction) {
+        return function () {
+            var t = $(this).parent().prev();
+            let orderLineId = t['0'].dataset.line
+            t.val(parseInt(t.val()) + direction)
+            setTimeout((function () {
+                let qty = t.val()
+                const url = "/add-to-order/" + orderLineId + "/" + qty
+
+                $.ajax({
+                    method: "POST",
+                    url: url,
+                    success: function (result) {
+                        var data = JSON.parse(result)
+                        document.getElementById('qty_update_' + product).innerHTML = data.quantity + ' x ' + data.quantityBundling
+                        document.getElementById('price_update_' + product).innerHTML = (data.price * data.quantity).toFixed(2) + ' € '
+                        document.getElementById('priceTotal').innerHTML = parseFloat(data.total).toFixed(2) + ' € '
+                        document.getElementById('cartItem').innerHTML = data.cartItem
+                    },
+                });
+                t.trigger("change")
+            }), 100)
+        }
+    }
+
+    $(document).on("mouseup", ".order-up", createOrderUpDownCallback(+1));
+    $(document).on("mouseup", ".order-down", createOrderUpDownCallback(-1));
 
     $(".js-update-cart-quantity").on("input", function (e) {
         e.preventDefault();
