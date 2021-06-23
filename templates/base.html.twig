@@ -117,7 +117,7 @@
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <ul class="menu-item__submenu--large">
-                                                                {% for gamme in categories.getGamme(app.user.societyID) %}
+                                                                {% for gamme in categories.getProductGamme(app.user.societyID) %}
                                                                     <li class="menu-item__submenu-item">
                                                                         <a href="{{ path('app_gamme', {
                                                                             gamme_id: gamme.id,
@@ -140,7 +140,7 @@
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <ul class="menu-item__submenu--large">
-                                                                {% for gamme in categories.getGamme(app.user.societyID) %}
+                                                                {% for gamme in categories.getPLVGamme(app.user.societyID) %}
                                                                     <li class="menu-item__submenu-item">
                                                                         <a href="{{ path('app_gamme', {
                                                                             gamme_id: gamme.id,

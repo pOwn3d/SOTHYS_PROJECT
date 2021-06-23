@@ -91,10 +91,23 @@ class ItemRepository extends ServiceEntityRepository
 
     public function findProductsByGenericName($value, $societyId, $page = 1, $genericName, $type): array
     {
+
+        $typeCriteria = ' IN (\'Vente\', \'Cabine\')';
+        if($type === 'plv') {
+            $typeCriteria = ' NOT IN (\'Vente\', \'Cabine\')';
+        }
+
         $limit = 12;
-        $sql = 'select *, item.id as itemId from item   INNER JOIN generic_name on item.generic_name_id = generic_name.id
-  INNER JOIN item_price on item_price.id_item_id = item.id   AND item_price.id_society_id = ' . $societyId . '    AND item.gamme_id = ' . $value . '
-    where item.id AND id_presentation = "' . $type . '" in ( select min(id) from item group by generic_name_id )  and id_presentation = "' . $type . '" LIMIT ' . $limit .' OFFSET '.($page - 1) * $limit;
+        $sql = 'select
+            *,
+            item.id as itemId
+            from item
+            INNER JOIN generic_name on item.generic_name_id = generic_name.id
+            INNER JOIN item_price on item_price.id_item_id = item.id AND item_price.id_society_id = ' . $societyId . ' AND item.gamme_id = ' . $value . '
+            AND id_presentation ' . $typeCriteria . '
+            GROUP BY generic_name_id
+            LIMIT ' . $limit .'
+            OFFSET '.($page - 1) * $limit;
 
         $conn = $this->getEntityManager()->getConnection();
         $stmt = $conn->prepare($sql);

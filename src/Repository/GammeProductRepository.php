@@ -23,11 +23,27 @@ class GammeProductRepository extends ServiceEntityRepository
     /**
      * @return GammeProduct[] Returns an array of GammeProduct objects
      */
-    public function findGammeWithPrice($societyId)
+    public function findProductGamme($societyId)
     {
         $query = $this->createQueryBuilder('g')
             ->select('g, i')
             ->join('g.items', 'i', Join::WITH, 'i.gamme = g.id AND i.idPresentation IN (\'Cabine\', \'Vente\')')
+            ->join('i.itemPrices', 'p', Join::WITH, 'p.idItem = i.id AND p.idSociety = :societyId')
+            ->setParameter('societyId', $societyId)
+            ->orderBy('g.id', 'ASC')
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
+    /**
+     * @return GammeProduct[] Returns an array of GammeProduct objects
+     */
+    public function findPLVGamme($societyId)
+    {
+        $query = $this->createQueryBuilder('g')
+            ->select('g')
+            ->join('g.items', 'i', Join::WITH, 'i.gamme = g.id AND i.idPresentation NOT IN (\'Cabine\', \'Vente\')')
             ->join('i.itemPrices', 'p', Join::WITH, 'p.idItem = i.id AND p.idSociety = :societyId')
             ->setParameter('societyId', $societyId)
             ->orderBy('g.id', 'ASC')

@@ -18,9 +18,14 @@ class CategoryServices
         $this->gammeProductRepository = $gammeProductRepository;
     }
 
-    public function getGamme($societyId)
+    public function getProductGamme($societyId)
     {
-        return $this->gammeProductRepository->findGammeWithPrice($societyId);
+        return $this->gammeProductRepository->findProductGamme($societyId);
+    }
+
+    public function getPLVGamme($societyId)
+    {
+        return $this->gammeProductRepository->findPLVGamme($societyId);
     }
 
 }
