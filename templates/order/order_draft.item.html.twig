@@ -10,10 +10,13 @@
                         {% include 'flash_messages.html.twig' %}
                     </div>
 
-                    <div class="col-6">
+                    <div class="col-4">
                         {% include 'order/order_details.html.twig' %}
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
+                        {% include 'order/order_address.html.twig' %}
+                    </div>
+                    <div class="col-4">
                         {% if order.idStatut == 1 %}
                             <div class="checkout-wrapper">
                                 <a href="{{ path('app_order_edit', { 'id': order.id }) }}" class=" checkout button button--primary-fill">

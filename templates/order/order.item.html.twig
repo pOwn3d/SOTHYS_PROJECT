@@ -12,18 +12,11 @@
                         {% include 'flash_messages.html.twig' %}
                     </div>
 
-                    <div class="col-6">
+                    <div class="col-4">
                         {% include 'order/order_details.html.twig' %}
                     </div>
-                    <div class="col-6">
-                        SOTHYS EXPORT <br/>
-                        <h3> Adresse Facturation</h3><br>
-                        REGINA'S BEAUTY<br/>
-                        Israël<br/>
-                        {% if order.address %}
-                            <h3> {{ 'order.delivery_address' | trans }}</h3><br>
-                            {{ 'transport_mode' | trans }}: {{ order.address }}<br/>
-                        {% endif %}
+                    <div class="col-4">
+                        {% include 'order/order_address.html.twig' %}
                     </div>
                 </div>
                 <table class="compte__commandes table-responsive">

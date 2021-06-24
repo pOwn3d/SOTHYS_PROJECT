@@ -105,7 +105,10 @@ class ShopController extends AbstractController
     public function orderPublish(CartItem $cartItem, Request $request, ShopServices $shopServices): Response
     {
         $society = $this->getUser()->getSocietyID();
-        $form = $this->createForm(OrderType::class);
+        $form = $this->createForm(OrderType::class, null, [
+            'societyId' => $society->getId(),
+        ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -181,7 +184,10 @@ class ShopController extends AbstractController
         $id = $request->get('id');
         $order = $orderServices->getOrderByID($id);
 
-        $form = $this->createForm(OrderType::class);
+        $society = $this->getUser()->getSocietyID();
+        $form = $this->createForm(OrderType::class, null, [
+            'societyId' => $society->getId(),
+        ]);
         $form->handleRequest($request);
 
         if(!$form->isSubmitted()) {
@@ -196,7 +202,7 @@ class ShopController extends AbstractController
                 $formData->setIdStatut(1);
             }
 
-            $order   = $shopServices->updateOrder($order, $form->getData());
+            $order = $shopServices->updateOrder($order, $form->getData());
             if ($order != null) {
                 return $this->redirectToRoute('app_order');
             }
