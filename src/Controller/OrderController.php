@@ -49,6 +49,7 @@ class OrderController extends AbstractController
     public function addToCart(Request $request, ShopServices $shopServices, OrderDraftServices $orderDraftServices, CartItem $cartItem)
     {
 
+        // TODO :: Récupérer les info de FreeRestockingRules pour mettre à jour le panier
         $itemId = $request->get('item');
         $promo = $request->get('promo');
         if ($promo == 'undefined') {

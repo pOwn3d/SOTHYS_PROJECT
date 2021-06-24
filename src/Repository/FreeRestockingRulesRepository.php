@@ -19,6 +19,15 @@ class FreeRestockingRulesRepository extends ServiceEntityRepository
         parent::__construct($registry, FreeRestockingRules::class);
     }
 
+    public function freeRestockingRulesSociety($value)
+    {
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.societyId = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return FreeRestockingRules[] Returns an array of FreeRestockingRules objects
     //  */

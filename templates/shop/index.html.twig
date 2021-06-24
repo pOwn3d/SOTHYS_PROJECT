@@ -70,26 +70,32 @@
                                         <td class="product-priceUnit">
                                             <span class="text--category">  {{ order.price }} €</span>
                                         </td>
-                                        <td class="product-priceTotal">
-                                            <span class="text--category" id="price_update_{{ order.idItem.id }}">{{ order.price *  order.quantity|round }} € </span>
-                                        </td>
-                                        <td>
-                                            <a href="{{ path('app_order_product_delete', { 'id': order.id }) }}"><i class="icon icon-close"></i></a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
+                                    <td class="product-priceTotal">
+                                        <span class="text--category" id="price_update_{{ order.idItem.id }}">{{ order.price *  order.quantity|round }} € </span>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('app_order_product_delete', { 'id': order.id }) }}"><i class="icon icon-close"></i></a>
+                                    </td>
+                                </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
+
+                            {% for freeRestockingRule in freeRestockingRules %}
+                                <hr>
+                                <p>   {{ freeRestockingRule.getLabel(app.request.locale) }}</p>
+                            {% endfor %}
+
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="cart--checkout-total">
                             <div class="cart--totals cart--totals-default">
-                                <h3>{{'Cart' | trans}}</h3>
+                                <h3>{{ 'Cart' | trans }}</h3>
                                 <table class="table-responsive cart--table-totals">
                                     <tbody>
                                     <tr class="cart-subtotal">
-                                        <th>{{'Subtotal' | trans}}</th>
+                                        <th>{{ 'Subtotal' | trans }}</th>
                                         <td></td>
                                     </tr>
                                     <tr class="order-total">

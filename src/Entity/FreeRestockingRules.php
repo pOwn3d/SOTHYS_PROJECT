@@ -191,4 +191,13 @@ class FreeRestockingRules
 
         return $this;
     }
+
+    public function getLabel($locale): ?string
+    {
+        if($locale === 'fr-FR') {
+            return $this->getLabelFr();
+        }
+        return $this->getLabelEN();
+    }
+
 }
