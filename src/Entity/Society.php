@@ -76,6 +76,11 @@ class Society
      */
     private $paymentMethod;
 
+    /**
+     * @ORM\OneToMany(targetEntity=FreeRestockingRules::class, mappedBy="societyId")
+     */
+    private $freeRestockingRules;
+
 
     public function __construct()
     {
@@ -87,6 +92,7 @@ class Society
         $this->customerIncoterms = new ArrayCollection();
         $this->promotions = new ArrayCollection();
         $this->addresses = new ArrayCollection();
+        $this->freeRestockingRules = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -357,6 +363,36 @@ class Society
     public function setPaymentMethod(?PaymentMethod $paymentMethod): self
     {
         $this->paymentMethod = $paymentMethod;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FreeRestockingRules[]
+     */
+    public function getFreeRestockingRules(): Collection
+    {
+        return $this->freeRestockingRules;
+    }
+
+    public function addFreeRestockingRule(FreeRestockingRules $freeRestockingRule): self
+    {
+        if (!$this->freeRestockingRules->contains($freeRestockingRule)) {
+            $this->freeRestockingRules[] = $freeRestockingRule;
+            $freeRestockingRule->setSocietyId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFreeRestockingRule(FreeRestockingRules $freeRestockingRule): self
+    {
+        if ($this->freeRestockingRules->removeElement($freeRestockingRule)) {
+            // set the owning side to null (unless already changed)
+            if ($freeRestockingRule->getSocietyId() === $this) {
+                $freeRestockingRule->setSocietyId(null);
+            }
+        }
 
         return $this;
     }

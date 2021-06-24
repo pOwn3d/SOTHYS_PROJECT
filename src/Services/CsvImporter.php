@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Entity\Address as EntityAddress;
 use App\Entity\CustomerIncoterm;
+use App\Entity\FreeRestockingRules;
 use App\Entity\GammeProduct;
 use App\Entity\GenericName;
 use App\Entity\Incoterm;
@@ -505,6 +506,41 @@ class CsvImporter
     public function remove()
     {
         return $this->em->getRepository(Item::class)->removeOldProduct();
-        // SELECT * FROM item LEFT JOIN item_price ON item.id = item_price.id_item_id WHERE price is null
+    }
+
+
+    /**
+     * @throws \League\Csv\InvalidArgument
+     * @throws \League\Csv\UnavailableFeature
+     * @throws \League\Csv\UnableToProcessCsv
+     */
+    public function freeRulesReasort()
+    {
+        $csv = Reader::createFromPath('../public/csv/RegleStockClient.csv');
+        $csv->setOutputBOM(Reader::BOM_UTF8);
+        $csv->addStreamFilter('convert.iconv.ISO-8859-15/UTF-8');
+        $csv->setDelimiter(';');
+        $csv->fetchColumn();
+
+        foreach ($csv as $row) {
+
+            $society = $this->em->getRepository(Society::class)->findOneBy(['idCustomer' => $row[0]]);
+            $freeRestockingRules = new FreeRestockingRules();
+            $freeRestockingRules
+                ->setSocietyID($society)
+                ->setTypeOfRule($row[3])
+                ->setValueCondition($row[4])
+                ->setObtention($row[5])
+                ->setValueRule($row[6])
+                ->setAmountStep($row[7])
+                ->setAmountQuantity($row[8])
+                ->setValidity($row[9])
+                ->setLabelFr($row[10])
+                ->setLabelEn($row[11]);
+
+            $this->em->persist($freeRestockingRules);
+            $this->em->flush();
+        }
+
     }
 }

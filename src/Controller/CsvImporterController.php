@@ -209,4 +209,16 @@ class CsvImporterController extends AbstractController
         $csvImporter->remove();
         dd();
     }
+
+    /**
+     * @Route("/import-free-restocking-rules", name="import_freerestocking_rules")
+     * @param CsvImporter $csvImporter
+     *
+     * @return Response
+     */
+    public function importFreeRestockingRules(CsvImporter $csvImporter): Response
+    {
+       $csvImporter->freeRulesReasort();
+        dd();
+    }
 }
