@@ -71,12 +71,12 @@ class PromoServices
     }
 
     //   TODO :: ETAPE 1  ::
-    public function promoItem($promoItems)
+    public function promoItem($promoItems, $promoID)
     {
-        $order = new OrderDraft();
         foreach ($promoItems as $promoItem) {
 
-            $promo = $this->promotionRepository->findOneBy(["id" => $promoItem->getPromotions()->getOwner()->getId()]);
+            $order = new OrderDraft();
+            $promo = $this->promotionRepository->findOneBy(["id" => $promoID]);
             $itemInfo = $this->itemRepository->findProduct($promoItem->getItem());
             $order->setIdItem($promoItem->getItem())
                 ->setIdSociety($this->security->getUser()->getSocietyID())
@@ -195,8 +195,7 @@ class PromoServices
         }
 
         // TODO :: ETAPE 1  ::  -- Enregistrer le(s) produit(s) en promotion qui ce trouve dans promotion_item
-        $this->promoItem($promo->getPromotionItem());
-
+        $this->promoItem($promo->getPromotionItem(), $id);
         //  TODO :: ETAPE 2  ::  -- Enregistrer les produits dans Free_Rules en fonction des conditions de gratuité
         $this->promoItemRules($promo->getFreeRules());
 

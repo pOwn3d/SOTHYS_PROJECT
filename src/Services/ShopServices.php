@@ -7,6 +7,7 @@ use App\Entity\Order;
 use App\Entity\OrderDraft;
 use App\Entity\OrderLine;
 use App\Entity\Society;
+use App\Repository\FreeRestockingRulesRepository;
 use App\Repository\IncotermRepository;
 use App\Repository\ItemPriceRepository;
 use App\Repository\ItemRepository;
@@ -31,6 +32,7 @@ class ShopServices extends AbstractController
     private SocietyRepository $societyRepository;
     private PromoServices $promoServices;
     private PromotionRepository $promotionRepository;
+    private FreeRestockingRulesRepository $freeRestockingRulesRepository;
 
 
     public function __construct(
@@ -44,10 +46,10 @@ class ShopServices extends AbstractController
         PromotionItemRepository $promotionItemRepository,
         SocietyRepository $societyRepository,
         PromoServices $promoServices,
-        PromotionRepository $promotionRepository
+        PromotionRepository $promotionRepository,
+        FreeRestockingRulesRepository $freeRestockingRulesRepository
     ) {
         $this->itemRepository = $itemRepository;
-
         $this->itemPriceRepository = $itemPriceRepository;
         $this->orderDraftRepository = $orderDraftRepository;
         $this->em = $em;
@@ -58,6 +60,7 @@ class ShopServices extends AbstractController
         $this->societyRepository = $societyRepository;
         $this->promoServices = $promoServices;
         $this->promotionRepository = $promotionRepository;
+        $this->freeRestockingRulesRepository = $freeRestockingRulesRepository;
     }
 
     public function getPriceItemIDSociety($item, $society)
@@ -105,6 +108,7 @@ class ShopServices extends AbstractController
                 ->setQuantityBundling($item->getAmountBulking())
                 ->setState(0)
                 ->setPromo(0)
+                ->setPromotionId($promo)
             ;
             $this->em->persist($order);
             $this->em->flush();
@@ -234,6 +238,11 @@ class ShopServices extends AbstractController
 
         $this->em->remove($orderLine);
         $this->em->flush();
+    }
+
+    public function getFreeRestockingRules($society)
+    {
+        return $this->freeRestockingRulesRepository->freeRestockingRulesSociety($society);
     }
 
 }
