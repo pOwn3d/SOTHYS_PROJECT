@@ -234,10 +234,11 @@ class ShopController extends AbstractController
     }
 
 /**
-     * @Route("/add-to-order/{orderLineId}/{qty}", name="app_order_edit_quantity_item")
+     * @Route("/add-to-order/{orderId}/{orderLineId}/{qty}", name="app_order_edit_quantity_item")
      */
     public function orderEditQuantityItem(Request $request, ShopServices $shopServices): Response
     {
+        $orderId = $request->get('orderId');
         $orderLineId = $request->get('orderLineId');
         $quantity = $request->get('qty');
 

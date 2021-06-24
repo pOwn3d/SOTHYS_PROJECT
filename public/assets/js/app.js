@@ -66,25 +66,19 @@ $(document).ready(function () {
     function createOrderUpDownCallback(direction) {
         return function () {
             var t = $(this).parent().prev();
+            let orderId = t['0'].dataset.order
             let orderLineId = t['0'].dataset.line
             t.val(parseInt(t.val()) + direction)
-            setTimeout((function () {
-                let qty = t.val()
-                const url = "/add-to-order/" + orderLineId + "/" + qty
+            let qty = t.val()
+            const url = "/add-to-order/" + orderId + '/' + orderLineId + "/" + qty
 
-                $.ajax({
-                    method: "POST",
-                    url: url,
-                    success: function (result) {
-                        var data = JSON.parse(result)
-                        document.getElementById('qty_update_' + product).innerHTML = data.quantity + ' x ' + data.quantityBundling
-                        document.getElementById('price_update_' + product).innerHTML = (data.price * data.quantity).toFixed(2) + ' € '
-                        document.getElementById('priceTotal').innerHTML = parseFloat(data.total).toFixed(2) + ' € '
-                        document.getElementById('cartItem').innerHTML = data.cartItem
-                    },
-                });
-                t.trigger("change")
-            }), 100)
+            $.ajax({
+                method: "POST",
+                url: url,
+                success: function (result) {
+                    window.location.reload();
+                },
+            });
         }
     }
 

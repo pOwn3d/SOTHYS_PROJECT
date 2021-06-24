@@ -14,11 +14,13 @@
                         {% include 'order/order_details.html.twig' %}
                     </div>
                     <div class="col-6">
-                        <div class="checkout-wrapper">
-                            <a href="{{ path('app_order_edit', { 'id': order.id }) }}" class=" checkout button button--primary-fill">
-                                {{ 'order.edit' | trans }}
-                            </a>
-                        </div>
+                        {% if order.idStatut == 1 %}
+                            <div class="checkout-wrapper">
+                                <a href="{{ path('app_order_edit', { 'id': order.id }) }}" class=" checkout button button--primary-fill">
+                                    {{ 'order.edit' | trans }}
+                                </a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
 
