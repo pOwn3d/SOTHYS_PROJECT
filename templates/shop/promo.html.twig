@@ -27,7 +27,7 @@
                                 </thead>
                                 <tbody id="tbodyPromo">
                                 {% set totalCabine = 0 %}
-                                 {% set total = 0 %}
+                                {% set total = 0 %}
                                 {% for order in orders %}
                                     {% set total = total + (order.price *  order.quantity ) %}
                                     {% if  order.idItem.idPresentation == "Cabine" %}
@@ -42,7 +42,7 @@
                                             <td class="product-quantity">
                                                 <span class="text--category show--mobile"> {{ order.idItem.labelFR }}</span>
                                                 <div class="quantity">
-                                                    <label for="product-quantity--291">Quantité</label>
+                                                    <label>{{ 'quantity' | trans }}</label>
                                                     <input type="number" data-promo="{{ order.promotionId.id }}" class="qty input-text js-update-cart-quantity-promo" step="1" min="1" data-product="{{ order.idItem.id }}" value="{{ order.quantity }}"
                                                            style="text-align: center;">
                                                     <div class="quantity-nav">

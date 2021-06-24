@@ -88,10 +88,8 @@ class ShopController extends AbstractController
     public function panierPromo(ShopServices $shopServices, CartItem $cartItem, PromoServices $promoServices): Response
     {
         $society = $this->getUser()->getSocietyID();
-        $orders = $shopServices->getOrderDraftPromo($society);;
+        $orders = $shopServices->getOrderDraftPromo($society);
         $promo = $promoServices->getPromoSociety();
-
-
 
         return $this->render('shop/promo.html.twig', [
             'controller_name' => 'ShopController',
@@ -146,7 +144,6 @@ class ShopController extends AbstractController
      */
     public function orderEdit(Request $request, OrderServices $orderServices, CartItem $cartItem): Response
     {
-
         $id = $request->get('id');
         $order = $orderServices->getOrderByID($id);
         $orderLines = $orderServices->getOrderLinesByID($id);
