@@ -26,8 +26,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class OrderType extends AbstractType
 {
 
-    private $security;
-
     public function __construct(Security $security, TranslatorInterface $translator)
     {
         $this->security = $security;
@@ -54,7 +52,7 @@ class OrderType extends AbstractType
             ])
             ->add("incoterm", EntityType::class, [
                 'class'         => CustomerIncoterm::class,
-                'query_builder' => function (EntityRepository $er) {
+                'query_builder' => function (EntityRepository $er) use ($options) {
                     return $er->createQueryBuilder('u')
                         ->innerJoin(
                             Incoterm::class,    // Entity
@@ -63,7 +61,7 @@ class OrderType extends AbstractType
                             'p.id = u.reference' // Join columns
                         )
                         ->andWhere('u.societyCustomerIncoterm = :societyId')
-                        ->setParameter('societyId', $this->security->getUser()->getSocietyID()->getId());
+                        ->setParameter('societyId', $options['societyId']);
                 },
                 'choice_label' => function (CustomerIncoterm $customerIncoterm) {
                     return $customerIncoterm->getModeTransport()->getName($this->translator->getLocale()) . ' - ' . $customerIncoterm->getReference() . ' : ' . $customerIncoterm->getCity();
@@ -71,7 +69,7 @@ class OrderType extends AbstractType
             ])
             ->add('address', EntityType::class, [
                 'class' => Address::class,
-                'query_builder' => function (EntityRepository $er) {
+                'query_builder' => function (EntityRepository $er) use ($options) {
                     return $er->createQueryBuilder('a')
                         ->innerJoin(
                             Society::class,
@@ -80,7 +78,8 @@ class OrderType extends AbstractType
                             's.id = a.society'
                         )
                         ->andWhere('s.id = :societyId')
-                        ->setParameter('societyId', $this->security->getUser()->getSocietyID());
+                        ->andWhere('a.label LIKE \'L%\'')
+                        ->setParameter('societyId', $options['societyId']);
                 },
                 'choice_label' => function(Address $address) {
                     return $address->getLabel() . ' - ' . $address->getAddress1() . ' ' . $address->getPostalCode() . ' ' . $address->getCity() . ' ' . $address->getCountry();
@@ -88,7 +87,7 @@ class OrderType extends AbstractType
             ])
             ->add('paymentMethod', EntityType::class, [
                 'class' => PaymentMethod::class,
-                'query_builder' => function(EntityRepository $er) {
+                'query_builder' => function(EntityRepository $er) use ($options) {
                     return $er->createQueryBuilder('p')
                     ->innerJoin(
                         Society::class,
@@ -97,7 +96,7 @@ class OrderType extends AbstractType
                         's.paymentMethod = p.id'
                     )
                     ->andWhere('s.id = :societyId')
-                    ->setParameter('societyId', $this->security->getUser()->getSocietyID());
+                    ->setParameter('societyId', $options['societyId']);
                 },
                 'choice_label' => function(PaymentMethod $paymentMethod) {
                     return $paymentMethod->getLabel($this->translator->getLocale());
@@ -110,6 +109,7 @@ class OrderType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Order::class,
             'allow_extra_fields' => true,
+            'societyId' => null,
         ]);
     }
 }

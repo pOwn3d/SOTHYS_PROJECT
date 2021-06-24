@@ -240,6 +240,19 @@ class ShopServices extends AbstractController
         $this->em->flush();
     }
 
+    public function emptyCart($societyId) {
+
+        $orderDrafts = $this->orderDraftRepository->findBy([
+            'idSociety' => $societyId,
+        ]);
+
+        foreach($orderDrafts as $orderDraft) {
+            $this->em->remove($orderDraft);
+        }
+
+        $this->em->flush();
+    }
+
     public function getFreeRestockingRules($society)
     {
         return $this->freeRestockingRulesRepository->freeRestockingRulesSociety($society);
