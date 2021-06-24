@@ -69,6 +69,9 @@ Confirm:
 
 Cart: 'Récapitulatif panier'
 
+cart:
+    empty: 'Vider le panier'
+
 Subtotal: 'Sous-total'
 
 Validate:

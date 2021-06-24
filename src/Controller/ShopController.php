@@ -261,4 +261,15 @@ class ShopController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{_locale}/empty-cart", name="app_empty_cart")
+     */
+    public function emptyCart(ShopServices $shopServices)
+    {
+
+        $societyId = $this->getUser()->getSocietyID()->getId();
+
+        $shopServices->emptyCart($societyId);
+        return $this->redirectToRoute("app_shop");
+    }
 }

@@ -68,8 +68,10 @@ save: 'save'
 Confirm:
     password: 'Confirm password'
 
-
 Cart: 'Cart'
+
+cart:
+    empty: 'Empty cart'
 
 Subtotal: 'Sub-total'
 
