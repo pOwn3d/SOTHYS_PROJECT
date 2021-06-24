@@ -1,13 +1,18 @@
 <div class="col-4 col-md-4">
     <ul class="compte__menu">
         <li>
-            <a class="active" href="{{ path('app_account') }}">
-                {{ 'my.account' | trans }}
+            <a class="active" href="{{ path('app_shop') }}">
+                {{ 'menu.do_order' | trans }}
             </a>
         </li>
         <li>
             <a class="active" href="{{ path('app_order') }}">
-                {{ 'my.orders' | trans }}
+                {{ 'menu.order' | trans }}
+            </a>
+        </li>
+        <li>
+            <a class="active" href="{{ path('app_portfolio') }}">
+                {{ 'menu.porfolio' | trans }}
             </a>
         </li>
     </ul>

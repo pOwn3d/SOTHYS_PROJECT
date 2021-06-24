@@ -2,6 +2,11 @@ my:
     orders: 'Mes commandes'
     account: 'Mon compte'
 
+menu:
+    order: 'Mes commandes'
+    do_order: 'Passer une commande'
+    porfolio: 'Portefeuille de commandes'
+
 products: 'produits'
 
 customer:

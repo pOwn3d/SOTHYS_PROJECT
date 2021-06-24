@@ -2,6 +2,11 @@ my:
     orders: 'My orders'
     account: 'My account'
 
+menu:
+    order: 'My orders'
+    do_order: 'New order'
+    porfolio: 'Order porfolio'
+
 products: 'products'
 
 customer:
