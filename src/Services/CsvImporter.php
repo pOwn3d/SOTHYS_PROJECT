@@ -18,6 +18,7 @@ use App\Entity\PaymentMethod;
 use App\Entity\Society;
 use App\Entity\TransportMode;
 use App\Entity\User;
+use App\Repository\FreeRestockingRulesRepository;
 use App\Repository\GammeProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
@@ -514,8 +515,15 @@ class CsvImporter
      * @throws \League\Csv\UnavailableFeature
      * @throws \League\Csv\UnableToProcessCsv
      */
-    public function freeRulesReasort()
+    public function freeRulesReasort(): string
     {
+        $dataBdd = $this->em->getRepository(FreeRestockingRules::class)->findAll();
+
+        foreach ($dataBdd as $data){
+            $this->em->remove($data);
+            $this->em->flush();
+        }
+
         $csv = Reader::createFromPath('../public/csv/RegleStockClient.csv');
         $csv->setOutputBOM(Reader::BOM_UTF8);
         $csv->addStreamFilter('convert.iconv.ISO-8859-15/UTF-8');
@@ -540,7 +548,8 @@ class CsvImporter
 
             $this->em->persist($freeRestockingRules);
             $this->em->flush();
-        }
 
+        }
+        return "Ok";
     }
 }
