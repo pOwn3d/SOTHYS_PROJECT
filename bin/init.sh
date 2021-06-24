@@ -71,3 +71,7 @@ echo ""
 echo "localhost$port/import-remove-old-item"
 curl -o /dev/null "localhost$port/import-remove-old-item"
 echo ""
+
+echo "localhost$port/import-free-restocking-rules"
+curl -o /dev/null "localhost$port/import-free-restocking-rules"
+echo ""

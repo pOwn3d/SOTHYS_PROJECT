@@ -29,6 +29,7 @@ class ShopController extends AbstractController
     public function index(ShopServices $shopServices, CartItem $cartItem, Request $request, SluggerInterface $slugger, ItemServices $itemService): Response
     {
         $society = $this->getUser()->getSocietyID();
+       $freeRestockingRules = $shopServices->getFreeRestockingRules($society);
         $errors = [];
 
         $form = $this->createForm(CsvOrderUploaderType::class);
@@ -79,6 +80,7 @@ class ShopController extends AbstractController
             'cartItem'        => $cartItem->getItemCart($society->getId()),
             'form'            => $form->createView(),
             'errors'          => $errors,
+            'freeRestockingRules' => $freeRestockingRules
         ]);
     }
 

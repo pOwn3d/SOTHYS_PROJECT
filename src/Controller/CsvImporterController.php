@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Services\CsvImporter;
 use Exception;
+use League\Csv\InvalidArgument;
+use League\Csv\UnableToProcessCsv;
+use League\Csv\UnavailableFeature;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -218,7 +221,10 @@ class CsvImporterController extends AbstractController
      */
     public function importFreeRestockingRules(CsvImporter $csvImporter): Response
     {
-       $csvImporter->freeRulesReasort();
+        try {
+            $csvImporter->freeRulesReasort();
+        } catch (InvalidArgument | UnavailableFeature | UnableToProcessCsv $e) {
+        }
         dd();
     }
 }
