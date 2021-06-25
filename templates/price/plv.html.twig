@@ -7,6 +7,23 @@
                         {{ name }}
                     </h2>
                     <table>
+                        <thead>
+                            <td>
+                                {{ 'Product' | trans }}
+                            </td>
+                            <td>
+                                {{ 'Code' | trans }}
+                            </td>
+                            <td>
+                                {{ 'Code barre' | trans }}
+                            </td>
+                            <td>
+                                {{ 'price.unit' | trans }}
+                            </td>
+                            <td>
+                                {{ 'quantity' | trans }}
+                            </td>
+                        </thead>
                         {% for price in gamme %}
                         <tr>
                             <td>
