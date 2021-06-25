@@ -1,0 +1,34 @@
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 aos-init aos-animate" data-aos="fade-up">
+                {% for name, gamme in prices %}
+                    <h2>
+                        {{ name }}
+                    </h2>
+                    <table>
+                        {% for price in gamme %}
+                        <tr>
+                            <td>
+                                {{ price.label(app.request.locale) }}
+                            </td>
+                            <td>
+                                {{ price.itemId }}
+                            </td>
+                            <td>
+                                {{ price.codeEAN }}
+                            </td>
+                            <td>
+                                {{ price.itemPrices.first().price|number_format(2) }}
+                            </td>
+                            <td>
+                                {{ price.capacity(app.request.locale) }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+<section>

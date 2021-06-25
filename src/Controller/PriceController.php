@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Services\PriceService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -18,20 +20,26 @@ class PriceController extends AbstractController
     }
 
     /**
-     * @Route("/price/all", name="app_price_all")
+     * @Route("/{_locale}/price/all", name="app_price_all")
      */
     public function downloadAllPrice(): Response
     {
-        return $this->render('price/index.html.twig', [
+        return $this->render('price/all.html.twig', [
         ]);
     }
 
     /**
-     * @Route("/price/plv", name="app_price_plv")
+     * @Route("/{_locale}/price/plv", name="app_price_plv")
      */
-    public function downloadPLVPrice(): Response
+    public function downloadPlvPrice(Request $request, PriceService $priceService): Response
     {
-        return $this->render('price/index.html.twig', [
+
+        $societyId = $this->getUser()->getSocietyId()->getId();
+        $prices = $priceService->getPlvPrices($societyId, $request->getLocale());
+
+        return $this->render('price/plv.html.twig', [
+            'societyId' => $societyId,
+            'prices' => $prices,
         ]);
     }
 }

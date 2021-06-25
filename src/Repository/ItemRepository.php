@@ -134,4 +134,15 @@ class ItemRepository extends ServiceEntityRepository
         return $pagination;
     }
 
+    public function findAllPlv($societyId)
+    {
+        return $this->createQueryBuilder('i')
+            ->join('i.itemPrices', 'ip', Join::WITH, 'i.id = ip.idItem AND ip.idSociety = :societyId')
+            ->join('i.gamme', 'g')
+            ->where('i.idPresentation = \'PLV\'')
+            ->setParameter('societyId', $societyId)
+            ->getQuery()
+            ->getResult();
+    }
+
 }
