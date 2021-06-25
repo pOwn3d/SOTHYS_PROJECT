@@ -6,6 +6,7 @@ menu:
     order: 'Mes commandes'
     do_order: 'Passer une commande'
     portfolio: 'Portefeuille de commandes'
+    price: 'Tarifs'
 
 products: 'produits'
 
@@ -183,3 +184,7 @@ status:
     done: 'Traité'
 
 address: 'Adresse'
+
+price_download:
+    all: 'Télécharger les tarifs 2021 en pdf'
+    plv: 'Télécharger les tarifs PLV 2021 en pdf'

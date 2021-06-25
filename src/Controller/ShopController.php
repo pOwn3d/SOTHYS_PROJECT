@@ -219,7 +219,7 @@ class ShopController extends AbstractController
     }
 
     /**
-     * @Route("/order-delete-item/{id}", name="app_order_product_delete")
+     * @Route("/{_locale}/order-delete-item/{id}", name="app_order_product_delete")
      */
     public function orderDeleteItem(Request $request, ShopServices $shopServices, OrderDraftRepository $orderDraftRepository): Response
     {

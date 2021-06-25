@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{% endblock %}
+
+{% block body %}
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 aos-init aos-animate" data-aos="fade-up">
+                    <div class="title--border title--border--margin">
+                        <h2> {{ 'menu.price' | trans }}</h2>
+                    </div>
+                </div>
+
+                {% include 'components/nav_customer.html.twig' %}
+
+                <div class="col-12 col-md-8">
+                    <a href="{{ path('app_price_all') }}">
+                        {{ 'price_download.all' | trans }}
+                    </a>
+
+                    <br />
+
+                    <a href="{{ path('app_price_plv') }}">
+                        {{ 'price_download.plv' | trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    <section>
+
+{% endblock %}

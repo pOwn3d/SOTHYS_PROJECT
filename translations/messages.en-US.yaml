@@ -6,6 +6,7 @@ menu:
     order: 'My orders'
     do_order: 'New order'
     portfolio: 'Order porfolio'
+    price: 'Prices'
 
 products: 'products'
 
@@ -182,3 +183,7 @@ status:
     done: 'Done'
 
 address: 'Address'
+
+price_download:
+    all: 'Download the 2021 prices as pdf'
+    plv: 'Download the 2021 PLV prices as pdf'
