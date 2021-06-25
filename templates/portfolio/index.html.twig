@@ -1,20 +1,59 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Hello PortfolioController!{% endblock %}
-
+{% block title %}Coedi Sothys -  {{ 'menu.portfolio' | trans }}{% endblock %}
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div id="content" role="main">
+        <section class="section section--compte">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 aos-init aos-animate" data-aos="fade-up">
+                        {% include 'flash_messages.html.twig' %}
+                        <div class="title--border title--border--margin">
+                            <h2> {{ 'menu.portfolio' | trans }}</h2>
+                        </div>
+                    </div>
+                    {% include 'components/nav_customer.html.twig' %}
+                    <div class="col-12 col-md-8">
+                        <table class="compte__commandes table-responsive">
+                            <thead>
+                            <tr>
+                                <th>{{'reference' | trans}}</th>
+                                <th>{{'order.creation_date' | trans}}</th>
+                                <th>{{'order.delivery_date' | trans}}</th>
+                                <th>{{'price.total' | trans}}</th>
+                                <th>{{'state' | trans}}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                    <tr>
+                                        <td class="ref">
+                                            {% if order.idOrderX3 != null %}
+                                                <a href="{{ path('app_order_item_id' , { 'id': order.idOrderX3 }) }}">{{ order.reference }} </a>
+                                            {% else %}
+                                                <a href="{{ path('app_order_item_id_draft' , { 'id': order.id }) }}">{{ order.reference }} </a>
+                                            {% endif %}
+                                        </td>
+                                        <td class="date">{{ order.dateOrder|date('d/m/Y') }}</td>
+                                        <td class="date">{{ order.dateDelivery|date('d/m/Y') }}</td>
+                                        <td class="price">{{ order.priceOrder }} €</td>
+                                        <td class="status">
+                                            {% if order.idStatut == 1 %}
+                                                <span class="status status--pendind">{{ 'status.draft' | trans }}</span>
+                                            {% elseif  order.idStatut == 2 %}
+                                                <span class="status status--processing">{{ 'status.pending' | trans }}</span>
+                                            {% else %}
+                                                <span class="status status--completed">{{ 'status.done' | trans }}</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Damien Fayol/Desktop/Workspace/SOTHYS_PROJECT/src/Controller/PortfolioController.php'|file_link(0) }}">src/Controller/PortfolioController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Damien Fayol/Desktop/Workspace/SOTHYS_PROJECT/templates/portfolio/index.html.twig'|file_link(0) }}">templates/portfolio/index.html.twig</a></code></li>
-    </ul>
-</div>
 {% endblock %}

@@ -55,6 +55,20 @@ class OrderRepository extends ServiceEntityRepository
             ;
     }
 
+    public function findPortfolioOrders(int $societyId)
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.SocietyID = :societyId')
+            ->andWhere('o.idStatut IN (:ids)')
+            ->setParameter('societyId', $societyId)
+            // TODO : get proper status id
+            ->setParameter('ids', [10, 11])
+            ->orderBy('o.dateOrder', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     /*
     public function findOneBySomeField($value): ?Order
     {

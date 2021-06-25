@@ -5,7 +5,7 @@ my:
 menu:
     order: 'My orders'
     do_order: 'New order'
-    porfolio: 'Order porfolio'
+    portfolio: 'Order porfolio'
 
 products: 'products'
 

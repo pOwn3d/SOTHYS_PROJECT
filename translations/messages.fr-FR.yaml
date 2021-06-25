@@ -5,7 +5,7 @@ my:
 menu:
     order: 'Mes commandes'
     do_order: 'Passer une commande'
-    porfolio: 'Portefeuille de commandes'
+    portfolio: 'Portefeuille de commandes'
 
 products: 'produits'
 
