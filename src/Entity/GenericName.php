@@ -114,4 +114,13 @@ class GenericName
 
         return $this;
     }
+
+    public function getName($locale) {
+
+        if($locale === 'fr-FR') {
+            return $this->getNameFR();
+        }
+
+        return $this->getNameEN();
+    }
 }

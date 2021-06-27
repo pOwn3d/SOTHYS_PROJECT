@@ -22,9 +22,16 @@ class PriceController extends AbstractController
     /**
      * @Route("/{_locale}/price/all", name="app_price_all")
      */
-    public function downloadAllPrice(): Response
+    public function downloadAllPrice(Request $request, PriceService $priceService): Response
     {
+        $societyId = $this->getUser()->getSocietyId()->getId();
+        $prices = $priceService->getAllPrices($societyId, $request->getLocale());
+
+        // dd($prices);
+
         return $this->render('price/all.html.twig', [
+            'societyId' => $societyId,
+            'prices' => $prices,
         ]);
     }
 
@@ -33,7 +40,6 @@ class PriceController extends AbstractController
      */
     public function downloadPlvPrice(Request $request, PriceService $priceService): Response
     {
-
         $societyId = $this->getUser()->getSocietyId()->getId();
         $prices = $priceService->getPlvPrices($societyId, $request->getLocale());
 

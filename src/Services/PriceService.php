@@ -16,6 +16,24 @@ class PriceService
         $this->itemRepository = $itemRepository;
     }
 
+    public function getAllPrices($societyId, $locale)
+    {
+        $items = $this->itemRepository->findAllPrice($societyId);
+
+        $prices = [];
+        foreach($items as $item) {
+            $gammeId = $item->getGamme()->getLabel($locale);
+            $genericName = $item->getGenericName()->getName($locale);
+            if(!empty($prices[$gammeId][$genericName])) {
+                $prices[$gammeId][$genericName][] = $item;
+            } else {
+                $prices[$gammeId][$genericName] = [$item];
+            }
+        }
+
+        return $prices;
+    }
+
     public function getPlvPrices($societyId, $locale)
     {
         $items = $this->itemRepository->findAllPlv($societyId);
