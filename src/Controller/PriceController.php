@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Services\PriceService;
+use Dompdf\Dompdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,14 +25,22 @@ class PriceController extends AbstractController
      */
     public function downloadAllPrice(Request $request, PriceService $priceService): Response
     {
+        $dompdf = new Dompdf();
+
         $societyId = $this->getUser()->getSocietyId()->getId();
         $prices = $priceService->getAllPrices($societyId, $request->getLocale());
 
-        // dd($prices);
-
-        return $this->render('price/all.html.twig', [
+        $html = $this->renderView('price/all.html.twig', [
             'societyId' => $societyId,
             'prices' => $prices,
+        ]);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        return $dompdf->stream("mypdf.pdf", [
+                "Attachment" => true
         ]);
     }
 
@@ -40,12 +49,22 @@ class PriceController extends AbstractController
      */
     public function downloadPlvPrice(Request $request, PriceService $priceService): Response
     {
+        $dompdf = new Dompdf();
+
         $societyId = $this->getUser()->getSocietyId()->getId();
         $prices = $priceService->getPlvPrices($societyId, $request->getLocale());
 
-        return $this->render('price/plv.html.twig', [
+        $html = $this->renderView('price/plv.html.twig', [
             'societyId' => $societyId,
             'prices' => $prices,
+        ]);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        return $dompdf->stream("mypdf.pdf", [
+                "Attachment" => true
         ]);
     }
 }

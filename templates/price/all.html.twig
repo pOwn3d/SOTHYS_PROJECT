@@ -1,58 +1,66 @@
-<section class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 aos-init aos-animate" data-aos="fade-up">
-                {% for name, gamme in prices %}
-                    <h2>
-                        {{ name }}
-                    </h2>
+{% extends 'base_pdf.html.twig' %}
 
-                    {% for genericName, products in gamme %}
-                        <h3>
-                            {{ genericName }}
-                        </h3>
+{% block body %}
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 aos-init aos-animate" data-aos="fade-up">
+                    {% for name, gamme in prices %}
+                        <h2>
+                            {{ name }}
+                        </h2>
 
-                        <table>
-                            <thead>
-                                <td>
-                                    {{ 'Product' | trans }}
-                                </td>
-                                <td>
-                                    {{ 'Code' | trans }}
-                                </td>
-                                <td>
-                                    {{ 'Code barre' | trans }}
-                                </td>
-                                <td>
-                                    {{ 'price.unit' | trans }}
-                                </td>
-                                <td>
-                                    {{ 'quantity' | trans }}
-                                </td>
-                            </thead>
-                            {% for price in products %}
-                            <tr>
-                                <td>
-                                    {{ price.label(app.request.locale) }}
-                                </td>
-                                <td>
-                                    {{ price.itemId }}
-                                </td>
-                                <td>
-                                    {{ price.codeEAN }}
-                                </td>
-                                <td>
-                                    {{ price.itemPrices.first().price|number_format(2) }}
-                                </td>
-                                <td>
-                                    {{ price.capacity(app.request.locale) }}
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </table>
+                        {% for genericName, products in gamme %}
+                            <h3>
+                                {{ genericName }}
+                            </h3>
+
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            {{ 'Product' | trans }}
+                                        </th>
+                                        <th>
+                                            {{ 'Code' | trans }}
+                                        </th>
+                                        <th>
+                                            {{ 'Code barre' | trans }}
+                                        </th>
+                                        <th>
+                                            {{ 'price.unit' | trans }}
+                                        </th>
+                                        <th>
+                                            {{ 'quantity' | trans }}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for price in products %}
+                                    <tr>
+                                        <td>
+                                            {{ price.label(app.request.locale) }}
+                                        </td>
+                                        <td>
+                                            {{ price.itemId }}
+                                        </td>
+                                        <td>
+                                            {{ price.codeEAN }}
+                                        </td>
+                                        <td>
+                                            {{ price.itemPrices.first().price|number_format(2) }}
+                                        </td>
+                                        <td>
+                                            {{ price.capacity(app.request.locale) }}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
-<section>
+    <section>
+{% endblock body %}
