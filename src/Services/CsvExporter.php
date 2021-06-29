@@ -88,7 +88,6 @@ class CsvExporter
             return;
         }
 
-        $date = (new \DateTime())->format('dmY');
-        file_put_contents($_ENV['EXPORT_FOLDER'] . "/CommandesCOEDI$date.csv", implode("\n", $rows) . "\n", FILE_APPEND);
+        file_put_contents($_ENV['EXPORT_FOLDER'] . "/COEDI_ImportCommandes.csv", implode("\n", $rows) . "\n", FILE_APPEND);
     }
 }
