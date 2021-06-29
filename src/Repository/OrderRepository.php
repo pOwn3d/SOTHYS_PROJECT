@@ -39,6 +39,7 @@ class OrderRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('o')
             ->andWhere('o.idOrderX3 IS NULL')
+            ->andWhere('o.idStatut = 2')
             ->orderBy('o.dateOrder', 'DESC')
             ->getQuery()
             ->getResult()

@@ -85,8 +85,8 @@ class ItemRepository extends ServiceEntityRepository
 
         foreach ($items as $item) {
             $this->getEntityManager()->remove($item);
-            $this->getEntityManager()->flush();
         }
+        $this->getEntityManager()->flush();
     }
 
     public function findProductsByGenericName($value, $societyId, $page = 1, $genericName, $type): array

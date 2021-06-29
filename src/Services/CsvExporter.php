@@ -5,23 +5,20 @@ namespace App\Services;
 
 use App\Repository\OrderLineRepository;
 use App\Repository\OrderRepository;
-use App\Repository\SocietyRepository;
-use League\Csv\CharsetConverter;
-use League\Csv\Writer;
-use SplTempFileObject;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CsvExporter
 {
 
     private OrderLineRepository $orderLineRepository;
     private OrderRepository $orderRepository;
-    private SocietyRepository $societyRepository;
+    private EntityManagerInterface $em;
 
-    public function __construct(OrderLineRepository $orderLineRepository, OrderRepository $orderRepository, SocietyRepository $societyRepository)
+    public function __construct(OrderLineRepository $orderLineRepository, OrderRepository $orderRepository, EntityManagerInterface $entityManager)
     {
-        $this->orderLineRepository = $orderLineRepository;
         $this->orderRepository     = $orderRepository;
-        $this->societyRepository   = $societyRepository;
+        $this->orderLineRepository = $orderLineRepository;
+        $this->em                  = $entityManager;
     }
 
     /**
@@ -82,22 +79,16 @@ class CsvExporter
                 array_push($rows, implode('|',$lineData) );
             }
 
+            $order->setIdStatut(3);
+            $this->em->persist($order);
+        }
+        $this->em->flush();
+
+        if(empty($rows)) {
+            return;
         }
 
-        // $encoder = (new CharsetConverter())
-        //     ->inputEncoding('utf-8')
-        //     ->outputEncoding('iso-8859-15');
-
-        // // TODO : virer les quotes
-
-        // $writer = Writer::createFromFileObject(new SplTempFileObject());
-        // $writer->addFormatter($encoder);
-        // $writer->insertAll($rows); //using an array
-        // $writer->output('test.csv');
-
-        file_put_contents('test.csv', implode("\n", $rows) . "\n", FILE_APPEND);
-
+        $date = (new \DateTime())->format('dmY');
+        file_put_contents($_ENV['EXPORT_FOLDER'] . "/CommandesCOEDI$date.csv", implode("\n", $rows) . "\n", FILE_APPEND);
     }
-
 }
-
