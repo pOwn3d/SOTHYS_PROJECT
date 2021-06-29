@@ -60,13 +60,28 @@ class CsvImporter
         $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
     }
 
+    public function getExistingIds(string $className) : array
+    {
+        $items = $this->em->getRepository($className)->findAll();
+
+        return array_map(function($item) {
+            return $item->getIdX3();
+        }, $items);
+    }
+
     public function importPaymentMethod()
     {
         $csv = Reader::createFromPath('../public/csv/ConditionPaiement.csv');
         $csv->setDelimiter(';');
         $csv->fetchColumn();
 
+        $existingIds = $this->getExistingIds(PaymentMethod::class);
+
         foreach ($csv as $row) {
+
+            if(in_array($row[0], $existingIds)) {
+                continue;
+            }
 
             $paymentMethod = new PaymentMethod();
             $paymentMethod
@@ -75,8 +90,9 @@ class CsvImporter
                 ->setLabelEN(\utf8_encode($row[2]));
 
             $this->em->persist($paymentMethod);
-            $this->em->flush();
         }
+
+        $this->em->flush();
     }
 
     public function importUser(bool $shouldSendMail = true)
@@ -125,36 +141,43 @@ class CsvImporter
         $csv = Reader::createFromPath('../public/csv/order.csv');
         $csv->fetchColumn();
 
+        $existingIds = $this->getExistingIds(Order::class);
+
         foreach ($csv as $row) {
             if ($row[13] == 0) {
                 $row[13] = null;
             }
 
             if ($row[0] != null) {
-                $society = $this->em->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[2] ]);
-//            $idOrder = $this->em->getRepository(Order)
-                $newOrder = new Order();
-                $newOrder
+                $society = $this->em->getRepository(Society::class)->findOneBy(['idCustomer' => $row[2]]);
+                $paymentMethod = $this->em->getRepository(PaymentMethod::class)->findOneBy(['idX3' => $row[12]]);
+                $address = $this->em->getRepository(EntityAddress::class)->findOneBy(['label' => $row[6]]);
+
+                $order = new Order();
+                if(in_array($row[1], $existingIds)) {
+                    $order = $this->em->getRepository(Order::class)->findOneBy([
+                        'idOrderX3' => $row[1],
+                    ]);
+                }
+
+                $order
                     ->setIdOrder($row[0])
                     ->setIdOrderX3($row[1])
                     ->setSocietyID($society)
-//                ->setIdLogin()
                     ->setDateOrder(new \DateTime($row[4]))
                     ->setDateDelivery(new \DateTime($row[5]))
-//                ->setIdAdress()
                     ->setIdStatut($row[7])
                     ->setIdDownStatut($row[8])
                     ->setReference($row[9])
-//                ->setIdTransport()
-//                ->setIdIntercom()
-//                ->setIdCondition()
+                    ->setAddress($address)
+//                ->setTransportMode()
+                    ->setPaymentMethod($paymentMethod)
                     ->setDateLastDelivery(new \DateTime($row[13]));
 
-                $this->em->persist($newOrder);
-                $this->em->flush();
+                $this->em->persist($order);
             }
         }
-
+        $this->em->flush();
     }
 
     public function importSociety()
@@ -183,8 +206,8 @@ class CsvImporter
                 ->setPaymentMethod($paymentMethod);
 
             $this->em->persist($newSociety);
-            $this->em->flush();
         }
+        $this->em->flush();
     }
 
     public function importGamme()
