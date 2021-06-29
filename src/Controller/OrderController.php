@@ -25,7 +25,7 @@ class OrderController extends AbstractController
      *
      * @return Response
      */
-    public function index(OrderRepository $orderRepository, CartItem $cartItem, OrderServices $orderServices): Response
+    public function index(OrderRepository $orderRepository, CartItem $cartItem): Response
     {
         $society = $this->getUser()->getSocietyID();
         $orders  = $orderRepository->findOrderCustomer($society);

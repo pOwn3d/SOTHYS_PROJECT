@@ -39,6 +39,7 @@ class OrderRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('o')
             ->andWhere('o.idOrderX3 IS NULL')
+            ->andWhere('o.idStatut = 2')
             ->orderBy('o.dateOrder', 'DESC')
             ->getQuery()
             ->getResult()
@@ -53,6 +54,20 @@ class OrderRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
             ;
+    }
+
+    public function findPortfolioOrders(int $societyId)
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.SocietyID = :societyId')
+            ->andWhere('o.idStatut IN (:ids)')
+            ->setParameter('societyId', $societyId)
+            // TODO : get proper status id
+            ->setParameter('ids', [10, 11])
+            ->orderBy('o.dateOrder', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     /*

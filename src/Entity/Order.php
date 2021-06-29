@@ -272,5 +272,8 @@ class Order
         return $this;
     }
 
-
+    public function getIdX3()
+    {
+        return $this->getIdOrderX3();
+    }
 }

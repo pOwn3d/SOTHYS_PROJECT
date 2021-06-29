@@ -2,6 +2,12 @@ my:
     orders: 'Mes commandes'
     account: 'Mon compte'
 
+menu:
+    order: 'Mes commandes'
+    do_order: 'Passer une commande'
+    portfolio: 'Portefeuille de commandes'
+    price: 'Tarifs'
+
 products: 'produits'
 
 customer:
@@ -78,7 +84,7 @@ Subtotal: 'Sous-total'
 Validate:
     order: 'Valider ma commande'
 
-Product: 'produit'
+Product: 'Produit'
 
 Designation: 'Désignation'
 
@@ -178,3 +184,7 @@ status:
     done: 'Traité'
 
 address: 'Adresse'
+
+price_download:
+    all: 'Télécharger les tarifs 2021 en pdf'
+    plv: 'Télécharger les tarifs PLV 2021 en pdf'

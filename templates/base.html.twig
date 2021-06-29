@@ -111,7 +111,7 @@
                                             </a>
                                         </li>
                                         <li class="menu-item menu-item--has-child">
-                                            <a class="{% if app.request.attributes.get('_route') starts with 'app_gamme'  or app.request.attributes.get('_route') starts with 'app_item_id' %} e-shop {% endif %}">{{ 'products' | trans }}</a>
+                                            <a class="{% if app.request.attributes.get('_route') starts with 'app_gamme' or app.request.attributes.get('_route') starts with 'app_item_id' %} e-shop {% endif %}">{{ 'products' | trans }}</a>
                                             <div class="menu-item__submenu">
                                                 <div class="container">
                                                     <div class="row">
@@ -157,7 +157,7 @@
                                             </div>
                                         </li>
                                         <li class="menu-item">
-                                            <a href="{{ path('app_order') }}" class="{% if app.request.attributes.get('_route') starts with 'app_shop' %} e-shop{% endif %}">
+                                            <a href="{{ path('app_order') }}" class="{% if app.request.attributes.get('_route') starts with 'app_order' %} e-shop{% endif %}">
                                                 {{ 'my.orders' | trans }}
                                             </a>
                                         </li>

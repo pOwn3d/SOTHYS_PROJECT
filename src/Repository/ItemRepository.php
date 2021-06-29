@@ -85,8 +85,8 @@ class ItemRepository extends ServiceEntityRepository
 
         foreach ($items as $item) {
             $this->getEntityManager()->remove($item);
-            $this->getEntityManager()->flush();
         }
+        $this->getEntityManager()->flush();
     }
 
     public function findProductsByGenericName($value, $societyId, $page = 1, $genericName, $type): array
@@ -132,6 +132,30 @@ class ItemRepository extends ServiceEntityRepository
         $pagination->currentPage = $page;
 
         return $pagination;
+    }
+
+    public function findAllPrice($societyId)
+    {
+        return $this->createQueryBuilder('i')
+            ->join('i.itemPrices', 'ip', Join::WITH, 'i.id = ip.idItem AND ip.idSociety = :societyId')
+            ->join('i.gamme', 'g')
+            ->join('i.genericName', 'n')
+            ->where('i.idPresentation IN (\'Cabine\', \'Vente\')')
+            ->setParameter('societyId', $societyId)
+            ->orderBy('i.genericName')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllPlv($societyId)
+    {
+        return $this->createQueryBuilder('i')
+            ->join('i.itemPrices', 'ip', Join::WITH, 'i.id = ip.idItem AND ip.idSociety = :societyId')
+            ->join('i.gamme', 'g')
+            ->where('i.idPresentation = \'PLV\'')
+            ->setParameter('societyId', $societyId)
+            ->getQuery()
+            ->getResult();
     }
 
 }
