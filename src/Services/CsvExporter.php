@@ -84,18 +84,13 @@ class CsvExporter
 
         }
 
-        // $encoder = (new CharsetConverter())
-        //     ->inputEncoding('utf-8')
-        //     ->outputEncoding('iso-8859-15');
+        if(empty($rows)) {
+            return;
+        }
 
-        // // TODO : virer les quotes
+        $date = (new \DateTime())->format('dmY');
 
-        // $writer = Writer::createFromFileObject(new SplTempFileObject());
-        // $writer->addFormatter($encoder);
-        // $writer->insertAll($rows); //using an array
-        // $writer->output('test.csv');
-
-        file_put_contents('test.csv', implode("\n", $rows) . "\n", FILE_APPEND);
+        file_put_contents($_ENV['EXPORT_FOLDER'] . "/CommandesCOEDI$date.csv", implode("\n", $rows) . "\n", FILE_APPEND);
 
     }
 

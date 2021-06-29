@@ -359,7 +359,8 @@ class CsvImporter
 
     public function importItemQuantity()
     {
-        $csv = Reader::createFromPath('../public/csv/itemQuantity.csv');
+        $csv = Reader::createFromPath('../public/csv/QuantiteGroupage.csv');
+        $csv->setDelimiter(';');
         $csv->fetchColumn();
 
         $companies = $this->em->getRepository(Society::class)->findAll();
@@ -427,7 +428,8 @@ class CsvImporter
 
     public function importIncoterm()
     {
-        $csv = Reader::createFromPath('../public/csv/intercom.csv');
+        $csv = Reader::createFromPath('../public/csv/Incoterm.csv');
+        $csv->setDelimiter(';');
         $csv->fetchColumn();
 
         foreach ($csv as $row) {
@@ -441,7 +443,8 @@ class CsvImporter
 
     public function customerImportIncoterm()
     {
-        $csv = Reader::createFromPath('../public/csv/customerIntercom.csv');
+        $csv = Reader::createFromPath('../public/csv/ClientIncoterm.csv');
+        $csv->setDelimiter(';');
         $csv->fetchColumn();
 
         foreach ($csv as $row) {
