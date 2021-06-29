@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ 'order'| trans }}
+{% endblock %}
+
+{% block body %}
+    <div id="content" role="main">
+        <section class="section section--compte">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 aos-init aos-animate" data-aos="fade-up">
+                        {% include 'flash_messages.html.twig' %}
+                    </div>
+
+                    <div class="col-4">
+                        {% include 'order/order_details.html.twig' %}
+                    </div>
+                    <div class="col-4">
+                        {% include 'order/order_address.html.twig' %}
+                    </div>
+                </div>
+                <table class="compte__commandes table-responsive">
+                    <thead>
+                    <tr>
+                        <th>{{ 'reference' | trans}}</th>
+                        <th>{{'Designation' | trans}}</th>
+                        <th>{{'Quantity.ordered' | trans}}</th>
+                        <th>{{'Quantity.shipped' | trans}}</th>
+                        <th>{{'price.unit' | trans}}</th>
+                        <th>{{'price.total' | trans}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% set totalCabine = 0 %}
+                    {% for order in ordersLine %}
+                        <tr>
+                            <td><a href="{{ path('app_item_id', { 'id': order.itemID.id }) }}">{{ order.itemID.itemID }}</a></td>
+                            <td><a href="{{ path('app_item_id', { 'id': order.itemID.id }) }}">{{ order.itemID.labelFR }}</a></td>
+                            <td>{{ order.quantity }}</td>
+                            <td>{{ order.quantity }}</td>
+                            <td>{{ order.priceUnit }}</td>
+                            <td>{{ order.price }}</td>
+                        </tr>
+
+                        {% if order.itemID.idPresentation == "Cabine" %}
+                            {% set totalCabine = totalCabine + (order.price) %}
+                        {% endif %}
+
+                    {% endfor %}
+                    <tr>
+                        <td colspan="5">Dont Vente/Cabine (EUR)</td>
+                        <td>{{ totalCabine }} €</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">Dont Autre (EUR)</td>
+                        <td>{{ orderSum.price |round(1, 'floor') - totalCabine }} </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">Total HT (EUR)</td>
+                        <td>{{ orderSum.price |round(1, 'floor') }} €</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

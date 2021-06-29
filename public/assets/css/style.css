@@ -1,0 +1,132 @@
+.menu-item__submenu-item {
+    display: inline-block;
+    width: 49%;
+}
+
+.--scale-2x {
+    animation: scale2x .7s ease-out;
+    animation-iteration-count: 1;
+
+    -moz-animation: scale2x .7s ease-out;
+    -moz-animation-iteration-count: 1;
+
+    -webkit-animation: scale2x .7s ease-out;
+    -webkit-animation-iteration-count: 1;
+
+    -ms-animation: scale2x .7s ease-out;
+    -ms-animation-iteration-count: 1;
+}
+
+@keyframes scale2x {
+    50% { transform: scale(2.0); }
+    100% { transform: scale(1.0); }
+}
+
+@-webkit-keyframes scale2x {
+    50% { transform: scale(2.0); }
+    100% { transform: scale(1.0); }
+}
+
+@-moz-keyframes scale2x {
+    50% { transform: scale(2.0); }
+    100% { transform: scale(1.0); }
+}
+
+@-ms-keyframes scale2x {
+    50% { transform: scale(2.0); }
+    100% { transform: scale(1.0); }
+}
+
+.error {
+    color: red;
+}
+
+.upload-box {
+    font-size: 13px;
+    background: white;
+    border: 0.1rem solid #394147;
+    width: 35rem;
+    outline: none;
+    margin-top: 2px;
+}
+
+input[type=file]::file-selector-button {
+    color: white;
+    background: #394147;
+    padding: 10px;
+    border:none;
+    outline: none;
+}
+
+.list-style-none {
+    list-style: none;
+}
+
+.Upload-csv-container{
+    text-align: center;
+}
+
+ul.promo > * {
+    margin: 1rem;
+}
+
+ul.promo {
+    margin-top: 2rem;
+    padding-left: 0;
+}
+
+.promo-item {
+    vertical-align: top;
+    display: inline-block;
+    padding: 7px 1rem;
+}
+
+.promo-container {
+    padding: 1.5rem 2rem;
+    margin: 2rem;
+}
+
+.inline-block-upload {
+    display: inline-block;
+    padding: 0.5rem 5.6rem;
+    border: 0.01rem solid black;
+    min-width: 35rem;
+}
+
+.js-cart-add-button, .js-global-add-button {
+    padding: 1rem 0;
+    cursor: pointer;
+}
+
+.search-results {
+    position: absolute;
+    background: #fff;
+    border: 1px solid;
+    margin: 1rem 0;
+    padding: 0 1rem;
+    display:block;
+    border-radius: 3px;
+    z-index: 100;
+}
+
+.search-results:empty {
+    display: none;
+}
+
+
+.up-button {
+    display: none;
+    width: 42px;
+    height: 42px;
+    box-shadow: 0 3px 6px #00000029;
+    border: 1px solid #030F40;
+    border-radius: 4px;
+    background: #FFFFFF 0 0 no-repeat padding-box;
+    font-size: 20px;
+    text-align: center;
+    line-height: 42px;
+    position: fixed;
+    right: 0;
+    bottom: 100px;
+    cursor: pointer;
+}

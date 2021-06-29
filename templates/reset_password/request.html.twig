@@ -1,51 +1,48 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Reset your password{% endblock %}
-
+{% block title %}Réinitialisation de votre mot de passe{% endblock %}
 {% block body %}
-  
 
-    <main class="main" id="top">
-        <div class="container-fluid">
-            <div class="row min-vh-100 bg-100">
-                <div class="col-6 d-none d-lg-block position-relative">
-                    <div class="bg-holder"
-                         style="background-image:url({{ asset('assets/images/bg-home.jpg') }});background-position: 50% 20%;">
-                    </div>
-
-                </div>
-                <div class="col-sm-10 col-md-6 px-sm-0 align-self-center mx-auto py-5">
-                    <div class="row justify-content-center g-0">
-                        <div class="col-lg-9 col-xl-8 col-xxl-6">
-                            {% for flashError in app.flashes('reset_password_error') %}
-                                <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-                            {% endfor %}
-                            <div class="card">
-                                <div class="card-header text-center p-2"><img
-                                            src="{{ asset('assets/images/logo_register.png') }}"/></div>
-                                <div class="card-body p-4">
-                                    <div class="text-center">
-                                        <h4 class="mb-0"> Réinitialisation mot de passe?</h4><small>Entrez votre e-mail
-                                            et nous vous enverrons un lien de réinitialisation.</small>
-                                        {{ form_start(requestForm) }}
-                                        {{ form_row(requestForm.email, {'label' : false,  'attr' : {'placeholder' : 'Email',  'class' : 'form-control'  }}) }}
-                                        <div class="mb-3">
-                                            <button class="btn btn-primary btn-block mt-3" type="submit"
-                                                    name="submit">Envoyer le lien de réinitialisation
-                                            </button>
-                                        </div>                                   
-                                        {{ form_end(requestForm) }}
-                                        <a class="fs--1 text-600" href="{{ path('app_login') }}">Je ne veux pas
-                                            récupérer mon compte<span class="d-inline-block ml-1">&rarr;</span></a>
+    <section class="section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-9">
+                    {% for flashError in app.flashes('reset_password_error') %}
+                        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+                    {% endfor %}
+                    {% include 'flash_messages.html.twig' %}
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="title--border ">
+                                <h2>Réinitialiser mon compte</h2>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form--login-register-wrapper">
+                                <form action="{{ path('app_forgot_password_request') }}" method="POST" class="form form--login-register">
+                                    <p class="fs-sm">Changez votre mot de passe en trois étapes faciles. Cela aide à protéger votre nouveau mot de passe</p>
+                                    <ul class="list-unstyled fs-sm pb-1 mb-4">
+                                        <li><span class="">1.</span>Remplissez votre adresse e-mail ci-dessous.</li>
+                                        <li><span class="">2.</span>Nous vous enverrons un lien temporaire par e-mail.</li>
+                                        <li><span class="">3.</span>Utilisez le lien pour changer votre mot de passe sur notre site Web sécurisé.</li>
+                                    </ul>
+                                    {{ form_start(requestForm) }}
+                                    <div>
+                                        <label class="form-label" for="recovery-email">Entrez votre adresse email</label>
+                                        {{ form_row(requestForm.email, {'label' : false,  'attr' : {'placeholder' : 'E-mail',  'class' : 'form-control', 'name' : 'recovery-email'  }}) }}
                                     </div>
-                                </div>
+                                    <div class="form__item flex flex--center" style="padding-top:25px;">
+                                        <span class="button button--primary-fill button--submit">
+                    <input type="submit" value="Obtenir un nouveau mot de passe">
+                                       </span>
+                                    </div>
+                                    {{ form_end(requestForm) }}
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
-
+    </section>
 
 {% endblock %}

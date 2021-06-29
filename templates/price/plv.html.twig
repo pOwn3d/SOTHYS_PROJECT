@@ -1,0 +1,59 @@
+{% extends 'base_pdf.html.twig' %}
+
+{% block body %}
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 aos-init aos-animate" data-aos="fade-up">
+                    {% for name, gamme in prices %}
+                        <h2>
+                            {{ name }}
+                        </h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        {{ 'Product' | trans }}
+                                    </th>
+                                    <th>
+                                        {{ 'Code' | trans }}
+                                    </th>
+                                    <th>
+                                        {{ 'Code barre' | trans }}
+                                    </th>
+                                    <th>
+                                        {{ 'price.unit' | trans }}
+                                    </th>
+                                    <th>
+                                        {{ 'quantity' | trans }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for price in gamme %}
+                                <tr>
+                                    <td>
+                                        {{ price.label(app.request.locale) }}
+                                    </td>
+                                    <td>
+                                        {{ price.itemId }}
+                                    </td>
+                                    <td>
+                                        {{ price.codeEAN }}
+                                    </td>
+                                    <td>
+                                        {{ price.itemPrices.first().price|number_format(2) }}
+                                    </td>
+                                    <td>
+                                        {{ price.capacity(app.request.locale) }}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    <section>
+{% endblock body %}

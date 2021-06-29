@@ -1,4 +1,3 @@
-
 ###> symfony/framework-bundle ###
 .env
 /.env.local
@@ -8,7 +7,7 @@
 /public/bundles/
 /var/
 var
-
+init.sh
 /vendor/
 /public/uploads/*
 /old/*
@@ -43,7 +42,7 @@ var
 /bin/*
 !bin/console
 !bin/symfony_requirements
-vendor  
+vendor
 # Assets and user uploads
 /web/bundles/
 /web/uploads/
@@ -87,8 +86,10 @@ package.tar
 /web/uploads/
 /web/test.php
 /public/.htaccess
+/Documents
 
 ## Composer related (symfony-specific)
 /bin/*
+!/bin/init.sh
 !/bin/console
 !/bin/symfony_requirements

@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ gamme.getLabel(app.request.locale) }}
+{% endblock %}
+
+{% block body %}
+
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 style="text-align: center">{{ gamme.getLabel(app.request.locale) }}</h1>
+                </div>
+                {% for product in products %}
+                    <div class="col-3 col-md-3 col-lg-3 productBox aos-init aos-animate" data-aos="fade-up">
+                        <a href="{{ path('app_item_id', {id: product.itemId}) }} " class="card card--product card--overlay ">
+                            <div class="card__visuel">
+                                <picture>
+                                    <img class="blur-up ls-is-cached lazyloaded" alt="" src="https://place-hold.it/450">
+                                </picture>
+                                <picture class="card__visuel--overlay">
+                                    <img class="blur-up ls-is-cached lazyloaded" alt="" src="https://place-hold.it/450">
+                                </picture>
+                            </div>
+                            <div class="card__content__wrapper">
+                                <div class="card__content">
+                                    <span class="card__title">{{ product.label_fr }}</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+
+
+                {% if pagination.range|length > 1 %}
+
+                    <div class="col-12" style="padding-bottom:3rem">
+                        <nav>
+                            <ul class="pagination">
+                                {% for page in pagination.range %}
+                                    <li class="page-item {{ page == pagination.currentPage ? 'active' : ''}}">
+                                        <a href="{{ path('app_gamme', {
+                                            gamme_id: gamme.id,
+                                            type : app.request.get('type'),
+                                            page: page
+                                        }) }}" class="page-link">
+                                            {{ page }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </nav>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

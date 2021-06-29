@@ -4,14 +4,16 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.2.5",
+        "php": ">=7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-json": "*",
         "composer/package-versions-deprecated": "1.11.99.1",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.2",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.8",
+        "dompdf/dompdf": "^1.0",
         "easycorp/easyadmin-bundle": "^3.2",
         "league/csv": "^9.6",
         "phpdocumentor/reflection-docblock": "^5.2",
@@ -45,7 +47,9 @@
         "symfonycasts/reset-password-bundle": "^1.5",
         "symfonycasts/verify-email-bundle": "^1.2",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/intl-extra": "^3.3",
+        "twig/twig": "^2.12|^3.0",
+        "willdurand/negotiation": "^3.0"
     },
     "require-dev": {
         "symfony/browser-kit": "^5.2",
@@ -89,6 +93,10 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "php -S localhost:8000 -t public/"
         ]
     },
     "conflict": {

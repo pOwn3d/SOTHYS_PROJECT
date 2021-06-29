@@ -1,20 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}{{'Home' | trans}}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="container">
+        <div class="promo-container">
+            {% if promos %}
+                <h2>{{'my_promotion' | trans}}</h2>
+                <hr>
+                <ul class="promo">
+                    {% for promo in promos %}
+                        <li class="list-style-none">
+                            <span class="promo-item">
+                                {{promo.nameFr}} | {{promo.dateStart | date('d/m/Y')}} - {{promo.dateEnd | date('d/m/Y')}}
+                            </span>
+                            <a href="{{ path('app_cart_promo', { 'id': promo.id }) }}" class="button button--secondary" style="display:inline-block">
+                                {{'cta.show_promo' | trans}}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <h4>{{ 'home.no_promotions' | trans }}</h4>
+            {% endif %}
+        </div>
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/pOwn3d/Desktop/SOTHY_PROJECT/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/pOwn3d/Desktop/SOTHY_PROJECT/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-</div>
+
+    {# <div id="content" role="main">
+        <section class="section section--product-information">
+            <div class="container">
+                {% for promo in promos %}
+                    <div class="col-12 col-md-12 col-lg-5">
+                        <div class="button__wrapper" style="flex-wrap: wrap">
+                            <a href="{{ path('app_cart_promo', { 'id': promo.id }) }}" class="button button--primary-fill button--small modal--show add-to-cart">
+                                {{'add.to.cart' | trans}}
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div> #}
+
 {% endblock %}

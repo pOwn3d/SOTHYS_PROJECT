@@ -1,0 +1,20 @@
+<h3>{{ 'reference' | trans }}: {{ order.reference }} </h3>
+<p>
+    {{'state' | trans }}:
+        {% if order.idStatut == 1 %}
+            {{ 'status.draft' | trans }}
+        {% elseif  order.idStatut == 2 %}
+            {{ 'status.pending' | trans }}
+        {% else %}
+            {{ 'status.done' | trans }}
+        {% endif %} <br />
+    <br />
+    {{ 'order.creation_date' | trans }}: {{ order.dateOrder|date('d/m/Y') }} <br />
+    {{ 'order.delivery_date' | trans }}: {{ order.dateDelivery|date('d/m/Y') }} <br />
+    <br />
+    {{ 'order.transport_mode_incoterm' | trans }}:
+        {{ incoterm.modeTransport.getName(app.request.locale) }} - {{ incoterm.reference }} : {{ incoterm.city }}
+    <br />
+    {{ 'order.payment_method' | trans }}: {{ paymentMethod.label(app.request.locale) }} <br />
+    <br />
+</p>

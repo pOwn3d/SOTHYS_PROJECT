@@ -27,10 +27,11 @@ class RegistrationController extends AbstractController
 
     /**
      * @Route("/inscription", name="app_register")
-     * @param Request $request
+     * @param Request                      $request
      * @param UserPasswordEncoderInterface $passwordEncoder
-     * @param GuardAuthenticatorHandler $guardHandler
-     * @param AppCustomAuthenticator $authenticator
+     * @param GuardAuthenticatorHandler    $guardHandler
+     * @param AppCustomAuthenticator       $authenticator
+     *
      * @return Response
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppCustomAuthenticator $authenticator): Response
@@ -47,7 +48,8 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-            $user->setRoles(['ROLE_USER']);
+            $user->setRoles([ 'ROLE_USER' ]);
+            $user->setAccountActivated(true);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);

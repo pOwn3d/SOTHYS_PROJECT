@@ -1,0 +1,189 @@
+my:
+    orders: 'My orders'
+    account: 'My account'
+
+menu:
+    order: 'My orders'
+    do_order: 'New order'
+    portfolio: 'Order porfolio'
+    price: 'Prices'
+
+products: 'products'
+
+customer:
+    area: 'CUSTOMER AREA'
+
+password: 'Password'
+
+stay:
+    connected: 'Stay connected'
+
+login: 'login'
+
+Forgot:
+    your:
+        password: 'Forgot your password'
+
+Home: 'Home'
+
+homePage : 'Home'
+
+Welcome:
+    at:
+        costomer:
+            area: 'Welcome in costomer area.'
+
+your:
+    space:
+        take:
+            advantage: 'This is your space, Take advantage of all your online services:'
+
+Ckeck:
+    your:
+        pricing: 'Ckeck your pricing'
+    current:
+        promotional:
+            offers: 'Ckeck the current promotional offers (which in developement phase)'
+
+order:
+    online: 'Order online directly'
+    date: 'Order date'
+    status: 'Order status'
+    substatus: 'status details'
+    creation_date: 'Creation date'
+    delivery_date: 'Desired date of availability'
+    delivery_adress: 'Delivery address'
+    payment_method: 'Payment method'
+    transport_mode_incoterm: 'Transport - Incoterm'
+    save: 'Validate my order'
+    save_draft: 'Save my draft'
+    edit: 'Edit my order'
+
+Track:
+    their:
+        progress: 'Track their progress'
+
+logout: 'Logout'
+
+Customer:
+    - 'utilisateur'
+    - account:
+        id: 'Customer account ID'
+
+save: 'save'
+
+Confirm:
+    password: 'Confirm password'
+
+Cart: 'Cart'
+
+cart:
+    empty: 'Empty cart'
+
+Subtotal: 'Sub-total'
+
+Validate:
+    order: 'Validate order'
+
+Product: 'Product'
+
+Designation: 'Designation'
+
+quantity: 'Quantity'
+
+Quantity:
+    counts: 'Quantity count'
+    ordered: 'Quantity ordered'
+    shipped: 'Quantity shipped'
+
+price:
+    unit: Unit Price (EUR)
+    total: Total price (EUR)
+
+Price: 'Price'
+
+Date: 'Date'
+
+state: 'Status'
+
+add:
+    to:
+        cart: 'Add to cart'
+
+settings:
+    user: 'User settings'
+    order: 'Order settings'
+    society: 'Society settings'
+
+User: 'User'
+Order: 'Order'
+Society: 'Society'
+
+new:
+    user: 'New user'
+
+email: 'E-mail'
+
+actif:
+    account: 'Actif account'
+
+verified:
+    email: 'Verified E-mail'
+
+id:
+    society: 'Society ID'
+    order: 'Order ID'
+    X3: 'ID X3'
+
+admin: 'Administrator'
+
+delete: 'Delete'
+
+roles: 'Roles'
+
+date:
+    shipping: 'Shipping date'
+    latest:
+        shipped: 'Date of last delivery'
+
+reference: 'Reference'
+
+Name: 'Name'
+
+Id Customer: 'Id Customer'
+
+promotions: 'Offers'
+
+upload:
+    orders: 'upload my orders'
+
+home:
+    no_promotions: ''
+
+cta:
+    show_promo: 'Access to offer'
+
+my_promotion: 'Promotions'
+
+my_account: 'My account'
+
+my_cart: 'My cart'
+
+access_my_account: 'Access to my account'
+
+access_my_cart: 'Access to my cart'
+
+order_number: 'Order number'
+
+search: 'Search'
+
+status:
+    draft: 'Draft'
+    pending: 'Validated'
+    done: 'Done'
+
+address: 'Address'
+
+price_download:
+    all: 'Download the 2021 prices as pdf'
+    plv: 'Download the 2021 PLV prices as pdf'

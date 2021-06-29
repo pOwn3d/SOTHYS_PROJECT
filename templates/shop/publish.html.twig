@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'my_cart' | trans }}
+{% endblock %}
+
+{% block body %}
+
+    <section class="section section--checkout">
+        <div class="container">
+            {% include 'flash_messages.html.twig' %}
+            {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <p class="form__item">
+                            <label for="reference">{{ 'reference' | trans }} </label>
+                            {{ form_row(form.reference, {
+                                'label' : false,
+                                'attr' : {
+                                    'placeholder' : 'reference',
+                                    'class' : 'form-control',
+                                    'name' : 'reference',
+                                }
+                            }) }}
+                        </p>
+                        <p class="form__item">
+                            <label for="delivery_date">{{ 'order.delivery_date' | trans }}</label>
+                            {{ form_row(form.dateDelivery, {
+                                'label' : false,
+                                'attr' : {
+                                    'placeholder' : 'order.delivery_date',
+                                    'class' : 'form-control',
+                                    'name' : 'delivery_date',
+                                }
+                            }) }}
+                        </p>
+                        <p class="form__item">
+                            <label for="address">{{ 'address' | trans }}</label>
+                            {{ form_row(form.address, {
+                                'label' : false,
+                                'attr' : {
+                                    'class' : 'form-control',
+                                    'name' : 'address',
+                                },
+                            }) }}
+                        </p>
+                        <p class="form__item">
+                            <label for="incoterm">{{ 'order.transport_mode_incoterm' | trans }}</label>
+                            {{ form_row(form.incoterm, {
+                                'label' : false,
+                                'attr' : {
+                                    'class' : 'form-control',
+                                    'name' : 'incoterm',
+                                }
+                            }) }}
+                        </p>
+                        <p class="form__item">
+                            <label for="paymentMethod">{{ 'order.payment_method' | trans }}</label>
+                            {{ form_row(form.paymentMethod, {
+                                'label' : false,
+                                'attr' : {'class' : 'form-control', 'name' : 'payment_method', 'readonly':'readonly' }
+                            }) }}
+                        </p>
+                    </div>
+                </div>
+                <div class="checkout-wrapper">
+                    <button type="submit" class=" checkout button button--primary-fill" name="order[save]">
+                        {{ 'order.save' | trans }}
+                    </button>
+
+                    <br />
+
+                    <button type="submit" class="checkout button button--secondary" name="order[saveDraft]">
+                        {{ 'order.save_draft' | trans }}
+                    </button>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </section>
+
+{% endblock %}

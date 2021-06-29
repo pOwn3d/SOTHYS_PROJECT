@@ -1,23 +1,188 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fr">
+
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
+    <title>{% block title %}Sothys{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            <link href=" {{ asset('assets/css/theme.css') }}" rel="stylesheet">
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+              integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp"
+              crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/main.css') }} ">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }} ">
+    {% endblock %}
+</head>
 
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
+<body class="nav-fixed">
+<header>
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-6 col-lg-2 col-xl-4">
+                    <a class="logo" href="{{ path('app_home') }}">
+                        <img
+                            src="{{ asset('assets/images/logo-sothys.png') }}"
+                            srcset="{{ asset('assets/images/logo-sothys.png') }}"
+                            alt="Sothys"
+                        />
+                    </a>
+                </div>
+                {% if app.user != null %}
+                    <div class="col-3 col-lg-5 col-xl-4">
+                        <div class="search-wrapper" style="display:flex">
+                            <input class="js-global-search-term" type="text" style="outline:none" />
+                            <button class="button button--primary-fill js-global-search-button">
+                                {{ 'search' | trans}}
+                            </button>
+                        </div>
+                        <div class="search-results"></div>
+                    </div>
+                    <div class="col-3 col-lg-5 col-xl-4">
+                            <div class="navbar-tools">
+                                <ul class="list--horizontal">
+                                    <li>
+                                        <a href="{{ path('app_shop') }}" aria-label="{{ 'access_my_cart' | trans }}"
+                                            title="{{ 'access_my_cart' | trans }}" data-microtip-position="bottom" role="tooltip"
+                                            class="cart__access js-cart-toggler"
+                                        >
+                                            <i class="icon icon-panier">
+                                                <span class="hidden">{{ 'my_cart' | trans }}</span>
+                                            </i>
+                                            <span id="cartItem">{{ cartItem|default('0') }}</span>
+                                        </a>
+                                    </li>
+                                    <li class="account__access_button d-none d-lg-block">
+                                        <a
+                                            href="{{ path('app_login') }}" aria-label="{{ 'access_my_account' | trans }}"
+                                            title="{{ 'access_my_account' | trans }}"
+                                            style="display: flex"
+                                        >
+                                            <i class="icon icon-compte">
+                                                <span class="hidden">{{ 'my_account' | trans }}</span>
+                                            </i>
+                                            <span style="font-size:1.5rem">{{ app.user.email }}</span>
+                                        </a>
+                                        <div class="account__access_wrapper">
+                                            <div class="account__access_inner">
+                                                <a href="{{ path('app_account') }}" class="button button--small button--dark" title="{{ 'my_account' | trans }}">
+                                                    {{ 'my_account' | trans }}
+                                                </a>
+                                                <a href="{{ path('app_logout') }}" class="button button--small button--dark" title="{{ 'logout' | trans }}">
+                                                    {{ 'logout' | trans }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% if app.user != null %}
+        <div class="header__nav">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <nav class="navbar navbar--fixed js-navbar">
+                            <div class="navbar__wrapper">
+                                <div class="navbar__collapse">
+                                    <div class="d-flex d-lg-none navbar__header">
+                                        <button class="navbar__toggler js-navbar-toggler">
+                                            <i class="icon icon-close">
+                                                <span class="hidden">fermer</span>
+                                            </i>
+                                        </button>
+                                        <ul class="lang">
+                                            <li>
+                                                <a href="#" title="Choix de la langue en Francais" class="active">FR</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" title="Choix de la langue en Anglais">EN</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <ul class="navbar__menu navbar__menu--desktop">
+                                        <li class="menu-item">
+                                            <a href="{{ path('app_home') }}" class="{% if app.request.attributes.get('_route') starts with 'app_home' %} e-shop{% endif %}">
+                                                {{ 'homePage' | trans }}
+                                            </a>
+                                        </li>
+                                        <li class="menu-item menu-item--has-child">
+                                            <a class="{% if app.request.attributes.get('_route') starts with 'app_gamme' or app.request.attributes.get('_route') starts with 'app_item_id' %} e-shop {% endif %}">{{ 'products' | trans }}</a>
+                                            <div class="menu-item__submenu">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <ul class="menu-item__submenu--large">
+                                                                {% for gamme in categories.getProductGamme(app.user.societyID) %}
+                                                                    <li class="menu-item__submenu-item">
+                                                                        <a href="{{ path('app_gamme', {
+                                                                            gamme_id: gamme.id,
+                                                                            type : 'vente'
+                                                                        }) }}" class="nav-link">
+                                                                            {{ gamme.getLabel(app.request.locale) }}
+                                                                        </a>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="menu-item menu-item--has-child">
+                                            <a class="{% if app.request.attributes.get('_route') starts with 'app_gamme'  or app.request.attributes.get('_route') starts with 'app_item_id' %} e-shop {% endif %}">PLV</a>
+                                            <div class="menu-item__submenu">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <ul class="menu-item__submenu--large">
+                                                                {% for gamme in categories.getPLVGamme(app.user.societyID) %}
+                                                                    <li class="menu-item__submenu-item">
+                                                                        <a href="{{ path('app_gamme', {
+                                                                            gamme_id: gamme.id,
+                                                                            type : 'plv'
+                                                                        }) }}" class="nav-link">
+                                                                            {{ gamme.getLabel(app.request.locale) }}
+                                                                        </a>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="menu-item">
+                                            <a href="{{ path('app_order') }}" class="{% if app.request.attributes.get('_route') starts with 'app_order' %} e-shop{% endif %}">
+                                                {{ 'my.orders' | trans }}
+                                            </a>
+                                        </li>
+                                        <li class="menu-item">
+                                            <a class="{% if app.request.attributes.get('_route') starts with 'app_promo' %} e-shop{% endif %}" href="{{ path('app_home') }}">
+                                                {{ 'my_promotion' | trans }}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</header>
+{% block body %}
+{% endblock %}
 
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
+{% endblock %}
+<div class="up-button" style="display: block;"><i class="fas fa-chevron-up"></i></div>
+</body>
 </html>

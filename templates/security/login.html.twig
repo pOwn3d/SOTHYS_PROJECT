@@ -1,76 +1,70 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Coedi Sothys - Connexion{% endblock %}
-
 {% block body %}
 
+    <section class="section section--checkout section--checkout-connexion">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-9">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="title--border ">
+                                <h2>{{ 'my.account' | trans }}</h2>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form--login-register-wrapper">
+                                <form action="" method="POST" class="form form--login-register" data-captcha-form="">
+                                    <input name="captcha-token" type="hidden">
+                                    {% if error %}
+                                        <div
+                                            class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                    {% endif %}
 
-    <main class="main" id="top">
-        <div class="container-fluid">
-            <div class="row min-vh-100 bg-100">
-                <div class="col-6 d-none d-lg-block position-relative">
-                    <div class="bg-holder"
-                         style="background-image:url({{ asset('assets/images/bg-home.jpg') }});background-position: 50% 20%;">
-                    </div>
-                </div>
-                <div class="col-sm-10 col-md-6 px-sm-0 align-self-center mx-auto py-5">
-                    <div class="row justify-content-center g-0">
-                        <div class="col-lg-9 col-xl-8 col-xxl-6">
-
-                            {% if error %}
-                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                            {% endif %}
-
-                            {% if app.user %}
-                                <div class="mb-3">
-                                    You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-                                </div>
-                            {% endif %}
-                            <div class="card">
-                                <div class="card-header text-center p-2"><img
-                                            src="{{ asset('assets/images/logo_register.png') }}"/></div>
-                                <div class="card-body p-4">
-                                    <div class="row flex-between-center">
-                                        <div class="col-auto">
-                                        </div>
-                                        <div class="col-auto fs--1 text-600"><span class="mb-0 font-weight-semi-bold">Pas de compte ?</span>
-                                            <span><a href="{{ path('app_register') }}">Inscription</a></span></div>
-                                    </div>
-                                    <form method="post">
+                                    {% if app.user %}
                                         <div class="mb-3">
-                                            <label class="form-label" for="split-email">Email</label>
+                                            You are logged in as {{ app.user.username }}, <a
+                                                href="{{ path('app_logout') }}">Logout</a>
+                                        </div>
+                                    {% endif %}
+                                    <fieldset>
+                                        <p class="form__item" data-children-count="1">
+                                            <label for="inputEmail">Email<sup data-children-count="0">*</sup></label>
                                             <input type="email" value="{{ last_username }}" name="email" id="inputEmail"
                                                    class="form-control" required autofocus>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label" for="split-email">Mot de passe</label>
+
+                                        <p class="form__item" data-children-count="1">
+                                            <label for="inputPassword">{{'password' | trans}}<sup
+                                                    data-children-count="0">*</sup></label>
                                             <input type="password" name="password" id="inputPassword"
                                                    class="form-control" required>
-                                        </div>
+                                        </p>
                                         <input type="hidden" name="_csrf_token"
                                                value="{{ csrf_token('authenticate') }}">
-                                        <div class="row flex-between-center">
-                                            <div class="col-auto">
-                                                <div class="form-check mb-0">                                     
-                                                    <input class="form-check-input" name="_remember_me"  type="checkbox" id="remember_me" checked="checked">
-                                                    <label class="form-check-label" for="remember_me">Se souvenir de moi</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-auto"><a class="fs--1" href="{{ path('app_forgot_password_request') }}">Mot de passe oublié</a></div>
+                                        <div class="form__footer">
+                                            <p class="form__item form__item--checkbox" data-children-count="1">
+                                                <input type="checkbox" id="rememberMe" name="rememberMe">
+                                                <label for="rememberMe">{{'stay.connected' | trans}}</label>
+                                            </p>
+                                            <p class="form__item">
+                                                <a class="fs--1"
+                                                   href="{{ path('app_forgot_password_request') }}">{{ 'Forgot.your.password' | trans}}
+                                                </a>
+                                            </p>
                                         </div>
-                                        <div class="mb-3">
-                                            <button class="btn btn-primary btn-block mt-3" type="submit" name="submit">
-                                                Connexion
-                                            </button>
+                                        <div class="form__item flex flex--center">
+                                            <span class="button button--primary-fill button--submit" style="margin: 0 auto;">
+                                                  <input type="submit" value="{{'login' | trans}}">
+                                            </span>
                                         </div>
-                                    </form>
-                                </div>
+                                    </fieldset>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+    </section>
 
-    {% endblock %}
+{% endblock %}

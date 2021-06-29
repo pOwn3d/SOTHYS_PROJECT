@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+{% block title %}Coedi Sothys -  {{ 'my.orders' | trans }}{% endblock %}
+{% block body %}
+
+    <div id="content" role="main">
+        <section class="section section--compte">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 aos-init aos-animate" data-aos="fade-up">
+                        {% include 'flash_messages.html.twig' %}
+                        <div class="title--border title--border--margin">
+                            <h2> {{ 'my.orders' | trans }}</h2>
+                        </div>
+                    </div>
+                    {% include 'components/nav_customer.html.twig' %}
+                    <div class="col-12 col-md-8">
+                        <table class="compte__commandes table-responsive">
+                            <thead>
+                            <tr>
+                                <th>{{'reference' | trans}}</th>
+                                <th>{{'order.creation_date' | trans}}</th>
+                                <th>{{'order.delivery_date' | trans}}</th>
+                                <th>{{'price.total' | trans}}</th>
+                                <th>{{'state' | trans}}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                    <tr>
+                                        <td class="ref">
+                                            {% if order.idOrderX3 != null %}
+                                                <a href="{{ path('app_order_item_id' , { 'id': order.idOrderX3 }) }}">{{ order.reference }} </a>
+                                            {% else %}
+                                                <a href="{{ path('app_order_item_id_draft' , { 'id': order.id }) }}">{{ order.reference }} </a>
+                                            {% endif %}
+                                        </td>
+                                        <td class="date">{{ order.dateOrder|date('d/m/Y') }}</td>
+                                        <td class="date">{{ order.dateDelivery|date('d/m/Y') }}</td>
+                                        <td class="price">{{ order.priceOrder }} €</td>
+                                        <td class="status">
+                                            {% if order.idStatut == 1 %}
+                                                <span class="status status--pendind">{{ 'status.draft' | trans }}</span>
+                                            {% elseif  order.idStatut == 2 %}
+                                                <span class="status status--processing">{{ 'status.pending' | trans }}</span>
+                                            {% else %}
+                                                <span class="status status--completed">{{ 'status.done' | trans }}</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

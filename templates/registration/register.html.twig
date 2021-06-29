@@ -1,68 +1,68 @@
-{% extends 'base.html.twig' %}
+{#{% extends 'base.html.twig' %}#}
 
-{% block title %}Coedi Sothys - Inscription{% endblock %}
+{#{% block title %}Coedi Sothys - Inscription{% endblock %}#}
 
-{% block body %}
-    {% for flashError in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-    {% endfor %}
-    
-    <main class="main" id="top">
-        <div class="container-fluid">
-            <div class="row min-vh-100 bg-100">
-                <div class="col-6 d-none d-lg-block position-relative">
-                    <div class="bg-holder"
-                         style="background-image:url({{ asset('assets/images/bg-home.jpg') }});background-position: 50% 20%;">
-                    </div>
-                </div>
-                <div class="col-sm-10 col-md-6 px-sm-0 align-self-center mx-auto py-5">
-                    <div class="row justify-content-center g-0">
-                        <div class="col-lg-9 col-xl-8 col-xxl-6">
-                            <div class="card">
-                                <div class="card-header text-center p-2"><img
-                                            src="{{ asset('assets/images/logo_register.png') }}"/></div>
-                                <div class="card-body p-4">
-                                    <div class="row flex-between-center">
-                                        <div class="col-auto">
-                                        </div>
-                                        <div class="col-auto fs--1 text-600"><span class="mb-0 font-weight-semi-bold">Déja utilisateur ?</span>
-                                            <span><a href="{{ path('app_login') }}">Connexion</a></span></div>
-                                    </div>
-                                    {{ form_start(registrationForm) }}                                 
-                                        <div class="mb-3">
-                                            <label class="form-label" for="split-email">Email</label>
-                                            {{ form_row(registrationForm.email, {'label' : false,  'attr' : {'placeholder' : 'Email',  'class' : 'form-control'  }}) }}
-                                        </div>
-                                        <div class="row gx-3">
-                                            <div class="mb-3 col-sm-6">
-                                                <label class="form-label" for="split-password">Mot de passe</label>
-                                                {{ form_row(registrationForm.plainPassword.first, {'label' : false,  'attr' : {'placeholder' : 'Mot de passe',  'class' : 'form-control'  }}) }}
-                                            </div>
-                                            <div class="mb-3 col-sm-6">
-                                                <label class="form-label" for="split-confirm-password">Confirmer mot de
-                                                    passe</label>
-                                                {{ form_row(registrationForm.plainPassword.second, {'label' : false,  'attr' : {'placeholder' : 'Mot de passe',  'class' : 'form-control'  }}) }}
-                                            </div>
-                                        </div>
-                                        <div class="form-check">
-                                            {{ form_row(registrationForm.agreeTerms, {'label' : false,  'attr' : {'placeholder' : 'Prénom',  'class' : 'form-check-input'  }}) }}
-                                            <label class="form-label" for="cover-register-checkbox">J'accepte les <a
-                                                        href="#!">conditions </a>et <a href="#!">les mentions
-                                                    légales</a></label>
-                                        </div>
-                                        <div class="mb-3">
-                                            <button class="btn btn-primary btn-block mt-3" type="submit" name="submit">
-                                                Inscription
-                                            </button>
-                                        </div>
-                                    {{ form_end(registrationForm) }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-    
-{% endblock %}
+{#{% block body %}#}
+{#    {% for flashError in app.flashes('verify_email_error') %}#}
+{#        <div class="alert alert-danger" role="alert">{{ flashError }}</div>#}
+{#    {% endfor %}#}
+
+{#    <main class="main" id="top">#}
+{#        <div class="container-fluid">#}
+{#            <div class="row min-vh-100 bg-100">#}
+{#                <div class="col-6 d-none d-lg-block position-relative">#}
+{#                    <div class="bg-holder"#}
+{#                         style="background-image:url({{ asset('assets/images/bg-home.jpg') }});background-position: 50% 20%;">#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-sm-10 col-md-6 px-sm-0 align-self-center mx-auto py-5">#}
+{#                    <div class="row justify-content-center g-0">#}
+{#                        <div class="col-lg-9 col-xl-8 col-xxl-6">#}
+{#                            <div class="card">#}
+{#                                <div class="card-header text-center p-2"><img#}
+{#                                            src="{{ asset('assets/images/logo_register.png') }}"/></div>#}
+{#                                <div class="card-body p-4">#}
+{#                                    <div class="row flex-between-center">#}
+{#                                        <div class="col-auto">#}
+{#                                        </div>#}
+{#                                        <div class="col-auto fs--1 text-600"><span class="mb-0 font-weight-semi-bold">Déja utilisateur ?</span>#}
+{#                                            <span><a href="{{ path('app_login') }}">Connexion</a></span></div>#}
+{#                                    </div>#}
+{#                                    {{ form_start(registrationForm) }}#}
+{#                                        <div class="mb-3">#}
+{#                                            <label class="form-label" for="split-email">Email</label>#}
+{#                                            {{ form_row(registrationForm.email, {'label' : false,  'attr' : {'placeholder' : 'Email',  'class' : 'form-control'  }}) }}#}
+{#                                        </div>#}
+{#                                        <div class="row gx-3">#}
+{#                                            <div class="mb-3 col-sm-6">#}
+{#                                                <label class="form-label" for="split-password">{{'password' | trans}}</label>#}
+{#                                                {{ form_row(registrationForm.plainPassword.first, {'label' : false,  'attr' : {'placeholder' : '{{'password' | trans}}',  'class' : 'form-control'  }}) }}#}
+{#                                            </div>#}
+{#                                            <div class="mb-3 col-sm-6">#}
+{#                                                <label class="form-label" for="split-confirm-password">Confirmer mot de#}
+{#                                                    passe</label>#}
+{#                                                {{ form_row(registrationForm.plainPassword.second, {'label' : false,  'attr' : {'placeholder' : '{{'password' | trans}}',  'class' : 'form-control'  }}) }}#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="form-check">#}
+{#                                            {{ form_row(registrationForm.agreeTerms, {'label' : false,  'attr' : {'placeholder' : 'Prénom',  'class' : 'form-check-input'  }}) }}#}
+{#                                            <label class="form-label" for="cover-register-checkbox">J'accepte les <a#}
+{#                                                        href="#!">conditions </a>et <a href="#!">les mentions#}
+{#                                                    légales</a></label>#}
+{#                                        </div>#}
+{#                                        <div class="mb-3">#}
+{#                                            <button class="btn btn-primary btn-block mt-3" type="submit" name="submit">#}
+{#                                                Inscription#}
+{#                                            </button>#}
+{#                                        </div>#}
+{#                                    {{ form_end(registrationForm) }}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </main>#}
+
+{#{% endblock %}#}

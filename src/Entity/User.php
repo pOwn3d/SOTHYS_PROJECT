@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -46,6 +48,11 @@ class User implements UserInterface
      */
     private $accountActivated;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Society::class, inversedBy="users")
+     */
+    private $societyID;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,7 +66,6 @@ class User implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -70,7 +76,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -81,7 +87,6 @@ class User implements UserInterface
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
-
         return array_unique($roles);
     }
 
@@ -96,13 +101,12 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self
     {
         $this->password = $password;
-
         return $this;
     }
 
@@ -134,7 +138,6 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
-
         return $this;
     }
 
@@ -146,7 +149,18 @@ class User implements UserInterface
     public function setAccountActivated(bool $accountActivated): self
     {
         $this->accountActivated = $accountActivated;
-
         return $this;
     }
+
+    public function getSocietyID(): ?Society
+    {
+        return $this->societyID;
+    }
+
+    public function setSocietyID(?Society $societyID): self
+    {
+        $this->societyID = $societyID;
+        return $this;
+    }
+
 }

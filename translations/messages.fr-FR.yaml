@@ -1,0 +1,190 @@
+my:
+    orders: 'Mes commandes'
+    account: 'Mon compte'
+
+menu:
+    order: 'Mes commandes'
+    do_order: 'Passer une commande'
+    portfolio: 'Portefeuille de commandes'
+    price: 'Tarifs'
+
+products: 'produits'
+
+customer:
+    area: 'MON ESPACE CLIENT'
+
+password: 'Mot de passe'
+
+stay:
+    connected: 'Rester connecté(e)'
+
+login: 'Se connecter'
+
+Forgot:
+    your:
+        password: 'Mot de passe oublié'
+
+Home: 'Page d''accueil'
+
+homePage: 'Accueil'
+
+Welcome:
+    at:
+        costomer:
+            area: 'Bienvenue dans votre espace client.'
+
+your:
+    space:
+        take:
+            advantage: 'Cet espace vous est dédié, Profitez de tous vos services en ligne:'
+
+Ckeck:
+    your:
+        pricing: 'Consultez vos tarifs'
+    current:
+        promotional:
+            offers: 'Accédez aux offres promotionnelles en cours (en cours de développement)'
+
+order:
+    online: 'Passez vos commandes en direct'
+    date: 'Date de commande'
+    status: 'Statut de la commande'
+    substatus: 'détail du status'
+    creation_date: 'Date de création'
+    delivery_date: 'Date de mise à disposition souhaitée'
+    delivery_adress: 'Addresse de livraison'
+    transport_mode_incoterm: 'Mode de transport - Incoterm'
+    payment_method: 'Méthode de payment'
+    save: 'Envoyer ma commande'
+    save_draft: 'Sauvegarde mon brouillon'
+    edit: 'Modifier ma commande'
+
+Track:
+    their:
+        progress: 'Suivez leur état d''avancement'
+
+logout: 'Déconnexion'
+
+Customer:
+    account:
+        id: 'Identifiant compte client'
+
+save: 'Sauvegarder'
+
+Confirm:
+    password: 'Confirmer le mot de passe'
+
+Cart: 'Récapitulatif panier'
+
+cart:
+    empty: 'Vider le panier'
+
+Subtotal: 'Sous-total'
+
+Validate:
+    order: 'Valider ma commande'
+
+Product: 'Produit'
+
+Designation: 'Désignation'
+
+quantity: 'Quantité'
+
+Quantity:
+    counts: 'Quantité Groupage'
+    ordered: 'Quantité commandée'
+    shipped: 'Quantité Livrée'
+
+price:
+    unit: Prix unitaire (EUR)
+    total: Prix total (EUR)
+
+Price: 'Prix'
+
+Date: 'Date'
+
+state: 'État'
+
+add:
+    to:
+        cart: 'Ajouter au panier'
+
+settings:
+    user: 'Gestion des Utilisateurs'
+    order: 'Gestion des commandes'
+    society: 'Gestion des societe'
+
+User: 'Utilisateur'
+Order: 'Commande'
+Society: 'Société'
+
+new:
+    user: 'Nouveau compte'
+
+email: 'Adresse E-mail'
+
+actif:
+    account: 'Compte actif'
+
+verified:
+    email: 'Adresse E-mail vérifié'
+
+id:
+    society: 'ID Société'
+    order: 'ID Commande'
+    X3: 'ID X3'
+
+admin: 'Administrateur'
+
+delete: 'Supprimer'
+
+roles: 'Roles'
+
+date:
+    shipping: 'Date de livraison'
+    latest:
+        shipped: 'Date de dernière livraison'
+
+reference: 'Référence'
+
+dateDelivery: 'Date de mise à disposition Ussac souhaitée'
+
+Name: 'Nom'
+
+Id Customer: 'Id utilisateur'
+
+promotions: 'Promotions'
+
+upload:
+    orders: 'Télécharger mes commandes'
+
+home:
+    no_promotions: ''
+
+cta:
+    show_promo: 'Accéder à la promotion'
+
+my_promotion: 'Mes promotions'
+
+my_account: 'Mon compte'
+
+my_cart: 'Mon panier'
+
+access_my_account: 'Accéder à mon compte'
+
+access_my_cart: 'Accéder à mon panier'
+
+order_number: 'N° de commande'
+
+search: 'Rechercher'
+
+status:
+    draft: 'Brouillon'
+    pending: 'Validé'
+    done: 'Traité'
+
+address: 'Adresse'
+
+price_download:
+    all: 'Télécharger les tarifs 2021 en pdf'
+    plv: 'Télécharger les tarifs PLV 2021 en pdf'
