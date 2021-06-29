@@ -18,6 +18,7 @@ use App\Repository\PromotionRepository;
 use App\Repository\SocietyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ShopServices extends AbstractController
 {
@@ -33,6 +34,10 @@ class ShopServices extends AbstractController
     private PromoServices $promoServices;
     private PromotionRepository $promotionRepository;
     private FreeRestockingRulesRepository $freeRestockingRulesRepository;
+    /**
+     * @var \App\Services\FreeRestockingRulesService
+     */
+    private FreeRestockingRulesService $freeRestockingRulesService;
 
 
     public function __construct(
@@ -47,7 +52,8 @@ class ShopServices extends AbstractController
         SocietyRepository $societyRepository,
         PromoServices $promoServices,
         PromotionRepository $promotionRepository,
-        FreeRestockingRulesRepository $freeRestockingRulesRepository
+        FreeRestockingRulesRepository $freeRestockingRulesRepository,
+        FreeRestockingRulesService $freeRestockingRulesService
     ) {
         $this->itemRepository = $itemRepository;
         $this->itemPriceRepository = $itemPriceRepository;
@@ -61,6 +67,7 @@ class ShopServices extends AbstractController
         $this->promoServices = $promoServices;
         $this->promotionRepository = $promotionRepository;
         $this->freeRestockingRulesRepository = $freeRestockingRulesRepository;
+        $this->freeRestockingRulesService = $freeRestockingRulesService;
     }
 
     public function getPriceItemIDSociety($item, $society)
@@ -79,7 +86,6 @@ class ShopServices extends AbstractController
             }
         }
 
-
         $item = $this->itemRepository->findOneBy(['id' => $itemId]);
         $cart = $this->orderDraftRepository->findOneBy(['idSociety' => $societyId]);
         $society = $this->societyRepository->findOneBy(['id' => $societyId]);
@@ -91,13 +97,6 @@ class ShopServices extends AbstractController
 
         $cartItem = $this->orderDraftRepository->findOneBy([ 'idItem' => $item->getId() ]);
 
-//        if ($this->itemQuantityService->quantityItemSociety($item, $society) == null) {
-//            $quantity = 1;
-//        } else {
-//            $quantity = $this->itemQuantityService->quantityItemSociety($item, $society)->getQuantity();
-//                 }
-
-
         if ($cart == null || $cartItem == null) {
             $order = new OrderDraft();
             $order->setIdItem($item)
@@ -108,21 +107,71 @@ class ShopServices extends AbstractController
                 ->setQuantityBundling($item->getAmountBulking())
                 ->setState(0)
                 ->setPromo(0)
-                ->setPromotionId($promo)
-            ;
+                ->setPromotionId($promo);
             $this->em->persist($order);
             $this->em->flush();
         }
 
         if ($cartItem != null) {
             $order = $cartItem;
-                $order->setQuantity($qty)
-                    ->setPriceOrder($order->getPrice() * $qty);
-                $this->em->persist($order);
-                $this->em->flush();
+            $order->setQuantity($qty)
+                ->setPriceOrder($order->getPrice() * $qty);
+            $this->em->persist($order);
+            $this->em->flush();
+        }
+    }
+
+    public function addToCartRestocking(Society $society, $itemId, $qty)
+    {
+
+        $item = $this->itemRepository->findOneBy(['id' => $itemId]);
+        $cart = $this->orderDraftRepository->findBy(['idSociety' => $society]);
+        $society = $this->societyRepository->findOneBy(['id' => $society]);
+        $rule = $this->freeRestockingRulesRepository->findOneBy(['societyId' => $society]);
+        $itemPrice = $this->itemPriceRepository->getItemPriceBySociety($itemId, $society->getId());
+        $totalOrder = 0;
+
+        foreach ($cart as $order) {
+            if (str_contains($rule->getTypeOfRule(), $order->getIdItem()->getIdPresentation()) == true) {
+                // Montant total de gratuité :
+                $totalOrder += $order->getPriceOrder() * $rule->getValueRule() / 100;
+            }
+
+            if (intval($order->getPriceOrder()) == 0) {
+                $totalOrder = $totalOrder - ($order->getPrice() * $order->getQuantity());
+            }
         }
 
-
+        if ($itemPrice->getPrice() * $qty > $totalOrder) {
+            $this->addFlash('error', 'Dépassement du nombre de produit gratuit');
+        } else {
+            if ($order->getIdItem()->getId() == $item->getId()) {
+                $order->setIdItem($item)
+                    ->setIdSociety($society)
+                    ->setPrice($itemPrice->getPrice())
+                    ->setPriceOrder(0)
+                    ->setQuantity($qty + $order->getQuantity())
+                    ->setQuantityBundling($item->getAmountBulking())
+                    ->setState(0)
+                    ->setPromo(0)
+                    ->setPromotionId(null);
+                $totalOrder = $totalOrder - ($order->getPrice() * $order->getQuantity());
+            } else {
+                $order = new OrderDraft();
+                $order->setIdItem($item)
+                    ->setIdSociety($society)
+                    ->setPrice($itemPrice->getPrice())
+                    ->setPriceOrder(0)
+                    ->setQuantity($qty)
+                    ->setQuantityBundling($item->getAmountBulking())
+                    ->setState(0)
+                    ->setPromo(0)
+                    ->setPromotionId(null);
+                $totalOrder = $totalOrder - ($order->getPrice() * $order->getQuantity());
+            }
+            $this->em->persist($order);
+            $this->em->flush();
+        }
     }
 
     public function getOrderDraft($society)
@@ -164,8 +213,7 @@ class ShopServices extends AbstractController
             ->setReference($data->getReference())
             ->setAddress($data->getAddress())
             ->setEmail($user->getEmail())
-            ->setPaymentMethod($data->getPaymentMethod())
-        ;
+            ->setPaymentMethod($data->getPaymentMethod());
 
         $this->em->persist($newOrder);
         $this->em->flush();
@@ -183,8 +231,7 @@ class ShopServices extends AbstractController
                 ->setPromo($promo)
 //                ->setIdOrderLine()
 //                ->setIdOrderX3()
-                ->setPriceUnit($order->getPrice())
-//                ->setRemainingQtyOrder()
+                ->setPriceUnit($order->getPrice())//                ->setRemainingQtyOrder()
             ;
 
             $this->em->remove($order);
@@ -193,7 +240,8 @@ class ShopServices extends AbstractController
         }
     }
 
-    public function updateOrder($order, $data) {
+    public function updateOrder($order, $data)
+    {
         $order->setDateDelivery($data->getDateDelivery())
             ->setIdStatut($data->getIdStatut())
             ->setIncoterm($data->getIncoterm())
@@ -206,7 +254,8 @@ class ShopServices extends AbstractController
         return $order;
     }
 
-    public function updateQuantityOrderLineById($orderLineId, $quantity) {
+    public function updateQuantityOrderLineById($orderLineId, $quantity)
+    {
 
         $orderLine = $this->orderLineRepository->findOneBy([
             'id' => $orderLineId,
@@ -220,7 +269,7 @@ class ShopServices extends AbstractController
 
     public function deleteItemOrderDraft($id)
     {
-        $orders = $this->orderDraftRepository->findOneBy([ 'id' => $id ]);
+        $orders = $this->orderDraftRepository->findOneBy(['id' => $id]);
         $this->em->remove($orders);
         $this->em->flush();
     }
@@ -240,13 +289,14 @@ class ShopServices extends AbstractController
         $this->em->flush();
     }
 
-    public function emptyCart($societyId) {
+    public function emptyCart($societyId)
+    {
 
         $orderDrafts = $this->orderDraftRepository->findBy([
             'idSociety' => $societyId,
         ]);
 
-        foreach($orderDrafts as $orderDraft) {
+        foreach ($orderDrafts as $orderDraft) {
             $this->em->remove($orderDraft);
         }
 

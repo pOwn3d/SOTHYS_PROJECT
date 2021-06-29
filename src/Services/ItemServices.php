@@ -54,6 +54,40 @@ class ItemServices
         return $results;
     }
 
+    function getItemsByFreeRestocking(int $societyId, string $text, string $locale = 'en-US', $freeRule) {
+
+//
+//dd('i.id = p.idItem AND p.idSociety = :societyId AND i.idPresentation  IN ' .$freeRule);
+
+        $qb = $this->itemRepository
+            ->createQueryBuilder('i')
+            ->join('i.gamme', 'g')
+            ->innerJoin('i.itemPrices', 'p', Join::WITH, 'i.id = p.idItem AND p.idSociety = :societyId AND i.idPresentation  IN (' .$freeRule .')' );
+
+        if($locale === 'fr-FR') {
+            $qb->where('i.labelFR LIKE :text');
+        } else {
+            $qb->where('i.labelEN LIKE :text');
+        }
+
+        $qb->orWhere('i.itemID LIKE :text');
+
+        if($locale === 'fr-FR') {
+            $qb->orWhere('g.labelFR LIKE :text');
+        } else {
+            $qb->orWhere('g.labelEN LIKE :text');
+        }
+
+        $results = $qb
+            ->setParameter('text', "%$text%")
+            ->setParameter('societyId', $societyId)
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+
+        return $results;
+    }
+
     public function relatedProduct($id){
       return  $this->itemRepository->findBy(['genericName' => $id]);
     }

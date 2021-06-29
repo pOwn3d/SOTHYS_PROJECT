@@ -2,12 +2,10 @@ function getLanguage() {
     if(!!navigator.language.match('fr')) {
         return 'fr-FR';
     }
-
     return 'en-US';
 }
 
 $(document).ready(function () {
-
 
     $(window).on('scroll', function () {
         $(window).scrollTop() > 300 ? $('.up-button').show(500) : $('.up-button').hide(500);
@@ -235,8 +233,41 @@ $(document).ready(function () {
         })
     });
 
-    $(document).on('click', '.js-global-add-button', function() {
-        var id = $(this).attr('data-product-id');
-        window.location.href = '/' + getLanguage() + '/produit/' + id;
-    });
+$(document).on('click', '.js-global-add-button', function () {
+    var id = $(this).attr('data-product-id');
+    window.location.href = '/' + getLanguage() + '/produit/' + id;
+});
+
+
+$('.js-global-search-button-promo').on('click', function (e) {
+    e.preventDefault();
+    var term = $('.js-global-search-term-promo').val()
+    const freeRules = document.getElementsByClassName('js-global-search-term-promo')[0].dataset.rules
+
+    if (!term.length) {
+        return
+    }
+    var language = getLanguage();
+
+    $.post('/' + language + '/search-promo', {
+        term: term,
+        freeRules: freeRules,
+    }).then((res) => {
+        var results = res.reduce(function (text, result) {
+            text += '<div class="js-global-add-button" data-product-id="' + result.id + '">' + result.gamme + ' - ' + result.label + ' - ' + result.reference + ' ' +
+                '<a href="/add-to-cart-restocking/' + result.id + '/1"  class="button button--primary-fill button--small modal--show add-to-cart"> Ajouter au panier' +
+                '</a></div>';
+            return text;
+        }, '');
+        $(this).parents('.search-wrapper').next('.search-results-promo').html(results);
+    })
+});
+
+$(document).on('click', '.js-global-add-button', function () {
+    var id = $(this).attr('data-product-id');
+    window.location.href = '/' + getLanguage() + '/produit/' + id;
+});
+
+
+
 

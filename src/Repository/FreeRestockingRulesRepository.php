@@ -25,7 +25,7 @@ class FreeRestockingRulesRepository extends ServiceEntityRepository
             ->andWhere('f.societyId = :val')
             ->setParameter('val', $value)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
     }
 
     // /**

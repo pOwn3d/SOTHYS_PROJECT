@@ -18,7 +18,6 @@ use App\Entity\PaymentMethod;
 use App\Entity\Society;
 use App\Entity\TransportMode;
 use App\Entity\User;
-use App\Repository\FreeRestockingRulesRepository;
 use App\Repository\GammeProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
@@ -51,9 +50,9 @@ class CsvImporter
 
     public function __construct(EntityManagerInterface $em, MailerInterface $mailer, ResetPasswordHelperInterface $resetPasswordHelper, GammeProductRepository $gammeProductRepository)
     {
-        $this->em                     = $em;
-        $this->mailer                 = $mailer;
-        $this->resetPasswordHelper    = $resetPasswordHelper;
+        $this->em = $em;
+        $this->mailer = $mailer;
+        $this->resetPasswordHelper = $resetPasswordHelper;
         $this->gammeProductRepository = $gammeProductRepository;
 
         // See here: https://www.doctrine-project.org/projects/doctrine-orm/en/2.8/reference/batch-processing.html
@@ -85,8 +84,8 @@ class CsvImporter
         $csv->fetchColumn();
 
         foreach ($csv as $row) {
-            $user    = $this->em->getRepository(User::class)->findOneBy([ 'email' => $row[0] ]);
-            $society = $this->em->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[1] ]);
+            $user = $this->em->getRepository(User::class)->findOneBy(['email' => $row[0]]);
+            $society = $this->em->getRepository(Society::class)->findOneBy(['idCustomer' => $row[1]]);
 
             $newUser = new User();
             $newUser
@@ -95,18 +94,18 @@ class CsvImporter
                 ->setIsVerified($row[3])
                 ->setPassword($row[4])
                 ->setSocietyID($society)
-                ->setRoles([ $row[5] ]);
+                ->setRoles([$row[5]]);
             $this->em->persist($newUser);
             $this->em->flush();
 
-            $user = $this->em->getRepository(User::class)->findOneBy([ 'email' => $newUser->getEmail() ]);
+            $user = $this->em->getRepository(User::class)->findOneBy(['email' => $newUser->getEmail()]);
 
             if (!$shouldSendMail) {
                 continue;
             }
 
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
-            $email      = (new TemplatedEmail())
+            $email = (new TemplatedEmail())
                 ->from(new Address('service.client@sothys.net', 'Service Client Sothys')) # TODO: translate me
                 ->to($newUser->getEmail())
                 ->subject('Demande de nouveau mot de passe') # TODO: translate me
@@ -131,7 +130,7 @@ class CsvImporter
             }
 
             if ($row[0] != null) {
-                $society = $this->em->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[2] ]);
+                $society = $this->em->getRepository(Society::class)->findOneBy(['idCustomer' => $row[2]]);
 //            $idOrder = $this->em->getRepository(Order)
                 $newOrder = new Order();
                 $newOrder
@@ -250,13 +249,13 @@ class CsvImporter
         $csv->fetchColumn();
 
         $gammes = $this->em->getRepository(GammeProduct::class)->findAll();
-        $divers = $this->em->getRepository(GammeProduct::class)->findOneBy([ 'refID' => 'DIVERS' ]);
+        $divers = $this->em->getRepository(GammeProduct::class)->findOneBy(['refID' => 'DIVERS']);
         $genericNames = $this->em->getRepository(GenericName::class)->findAll();
 
         foreach ($csv as $row) {
 
             $product = new Item();
-            $gamme   = null;
+            $gamme = null;
             if ($row[8] != null) {
                 $gammeString = $row[0];
                 $foundGammes = array_filter($gammes, function ($gamme) use ($row) {
@@ -268,7 +267,7 @@ class CsvImporter
                 }
             } else {
                 $gammeString = 'DIVERS';
-                $gamme       = $divers;
+                $gamme = $divers;
             }
 
             $genericName = null;
@@ -308,7 +307,7 @@ class CsvImporter
         $csv->fetchColumn();
 
         $companies = $this->em->getRepository(Society::class)->findAll();
-        $items     = $this->em->getRepository(Item::class)->findAll();
+        $items = $this->em->getRepository(Item::class)->findAll();
 
         $i = 0;
         foreach ($csv as $row) {
@@ -363,7 +362,7 @@ class CsvImporter
         $csv->fetchColumn();
 
         $companies = $this->em->getRepository(Society::class)->findAll();
-        $items     = $this->em->getRepository(Item::class)->findAll();
+        $items = $this->em->getRepository(Item::class)->findAll();
 
         $i = 0;
         foreach ($csv as $row) {
@@ -446,9 +445,9 @@ class CsvImporter
 
         foreach ($csv as $row) {
 
-            $user     = $this->em->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[1] ]);
-            $incoterm = $this->em->getRepository(Incoterm::class)->findOneBy([ 'reference' => $row[3] ]);
-            $modeTransport = $this->em->getRepository(TransportMode::class)->findOneBy([ 'idTransport' => $row[2] ]);
+            $user = $this->em->getRepository(Society::class)->findOneBy(['idCustomer' => $row[1]]);
+            $incoterm = $this->em->getRepository(Incoterm::class)->findOneBy(['reference' => $row[3]]);
+            $modeTransport = $this->em->getRepository(TransportMode::class)->findOneBy(['idTransport' => $row[2]]);
 
             $gamme = new CustomerIncoterm();
             $gamme
@@ -469,7 +468,7 @@ class CsvImporter
 
         foreach ($csv as $row) {
 
-            $society = $this->em->getRepository(Society::class)->findOneBy([ 'idCustomer' => $row[0] ]);
+            $society = $this->em->getRepository(Society::class)->findOneBy(['idCustomer' => $row[0]]);
             $address = new EntityAddress();
             $address
                 ->setSociety($society)
@@ -519,7 +518,7 @@ class CsvImporter
     {
         $dataBdd = $this->em->getRepository(FreeRestockingRules::class)->findAll();
 
-        foreach ($dataBdd as $data){
+        foreach ($dataBdd as $data) {
             $this->em->remove($data);
             $this->em->flush();
         }
@@ -530,26 +529,36 @@ class CsvImporter
         $csv->setDelimiter(';');
         $csv->fetchColumn();
 
+
         foreach ($csv as $row) {
-
-            $society = $this->em->getRepository(Society::class)->findOneBy(['idCustomer' => $row[0]]);
-            $freeRestockingRules = new FreeRestockingRules();
-            $freeRestockingRules
-                ->setSocietyID($society)
-                ->setTypeOfRule($row[3])
-                ->setValueCondition($row[4])
-                ->setObtention($row[5])
-                ->setValueRule($row[6])
-                ->setAmountStep($row[7])
-                ->setAmountQuantity($row[8])
-                ->setValidity($row[9])
-                ->setLabelFr($row[10])
-                ->setLabelEn($row[11]);
-
-            $this->em->persist($freeRestockingRules);
-            $this->em->flush();
-
+            if (!strpos($row[3], 'IdArticle') && $row[6] != "") {
+                if (strpos($row[3], 'IN(')) {
+                    $explodeCol3 = explode(')', explode('(', $row[3])[1])[0];
+                } else if (strpos($row[3], '=') ) {
+                    $explodeCol3 = explode('=', $row[3])[1];
+                }
+                if (strpos($row[4], 'IN(')) {
+                    $explodeCol4 = explode(')', explode('(', $row[4])[1])[0];
+                } else if (strpos($row[4], '=') ) {
+                    $explodeCol4 = explode('=', $row[4])[1];
+                }
+                           $society = $this->em->getRepository(Society::class)->findOneBy(['idCustomer' => $row[0]]);
+                $freeRestockingRules = new FreeRestockingRules();
+                $freeRestockingRules
+                    ->setSocietyID($society)
+                    ->setTypeOfRule($explodeCol3)
+                    ->setValueCondition($explodeCol4)
+                    ->setObtention($row[5])
+                    ->setValueRule($row[6])
+                    ->setAmountStep($row[7])
+                    ->setAmountQuantity($row[8])
+                    ->setValidity($row[9])
+                    ->setLabelFr($row[10])
+                    ->setLabelEn($row[11]);
+                $this->em->persist($freeRestockingRules);
+                $this->em->flush();
+            }
         }
-        return "Ok";
+        return 'Ok';
     }
 }
