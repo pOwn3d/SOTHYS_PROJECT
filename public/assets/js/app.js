@@ -105,6 +105,30 @@ $(document).ready(function () {
             },
         });
     });
+    
+    // NEW
+
+    $(document).on("mouseup", ".free-up", createCartUpDownCallbackRestocking(+1));
+    $(document).on("mouseup", ".free-down", createCartUpDownCallbackRestocking(-1));
+
+    function createCartUpDownCallbackRestocking(direction) {
+        return function () {
+            var t = $(this).parent().prev();
+            let orderId = t['0'].dataset.product
+            t.val(parseInt(t.val()) + direction)
+            let qty = t.val()
+            const url = "/add-to-cart-restocking/" + orderId +  "/" + qty
+
+            $.ajax({
+                method: "POST",
+                url: url,
+                success: function (result) {
+                    // TODO : Supprimer le reload est afficher le message en cas d'erreur si la gratuité est dépasser. 
+                    window.location.reload();
+                },
+            });
+        }
+    }
 
 
     $(document).on("mouseup", ".promo-down", (function () {
@@ -160,7 +184,6 @@ $(document).ready(function () {
                 )
         }
     ))
-
 
     $(".js-update-cart-quantity-promo").change(function(){
 

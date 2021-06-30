@@ -17,7 +17,6 @@ use App\Repository\PromotionRepository;
 use App\Repository\SocietyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ShopServices extends AbstractController
 {
@@ -132,7 +131,6 @@ class ShopServices extends AbstractController
 
         foreach ($cart as $order) {
             if (str_contains($rule->getTypeOfRule(), $order->getIdItem()->getIdPresentation()) == true) {
-                // Montant total de gratuité :
                 $totalOrder += $order->getPriceOrder() * $rule->getValueRule() / 100;
             }
 
@@ -144,33 +142,36 @@ class ShopServices extends AbstractController
         if ($itemPrice->getPrice() * $qty > $totalOrder) {
             $this->addFlash('error', 'Dépassement du nombre de produit gratuit');
         } else {
-            if ($order->getIdItem()->getId() == $item->getId()) {
-                $order->setIdItem($item)
-                    ->setIdSociety($society)
-                    ->setPrice($itemPrice->getPrice())
-                    ->setPriceOrder(0)
-                    ->setQuantity($qty + $order->getQuantity())
-                    ->setQuantityBundling($item->getAmountBulking())
-                    ->setState(0)
-                    ->setPromo(0)
-                    ->setPromotionId(null);
-                $totalOrder = $totalOrder - ($order->getPrice() * $order->getQuantity());
-            } else {
-                $order = new OrderDraft();
-                $order->setIdItem($item)
-                    ->setIdSociety($society)
-                    ->setPrice($itemPrice->getPrice())
-                    ->setPriceOrder(0)
-                    ->setQuantity($qty)
-                    ->setQuantityBundling($item->getAmountBulking())
-                    ->setState(0)
-                    ->setPromo(0)
-                    ->setPromotionId(null);
-                $totalOrder = $totalOrder - ($order->getPrice() * $order->getQuantity());
+
+            $ifexist = false;
+            if ($totalOrder >= 0) {
+                foreach ($cart as $order) {
+                    if ($order->getIdItem() === $item) {
+                        $order->setPriceOrder(0)
+                            ->setQuantity($qty);
+                        $totalOrder = $totalOrder - ($order->getPrice() * $order->getQuantity());
+                        $ifexist = true;
+                        $this->em->persist($order);
+                        $this->em->flush();
+                    }
+                }
+                if (!$ifexist) {
+                    $order = new OrderDraft();
+                    $order->setIdItem($item)
+                        ->setIdSociety($society)
+                        ->setPrice($itemPrice->getPrice())
+                        ->setPriceOrder(0)
+                        ->setQuantity($qty)
+                        ->setQuantityBundling($item->getAmountBulking())
+                        ->setState(0)
+                        ->setPromo(0)
+                        ->setPromotionId(null);
+                    $this->em->persist($order);
+                    $this->em->flush();
+                }
             }
-            $this->em->persist($order);
-            $this->em->flush();
         }
+
     }
 
     public function getOrderDraft($society)

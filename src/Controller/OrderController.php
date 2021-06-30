@@ -9,6 +9,7 @@ use App\Services\OrderServices;
 use App\Services\ShopServices;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -92,10 +93,10 @@ class OrderController extends AbstractController
      * @param ShopServices $shopServices
      * @param OrderDraftServices $orderDraftServices
      * @param CartItem $cartItem
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
      */
-    public function addToCartRestocking(Request $request, ShopServices $shopServices, OrderDraftServices $orderDraftServices, CartItem $cartItem): JsonResponse|Response
+    public function addToCartRestocking(Request $request, ShopServices $shopServices, OrderDraftServices $orderDraftServices, CartItem $cartItem): RedirectResponse
     {
 
         $itemId = $request->get('item');
@@ -111,6 +112,7 @@ class OrderController extends AbstractController
                 'id' => $order->getId(),
                 'cartItem' => $cartItem->getItemCart($society->getId()),
             ];
+
             return $this->redirectToRoute('app_shop');
         }
 
