@@ -33,4 +33,30 @@ class SearchController extends AbstractController {
             ];
         }, $items));
     }
+
+    /**
+     * @Route("/{_locale}/search-promo", name="app_search_promo")
+     */
+    public function searchPromo(ItemServices $itemServices, Request $request) {
+        $term = $request->request->get('term', '');
+        $freeRules = $request->request->get('freeRules');
+
+        $societyId = $this->getUser()->getSocietyID()->getId();
+
+//        $items = $itemServices->getItemsByTerm($societyId, $term, $request->getLocale());
+        $items = $itemServices->getItemsByFreeRestocking($societyId, $term, $request->getLocale(), $freeRules);
+
+        if(empty($items)) {
+            return new JsonResponse([]);
+        }
+
+        return new JsonResponse(array_map(function(Item $item) use ($request) {
+            return [
+                'id' => $item->getId(),
+                'label' => $item->getLabel($request->getLocale()),
+                'gamme' => $item->getGamme()->getLabel($request->getLocale()),
+                'reference' => $item->getItemID(),
+            ];
+        }, $items));
+    }
 }

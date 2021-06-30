@@ -9,6 +9,7 @@ use App\Services\OrderServices;
 use App\Services\ShopServices;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,7 +47,7 @@ class OrderController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function addToCart(Request $request, ShopServices $shopServices, OrderDraftServices $orderDraftServices, CartItem $cartItem)
+    public function addToCart(Request $request, ShopServices $shopServices, OrderDraftServices $orderDraftServices, CartItem $cartItem): JsonResponse|Response
     {
 
         // TODO :: Récupérer les info de FreeRestockingRules pour mettre à jour le panier
@@ -83,6 +84,39 @@ class OrderController extends AbstractController
         }
         return new JsonResponse(json_encode($data));
 
+    }
+
+
+    /**
+     * @Route("/add-to-cart-restocking/{item}/{qty}", name="app_add_to_cart_restocking" )
+     * @param Request $request
+     * @param ShopServices $shopServices
+     * @param OrderDraftServices $orderDraftServices
+     * @param CartItem $cartItem
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
+     */
+    public function addToCartRestocking(Request $request, ShopServices $shopServices, OrderDraftServices $orderDraftServices, CartItem $cartItem): RedirectResponse
+    {
+
+        $itemId = $request->get('item');
+        $society = $this->getUser()->getSocietyID();
+        $shopServices->addToCartRestocking($society, $itemId, $request->get('qty'));
+        $orders = $orderDraftServices->getAllOrderDraftID($society->getId(), $itemId);
+
+        foreach ($orders as $order) {
+            $data = [
+                'quantity' => $order->getQuantity(),
+                'price' => $order->getPrice(),
+                'quantityBundling' => $order->getQuantityBundling(),
+                'id' => $order->getId(),
+                'cartItem' => $cartItem->getItemCart($society->getId()),
+            ];
+
+            return $this->redirectToRoute('app_shop');
+        }
+
+        return $this->redirectToRoute('app_shop');
     }
 
 }

@@ -30,6 +30,11 @@ class OrderDraftServices
         return $this->orderDraftRepository->findBy([ 'idSociety' => $id, 'idItem' => $item ]);
     }
 
+    public function getAllOrderDraft($society)
+    {
+        return $this->orderDraftRepository->findBy([ 'idSociety' => $society]);
+    }
+
     public function getAllOrderDraftPromoID($society)
     {
         return $this->orderDraftRepository->findOrderDraftSocietyPromo($society);

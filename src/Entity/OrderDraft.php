@@ -74,6 +74,11 @@ class OrderDraft
      */
     private $promotionId;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $freeRestocking;
+
     public function __construct()
     {
         $this->orderLines = new ArrayCollection();
@@ -225,6 +230,18 @@ class OrderDraft
     public function setPromotionId(?Promotion $promotionId): self
     {
         $this->promotionId = $promotionId;
+
+        return $this;
+    }
+
+    public function getFreeRestocking(): ?int
+    {
+        return $this->freeRestocking;
+    }
+
+    public function setFreeRestocking(?int $freeRestocking): self
+    {
+        $this->freeRestocking = $freeRestocking;
 
         return $this;
     }
