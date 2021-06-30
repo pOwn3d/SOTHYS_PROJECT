@@ -138,6 +138,7 @@ class CsvImporter
 
     public function importOrder()
     {
+        // TODO : use correct name
         $csv = Reader::createFromPath('../public/csv/order.csv');
         $csv->fetchColumn();
 
@@ -170,6 +171,7 @@ class CsvImporter
                     ->setIdDownStatut($row[8])
                     ->setReference($row[9])
                     ->setAddress($address)
+                    // TODO: add transportMode handling (EAX => id)
 //                ->setTransportMode()
                     ->setPaymentMethod($paymentMethod)
                     ->setDateLastDelivery(new \DateTime($row[13]));
@@ -228,14 +230,27 @@ class CsvImporter
 
     public function importOrderLine()
     {
+        // TODO : correct name
         $csv = Reader::createFromPath('../public/csv/orderLine.csv');
         $csv->fetchColumn();
 
         $items = $this->em->getRepository(Item::class)->findAll();
+        $existingIds = $this->getExistingIds(OrderLine::class);
 
         foreach ($csv as $row) {
 
             $orderLine = new OrderLine();
+
+            if(!empty($row[1]) && in_array($row[1], $existingIds)) {
+                $orderLine = $this->em->getRepository(OrderLine::class)->findOneBy([
+                    'idOrderLine' => $row[1],
+                ]);
+            }
+
+            if($orderLine === null) {
+                dd($row, $orderLine);
+            }
+
             if ($row[0] != "" && $row[1] != "") {
                 $item = null;
 
