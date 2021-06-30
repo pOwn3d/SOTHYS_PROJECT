@@ -10,9 +10,11 @@ use App\Services\ItemServices;
 use App\Services\OrderServices;
 use App\Services\PromoServices;
 use App\Services\ShopServices;
+use Exception;
 use League\Csv\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -63,7 +65,7 @@ class ShopController extends AbstractController
                             $item = $itemService->getItemByX3Id($row[0]);
                             $shopServices->addToCart($society, $item->getId(), $row[1], 0);
                         }
-                    } catch(\Exception $e) {
+                    } catch(Exception $e) {
                         $errors[] = "We have no item with this id : " . $row[0];
                     }
                 }
@@ -158,11 +160,6 @@ class ShopController extends AbstractController
         if($request->get('token') !== 'token' && ($order->getIdStatut() !== 1 || in_array('ROLE_ADMIN', $this->getUser()->getRoles()))) {
             return $this->redirectToRoute('app_order');
         }
-
-        // TODO : handle promo edition ?
-        // if ($promo == true) {
-        //     return $this->redirectToRoute('app_promo_shop');
-        // }
 
         return $this->render('shop/edit.html.twig', [
             'controller_name' => 'ShopController',
@@ -269,7 +266,7 @@ class ShopController extends AbstractController
     /**
      * @Route("/{_locale}/empty-cart", name="app_empty_cart")
      */
-    public function emptyCart(ShopServices $shopServices)
+    public function emptyCart(ShopServices $shopServices): RedirectResponse
     {
 
         $societyId = $this->getUser()->getSocietyID()->getId();
