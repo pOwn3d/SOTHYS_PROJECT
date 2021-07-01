@@ -271,7 +271,11 @@ $(document).ready(function () {
         })
     });
 
-$(document).on('click', '.js-global-add-button', function () {
+$(document).on('click', function() {
+    $('.search-results').html('');
+});
+
+$(document).on('click', '.js-global-add-button', function (e) {
     var id = $(this).attr('data-product-id');
     window.location.href = '/' + getLanguage() + '/produit/' + id;
 });
