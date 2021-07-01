@@ -47,7 +47,7 @@ class OrderController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function addToCart(Request $request, ShopServices $shopServices, OrderDraftServices $orderDraftServices, CartItem $cartItem): JsonResponse|Response
+    public function addToCart(Request $request, ShopServices $shopServices, OrderDraftServices $orderDraftServices, CartItem $cartItem): Response
     {
 
         // TODO :: Récupérer les info de FreeRestockingRules pour mettre à jour le panier
