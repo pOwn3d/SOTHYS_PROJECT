@@ -105,7 +105,7 @@ $(document).ready(function () {
             },
         });
     });
-    
+
     // NEW
 
     $(document).on("mouseup", ".free-up", createCartUpDownCallbackRestocking(+1));
@@ -123,7 +123,7 @@ $(document).ready(function () {
                 method: "POST",
                 url: url,
                 success: function (result) {
-                    // TODO : Supprimer le reload est afficher le message en cas d'erreur si la gratuité est dépasser. 
+                    // TODO : Supprimer le reload est afficher le message en cas d'erreur si la gratuité est dépasser.
                     window.location.reload();
                 },
             });
@@ -278,7 +278,7 @@ $('.js-global-search-button-promo').on('click', function (e) {
     }).then((res) => {
         var results = res.reduce(function (text, result) {
             text += '<div class="js-global-add-button" data-product-id="' + result.id + '">' + result.gamme + ' - ' + result.label + ' - ' + result.reference + ' ' +
-                '<a href="/add-to-cart-restocking/' + result.id + '/1"  class="button button--primary-fill button--small modal--show add-to-cart"> Ajouter au panier' +
+                '<a href="/add-to-cart-restocking/' + result.id + '/1" class="button button--primary-fill button--small modal--show add-to-cart"> Ajouter au panier' +
                 '</a></div>';
             return text;
         }, '');
@@ -290,7 +290,3 @@ $(document).on('click', '.js-global-add-button', function () {
     var id = $(this).attr('data-product-id');
     window.location.href = '/' + getLanguage() + '/produit/' + id;
 });
-
-
-
-

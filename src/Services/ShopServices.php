@@ -140,7 +140,8 @@ class ShopServices extends AbstractController
         }
 
         if ($itemPrice->getPrice() * $qty > $totalOrder) {
-            $this->addFlash('error', 'Dépassement du nombre de produit gratuit');
+            # TODO : translate me
+            $this->addFlash('error', 'Dépassement du nombre de produits gratuits');
         } else {
 
             $ifexist = false;

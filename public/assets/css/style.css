@@ -113,7 +113,6 @@ ul.promo {
     display: none;
 }
 
-
 .up-button {
     display: none;
     width: 42px;
@@ -129,4 +128,13 @@ ul.promo {
     right: 0;
     bottom: 100px;
     cursor: pointer;
+}
+
+
+.flash-error {
+    color: #f00;
+    border: 1px solid;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
 }
