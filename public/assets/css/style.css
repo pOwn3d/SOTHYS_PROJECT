@@ -138,3 +138,9 @@ ul.promo {
     border-radius: 4px;
     margin-bottom: 1rem;
 }
+
+.compte__commandes th {
+    position: sticky;
+    top: 14rem;
+    background: #fff;
+}
