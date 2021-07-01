@@ -112,7 +112,7 @@ $(document).ready(function () {
             },
         });
     });
-    
+
     // NEW
 
     $(document).on("mouseup", ".free-up", createCartUpDownCallbackRestocking(+1));
@@ -305,7 +305,3 @@ $(document).on('click', '.js-global-add-button', function () {
     var id = $(this).attr('data-product-id');
     window.location.href = '/' + getLanguage() + '/produit/' + id;
 });
-
-
-
-
