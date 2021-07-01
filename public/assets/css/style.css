@@ -98,7 +98,7 @@ ul.promo {
     cursor: pointer;
 }
 
-.search-results {
+.search-results, .search-results-promo {
     position: absolute;
     background: #fff;
     border: 1px solid;
@@ -109,7 +109,7 @@ ul.promo {
     z-index: 100;
 }
 
-.search-results:empty {
+.search-results:empty, .search-results-promo:empty {
     display: none;
 }
 
