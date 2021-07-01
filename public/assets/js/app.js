@@ -47,6 +47,9 @@ $(document).ready(function () {
                     url: url,
                     success: function (result) {
                         var data = JSON.parse(result)
+                        if (data == true) {
+                            window.location.reload();
+                        }
                         document.getElementById('qty_update_' + product).innerHTML = data.quantity + ' x ' + data.quantityBundling
                         document.getElementById('price_update_' + product).innerHTML = (data.price * data.quantity).toFixed(2) + ' € '
                         document.getElementById('priceTotal').innerHTML = parseFloat(data.total).toFixed(2) + ' € '
@@ -94,7 +97,11 @@ $(document).ready(function () {
             method: "POST",
             url: url,
             success: function (result) {
+
                 var data = JSON.parse(result)
+                if (data.cartItem == true) {
+                    window.location.reload();
+                }
                 document.getElementById('qty_update_' + product).innerHTML = data.quantity + ' x ' + data.quantityBundling
                 document.getElementById('price_update_' + product).innerHTML = (data.price * data.quantity).toFixed(2) + ' € '
                 document.getElementById('priceTotal').innerHTML = parseFloat(data.total).toFixed(2) + ' € '
@@ -114,17 +121,21 @@ $(document).ready(function () {
     function createCartUpDownCallbackRestocking(direction) {
         return function () {
             var t = $(this).parent().prev();
+            let product = t['0'].dataset.product
             let orderId = t['0'].dataset.product
             t.val(parseInt(t.val()) + direction)
             let qty = t.val()
-            const url = "/add-to-cart-restocking/" + orderId +  "/" + qty
+            const url = "/add-to-cart-restocking/" + orderId + "/" + qty + "/0"
 
             $.ajax({
                 method: "POST",
                 url: url,
                 success: function (result) {
-                    // TODO : Supprimer le reload est afficher le message en cas d'erreur si la gratuité est dépasser. 
-                    window.location.reload();
+                    var data = JSON.parse(result)
+                    document.getElementById('qty_update_' + product).innerHTML = data.quantity + ' x ' + data.quantityBundling
+                    if (data.error != null) {
+                        alert(data.error)
+                    }
                 },
             });
         }
@@ -232,6 +243,10 @@ $(document).ready(function () {
             method: "POST",
             url: url,
             success: function (result) {
+                var data = JSON.parse(result)
+                if (data.cartItem === true) {
+                    window.location.reload();
+                }
                 window.location.reload();
             },
         });
@@ -278,7 +293,7 @@ $('.js-global-search-button-promo').on('click', function (e) {
     }).then((res) => {
         var results = res.reduce(function (text, result) {
             text += '<div class="js-global-add-button" data-product-id="' + result.id + '">' + result.gamme + ' - ' + result.label + ' - ' + result.reference + ' ' +
-                '<a href="/add-to-cart-restocking/' + result.id + '/1"  class="button button--primary-fill button--small modal--show add-to-cart"> Ajouter au panier' +
+                '<a href="/add-to-cart-restocking/' + result.id + '/1/1"  class="button button--primary-fill button--small modal--show add-to-cart"> Ajouter au panier' +
                 '</a></div>';
             return text;
         }, '');
