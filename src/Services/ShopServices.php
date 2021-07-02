@@ -77,23 +77,25 @@ class ShopServices extends AbstractController
     {
         $societyId = $society->getId();
         $promo = $this->promotionRepository->findOneBy(["id" => $promoID]);
-
+        $item = $this->itemRepository->findOneBy(['id' => $itemId]);
+        $cart = $this->orderDraftRepository->findOneBy(['idSociety' => $societyId]);
+        $orders = $this->orderDraftRepository->findBy(['idSociety' => $society]);
+        $society = $this->societyRepository->findOneBy(['id' => $societyId]);
+        $itemPrice = $this->itemPriceRepository->getItemPriceBySociety($itemId, $societyId);
+        $rule = $this->freeRestockingRulesRepository->findOneBy(['societyId' => $society]);
+        $totalOrder = 0;
+        $ordersFree = 0;
         if ($promo != null) {
             foreach ($promo->getFreeRules() as $promoRule) {
                 $this->promoServices->promoItemFreeAdd($promoRule, $qty, $itemId);
             }
         }
 
-        $item = $this->itemRepository->findOneBy(['id' => $itemId]);
-        $cart = $this->orderDraftRepository->findOneBy(['idSociety' => $societyId]);
-        $society = $this->societyRepository->findOneBy(['id' => $societyId]);
-        $itemPrice = $this->itemPriceRepository->getItemPriceBySociety($itemId, $societyId);
-
         if (empty($item) || empty($itemPrice)) {
             throw new \Exception("No item found with this id ");
         }
 
-        $cartItem = $this->orderDraftRepository->findOneBy([ 'idItem' => $item->getId() ]);
+        $cartItem = $this->orderDraftRepository->findOneBy(['idItem' => $item->getId()]);
 
         if ($cart == null || $cartItem == null) {
             $order = new OrderDraft();
@@ -117,6 +119,31 @@ class ShopServices extends AbstractController
             $this->em->persist($order);
             $this->em->flush();
         }
+
+
+        // Récupérer le total de gratuité pour la commande : 
+        // Calculer le montant en fonction des commandes en BDD 
+        foreach ($orders as $order) {
+            if (str_contains($rule->getTypeOfRule(), $order->getIdItem()->getIdPresentation()) == true && $order->getPriceOrder() != 0) {
+                $totalOrder += $order->getPriceOrder() * $rule->getValueRule() / 100;
+            }
+
+            if (intval($order->getPriceOrder()) == 0) {
+                $itemFree = $this->itemPriceRepository->getItemPriceBySociety($order->getIdItem()->getId(), $societyId);
+                $itemFree = $itemFree->getPrice() * $order->getQuantity();
+                $ordersFree += $itemFree;
+                $orderId[] = $order;
+            }
+        }
+
+
+        if ($ordersFree > $totalOrder) {
+            foreach ($orderId as $id)
+                $this->em->remove($id);
+            $this->em->flush();
+            return $reload = true;
+        }
+
     }
 
     public function addToCartRestocking(Society $society, $itemId, $qty)
@@ -139,11 +166,9 @@ class ShopServices extends AbstractController
             }
         }
 
-        if ($itemPrice->getPrice() * $qty > $totalOrder) {
-            # TODO : translate me
-            $this->addFlash('error', 'Dépassement du nombre de produits gratuits');
+        if ($totalOrder <= ($itemPrice->getPrice() * $qty)) {
+            return $error = 'Dépassement du nombre de produit gratuit';
         } else {
-
             $ifexist = false;
             if ($totalOrder >= 0) {
                 foreach ($cart as $order) {
