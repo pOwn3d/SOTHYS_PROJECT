@@ -138,8 +138,9 @@ class CsvImporter
     public function importOrder()
     {
         // TODO : use correct name
-        $csv = Reader::createFromPath('../public/csv/order.csv');
+        $csv = Reader::createFromPath('../public/csv/Commande2103090905.csv');
         $csv->fetchColumn();
+        $csv->setDelimiter(';');
 
         $existingIds = $this->getExistingIds(Order::class);
 
@@ -161,14 +162,14 @@ class CsvImporter
                 }
 
                 $order
-                    ->setIdOrder($row[0])
-                    ->setIdOrderX3($row[1])
+                    ->setIdOrder(utf8_encode($row[0]))
+                    ->setIdOrderX3(utf8_encode($row[1]))
                     ->setSocietyID($society)
                     ->setDateOrder(new \DateTime($row[4]))
                     ->setDateDelivery(new \DateTime($row[5]))
-                    ->setIdStatut($row[7])
-                    ->setIdDownStatut($row[8])
-                    ->setReference($row[9])
+                    ->setIdStatut(utf8_encode($row[7]))
+                    ->setIdDownStatut(utf8_encode($row[8]))
+                    ->setReference(utf8_encode($row[9]))
                     ->setAddress($address)
                     // TODO: add transportMode handling (EAX => id)
 //                ->setTransportMode()
@@ -213,15 +214,17 @@ class CsvImporter
 
     public function importGamme()
     {
-        $csv = Reader::createFromPath('../public/csv/gamme.csv');
+        $csv = Reader::createFromPath('../public/csv/Gamme.csv');
         $csv->fetchColumn();
+        $csv->setDelimiter(';');
+
 
         foreach ($csv as $row) {
             $gamme = new GammeProduct();
             $gamme
-                ->setRefID($row[0])
-                ->setLabelFR($row[1])
-                ->setLabelEN($row[2]);
+                ->setRefID(\utf8_encode($row[0]))
+                ->setLabelFR(\utf8_encode($row[1]))
+                ->setLabelEN(\utf8_encode($row[2]));
             $this->em->persist($gamme);
             $this->em->flush();
         }
@@ -230,8 +233,9 @@ class CsvImporter
     public function importOrderLine()
     {
         // TODO : correct name
-        $csv = Reader::createFromPath('../public/csv/orderLine.csv');
+        $csv = Reader::createFromPath('../public/csv/CommandeLigne2103090910.csv');
         $csv->fetchColumn();
+        $csv->setDelimiter(';');
 
         $items = $this->em->getRepository(Item::class)->findAll();
         $existingIds = $this->getExistingIds(OrderLine::class);
@@ -283,8 +287,9 @@ class CsvImporter
 
     public function importItem()
     {
-        $csv = Reader::createFromPath('../public/csv/item.csv');
+        $csv = Reader::createFromPath('../public/csv/Article.csv');
         $csv->fetchColumn();
+        $csv->setDelimiter(';');
 
         $gammes = $this->em->getRepository(GammeProduct::class)->findAll();
         $divers = $this->em->getRepository(GammeProduct::class)->findOneBy(['refID' => 'DIVERS']);
@@ -322,17 +327,17 @@ class CsvImporter
             $product
                 ->setItemID($row[0])
                 ->setGamme($gamme)
-                ->setLabelFR($row[1])
-                ->setLabelEN($row[2])
-                ->setCapacityFR($row[3])
-                ->setCapacityEN($row[4])
-                ->setIdPresentation($row[5])
-                ->setSector($row[6])
-                ->setUsageString($row[7])
+                ->setLabelFR(utf8_encode($row[1]))
+                ->setLabelEN(utf8_encode($row[2]))
+                ->setCapacityFR(utf8_encode($row[3]))
+                ->setCapacityEN(utf8_encode($row[4]))
+                ->setIdPresentation(utf8_encode($row[5]))
+                ->setSector(utf8_encode($row[6]))
+                ->setUsageString(utf8_encode($row[7]))
                 ->setGammeString($gammeString)
-                ->setAmountBulking($row[11])
-                ->setCodeEAN($row[12])
-                ->setIdAtTheRate($row[13])
+                ->setAmountBulking(utf8_encode($row[11]))
+                ->setCodeEAN(utf8_encode($row[12]))
+                ->setIdAtTheRate(utf8_encode($row[13]))
                 ->setGenericName($genericName);
             $this->em->persist($product);
         }
@@ -341,8 +346,9 @@ class CsvImporter
 
     public function importItemPrice()
     {
-        $csv = Reader::createFromPath('../public/csv/price.csv');
+        $csv = Reader::createFromPath('../public/csv/PrixClient.csv');
         $csv->fetchColumn();
+        $csv->setDelimiter(';');
 
         $companies = $this->em->getRepository(Society::class)->findAll();
         $items = $this->em->getRepository(Item::class)->findAll();
@@ -445,7 +451,6 @@ class CsvImporter
 
         $this->em->flush();
     }
-
 
     public function importModeTransport()
     {
