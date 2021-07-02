@@ -222,8 +222,10 @@ class ShopController extends AbstractController
     {
         // TODO : Checker si la société est bien celle de la personne qui supprime le produit.
         $id = $request->get('id');
+        $societyId = $this->getUser()->getSocietyID()->getId();
         $order = $orderDraftRepository->find($id);
         $shopServices->deleteItemOrderDraft($id);
+        $shopServices->deleteFreeItem($societyId);
 
         if ($order->getPromo() == true) {
             return $this->redirectToRoute('app_promo_shop');

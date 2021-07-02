@@ -20,6 +20,17 @@
                             </div>
                             <div class="search-results"></div>
                             <br />
+                            <div>
+                                <hr>
+                                <p>{{ freeRestockingRules.getLabel(app.request.locale) }}</p>
+                                <div class="search-wrapper" style="display:flex">
+                                    <input class="js-global-search-term-promo" data-rules="{{ freeRestockingRules.valueCondition }}" type="text" style="outline:none"/>
+                                    <button class="button button--primary-fill js-global-search-button-promo">
+                                        {{ 'search' | trans }}
+                                    </button>
+                                </div>
+                                <div class="search-results-promo"></div>
+                            </div>
                             <table class="cart--table table-responsive">
                                 <thead>
                                     <tr>
@@ -91,15 +102,7 @@
                                     {% endfor %}
                                 </tbody>
                             </table>
-                            <hr>
-                            <p>{{ freeRestockingRules.getLabel(app.request.locale) }}</p>
-                            <div class="search-wrapper" style="display:flex">
-                                <input class="js-global-search-term-promo" data-rules="{{ freeRestockingRules.valueCondition }}" type="text" style="outline:none"/>
-                                <button class="button button--primary-fill js-global-search-button-promo">
-                                    {{ 'search' | trans }}
-                                </button>
-                            </div>
-                            <div class="search-results-promo"></div>
+                            
                         </div>
                     </div>
                     <div class="col-12 col-md-4">

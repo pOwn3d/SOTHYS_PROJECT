@@ -334,4 +334,13 @@ class ShopServices extends AbstractController
         return $this->freeRestockingRulesRepository->freeRestockingRulesSociety($society);
     }
 
+    public function deleteFreeItem($id)
+    {
+        $orders = $this->orderDraftRepository->findBy(['idSociety' => $id, 'priceOrder' => 0]);
+        foreach ($orders as $order) {
+            $this->em->remove($order);
+            $this->em->flush();
+        }
+    }
+
 }
