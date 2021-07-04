@@ -113,7 +113,26 @@ $(document).ready(function () {
         });
     });
 
-    // NEW
+    $(".js-update-cart-quantity-free").on("input", function (e) {
+        e.preventDefault();
+        let product = this.dataset.product
+        let qty = $(this).val();
+        const url = "/add-to-cart-restocking/" + product + "/" + qty + "/0"
+
+        $.ajax({
+            method: "POST",
+            url: url,
+            success: function (result) {
+                var data = JSON.parse(result)
+                console.log(data)
+                if (data.error != null) {
+                    alert(data.error)
+                }
+                document.getElementById('qty_update_' + product).innerHTML = data.quantity + ' x ' + data.quantityBundling
+            },
+        });
+    });
+
 
     $(document).on("mouseup", ".free-up", createCartUpDownCallbackRestocking(+1));
     $(document).on("mouseup", ".free-down", createCartUpDownCallbackRestocking(-1));
