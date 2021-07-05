@@ -95,7 +95,7 @@ class ShopServices extends AbstractController
             throw new \Exception("No item found with this id ");
         }
 
-        $cartItem = $this->orderDraftRepository->findOneBy(['idItem' => $item->getId()]);
+        $cartItem = $this->orderDraftRepository->findOneBy(['idItem' => $item->getId(), 'idSociety' => $societyId]);
 
         if ($cart == null || $cartItem == null) {
             $order = new OrderDraft();
