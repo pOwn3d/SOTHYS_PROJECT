@@ -73,7 +73,7 @@ class CsvExporter
                     $orderLine->getDiscountedPrice(),
                     $orderLine->getGratuityCode(),
                     $orderLine->getId(),
-                    $orderLine->getCode(),
+                    $orderLine->getCode(), // TODO : ajouter CODE PROJET ici
                     '',
                 ];
                 array_push($rows, implode('|',$lineData) );
