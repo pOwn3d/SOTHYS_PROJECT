@@ -48,7 +48,10 @@
                                     {% set total = 0 %}
                                     {% for order in orders %}
 
-                                        {% set total = total + (order.price *  order.quantity ) %}
+                                        {% if order.priceOrder > 0.0 %}
+                                            {% set total = total + (order.price *  order.quantity ) %}
+                                        {% endif %}
+                                       
                                         {% if order.idItem.idPresentation == "Cabine" or order.idItem.idPresentation == "Vente" %}
                                             {% set totalCabine = totalCabine + (order.price) %}
                                         {% endif %}
