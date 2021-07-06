@@ -22,6 +22,7 @@ use App\Entity\TransportMode;
 use App\Entity\User;
 use App\Repository\GammeProductRepository;
 use App\Repository\ItemRepository;
+use App\Repository\PromotionItemRepository;
 use App\Repository\PromotionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
@@ -59,8 +60,12 @@ class CsvImporter
      * @var \App\Repository\PromotionRepository
      */
     private PromotionRepository $promotionRepository;
+    /**
+     * @var \App\Repository\PromotionItemRepository
+     */
+    private PromotionItemRepository $promotionItemRepository;
 
-    public function __construct(EntityManagerInterface $em, MailerInterface $mailer, ResetPasswordHelperInterface $resetPasswordHelper, GammeProductRepository $gammeProductRepository, ItemRepository $itemRepository, PromotionRepository $promotionRepository)
+    public function __construct(EntityManagerInterface $em, MailerInterface $mailer, ResetPasswordHelperInterface $resetPasswordHelper, GammeProductRepository $gammeProductRepository, ItemRepository $itemRepository, PromotionRepository $promotionRepository, PromotionItemRepository $promotionItemRepository)
     {
         $this->em = $em;
         $this->mailer = $mailer;
@@ -68,6 +73,7 @@ class CsvImporter
         $this->gammeProductRepository = $gammeProductRepository;
         $this->itemRepository = $itemRepository;
         $this->promotionRepository = $promotionRepository;
+        $this->promotionItemRepository = $promotionItemRepository;
 
         // See here: https://www.doctrine-project.org/projects/doctrine-orm/en/2.8/reference/batch-processing.html
         $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
@@ -631,7 +637,13 @@ class CsvImporter
         $csv->fetchColumn();
 
         foreach ($csv as $row) {
+            $promoItems = $this->promotionItemRepository->findBy(['idX3' => $row[0]]);
             $promo = new Promotion();
+            
+            foreach ($promoItems as $promoItem){
+                $promo->addPromotionItem($promoItem);
+            }  
+      
             $promo->setIdX3($row[0]);
             $promo->setDateStart(new \DateTime($row[2]));
             $promo->setDateEnd(new \DateTime($row[3]));

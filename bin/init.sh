@@ -80,3 +80,11 @@ echo ""
 echo "localhost$port/import-free-restocking-rules"
 curl -o /dev/null "localhost$port/import-free-restocking-rules"
 echo ""
+
+echo "localhost$port/import-promo-item"
+curl -o /dev/null "localhost$port/import-promo-item"
+echo ""
+
+echo "localhost$port/import-promo"
+curl -o /dev/null "localhost$port/import-promo"
+echo ""

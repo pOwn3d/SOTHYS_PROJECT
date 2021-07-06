@@ -246,11 +246,10 @@ class ShopServices extends AbstractController
         $orderId = $newOrder->getId();
 
         foreach ($orders as $order) {
-
             $newOrderLine = new OrderLine();
             $newOrderLine
                 ->setQuantity($order->getQuantity())
-                ->setPrice($order->getPrice() * $order->getQuantity())
+                ->setPrice($order->getPriceOrder())
                 ->setPriceUnit($order->getPrice())
                 ->setItemID($order->getIdItem())
                 ->setIdOrder($orderId)
