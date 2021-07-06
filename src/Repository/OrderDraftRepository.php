@@ -85,7 +85,7 @@ class OrderDraftRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('o')
             ->andWhere('o.idSociety = :val')
             ->andWhere('o.promo IS  NULL')
-            ->orWhere('o.promo = false')
+            ->andWhere('o.promo = false')
             ->setParameter('val', $societyId)
             ->getQuery()
             ->getResult();
