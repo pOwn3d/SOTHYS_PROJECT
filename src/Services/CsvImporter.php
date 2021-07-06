@@ -602,7 +602,7 @@ class CsvImporter
                 } else if (strpos($row[4], '=') ) {
                     $explodeCol4 = explode('=', $row[4])[1];
                 }
-                           $society = $this->em->getRepository(Society::class)->findOneBy(['idCustomer' => $row[0]]);
+                $society = $this->em->getRepository(Society::class)->findOneBy(['idCustomer' => $row[0]]);
                 $freeRestockingRules = new FreeRestockingRules();
                 $freeRestockingRules
                     ->setSocietyID($society)
@@ -629,17 +629,18 @@ class CsvImporter
         $csv->addStreamFilter('convert.iconv.ISO-8859-15/UTF-8');
         $csv->setDelimiter(';');
         $csv->fetchColumn();
-        $promo = new Promotion();
 
         foreach ($csv as $row) {
+            $promo = new Promotion();
             $promo->setIdX3($row[0]);
             $promo->setDateStart(new \DateTime($row[2]));
             $promo->setDateEnd(new \DateTime($row[3]));
             $promo->setNameFr($row[4]);
             $promo->setNameEn($row[5]);
+            $this->em->persist($promo);
+            $this->em->flush();
         }
-        $this->em->persist($promo);
-        $this->em->flush();
+
     }
 
     public function importPromoItem()
@@ -649,18 +650,17 @@ class CsvImporter
         $csv->addStreamFilter('convert.iconv.ISO-8859-15/UTF-8');
         $csv->setDelimiter(';');
         $csv->fetchColumn();
-        $promoItem = new PromotionItem();
 
         foreach ($csv as $row) {
-
-            $item = $this->itemRepository->findOneBy(['id' => $row[1]]);
+            $promoItem = new PromotionItem();
+            $item = $this->itemRepository->findOneBy(['itemID' => $row[1]]);
             $promoItem->setIdX3($row[0]);
             $promoItem->setItem($item);
             $promoItem->setName($row[0]);
             $promoItem->setPrice(0);
+            $this->em->persist($promoItem);
+            $this->em->flush();
         }
-        $this->em->persist($promoItem);
-        $this->em->flush();
     }
 
 }
