@@ -39,6 +39,11 @@ class PromotionItem
      */
     private $name;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $idX3;
+
     public function __construct()
     {
         $this->promotions = new ArrayCollection();
@@ -112,6 +117,18 @@ class PromotionItem
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getIdX3(): ?string
+    {
+        return $this->idX3;
+    }
+
+    public function setIdX3(string $idX3): self
+    {
+        $this->idX3 = $idX3;
 
         return $this;
     }

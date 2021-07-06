@@ -15,10 +15,14 @@ use App\Entity\ItemQuantity;
 use App\Entity\Order;
 use App\Entity\OrderLine;
 use App\Entity\PaymentMethod;
+use App\Entity\Promotion;
+use App\Entity\PromotionItem;
 use App\Entity\Society;
 use App\Entity\TransportMode;
 use App\Entity\User;
 use App\Repository\GammeProductRepository;
+use App\Repository\ItemRepository;
+use App\Repository\PromotionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -47,13 +51,23 @@ class CsvImporter
      * @var GammeProductRepository
      */
     private GammeProductRepository $gammeProductRepository;
+    /**
+     * @var \App\Repository\ItemRepository
+     */
+    private ItemRepository $itemRepository;
+    /**
+     * @var \App\Repository\PromotionRepository
+     */
+    private PromotionRepository $promotionRepository;
 
-    public function __construct(EntityManagerInterface $em, MailerInterface $mailer, ResetPasswordHelperInterface $resetPasswordHelper, GammeProductRepository $gammeProductRepository)
+    public function __construct(EntityManagerInterface $em, MailerInterface $mailer, ResetPasswordHelperInterface $resetPasswordHelper, GammeProductRepository $gammeProductRepository, ItemRepository $itemRepository, PromotionRepository $promotionRepository)
     {
         $this->em = $em;
         $this->mailer = $mailer;
         $this->resetPasswordHelper = $resetPasswordHelper;
         $this->gammeProductRepository = $gammeProductRepository;
+        $this->itemRepository = $itemRepository;
+        $this->promotionRepository = $promotionRepository;
 
         // See here: https://www.doctrine-project.org/projects/doctrine-orm/en/2.8/reference/batch-processing.html
         $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
@@ -588,7 +602,7 @@ class CsvImporter
                 } else if (strpos($row[4], '=') ) {
                     $explodeCol4 = explode('=', $row[4])[1];
                 }
-                           $society = $this->em->getRepository(Society::class)->findOneBy(['idCustomer' => $row[0]]);
+                $society = $this->em->getRepository(Society::class)->findOneBy(['idCustomer' => $row[0]]);
                 $freeRestockingRules = new FreeRestockingRules();
                 $freeRestockingRules
                     ->setSocietyID($society)
@@ -607,4 +621,46 @@ class CsvImporter
         }
         return 'Ok';
     }
+
+    public function importPromo()
+    {
+        $csv = Reader::createFromPath('../public/csv/NomenclatureCoediEntete.csv');
+        $csv->setOutputBOM(Reader::BOM_UTF8);
+        $csv->addStreamFilter('convert.iconv.ISO-8859-15/UTF-8');
+        $csv->setDelimiter(';');
+        $csv->fetchColumn();
+
+        foreach ($csv as $row) {
+            $promo = new Promotion();
+            $promo->setIdX3($row[0]);
+            $promo->setDateStart(new \DateTime($row[2]));
+            $promo->setDateEnd(new \DateTime($row[3]));
+            $promo->setNameFr($row[4]);
+            $promo->setNameEn($row[5]);
+            $this->em->persist($promo);
+            $this->em->flush();
+        }
+
+    }
+
+    public function importPromoItem()
+    {
+        $csv = Reader::createFromPath('../public/csv/NomenclatureCoediComposant.csv');
+        $csv->setOutputBOM(Reader::BOM_UTF8);
+        $csv->addStreamFilter('convert.iconv.ISO-8859-15/UTF-8');
+        $csv->setDelimiter(';');
+        $csv->fetchColumn();
+
+        foreach ($csv as $row) {
+            $promoItem = new PromotionItem();
+            $item = $this->itemRepository->findOneBy(['itemID' => $row[1]]);
+            $promoItem->setIdX3($row[0]);
+            $promoItem->setItem($item);
+            $promoItem->setName($row[0]);
+            $promoItem->setPrice(0);
+            $this->em->persist($promoItem);
+            $this->em->flush();
+        }
+    }
+
 }
