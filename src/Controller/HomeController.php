@@ -21,10 +21,10 @@ class HomeController extends AbstractController
      */
     public function index(CartItem $cartItem, PromotionRepository $promotionRepository): Response
     {
-
-        $promos = $promotionRepository->findAllValidPromos();
-
+        
         $societyId = $this->getUser()->getSocietyID()->getId();
+        $promos = $promotionRepository->findAllValidPromos($societyId);
+        
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'cartItem'        => $cartItem->getItemCart($societyId),
