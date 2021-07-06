@@ -655,6 +655,11 @@ class CsvImporter
 
     }
 
+    /**
+     * @throws \League\Csv\InvalidArgument
+     * @throws \League\Csv\UnavailableFeature
+     * @throws \League\Csv\UnableToProcessCsv
+     */
     public function importPromoItem()
     {
         $csv = Reader::createFromPath('../public/csv/NomenclatureCoediComposant.csv');

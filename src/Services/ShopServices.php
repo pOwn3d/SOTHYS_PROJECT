@@ -222,7 +222,7 @@ class ShopServices extends AbstractController
 
         $total = 0;
         foreach ($orders as $order) {
-            $total += $order->getPrice() * $order->getQuantity();
+            $total += $order->getPriceOrder() ;
         }
 
         $newOrder = new Order();

@@ -17,19 +17,16 @@ class OrderController extends AbstractController
 {
     /**
      * @Route("/{_locale}/mes-commandes", name="app_order", requirements={
-    * "_locale"="%app.locales%"
-    * })
+     * "_locale"="%app.locales%"
+     * })
      * @param OrderRepository $orderRepository
-     * @param CartItem        $cartItem
-     * @param OrderServices   $orderServices
-     *
+     * @param CartItem $cartItem
      * @return Response
      */
     public function index(OrderRepository $orderRepository, CartItem $cartItem): Response
     {
         $society = $this->getUser()->getSocietyID();
         $orders  = $orderRepository->findOrderCustomer($society);
-
         return $this->render('order/index.html.twig', [
             'controller_name' => 'OrderController',
             'orders'          => $orders,
