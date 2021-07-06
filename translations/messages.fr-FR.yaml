@@ -188,3 +188,7 @@ address: 'Adresse'
 price_download:
     all: 'Télécharger les tarifs 2021 en pdf'
     plv: 'Télécharger les tarifs PLV 2021 en pdf'
+
+
+gratuity:
+    'Gratuité'

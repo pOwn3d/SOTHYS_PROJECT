@@ -187,3 +187,6 @@ address: 'Address'
 price_download:
     all: 'Download the 2021 prices as pdf'
     plv: 'Download the 2021 PLV prices as pdf'
+
+gratuity:
+    'Gratuity'

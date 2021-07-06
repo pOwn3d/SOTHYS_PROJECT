@@ -45,6 +45,8 @@
                                 </thead>
                                 <tbody>
                                     {% set totalCabine = 0 %}
+                                    {% set subtotal = 0 %}
+                                    {% set gratuity = 0 %}
                                     {% set total = 0 %}
                                     {% for order in orders %}
 
@@ -113,7 +115,7 @@
                             <div class="cart--totals cart--totals-default">
                                 <h3>{{ 'Cart' | trans }}</h3>
 
-                                {% include('shop/total.html.twig') %}
+                                {% include('shop/_total.html.twig') %}
 
                                 <div class="checkout-wrapper">
                                     <a href="{{ path("app_order_publish" , { 'promo': '0'}) }}" class=" checkout button button--primary-fill">

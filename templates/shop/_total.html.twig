@@ -2,7 +2,15 @@
     <tbody>
     <tr class="cart-subtotal">
         <th>{{ 'Subtotal' | trans }}</th>
-        <td></td>
+        <td>
+            <span class="price total" id="priceTotal">{{ subtotal }} €</span>
+        </td>
+    </tr>
+    <tr class="cart-gratuity">
+        <th>{{ 'gratuity' | trans }}</th>
+        <td>
+            <span class="price total" id="priceTotal">{{ gratuity }} €</span>
+        </td>
     </tr>
     <tr class="order-total">
         <th>{{ 'Total'| trans }} </th>
