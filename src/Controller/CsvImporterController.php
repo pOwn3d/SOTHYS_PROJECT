@@ -227,4 +227,28 @@ class CsvImporterController extends AbstractController
         }
         dd();
     }
+
+    /**
+     * @Route("/import-promo", name="import_promo")
+     * @param CsvImporter $csvImporter
+     *
+     * @return Response
+     */
+    public function importPromo(CsvImporter $csvImporter): Response
+    {
+        $csvImporter->importPromo();
+        dd();
+    }
+
+    /**
+     * @Route("/import-promo-item", name="import_promo_item")
+     * @param CsvImporter $csvImporter
+     *
+     * @return Response
+     */
+    public function importPromoItem(CsvImporter $csvImporter): Response
+    {
+        $csvImporter->importPromoItem();
+        dd();
+    }
 }
