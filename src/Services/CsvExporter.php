@@ -64,6 +64,7 @@ class CsvExporter
             $orderLines = $this->orderLineRepository->findByOrderID($order->getId());
 
             foreach ($orderLines as $orderLine) {
+
                 $lineData = [
                     'L',
                     $orderLine->getItemID()->getItemID(),
@@ -71,11 +72,30 @@ class CsvExporter
                     $orderLine->getPrice(),
                     $orderLine->getDiscount1(),
                     $orderLine->getDiscountedPrice(),
-                    $orderLine->getGratuityCode(),
+                    '',
                     $orderLine->getId(),
                     $orderLine->getCode(), // TODO : ajouter CODE PROJET ici
                     '',
                 ];
+
+                if($orderLine->getPrice() == 0) {
+                    $gratuityCode = $order->getSocietyID()->getFreeRestockingRules()->first()->getObtention();
+
+                    $lineData = [
+                        'L',
+                        $orderLine->getItemID()->getItemID(),
+                        $orderLine->getQuantity(),
+                        $orderLine->getPriceUnit(),
+                        100,
+                        $orderLine->getPrice(),
+                        $gratuityCode,
+                        $orderLine->getId(),
+                        $orderLine->getCode(), // TODO : ajouter CODE PROJET ici
+                        '',
+                    ];
+
+                }
+
                 array_push($rows, implode('|',$lineData) );
             }
 
