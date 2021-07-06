@@ -35,12 +35,12 @@ class OrderLine
     private $quantity;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="float", length=255, nullable=true)
      */
     private $price;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="float", length=255, nullable=true)
      */
     private $priceUnit;
 
@@ -108,23 +108,23 @@ class OrderLine
         return $this;
     }
 
-    public function getPrice(): ?string
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function setPrice(?string $price): self
+    public function setPrice(?float $price): self
     {
         $this->price = $price;
         return $this;
     }
 
-    public function getPriceUnit(): ?int
+    public function getPriceUnit(): ?float
     {
         return $this->priceUnit;
     }
 
-    public function setPriceUnit(?int $priceUnit): self
+    public function setPriceUnit(?float $priceUnit): self
     {
         $this->priceUnit = $priceUnit;
         return $this;

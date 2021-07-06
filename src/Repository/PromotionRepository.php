@@ -2,10 +2,8 @@
 
 namespace App\Repository;
 
-use App\Entity\FreeRules;
 use App\Entity\Promotion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,12 +19,15 @@ class PromotionRepository extends ServiceEntityRepository
         parent::__construct($registry, Promotion::class);
     }
 
-    public function findAllValidPromos()
+    public function findAllValidPromos($societyID)
     {
         return $this->createQueryBuilder('p')
+            ->innerJoin('p.society', 's')
             ->andWhere('p.dateStart <= :date')
             ->andWhere('p.dateEnd >= :date')
+            ->andWhere('s.id >= :val')
             ->setParameter('date', (new \DateTime()))
+            ->setParameter('val', $societyID)
             ->orderBy('p.dateEnd', 'ASC')
             ->getQuery()
             ->getResult();
