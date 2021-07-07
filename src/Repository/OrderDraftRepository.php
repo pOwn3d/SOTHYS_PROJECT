@@ -24,8 +24,6 @@ class OrderDraftRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('o')
             ->andWhere('o.idSociety = :val')
-//            ->andWhere('o.promo IS  NULL')
-//            ->andWhere('o.promo = true')
             ->setParameter('val', $society)
             ->orderBy('o.id', 'ASC')
             ->getQuery()
@@ -84,8 +82,6 @@ class OrderDraftRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('o')
             ->andWhere('o.idSociety = :val')
-            ->andWhere('o.promo IS  NULL')
-            ->andWhere('o.promo = false')
             ->setParameter('val', $societyId)
             ->getQuery()
             ->getResult();
