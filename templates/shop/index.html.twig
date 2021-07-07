@@ -7,10 +7,11 @@
 {% block body %}
     <section class="section section--checkout">
         <div class="container">
-            {% include 'flash_messages.html.twig' %}
             <div>
                 <div class="row">
                     <div class="col-12 col-md-8">
+                        {% include 'flash_messages.html.twig' %}
+
                         <div class="cart--checkout-table">
                             <div class="search-wrapper" style="display:flex">
                                 <input class="js-cart-search-term" type="text" style="outline:none" />

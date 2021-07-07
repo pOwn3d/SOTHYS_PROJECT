@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ShopController extends AbstractController
 {
@@ -28,7 +29,7 @@ class ShopController extends AbstractController
     public function index(ShopServices $shopServices, CartItem $cartItem, Request $request, SluggerInterface $slugger, ItemServices $itemService): Response
     {
         $society = $this->getUser()->getSocietyID();
-       $freeRestockingRules = $shopServices->getFreeRestockingRules($society);
+        $freeRestockingRules = $shopServices->getFreeRestockingRules($society);
         $errors = [];
 
         $form = $this->createForm(CsvOrderUploaderType::class);
@@ -103,7 +104,7 @@ class ShopController extends AbstractController
     /**
      * @Route("/{_locale}/order-publish/{promo}", name="app_order_publish")
      */
-    public function orderPublish(CartItem $cartItem, Request $request, ShopServices $shopServices): Response
+    public function orderPublish(CartItem $cartItem, Request $request, ShopServices $shopServices, TranslatorInterface $translator): Response
     {
         $society = $this->getUser()->getSocietyID();
         $form = $this->createForm(OrderType::class, null, [
@@ -130,8 +131,9 @@ class ShopController extends AbstractController
         }
 
         $cartItem = $cartItem->getItemCart($society->getId());
+
         if ($cartItem == 0){
-            $this->addFlash('error', 'Panier vide');
+            $this->addFlash('error', $translator->trans('Panier vide'));
             return $this->redirectToRoute('app_shop');
         }
 
