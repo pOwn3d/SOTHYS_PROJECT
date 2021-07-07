@@ -88,7 +88,7 @@ class OrderController extends AbstractController
 
 
     /**
-     * @Route("/add-to-cart-restocking/{item}/{qty}/{ajax}", name="app_add_to_cart_restocking" )
+     * @Route("/{_locale}/add-to-cart-restocking/{item}/{qty}/{ajax}", name="app_add_to_cart_restocking" )
      * @param Request $request
      * @param ShopServices $shopServices
      * @param OrderDraftServices $orderDraftServices

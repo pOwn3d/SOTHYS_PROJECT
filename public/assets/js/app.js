@@ -316,7 +316,7 @@ $('.js-global-search-button-promo').on('click', function (e) {
     }).then((res) => {
         var results = res.reduce(function (text, result) {
             text += '<div class="js-global-add-button" data-product-id="' + result.id + '">' + result.gamme + ' - ' + result.label + ' - ' + result.reference + ' ' +
-                '<a href="/add-to-cart-restocking/' + result.id + '/1/1"  class="button button--primary-fill button--small modal--show add-to-cart"> Ajouter au panier' +
+                '<a href="/' + language + '/add-to-cart-restocking/' + result.id + '/1/1"  class="button button--primary-fill button--small modal--show add-to-cart"> Ajouter au panier' +
                 '</a></div>';
             return text;
         }, '');
