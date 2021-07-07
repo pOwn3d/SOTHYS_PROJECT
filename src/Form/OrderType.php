@@ -101,7 +101,8 @@ class OrderType extends AbstractType
                 'choice_label' => function(PaymentMethod $paymentMethod) {
                     return $paymentMethod->getLabel($this->translator->getLocale());
                 },
-            ]);
+            ])
+            ->add('comment');
     }
 
     public function configureOptions(OptionsResolver $resolver)

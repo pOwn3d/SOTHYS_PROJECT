@@ -96,6 +96,11 @@ class Order
      */
     private $paymentMethod;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $comment;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -275,5 +280,17 @@ class Order
     public function getIdX3()
     {
         return $this->getIdOrderX3();
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(string $comment): self
+    {
+        $this->comment = $comment;
+
+        return $this;
     }
 }

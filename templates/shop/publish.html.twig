@@ -61,6 +61,13 @@
                                 'attr' : {'class' : 'form-control', 'name' : 'payment_method', 'readonly':'readonly' }
                             }) }}
                         </p>
+                        <p class="form__item">
+                            <label for="comment">{{ 'order.comment' | trans }}</label>
+                            {{ form_row(form.comment, {
+                                'label' : false,
+                                'attr' : {'class' : 'form-control', 'name' : 'comment' }
+                            }) }}
+                        </p>
                     </div>
                 </div>
                 <div class="checkout-wrapper">

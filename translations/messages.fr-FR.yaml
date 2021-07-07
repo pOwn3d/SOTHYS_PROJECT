@@ -55,6 +55,7 @@ order:
     delivery_address: 'Addresse de livraison'
     transport_mode_incoterm: 'Mode de transport - Incoterm'
     payment_method: 'Méthode de payment'
+    comment: 'Commentaire'
     save: 'Envoyer ma commande'
     save_draft: 'Sauvegarde mon brouillon'
     edit: 'Modifier ma commande'

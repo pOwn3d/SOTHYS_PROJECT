@@ -121,8 +121,8 @@ class ShopServices extends AbstractController
         }
 
 
-        // Récupérer le total de gratuité pour la commande : 
-        // Calculer le montant en fonction des commandes en BDD 
+        // Récupérer le total de gratuité pour la commande :
+        // Calculer le montant en fonction des commandes en BDD
         foreach ($orders as $order) {
             if (str_contains($rule->getTypeOfRule(), $order->getIdItem()->getIdPresentation()) == true && $order->getPriceOrder() != 0) {
                 $totalOrder += $order->getPriceOrder() * $rule->getValueRule() / 100;
@@ -229,7 +229,7 @@ class ShopServices extends AbstractController
         $newOrder
 //                ->setIdOrderX3()
 //                ->setIdOrder(666)
-//                ->setIdDownStatut()
+            ->setComment($data->getComment())
             ->setPriceOrder($total)
             ->setDateOrder(new \DateTime())
             ->setDateDelivery($data->getDateDelivery())

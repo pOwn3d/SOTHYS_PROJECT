@@ -74,6 +74,7 @@ class ShopController extends AbstractController
         }
 
         $orders  = $shopServices->getOrderDraft($society);
+
         return $this->render('shop/index.html.twig', [
             'controller_name' => 'ShopController',
             'orders'          => $orders,

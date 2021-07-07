@@ -54,6 +54,7 @@ order:
     delivery_date: 'Desired date of availability'
     delivery_address: 'Delivery address'
     payment_method: 'Payment method'
+    comment: 'Comment'
     transport_mode_incoterm: 'Transport - Incoterm'
     save: 'Validate my order'
     save_draft: 'Save my draft'
