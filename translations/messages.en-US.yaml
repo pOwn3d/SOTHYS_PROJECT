@@ -52,7 +52,7 @@ order:
     substatus: 'status details'
     creation_date: 'Creation date'
     delivery_date: 'Desired date of availability'
-    delivery_adress: 'Delivery address'
+    delivery_address: 'Delivery address'
     payment_method: 'Payment method'
     transport_mode_incoterm: 'Transport - Incoterm'
     save: 'Validate my order'

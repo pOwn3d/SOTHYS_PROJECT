@@ -52,7 +52,7 @@ order:
     substatus: 'détail du status'
     creation_date: 'Date de création'
     delivery_date: 'Date de mise à disposition souhaitée'
-    delivery_adress: 'Addresse de livraison'
+    delivery_address: 'Addresse de livraison'
     transport_mode_incoterm: 'Mode de transport - Incoterm'
     payment_method: 'Méthode de payment'
     save: 'Envoyer ma commande'
