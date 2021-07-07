@@ -19,18 +19,6 @@
                                 </button>
                             </div>
                             <div class="search-results"></div>
-                            <br />
-                            <div>
-                                <hr>
-                                <p>{{ freeRestockingRules.getLabel(app.request.locale) }}</p>
-                                <div class="search-wrapper" style="display:flex">
-                                    <input class="js-global-search-term-promo" data-rules="{{ freeRestockingRules.valueCondition }}" type="text" style="outline:none"/>
-                                    <button class="button button--primary-fill js-global-search-button-promo">
-                                        {{ 'search' | trans }}
-                                    </button>
-                                </div>
-                                <div class="search-results-promo"></div>
-                            </div>
                             <table class="cart--table table-responsive">
                                 <thead>
                                     <tr>
@@ -49,9 +37,12 @@
                                     {% set gratuity = 0 %}
                                     {% set total = 0 %}
                                     {% for order in orders %}
-
                                         {% if order.priceOrder > 0.0 %}
                                             {% set total = total + (order.price *  order.quantity ) %}
+                                            {% set subtotal = subtotal + (order.price *  order.quantity ) %}
+                                        {% else %}
+                                            {% set gratuity = gratuity + (order.price *  order.quantity ) %}
+                                            {% set subtotal = subtotal + (order.price *  order.quantity ) %}
                                         {% endif %}
 
                                         {% if order.idItem.idPresentation == "Cabine" or order.idItem.idPresentation == "Vente" %}
@@ -107,7 +98,18 @@
                                     {% endfor %}
                                 </tbody>
                             </table>
-
+                            <br />
+                            <div>
+                                <hr>
+                                <p>{{ freeRestockingRules.getLabel(app.request.locale) }}</p>
+                                <div class="search-wrapper" style="display:flex">
+                                    <input class="js-global-search-term-promo" data-rules="{{ freeRestockingRules.valueCondition }}" type="text" style="outline:none"/>
+                                    <button class="button button--primary-fill js-global-search-button-promo">
+                                        {{ 'search' | trans }}
+                                    </button>
+                                </div>
+                                <div class="search-results-promo"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12 col-md-4">

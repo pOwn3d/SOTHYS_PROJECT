@@ -294,8 +294,8 @@ class CsvImporter
                     ->setIdOrderLine($row[1])
                     ->setQuantity($row[3])
                     ->setItemID($item)
-                    ->setPrice($row[4])
-                    ->setPriceUnit($row[5])
+                    ->setPrice($row[5])
+                    ->setPriceUnit($row[4])
                     ->setIdOrderX3($row[7])
                     ->setRemainingQtyOrder($row[9]);
 
@@ -639,11 +639,11 @@ class CsvImporter
         foreach ($csv as $row) {
             $promoItems = $this->promotionItemRepository->findBy(['idX3' => $row[0]]);
             $promo = new Promotion();
-            
+
             foreach ($promoItems as $promoItem){
                 $promo->addPromotionItem($promoItem);
-            }  
-      
+            }
+
             $promo->setIdX3($row[0]);
             $promo->setDateStart(new \DateTime($row[2]));
             $promo->setDateEnd(new \DateTime($row[3]));
