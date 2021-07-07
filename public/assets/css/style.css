@@ -144,3 +144,11 @@ ul.promo {
     top: 14rem;
     background: #fff;
 }
+
+form .quantity {
+    max-width: none;
+}
+
+form .quantity input {
+    width: 90px;
+}
