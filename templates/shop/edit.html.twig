@@ -40,9 +40,16 @@
                                     {% set gratuity = 0 %}
                                     {% for item in orders %}
 
-                                        {% set total = total + (item.price *  item.quantity ) %}
-                                        {% if  item.idItem.idPresentation == "Cabine" %}
-                                        {% set totalCabine = totalCabine + (item.price) %}
+                                        {% if item.price > 0.0 %}
+                                            {% set total = total + (item.priceUnit *  item.quantity ) %}
+                                            {% set subtotal = subtotal + (item.priceUnit *  item.quantity ) %}
+                                        {% else %}
+                                            {% set gratuity = gratuity + (item.priceUnit *  item.quantity ) %}
+                                            {% set subtotal = subtotal + (item.priceUnit *  item.quantity ) %}
+                                        {% endif %}
+
+                                        {% if item.idItem.idPresentation == "Cabine" or item.idItem.idPresentation == "Vente" %}
+                                            {% set totalCabine = totalCabine + (item.price) %}
                                         {% endif %}
 
                                         <tr>
@@ -57,7 +64,7 @@
                                             <td class="product-quantity">
                                                 <span class="text--category show--mobile">  <a href="{{ path('app_item_id', { 'id': item.idItem.id }) }}">{{ item.idItem.labelFR }}</a></span>
                                                 <div class="quantity">
-                                                    <label for="product-quantity--291">{{ 'quantity' | trans }}</label>
+                                                    <label>{{ 'quantity' | trans }}</label>
                                                     <input type="number" class="qty input-text js-update-item-quantity" step="1" min="1"
                                                         data-line="{{ item.id }}"
                                                         data-order="{{ order.id }}"
@@ -74,10 +81,10 @@
                                                 <span class="text--category" id="qty_update_{{ item.idItem.id }}">{{ item.quantity }} x {{ item.quantityBundling }} </span>
                                             </td>
                                             <td class="product-priceUnit">
-                                                <span class="text--category">  {{ item.price }} €</span>
+                                                <span class="text--category">  {{ item.priceUnit }} €</span>
                                             </td>
                                             <td class="product-priceTotal">
-                                                <span class="text--category" id="price_update_{{ item.idItem.id }}">{{ item.price *  item.quantity|round }} € </span>
+                                                <span class="text--category" id="price_update_{{ item.idItem.id }}">{{ item.price }} € </span>
                                             </td>
                                             <td>
                                                 <a href="{{ path('app_order_product_edit_delete', {

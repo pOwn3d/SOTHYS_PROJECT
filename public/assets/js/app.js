@@ -117,7 +117,8 @@ $(document).ready(function () {
         e.preventDefault();
         let product = this.dataset.product
         let qty = $(this).val();
-        const url = "/add-to-cart-restocking/" + product + "/" + qty + "/0"
+        let language = getLanguage();
+        const url = '/' + language + "/add-to-cart-restocking/" + product + "/" + qty + "/0"
 
         $.ajax({
             method: "POST",
@@ -144,7 +145,9 @@ $(document).ready(function () {
             let orderId = t['0'].dataset.product
             t.val(parseInt(t.val()) + direction)
             let qty = t.val()
-            const url = "/add-to-cart-restocking/" + orderId + "/" + qty + "/0"
+
+            let language = getLanguage();
+            const url = '/' + language + "/add-to-cart-restocking/" + orderId + "/" + qty + "/0"
 
             $.ajax({
                 method: "POST",

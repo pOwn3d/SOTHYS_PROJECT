@@ -287,6 +287,9 @@ class ShopServices extends AbstractController
         ]);
 
         $orderLine->setQuantity($quantity);
+        if($orderLine->getPrice() != 0) {
+            $orderLine->setPrice($quantity * $orderLine->getPriceUnit());
+        }
 
         $this->em->persist($orderLine);
         $this->em->flush();

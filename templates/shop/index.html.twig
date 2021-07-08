@@ -37,35 +37,36 @@
                                     {% set subtotal = 0 %}
                                     {% set gratuity = 0 %}
                                     {% set total = 0 %}
-                                    {% for order in orders %}
-                                        {% if order.priceOrder > 0.0 %}
-                                            {% set total = total + (order.price *  order.quantity ) %}
-                                            {% set subtotal = subtotal + (order.price *  order.quantity ) %}
+                                    {% for item in orders %}
+
+                                        {% if item.priceOrder > 0.0 %}
+                                            {% set total = total + (item.price * item.quantity ) %}
+                                            {% set subtotal = subtotal + (item.price * item.quantity ) %}
                                         {% else %}
-                                            {% set gratuity = gratuity + (order.price *  order.quantity ) %}
-                                            {% set subtotal = subtotal + (order.price *  order.quantity ) %}
+                                            {% set gratuity = gratuity + (item.price * item.quantity ) %}
+                                            {% set subtotal = subtotal + (item.price * item.quantity ) %}
                                         {% endif %}
 
-                                        {% if order.idItem.idPresentation == "Cabine" or order.idItem.idPresentation == "Vente" %}
-                                            {% set totalCabine = totalCabine + (order.price) %}
+                                        {% if item.idItem.idPresentation == "Cabine" or item.idItem.idPresentation == "Vente" %}
+                                            {% set totalCabine = totalCabine + (item.price) %}
                                         {% endif %}
 
                                         <tr>
                                             <td class="product-name">
-                                                <a href="{{ path('app_item_id', { 'id': order.idItem.id }) }}">{{ order.idItem.itemId }}</a>
+                                                <a href="{{ path('app_item_id', { 'id': item.idItem.id }) }}">{{ item.idItem.itemId }}</a>
                                             </td>
-                                            <td class="product-designation ">
-                                        <span class="text--category">
-                                            <a href="{{ path('app_item_id', { 'id': order.idItem.id }) }}">{{ order.idItem.labelFR }}</a>
-                                        </span>
+                                            <td class="product-designation">
+                                                <span class="text--category">
+                                                    <a href="{{ path('app_item_id', { 'id': item.idItem.id }) }}">{{ item.idItem.labelFR }}</a>
+                                                </span>
                                             </td>
                                             <td class="product-quantity">
-                                                <span class="text--category show--mobile">  <a href="{{ path('app_item_id', { 'id': order.idItem.id }) }}">{{ order.idItem.labelFR }}</a></span>
+                                                <span class="text--category show--mobile">  <a href="{{ path('app_item_id', { 'id': item.idItem.id }) }}">{{ item.idItem.labelFR }}</a></span>
                                                 <form>
-                                                    {% if order.priceOrder == 0.0 %}
+                                                    {% if item.priceOrder == 0.0 %}
                                                         <div class="quantity">
                                                             <label>{{ 'quantity' | trans }}</label>
-                                                            <input type="number" class="qty input-text js-update-cart-quantity-free" step="1" min="1" data-product="{{ order.idItem.id }}" value="{{ order.quantity }}" style="text-align: center;">
+                                                            <input type="number" class="qty input-text js-update-cart-quantity-free" step="1" min="1" data-product="{{ item.idItem.id }}" value="{{ item.quantity }}" style="text-align: center;">
                                                             <div class="quantity-nav">
                                                                 <div class="quantity-button quantity-up free-up">+</div>
                                                                 <div class="quantity-button quantity-down free-down">-</div>
@@ -74,7 +75,13 @@
                                                     {% else %}
                                                         <div class="quantity">
                                                             <label>{{ 'quantity' | trans }}</label>
-                                                            <input type="number" class="qty input-text js-update-cart-quantity" step="1" min="1" data-product="{{ order.idItem.id }}" value="{{ order.quantity }}" style="text-align: center;">
+                                                            <input type="number" class="qty input-text js-update-cart-quantity"
+                                                                step="1"
+                                                                min="1"
+                                                                data-product="{{ item.idItem.id }}"
+                                                                value="{{ item.quantity }}"
+                                                                style="text-align: center;"
+                                                            />
                                                             <div class="quantity-nav">
                                                                 <div class="quantity-button quantity-up shop-up">+</div>
                                                                 <div class="quantity-button quantity-down shop-down">-</div>
@@ -84,16 +91,16 @@
                                                 </form>
                                             </td>
                                             <td class="product-quantityGroupage">
-                                                <span class="text--category" id="qty_update_{{ order.idItem.id }}">{{ order.quantity }} x {{ order.quantityBundling }} </span>
+                                                <span class="text--category" id="qty_update_{{ item.idItem.id }}">{{ item.quantity }} x {{ item.quantityBundling }} </span>
                                             </td>
                                             <td class="product-priceUnit">
-                                                <span class="text--category">  {{ order.price }} €</span>
+                                                <span class="text--category">  {{ item.price }} €</span>
                                             </td>
                                             <td class="product-priceTotal">
-                                                <span class="text--category" id="price_update_{{ order.idItem.id }}">{{ order.priceOrder }} € </span>
+                                                <span class="text--category" id="price_update_{{ item.idItem.id }}">{{ item.priceOrder }} € </span>
                                             </td>
                                             <td>
-                                                <a href="{{ path('app_order_product_delete', { 'id': order.id }) }}"><i class="icon icon-close"></i></a>
+                                                <a href="{{ path('app_order_product_delete', { 'id': item.id }) }}"><i class="icon icon-close"></i></a>
                                             </td>
                                         </tr>
                                     {% endfor %}
