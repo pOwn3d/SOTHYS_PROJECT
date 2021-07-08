@@ -149,8 +149,16 @@ class ShopController extends AbstractController
     /**
      * @Route("/{_locale}/order-edit/{id}", name="app_order_edit")
      */
-    public function orderEdit(Request $request, OrderServices $orderServices, CartItem $cartItem): Response
+    public function orderEdit(
+        Request $request,
+        OrderServices $orderServices,
+        CartItem $cartItem,
+        ShopServices $shopServices
+    ): Response
     {
+        $society = $this->getUser()->getSocietyID();
+        $freeRestockingRules = $shopServices->getFreeRestockingRules($society);
+
         $id = $request->get('id');
         $order = $orderServices->getOrderByID($id);
         $orderLines = $orderServices->getOrderLinesByID($id);
@@ -171,6 +179,7 @@ class ShopController extends AbstractController
             'cartItem'        => $cartItemCount,
             'form'            => null,
             'errors'          => [],
+            'freeRestockingRules' => $freeRestockingRules,
         ]);
     }
 

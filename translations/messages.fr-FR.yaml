@@ -177,7 +177,11 @@ access_my_cart: 'Accéder à mon panier'
 
 order_number: 'N° de commande'
 
-search: 'Rechercher'
+
+search:
+    global: 'Rechercher'
+    product: 'Rechercher produits'
+    gratuity: 'Rechercher gratuités'
 
 status:
     draft: 'Brouillon'

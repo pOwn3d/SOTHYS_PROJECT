@@ -176,7 +176,10 @@ access_my_cart: 'Access to my cart'
 
 order_number: 'Order number'
 
-search: 'Search'
+search:
+    global: 'Search'
+    product: 'Search products'
+    gratuity: 'Search gratuities'
 
 status:
     draft: 'Draft'
