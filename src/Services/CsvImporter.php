@@ -562,10 +562,19 @@ class CsvImporter
         $csv->setDelimiter(';');
         $csv->fetchColumn();
 
-        foreach ($csv as $row) {
+        $existingIds = $this->getExistingIds(EntityAddress::class);
 
+        foreach ($csv as $row) {
             $society = $this->em->getRepository(Society::class)->findOneBy(['idCustomer' => $row[0]]);
+
             $address = new EntityAddress();
+            if(in_array($society->getId() . '-' . $row[1], $existingIds)) {
+                $address = $this->em->getRepository(EntityAddress::class)->findOneBy([
+                    'society' => $society,
+                    'label' => $row[1],
+                ]);
+            }
+
             $address
                 ->setSociety($society)
                 ->setLabel($row[1])
@@ -632,9 +641,20 @@ class CsvImporter
         $csv->setDelimiter(';');
         $csv->fetchColumn();
 
+        $existingIds = $this->getExistingIds(FreeRestockingRules::class);
 
         foreach ($csv as $row) {
             if (!strpos($row[3], 'IdArticle') && $row[6] != "") {
+
+                $society = $this->em->getRepository(Society::class)->findOneBy(['idCustomer' => $row[0]]);
+
+                $freeRestockingRules = new FreeRestockingRules();
+                if(in_array($society->getId(), $existingIds)) {
+                    $freeRestockingRules = $this->em->getRepository(FreeRestockingRules::class)->findOneBy([
+                        'society' => $society,
+                    ]);
+                }
+
                 if (strpos($row[3], 'IN(')) {
                     $explodeCol3 = explode(')', explode('(', $row[3])[1])[0];
                 } else if (strpos($row[3], '=') ) {
@@ -645,8 +665,7 @@ class CsvImporter
                 } else if (strpos($row[4], '=') ) {
                     $explodeCol4 = explode('=', $row[4])[1];
                 }
-                $society = $this->em->getRepository(Society::class)->findOneBy(['idCustomer' => $row[0]]);
-                $freeRestockingRules = new FreeRestockingRules();
+
                 $freeRestockingRules
                     ->setSocietyID($society)
                     ->setTypeOfRule($explodeCol3)

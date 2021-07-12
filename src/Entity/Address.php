@@ -191,4 +191,9 @@ class Address
 
         return $this;
     }
+
+    public function getUniqueId()
+    {
+        return $this->getSociety()->getId() . '-' . $this->getLabel();
+    }
 }

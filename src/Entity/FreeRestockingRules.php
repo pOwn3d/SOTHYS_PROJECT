@@ -200,4 +200,9 @@ class FreeRestockingRules
         return $this->getLabelEN();
     }
 
+    public function getUniqueId()
+    {
+        return $this->getSocietyId()->getId();
+    }
+
 }
