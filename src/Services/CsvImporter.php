@@ -159,7 +159,6 @@ class CsvImporter
 
     public function importOrder()
     {
-        // TODO : use correct name
         $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/Commande.csv');
         $csv->fetchColumn();
         $csv->setDelimiter(';');
@@ -249,9 +248,15 @@ class CsvImporter
         $csv->fetchColumn();
         $csv->setDelimiter(';');
 
+        $existingIds = $this->getExistingIds(GammeProduct::class);
 
         foreach ($csv as $row) {
             $gamme = new GammeProduct();
+            if(in_array($row[0], $existingIds)) {
+                $gamme = $this->em->getRepository(GammeProduct::class)->findOneBy([
+                    'refID' => $row[0],
+                ]);
+            }
             $gamme
                 ->setRefID(\utf8_encode($row[0]))
                 ->setLabelFR(\utf8_encode($row[1]))
@@ -263,8 +268,7 @@ class CsvImporter
 
     public function importOrderLine()
     {
-        // TODO : correct name
-        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/CommandeLigne2103090910.csv');
+        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/CommandeLigne.csv');
         $csv->fetchColumn();
         $csv->setDelimiter(';');
 

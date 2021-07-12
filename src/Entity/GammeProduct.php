@@ -121,4 +121,8 @@ class GammeProduct
         $this->refID = $refID;
         return $this;
     }
+
+    public function getIdX3() {
+        return $this->getRefID();
+    }
 }
