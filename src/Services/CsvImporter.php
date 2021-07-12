@@ -632,9 +632,20 @@ class CsvImporter
         $csv->setDelimiter(';');
         $csv->fetchColumn();
 
+        $existingIds = $this->getExistingIds(FreeRestockingRules::class);
 
         foreach ($csv as $row) {
             if (!strpos($row[3], 'IdArticle') && $row[6] != "") {
+
+                $society = $this->em->getRepository(Society::class)->findOneBy(['idCustomer' => $row[0]]);
+
+                $freeRestockingRules = new FreeRestockingRules();
+                if(in_array($society->getId(), $existingIds)) {
+                    $freeRestockingRules = $this->em->getRepository(FreeRestockingRules::class)->findOneBy([
+                        'society' => $society,
+                    ]);
+                }
+
                 if (strpos($row[3], 'IN(')) {
                     $explodeCol3 = explode(')', explode('(', $row[3])[1])[0];
                 } else if (strpos($row[3], '=') ) {
@@ -645,8 +656,7 @@ class CsvImporter
                 } else if (strpos($row[4], '=') ) {
                     $explodeCol4 = explode('=', $row[4])[1];
                 }
-                $society = $this->em->getRepository(Society::class)->findOneBy(['idCustomer' => $row[0]]);
-                $freeRestockingRules = new FreeRestockingRules();
+
                 $freeRestockingRules
                     ->setSocietyID($society)
                     ->setTypeOfRule($explodeCol3)
