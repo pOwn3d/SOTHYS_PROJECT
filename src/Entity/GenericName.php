@@ -123,4 +123,9 @@ class GenericName
 
         return $this->getNameEN();
     }
+
+    public function getUniqueId()
+    {
+        return $this->getItemId();
+    }
 }

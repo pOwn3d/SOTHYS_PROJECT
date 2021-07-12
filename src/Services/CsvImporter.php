@@ -588,8 +588,15 @@ class CsvImporter
         $csv->setDelimiter(';');
         $csv->fetchColumn();
 
+        $existingIds = $this->getExistingIds(GenericName::class);
+
         foreach ($csv as $row) {
             $genericName = new GenericName();
+            if(in_array($row[0], $existingIds)) {
+                $genericName = $this->em->getRepository(GenericName::class)->findOneBy([
+                    'itemId' => $row[0],
+                ]);
+            }
             $genericName
                 ->setItemId($row[0])
                 ->setNameFR($row[1])
