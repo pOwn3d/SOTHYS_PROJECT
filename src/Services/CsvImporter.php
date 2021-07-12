@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Services;
 
 use App\Entity\Address as EntityAddress;
@@ -52,14 +51,17 @@ class CsvImporter
      * @var GammeProductRepository
      */
     private GammeProductRepository $gammeProductRepository;
+
     /**
      * @var \App\Repository\ItemRepository
      */
     private ItemRepository $itemRepository;
+
     /**
      * @var \App\Repository\PromotionRepository
      */
     private PromotionRepository $promotionRepository;
+
     /**
      * @var \App\Repository\PromotionItemRepository
      */
@@ -90,7 +92,7 @@ class CsvImporter
 
     public function importPaymentMethod()
     {
-        $csv = Reader::createFromPath('../public/csv/ConditionPaiement.csv');
+        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/ConditionPaiement.csv');
         $csv->setDelimiter(';');
         $csv->fetchColumn();
 
@@ -116,7 +118,7 @@ class CsvImporter
 
     public function importUser(bool $shouldSendMail = true)
     {
-        $csv = Reader::createFromPath('../public/csv/user.csv');
+        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/user.csv');
         $csv->fetchColumn();
 
         foreach ($csv as $row) {
@@ -158,7 +160,7 @@ class CsvImporter
     public function importOrder()
     {
         // TODO : use correct name
-        $csv = Reader::createFromPath('../public/csv/Commande2103090905.csv');
+        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/Commande2103090905.csv');
         $csv->fetchColumn();
         $csv->setDelimiter(';');
 
@@ -204,7 +206,7 @@ class CsvImporter
 
     public function importSociety()
     {
-        $csv = Reader::createFromPath('../public/csv/Client.csv');
+        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/Client.csv');
         $csv->setDelimiter(';');
         $csv->fetchColumn();
 
@@ -234,7 +236,7 @@ class CsvImporter
 
     public function importGamme()
     {
-        $csv = Reader::createFromPath('../public/csv/Gamme.csv');
+        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/Gamme.csv');
         $csv->fetchColumn();
         $csv->setDelimiter(';');
 
@@ -253,7 +255,7 @@ class CsvImporter
     public function importOrderLine()
     {
         // TODO : correct name
-        $csv = Reader::createFromPath('../public/csv/CommandeLigne2103090910.csv');
+        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/CommandeLigne2103090910.csv');
         $csv->fetchColumn();
         $csv->setDelimiter(';');
 
@@ -307,7 +309,7 @@ class CsvImporter
 
     public function importItem()
     {
-        $csv = Reader::createFromPath('../public/csv/Article.csv');
+        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/Article.csv');
         $csv->fetchColumn();
         $csv->setDelimiter(';');
 
@@ -366,7 +368,7 @@ class CsvImporter
 
     public function importItemPrice()
     {
-        $csv = Reader::createFromPath('../public/csv/PrixClient.csv');
+        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/PrixClient.csv');
         $csv->fetchColumn();
         $csv->setDelimiter(';');
 
@@ -422,7 +424,7 @@ class CsvImporter
 
     public function importItemQuantity()
     {
-        $csv = Reader::createFromPath('../public/csv/QuantiteGroupage.csv');
+        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/QuantiteGroupage.csv');
         $csv->setDelimiter(';');
         $csv->fetchColumn();
 
@@ -474,7 +476,7 @@ class CsvImporter
 
     public function importModeTransport()
     {
-        $csv = Reader::createFromPath('../public/csv/modeTransport.csv');
+        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/modeTransport.csv');
         $csv->fetchColumn();
 
         foreach ($csv as $row) {
@@ -490,7 +492,7 @@ class CsvImporter
 
     public function importIncoterm()
     {
-        $csv = Reader::createFromPath('../public/csv/Incoterm.csv');
+        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/Incoterm.csv');
         $csv->setDelimiter(';');
         $csv->fetchColumn();
 
@@ -505,7 +507,7 @@ class CsvImporter
 
     public function customerImportIncoterm()
     {
-        $csv = Reader::createFromPath('../public/csv/ClientIncoterm.csv');
+        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/ClientIncoterm.csv');
         $csv->setDelimiter(';');
         $csv->fetchColumn();
 
@@ -528,7 +530,7 @@ class CsvImporter
 
     public function importSocietyAddress()
     {
-        $csv = Reader::createFromPath('../public/csv/Adresse.csv');
+        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/Adresse.csv');
         $csv->setDelimiter(';');
         $csv->fetchColumn();
 
@@ -554,7 +556,7 @@ class CsvImporter
 
     public function importGenericName()
     {
-        $csv = Reader::createFromPath('../public/csv/NomGenerique.csv');
+        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/NomGenerique.csv');
         $csv->setDelimiter(';');
         $csv->fetchColumn();
 
@@ -589,7 +591,7 @@ class CsvImporter
             $this->em->flush();
         }
 
-        $csv = Reader::createFromPath('../public/csv/RegleStockClient.csv');
+        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/RegleStockClient.csv');
         $csv->setOutputBOM(Reader::BOM_UTF8);
         $csv->addStreamFilter('convert.iconv.ISO-8859-15/UTF-8');
         $csv->setDelimiter(';');
@@ -630,7 +632,7 @@ class CsvImporter
 
     public function importPromo()
     {
-        $csv = Reader::createFromPath('../public/csv/NomenclatureCoediEntete.csv');
+        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/NomenclatureCoediEntete.csv');
         $csv->setOutputBOM(Reader::BOM_UTF8);
         $csv->addStreamFilter('convert.iconv.ISO-8859-15/UTF-8');
         $csv->setDelimiter(';');
@@ -662,7 +664,7 @@ class CsvImporter
      */
     public function importPromoItem()
     {
-        $csv = Reader::createFromPath('../public/csv/NomenclatureCoediComposant.csv');
+        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/NomenclatureCoediComposant.csv');
         $csv->setOutputBOM(Reader::BOM_UTF8);
         $csv->addStreamFilter('convert.iconv.ISO-8859-15/UTF-8');
         $csv->setDelimiter(';');

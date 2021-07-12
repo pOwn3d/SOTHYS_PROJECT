@@ -104,11 +104,6 @@ class CsvExporter
         }
         $this->em->flush();
 
-        if(empty($rows)) {
-            return;
-        }
-
-        $date = (new \DateTime())->format('dmY');
-        file_put_contents($_ENV['EXPORT_FOLDER'] . "/COEDI_ImportCommandes$date.csv", implode("\n", $rows) . "\n", FILE_APPEND);
+        return $rows;
     }
 }

@@ -15,9 +15,7 @@ class CsvExportController extends AbstractController
      */
     public function index(CsvExporter $csvExporter): Response
     {
-
-        $csvExporter->exportCoedi();
-        dd();
-
+        $rows = $csvExporter->exportCoedi();
+        return new Response(implode('\n', $rows) . '\n');
     }
 }
