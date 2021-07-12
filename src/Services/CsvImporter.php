@@ -122,7 +122,7 @@ class CsvImporter
         $csv->fetchColumn();
 
         foreach ($csv as $row) {
-            $user = $this->em->getRepository(User::class)->findOneBy(['email' => $row[0]]);
+            // $user = $this->em->getRepository(User::class)->findOneBy(['email' => $row[0]]);
             $society = $this->em->getRepository(Society::class)->findOneBy(['idCustomer' => $row[1]]);
 
             $newUser = new User();
@@ -160,7 +160,7 @@ class CsvImporter
     public function importOrder()
     {
         // TODO : use correct name
-        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/Commande2103090905.csv');
+        $csv = Reader::createFromPath($_ENV['IMPORT_FOLDER'] . '/Commande.csv');
         $csv->fetchColumn();
         $csv->setDelimiter(';');
 
@@ -210,6 +210,8 @@ class CsvImporter
         $csv->setDelimiter(';');
         $csv->fetchColumn();
 
+        $existingIds = $this->getExistingIds(Society::class);
+
         $paymentMethods = $this->em->getRepository(PaymentMethod::class)->findAll();
 
         foreach ($csv as $row) {
@@ -223,13 +225,20 @@ class CsvImporter
                 $paymentMethod = array_shift($foundPaymentMethods);
             }
 
-            $newSociety = new Society();
-            $newSociety
+            $society = new Society();
+
+            if(!empty($row[0]) && in_array($row[0], $existingIds)) {
+                $society = $this->em->getRepository(Society::class)->findOneBy([
+                    'idCustomer' => $row[0],
+                ]);
+            }
+
+            $society
                 ->setIdCustomer($row[0])
                 ->setName($row[5])
                 ->setPaymentMethod($paymentMethod);
 
-            $this->em->persist($newSociety);
+            $this->em->persist($society);
         }
         $this->em->flush();
     }

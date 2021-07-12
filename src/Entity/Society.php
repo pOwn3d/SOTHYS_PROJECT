@@ -397,5 +397,7 @@ class Society
         return $this;
     }
 
-
+    public function getIdX3() {
+        return $this->getIdCustomer();
+    }
 }
