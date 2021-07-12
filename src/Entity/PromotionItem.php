@@ -132,4 +132,9 @@ class PromotionItem
 
         return $this;
     }
+
+    public function getUniqueId()
+    {
+        return $this->getIdX3() . '-' . $this->getItem()->getUniqueId();
+    }
 }

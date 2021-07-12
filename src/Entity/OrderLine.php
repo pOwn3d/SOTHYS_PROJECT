@@ -211,7 +211,7 @@ class OrderLine
         return $this->getItemID()->getAmountBulking();
     }
 
-    public function getIdX3()
+    public function getUniqueId()
     {
         return $this->getIdOrderLine();
     }

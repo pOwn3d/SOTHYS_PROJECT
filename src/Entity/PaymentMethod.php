@@ -81,4 +81,9 @@ class PaymentMethod
 
         return $this->getlabelEN();
     }
+
+    public function getUniqueId()
+    {
+        return $this->getIdX3();
+    }
 }

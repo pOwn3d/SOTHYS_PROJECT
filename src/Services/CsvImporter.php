@@ -86,7 +86,7 @@ class CsvImporter
         $items = $this->em->getRepository($className)->findAll();
 
         return array_map(function($item) {
-            return $item->getIdX3();
+            return $item->getUniqueId();
         }, $items);
     }
 
@@ -655,6 +655,7 @@ class CsvImporter
                 $this->em->flush();
             }
         }
+
         return 'Ok';
     }
 
@@ -666,9 +667,17 @@ class CsvImporter
         $csv->setDelimiter(';');
         $csv->fetchColumn();
 
+        $existingIds = $this->getExistingIds(Promotion::class);
+
         foreach ($csv as $row) {
+
             $promoItems = $this->promotionItemRepository->findBy(['idX3' => $row[0]]);
             $promo = new Promotion();
+            if(in_array($row[0], $existingIds)) {
+                $promo = $this->em->getRepository(Promotion::class)->findOneBy([
+                    'idX3' => $row[0],
+                ]);
+            }
 
             foreach ($promoItems as $promoItem){
                 $promo->addPromotionItem($promoItem);
@@ -698,9 +707,20 @@ class CsvImporter
         $csv->setDelimiter(';');
         $csv->fetchColumn();
 
+        $existingIds = $this->getExistingIds(PromotionItem::class);
+
         foreach ($csv as $row) {
-            $promoItem = new PromotionItem();
+
             $item = $this->itemRepository->findOneBy(['itemID' => $row[1]]);
+
+            $promoItem = new PromotionItem();
+            if(in_array($row[0] . '-' . $row[1], $existingIds)) {
+                $promoItem = $this->em->getRepository(PromotionItem::class)->findOneBy([
+                    'idX3' => $row[0],
+                    'item' => $item,
+                ]);
+            }
+
             $promoItem->setIdX3($row[0]);
             $promoItem->setItem($item);
             $promoItem->setName($row[0]);

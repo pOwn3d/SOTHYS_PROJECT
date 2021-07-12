@@ -271,5 +271,8 @@ class Promotion
         return $this;
     }
 
-
+    public function getUniqueId()
+    {
+        return $this->getIdX3();
+    }
 }

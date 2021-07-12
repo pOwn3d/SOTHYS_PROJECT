@@ -277,7 +277,7 @@ class Order
         return $this;
     }
 
-    public function getIdX3()
+    public function getUniqueId()
     {
         return $this->getIdOrderX3();
     }
