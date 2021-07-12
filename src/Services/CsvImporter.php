@@ -330,9 +330,17 @@ class CsvImporter
         $divers = $this->em->getRepository(GammeProduct::class)->findOneBy(['refID' => 'DIVERS']);
         $genericNames = $this->em->getRepository(GenericName::class)->findAll();
 
+        $existingIds = $this->getExistingIds(Item::class);
+
         foreach ($csv as $row) {
 
             $product = new Item();
+            if(in_array($row[0], $existingIds)) {
+                $product = $this->em->getRepository(Item::class)->findOneBy([
+                    'idOrderX3' => $row[0],
+                ]);
+            }
+
             $gamme = null;
             if ($row[8] != null) {
                 $gammeString = $row[0];

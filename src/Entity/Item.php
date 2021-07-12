@@ -487,4 +487,8 @@ class Item
 
         return $this;
     }
+
+    public function getIdX3() {
+        return $this->getItemID();
+    }
 }
