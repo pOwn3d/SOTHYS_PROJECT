@@ -517,7 +517,14 @@ class CsvImporter
         $csv->setDelimiter(';');
         $csv->fetchColumn();
 
+        $existingIds = $this->getExistingIds(Incoterm::class);
+
         foreach ($csv as $row) {
+
+            if(in_array($row[0], $existingIds)) {
+                continue;
+            }
+
             $gamme = new Incoterm();
             $gamme
                 ->setReference($row[0]);

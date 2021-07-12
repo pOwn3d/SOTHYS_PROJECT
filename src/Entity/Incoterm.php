@@ -81,6 +81,9 @@ class Incoterm
         return $this;
     }
 
+    public function getIdX3() {
+        return $this->getReference();
+    }
 
     public function __toString(){
         return $this->getReference();
